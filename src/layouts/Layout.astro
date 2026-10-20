@@ -1,0 +1,74 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+import '../styles/global.css';
+import BackToTop from '../components/BackToTop.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "OmniSpec — Spec-Driven Development para Agentes de Código",
+  description = "Framework de desarrollo guiado por especificaciones con motor CLI local y gobernanza versionada en Git para agentes en Antigravity, OpenCode, Claude Code, Cursor y Codex."
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#0a0b0e" />
+    
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href="https://omni-spec.dev/" />
+
+    <!-- SPA ViewTransitions de Astro -->
+    <ViewTransitions />
+
+    <script is:inline>
+      function applyThemeAndLang() {
+        const theme = localStorage.getItem('omni-theme') || 'dark';
+        if (theme === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else {
+          document.documentElement.classList.add('dark');
+        }
+        const rawLang = localStorage.getItem('omni-lang');
+        const lang = (rawLang === 'en' || rawLang === 'es') ? rawLang : 'es';
+        document.documentElement.lang = lang;
+      }
+
+      applyThemeAndLang();
+      document.addEventListener('astro:after-swap', applyThemeAndLang);
+    </script>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://omni-spec.dev/" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/assets/omni-spec-banner.svg" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="/assets/omni-spec-banner.svg" />
+
+    <!-- Tipografía: Albert Sans y JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  </head>
+  <body class="bg-background text-primary min-h-screen relative flex flex-col font-sans">
+    <div class="relative z-10 flex flex-col flex-1">
+      <slot />
+    </div>
+    <BackToTop />
+  </body>
+</html>

@@ -1,0 +1,80 @@
+---
+const faqs = [
+  {
+    qKey: "faq.q1",
+    aKey: "faq.a1",
+    q: "¿Por qué un archivo de prompt no basta para controlar a un agente?",
+    a: "Un prompt en el chat o un system prompt genérico pierde efectividad a medida que la conversación avanza y el contexto se satura. OmniSpec traslada las reglas al repositorio mediante una constitución inmutable, especificaciones estructuradas en Markdown y comandos CLI locales que validan el avance antes de modificar código."
+  },
+  {
+    qKey: "faq.q2",
+    aKey: "faq.a2",
+    q: "¿OmniSpec envía mi código, tokens o contexto a servidores externos?",
+    a: "No. OmniSpec opera completamente en local. El código, las especificaciones y la constitución residen en tu disco dentro de specs/ y .agents/. No incluye telemetría ni llamadas a servicios propietarios."
+  },
+  {
+    qKey: "faq.q3",
+    aKey: "faq.a3",
+    q: "¿Cómo encaja OmniSpec con iniciativas de especificación previa?",
+    a: "A diferencia de simples plantillas de documentación, OmniSpec integra un motor CLI local que enlaza cada especificación con tareas atómicas y Quality Gates obligatorios conectados a los comandos de tu repositorio (npm test, linter, build)."
+  },
+  {
+    qKey: "faq.q4",
+    aKey: "faq.a4",
+    q: "¿Necesito instalar dependencias npm adicionales en mi proyecto?",
+    a: "Ninguna dependencia externa de producción. El motor de OmniSpec (specs/.omni/runtime) está implementado con módulos estándar ESM de Node.js (requiere Node.js >=18.19.0)."
+  },
+  {
+    qKey: "faq.q5",
+    aKey: "faq.a5",
+    q: "¿Puedo usarlo en proyectos existentes (brownfield) o solo nuevos?",
+    a: "Funciona en proyectos nuevos (greenfield) y existentes (brownfield). El comando /omni-init mapea los módulos y herramientas del repositorio de manera no destructiva, sin alterar archivos previos sin confirmación explícita."
+  },
+  {
+    qKey: "faq.q6",
+    aKey: "faq.a6",
+    q: "¿Qué licencia tiene el proyecto?",
+    a: "OmniSpec es software libre y de código abierto bajo la licencia MIT. Puede utilizarse e integrarse libremente en entornos personales, académicos o comerciales."
+  },
+  {
+    qKey: "faq.q7",
+    aKey: "faq.a7",
+    q: "¿Cuál es el origen y visión de OmniSpec?",
+    a: "OmniSpec nace como una iniciativa personal con el propósito de contar con un framework de Spec-Driven Development verdaderamente adaptable a cualquier necesidad, stack y agente de IA, sin dependencias externas ni flujos rígidos. El proyecto se encuentra en desarrollo activo continuo: de forma constante se incorporan mejoras y refinamientos, y cualquier sugerencia o caso de uso es bienvenido a través de GitHub Issues."
+  }
+];
+---
+
+<section id="faq" class="py-16 md:py-24 border-t border-border">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="mb-12">
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-primary tracking-tight" data-i18n="faq.title">
+        Preguntas Frecuentes de Desarrolladores
+      </h2>
+      <p class="mt-4 text-base sm:text-lg text-primary-muted leading-relaxed max-w-[65ch]" data-i18n="faq.subtitle">
+        Respuestas directas sobre la arquitectura, privacidad y gobernanza de OmniSpec.
+      </p>
+    </div>
+
+    <!-- Lista de Acordeón sin tarjetas genéricas -->
+    <div class="flex flex-col divide-y divide-border border-y border-border">
+      {faqs.map((faq) => (
+        <details class="group py-5 transition-colors overflow-hidden [&_summary::-webkit-details-marker]:hidden">
+          <summary class="flex items-center justify-between gap-4 cursor-pointer select-none list-none font-semibold text-base sm:text-lg text-primary group-hover:text-accent transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-lg py-1">
+            <span data-i18n={faq.qKey}>{faq.q}</span>
+            <span class="shrink-0 w-6 h-6 rounded-full bg-surface-elevated border border-border flex items-center justify-center text-primary-muted transition-transform duration-200 group-open:rotate-180">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+              </svg>
+            </span>
+          </summary>
+          <div class="mt-3 text-sm sm:text-base text-primary-muted leading-relaxed max-w-[65ch] pr-6">
+            <p data-i18n={faq.aKey}>{faq.a}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,70 @@
+---
+---
+
+<section id="leyes" class="py-16 md:py-24 border-t border-border transition-colors">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="max-w-3xl mb-14">
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-primary tracking-tight" data-i18n="const.title">
+        Las 4 Cláusulas de Gobernanza en CONSTITUTION.md
+      </h2>
+      <p class="mt-4 text-base sm:text-lg text-primary-muted leading-relaxed max-w-[65ch]" data-i18n="const.subtitle">
+        Reglas de ingeniería inmutables que todo agente debe leer y respetar antes de proponer o aplicar cambios en el repositorio.
+      </p>
+    </div>
+
+    <!-- Lista Editorial estructurada en cláusulas legales de ingeniería -->
+    <div class="flex flex-col divide-y divide-border border-y border-border">
+      
+      <!-- Cláusula 1 -->
+      <div class="py-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-baseline">
+        <div class="md:col-span-1 font-mono text-xl font-bold text-accent">01</div>
+        <div class="md:col-span-4">
+          <h3 class="text-xl font-bold text-primary tracking-tight" data-i18n="const.law1.title">Diagnóstico Pre-Ejecución</h3>
+          <span class="text-xs font-mono text-primary-muted mt-1 block" data-i18n="const.law1.sub">Análisis estructurado y confirmación de supuestos</span>
+        </div>
+        <div class="md:col-span-7 text-sm sm:text-base text-primary-muted leading-relaxed max-w-[55ch]" data-i18n="const.law1.body">
+          Antes de modificar código, el agente redacta un reporte con: <strong>Problema</strong>, <strong>Solución propuesta</strong> y <strong>Riesgos o consecuencias</strong>. Los cambios destructivos, refactors amplios o alteraciones de esquema requieren confirmación explícita del desarrollador. Si el modelo no puede verificar una ruta o API, debe detenerse y consultar.
+        </div>
+      </div>
+
+      <!-- Cláusula 2 -->
+      <div class="py-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-baseline">
+        <div class="md:col-span-1 font-mono text-xl font-bold text-emerald-600 dark:text-emerald-400">02</div>
+        <div class="md:col-span-4">
+          <h3 class="text-xl font-bold text-primary tracking-tight" data-i18n="const.law2.title">Alcance Mínimo y Focalizado</h3>
+          <span class="text-xs font-mono text-primary-muted mt-1 block" data-i18n="const.law2.sub">Preservación del código existente y contención</span>
+        </div>
+        <div class="md:col-span-7 text-sm sm:text-base text-primary-muted leading-relaxed max-w-[55ch]" data-i18n="const.law2.body">
+          Modifica <strong>exclusivamente</strong> los archivos y líneas contemplados en el plan. Queda prohibido alterar módulos adyacentes funcionales o introducir formateos masivos que dificulten la revisión en git. Se rechazan soluciones provisionales que introduzcan deuda técnica evitable.
+        </div>
+      </div>
+
+      <!-- Cláusula 3 -->
+      <div class="py-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-baseline">
+        <div class="md:col-span-1 font-mono text-xl font-bold text-amber-600 dark:text-amber-400">03</div>
+        <div class="md:col-span-4">
+          <h3 class="text-xl font-bold text-primary tracking-tight" data-i18n="const.law3.title">Verificación con Comandos Reales</h3>
+          <span class="text-xs font-mono text-primary-muted mt-1 block" data-i18n="const.law3.sub">Evidencia de ejecución con exit code 0</span>
+        </div>
+        <div class="md:col-span-7 text-sm sm:text-base text-primary-muted leading-relaxed max-w-[55ch]" data-i18n="const.law3.body">
+          La confirmación verbal del modelo no reemplaza la ejecución de software. Cada tarea se valida con los comandos de comprobación del proyecto (ej. <code class="code-inline">npm test</code>, <code class="code-inline">astro check</code>, <code class="code-inline">cargo test</code>, <code class="code-inline">pytest</code>). Solo se permite cerrar una especificación si los comandos devuelven código de salida 0 con evidencia registrada.
+        </div>
+      </div>
+
+      <!-- Cláusula 4 -->
+      <div class="py-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-baseline">
+        <div class="md:col-span-1 font-mono text-xl font-bold text-cyan-600 dark:text-cyan-400">04</div>
+        <div class="md:col-span-4">
+          <h3 class="text-xl font-bold text-primary tracking-tight" data-i18n="const.law4.title">Ergonomía y Estados de Interfaz</h3>
+          <span class="text-xs font-mono text-primary-muted mt-1 block" data-i18n="const.law4.sub">Experiencia de usuario completa y accesibilidad</span>
+        </div>
+        <div class="md:col-span-7 text-sm sm:text-base text-primary-muted leading-relaxed max-w-[55ch]" data-i18n="const.law4.body">
+          En tareas de frontend se rechazan componentes genéricos sin control de estados. Se exige contemplar los <strong>4 estados esenciales</strong> (Carga, Vacío, Error y Éxito/Completado), retroalimentación visual en microinteracciones y cumplimiento riguroso de contraste y navegación accesible por teclado.
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>

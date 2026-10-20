@@ -1,0 +1,504 @@
+---
+---
+
+<section id="canvas" class="py-16 md:py-24 transition-colors">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="max-w-3xl mb-12">
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-primary tracking-tight" data-i18n="canvas.title">
+        Cómo Opera OmniSpec en tu Repositorio
+      </h2>
+      <p class="mt-4 text-base sm:text-lg text-primary-muted leading-relaxed max-w-[65ch]" data-i18n="canvas.subtitle">
+        Sin servidores externos ni paneles propietarios. OmniSpec es un motor CLI que opera directamente sobre tu árbol de archivos y se audita con Git en Markdown plano.
+      </p>
+    </div>
+
+    <!-- Ventana Principal Estilo IDE Real (VS Code / Cursor) -->
+    <div class="rounded-xl border border-border bg-surface dark:bg-[#0d0e12] overflow-hidden shadow-xl dark:shadow-2xl transition-colors">
+      
+      <!-- Barra Superior de Ventana del IDE -->
+      <div class="flex items-center justify-between px-4 py-2.5 bg-surface-elevated dark:bg-[#14161d] border-b border-border select-none text-xs font-mono">
+        <!-- Controles de ventana Mac / IDE -->
+        <div class="flex items-center gap-2">
+          <span class="w-3 h-3 rounded-full bg-[#ff5f56] inline-block"></span>
+          <span class="w-3 h-3 rounded-full bg-[#ffbd2e] inline-block"></span>
+          <span class="w-3 h-3 rounded-full bg-[#27c93f] inline-block"></span>
+          <span class="ml-2 text-primary-muted font-medium hidden sm:inline" data-i18n="canvas.workspace">mi-proyecto — OmniSpec Workspace</span>
+        </div>
+        
+        <!-- Breadcrumb del archivo activo -->
+        <div id="ide-breadcrumb" class="text-primary-muted font-medium text-xs truncate max-w-[280px] sm:max-w-md">
+          mi-proyecto &gt; specs &gt; 001-landing-page
+        </div>
+
+        <div class="flex items-center gap-2 text-primary-muted text-[11px]">
+          <span class="text-emerald-500 font-semibold">● Git: main</span>
+        </div>
+      </div>
+
+      <!-- Cuerpo del IDE: Explorador (Izquierda) + Editor y Terminal (Derecha) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 min-h-[580px]">
+        
+        <!-- Panel Izquierdo: Explorador de Archivos Real (4 columnas) -->
+        <div class="lg:col-span-4 bg-surface dark:bg-[#111319] border-b lg:border-b-0 lg:border-r border-border p-3 flex flex-col justify-between font-mono text-xs">
+          <div>
+            <!-- Cabecera del Explorador -->
+            <div class="flex items-center justify-between pb-2 mb-2 px-2 border-b border-border text-[11px] font-semibold text-primary-muted uppercase tracking-wider">
+              <span class="flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 text-primary-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                </svg>
+                <span data-i18n="canvas.explorer">Explorador</span>
+              </span>
+              <span class="text-[11px] text-primary-muted/70 lowercase">./mi-proyecto</span>
+            </div>
+
+            <!-- Árbol de Carpetas con Chevrons e Indentación Real -->
+            <div class="space-y-0.5 text-xs text-primary-muted select-none">
+              
+              <!-- Carpeta Raíz: .agents/ -->
+              <div>
+                <div class="flex items-center gap-1.5 py-1 px-2 rounded hover:bg-surface-hover dark:hover:bg-white/5 cursor-pointer text-primary/90 font-medium">
+                  <svg class="w-3 h-3 text-primary-muted shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                  </svg>
+                  <svg class="w-3.5 h-3.5 text-blue-400 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
+                  </svg>
+                  <span>.agents/skills/</span>
+                </div>
+                
+                <div class="pl-6 space-y-0.5 text-[11px] text-primary-muted/80 border-l border-border/40 ml-3.5 my-0.5">
+                  <div class="py-0.5 px-2 rounded hover:bg-surface-hover dark:hover:bg-white/5 flex items-center justify-between text-primary-muted hover:text-primary">
+                    <span class="flex items-center gap-1.5">
+                      <svg class="w-3 h-3 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                      omni-*/ (9 skills)
+                    </span>
+                    <span class="text-[11px] text-blue-400 font-mono">active</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Carpeta: specs/ -->
+              <div>
+                <div class="flex items-center gap-1.5 py-1 px-2 rounded hover:bg-surface-hover dark:hover:bg-white/5 cursor-pointer text-primary/90 font-medium">
+                  <svg class="w-3 h-3 text-primary-muted shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                  </svg>
+                  <svg class="w-3.5 h-3.5 text-amber-400 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
+                  </svg>
+                  <span>specs/</span>
+                </div>
+
+                <div class="pl-6 space-y-0.5 text-[11px] border-l border-border/40 ml-3.5 my-0.5">
+                  <!-- manifest.json -->
+                  <button type="button" class="ide-file-btn w-full text-left py-1 px-2 rounded hover:bg-surface-hover dark:hover:bg-white/5 flex items-center justify-between text-primary-muted hover:text-primary transition-colors" data-file="manifest">
+                    <span class="flex items-center gap-1.5 truncate">
+                      <span class="text-amber-500 font-bold text-[11px]">{ }</span>
+                      manifest.json
+                    </span>
+                    <span class="text-[11px] text-primary-muted font-mono">lock</span>
+                  </button>
+
+                  <!-- 001-landing-page/ -->
+                  <div>
+                    <div class="flex items-center gap-1.5 py-0.5 px-2 text-primary/80 font-medium">
+                      <svg class="w-2.5 h-2.5 text-primary-muted shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                      <svg class="w-3 h-3 text-amber-300/80 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
+                      </svg>
+                      <span>001-landing-page/</span>
+                    </div>
+
+                    <div class="pl-5 space-y-0.5 border-l border-border/40 ml-2.5 my-0.5">
+                      <!-- spec.md -->
+                      <button type="button" class="ide-file-btn w-full text-left py-1 px-2 rounded bg-surface-elevated dark:bg-white/10 text-primary font-semibold flex items-center justify-between transition-colors" data-file="spec">
+                        <span class="flex items-center gap-1.5 truncate">
+                          <span class="text-blue-400 font-bold text-[11px]">M↓</span>
+                          spec.md
+                        </span>
+                        <span class="text-[11px] text-emerald-400 font-mono">AC-07</span>
+                      </button>
+
+                      <!-- plan.md -->
+                      <button type="button" class="ide-file-btn w-full text-left py-1 px-2 rounded hover:bg-surface-hover dark:hover:bg-white/5 text-primary-muted hover:text-primary flex items-center justify-between transition-colors" data-file="plan">
+                        <span class="flex items-center gap-1.5 truncate">
+                          <span class="text-blue-400 font-bold text-[11px]">M↓</span>
+                          plan.md
+                        </span>
+                        <span class="text-[11px] text-primary-muted font-mono">scope</span>
+                      </button>
+
+                      <!-- tasks.md -->
+                      <button type="button" class="ide-file-btn w-full text-left py-1 px-2 rounded hover:bg-surface-hover dark:hover:bg-white/5 text-primary-muted hover:text-primary flex items-center justify-between transition-colors" data-file="tasks">
+                        <span class="flex items-center gap-1.5 truncate">
+                          <span class="text-blue-400 font-bold text-[11px]">M↓</span>
+                          tasks.md
+                        </span>
+                        <span class="text-[11px] text-primary-muted font-mono">10/10</span>
+                      </button>
+
+                      <!-- verification.md -->
+                      <button type="button" class="ide-file-btn w-full text-left py-1 px-2 rounded hover:bg-surface-hover dark:hover:bg-white/5 text-primary-muted hover:text-primary flex items-center justify-between transition-colors" data-file="verification">
+                        <span class="flex items-center gap-1.5 truncate">
+                          <span class="text-blue-400 font-bold text-[11px]">M↓</span>
+                          verification.md
+                        </span>
+                        <span class="text-[11px] text-emerald-400 font-mono">exit 0</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Archivo Raíz: CONSTITUTION.md -->
+              <button type="button" class="ide-file-btn w-full text-left py-1 px-2 rounded hover:bg-surface-hover dark:hover:bg-white/5 text-primary-muted hover:text-primary flex items-center justify-between transition-colors" data-file="constitution">
+                <span class="flex items-center gap-1.5 truncate">
+                  <span class="text-amber-400 font-bold text-[11px]">M↓</span>
+                  CONSTITUTION.md
+                </span>
+                <span class="text-[11px] text-amber-500 font-mono">supreme</span>
+              </button>
+
+            </div>
+          </div>
+
+          <!-- Pie del Explorador -->
+          <div class="pt-3 mt-4 border-t border-border text-[11px] text-primary-muted flex items-center justify-between">
+            <span data-i18n="canvas.gitTracked">Git Tracked</span>
+            <span class="text-emerald-500 font-medium" data-i18n="canvas.localOnly">100% Local</span>
+          </div>
+        </div>
+
+        <!-- Panel Derecho: Editor Activo & Suite Terminal (8 columnas) -->
+        <div class="lg:col-span-8 flex flex-col bg-surface dark:bg-[#0d0e12]">
+          
+          <!-- Pestaña de Archivo Abierto en el Editor -->
+          <div class="flex items-center border-b border-border bg-surface-elevated dark:bg-[#14161d] overflow-x-auto no-scrollbar">
+            <div id="editor-tab" class="flex items-center gap-2 px-4 py-2 bg-surface dark:bg-[#0d0e12] border-t-2 border-accent text-xs font-mono text-primary font-medium shrink-0">
+              <span class="text-blue-400 text-xs font-bold">M↓</span>
+              <span id="editor-filename">spec.md</span>
+              <span class="text-primary-muted/50 text-xs ml-1">×</span>
+            </div>
+            <div class="px-3 text-xs font-mono text-primary-muted/40" data-i18n="canvas.livePreview">
+              Vista previa en tiempo real
+            </div>
+          </div>
+
+          <!-- Vista de Código con Números de Línea -->
+          <div class="p-4 font-mono text-xs overflow-x-auto border-b border-border bg-surface dark:bg-[#0d0e12] min-h-[200px] max-h-[220px]">
+            <pre id="editor-code" class="text-primary-muted leading-relaxed select-text font-mono text-[11px] whitespace-pre"></pre>
+          </div>
+
+          <!-- Suite de los 9 Comandos OmniSpec: Pestañas de Fases -->
+          <div class="border-t border-border bg-surface-elevated/40 dark:bg-[#111319] p-3 flex flex-col gap-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-mono font-semibold text-primary uppercase tracking-wider" data-i18n="canvas.terminalHeader">Terminal Integrada:</span>
+                <span class="text-[11px] font-mono text-primary-muted" data-i18n="canvas.terminalSuite">Suite Completa de 9 Flujos de Trabajo</span>
+              </div>
+              <span id="terminal-exit-badge" class="text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-500 dark:text-emerald-400 border border-emerald-500/30">
+                Exit Code: 0 (PASSED)
+              </span>
+            </div>
+
+            <!-- Selector de los 9 Comandos Organizados por Ciclos de Ingeniería -->
+            <div role="tablist" aria-label="Suite de 9 comandos OmniSpec" class="flex overflow-x-auto gap-1.5 pb-1 no-scrollbar text-xs font-mono">
+              <!-- Ciclo 1: Descubrimiento -->
+              <button type="button" role="tab" aria-selected="false" class="skill-tab-btn px-2.5 py-1.5 rounded bg-surface hover:bg-surface-elevated text-primary-muted border border-border shrink-0 transition-colors" data-skill="init">
+                /omni-init
+              </button>
+              <button type="button" role="tab" aria-selected="false" class="skill-tab-btn px-2.5 py-1.5 rounded bg-surface hover:bg-surface-elevated text-primary-muted border border-border shrink-0 transition-colors" data-skill="discuss">
+                /omni-discuss
+              </button>
+              <button type="button" role="tab" aria-selected="false" class="skill-tab-btn px-2.5 py-1.5 rounded bg-surface hover:bg-surface-elevated text-primary-muted border border-border shrink-0 transition-colors" data-skill="clarify">
+                /omni-clarify
+              </button>
+              <!-- Ciclo 2: Contrato -->
+              <button type="button" role="tab" aria-selected="true" class="skill-tab-btn px-2.5 py-1.5 rounded bg-primary text-background font-bold border border-primary shrink-0 transition-colors" data-skill="specify">
+                /omni-specify
+              </button>
+              <button type="button" role="tab" aria-selected="false" class="skill-tab-btn px-2.5 py-1.5 rounded bg-surface hover:bg-surface-elevated text-primary-muted border border-border shrink-0 transition-colors" data-skill="plan">
+                /omni-plan
+              </button>
+              <button type="button" role="tab" aria-selected="false" class="skill-tab-btn px-2.5 py-1.5 rounded bg-surface hover:bg-surface-elevated text-primary-muted border border-border shrink-0 transition-colors" data-skill="tasks">
+                /omni-tasks
+              </button>
+              <!-- Ciclo 3: Ejecución -->
+              <button type="button" role="tab" aria-selected="false" class="skill-tab-btn px-2.5 py-1.5 rounded bg-surface hover:bg-surface-elevated text-primary-muted border border-border shrink-0 transition-colors" data-skill="implement">
+                /omni-implement
+              </button>
+              <button type="button" role="tab" aria-selected="false" class="skill-tab-btn px-2.5 py-1.5 rounded bg-surface hover:bg-surface-elevated text-primary-muted border border-border shrink-0 transition-colors" data-skill="audit">
+                /omni-audit
+              </button>
+              <button type="button" role="tab" aria-selected="false" class="skill-tab-btn px-2.5 py-1.5 rounded bg-surface hover:bg-surface-elevated text-primary-muted border border-border shrink-0 transition-colors" data-skill="converge">
+                /omni-converge
+              </button>
+            </div>
+
+            <!-- Terminal Output Box con Logs Fidedignos -->
+            <div class="rounded-lg bg-surface-elevated dark:bg-black/60 border border-border p-3.5 font-mono text-xs space-y-1.5 min-h-[140px] max-h-[160px] overflow-y-auto">
+              <div class="text-primary font-medium flex items-center gap-1.5">
+                <span class="text-emerald-500 dark:text-emerald-400 font-bold">$</span>
+                <span id="terminal-cmd" class="text-primary">node specs/.omni/runtime/bin/omni-spec.mjs create feature "Landing Page Oficial"</span>
+              </div>
+              <div id="terminal-output" class="text-primary-muted text-xs leading-relaxed pt-1 max-w-[70ch]">
+                [create] Generando specs/001-landing-page/spec.md<br />
+                [clarify] Parámetros validados: Astro + Tailwind CSS + TypeScript<br />
+                [ac] Registrados 7 criterios de aceptación verificables (AC-01..AC-07)<br />
+                <span class="text-emerald-500 dark:text-emerald-400">[done] Especificación formalizada y commiteable en Git.</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<script>
+  // Archivos simulados del explorador con código real
+  const fileContents: Record<string, { name: string; path: string; code: string }> = {
+    spec: {
+      name: "spec.md",
+      path: "mi-proyecto > specs > 001-landing-page > spec.md",
+      code: ` 1  # [SPEC-001] Landing Page Oficial de OmniSpec
+ 2  
+ 3  ## 1. Need and Scope
+ 4  OmniSpec requiere una presencia web técnica para comunicar Spec-Driven Development.
+ 5  
+ 6  ## 2. Acceptance Criteria (AC)
+ 7  - [x] AC-01: Build limpio en TypeScript estricto (\`npm run build\` exit 0).
+ 8  - [x] AC-02: Hero con comando universal de instalación sin vendor bias.
+ 9  - [x] AC-03: Comparativa de ingeniería contra prompting no estructurado.
+10  - [x] AC-04: Explorador visual estilo IDE real con código activo en editor.
+11  - [x] AC-05: Integración nativa de OpenCode, Antigravity, Claude, Cursor y Codex.
+12  - [x] AC-06: Acordeón FAQ accesible por teclado (\`<details>\` nativo sin JS).
+13  - [x] AC-07: Rendimiento 0 antipatrones (Impeccable) y modo Dark / Light.`
+    },
+    plan: {
+      name: "plan.md",
+      path: "mi-proyecto > specs > 001-landing-page > plan.md",
+      code: ` 1  # [PLAN-001] Arquitectura y Delimitación de Archivos
+ 2  
+ 3  ## File Scope Boundaries (Permiso estricto de modificación):
+ 4  - [x] src/components/ProductCanvas.astro (Rediseño a IDE real)
+ 5  - [x] src/components/Hero.astro (Comando neutral de instalación)
+ 6  - [x] src/components/AgentSelector.astro (Integración de OpenCode)
+ 7  - [x] src/components/Navbar.astro (Drawer móvil accesible)
+ 8  
+ 9  ## Protected Paths (Bloqueadas contra alteraciones):
+10  - specs/.omni/runtime/* (Motor protegido en Node ESM)
+11  - package.json (Dependencias inalteradas)`
+    },
+    tasks: {
+      name: "tasks.md",
+      path: "mi-proyecto > specs > 001-landing-page > tasks.md",
+      code: ` 1  # [TASKS-001] Tareas de Implementación Atómicas
+ 2  
+ 3  - [x] TASK-01 / AC-01: Scaffolding Astro con TypeScript y Tailwind.
+ 4  - [x] TASK-02 / AC-02: Hero con comando universal \`npx omni-spec init\`.
+ 5  - [x] TASK-03 / AC-04: Explorador interactivo estilo IDE con editor split.
+ 6  - [x] TASK-04 / AC-05: Incorporación de OpenCode y matriz de integración.
+ 7  - [x] TASK-05 / AC-06: Acordeón accesible por teclado sin JS runtime.
+ 8  - [x] TASK-06 / AC-07: Drawer de navegación móvil con roles WAI-ARIA.`
+    },
+    verification: {
+      name: "verification.md",
+      path: "mi-proyecto > specs > 001-landing-page > verification.md",
+      code: ` 1  # Verification evidence — SPEC-001
+ 2  
+ 3  Snapshot SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c...
+ 4  Verification Mode: automated
+ 5  
+ 6  Comprobaciones de Calidad Ejecutadas:
+ 7  $ npm run build
+ 8  > astro check: 16 files, 0 errors, 0 warnings, 0 hints.
+ 9  > astro build: Complete in 1.09s (Exit Code: 0)
+10  
+11  $ npx impeccable detect http://localhost:4321
+12  > Result: 0 anti-patrones detectados (PASSED)`
+    },
+    constitution: {
+      name: "CONSTITUTION.md",
+      path: "mi-proyecto > CONSTITUTION.md",
+      code: ` 1  # CONSTITUTION — OmniSpec Supreme Engineering Law
+ 2  
+ 3  ## 1. Governance & Code Surgery
+ 4  - 01 Diagnóstico Pre-Ejecución: Reporte estructurado antes de escribir en disco.
+ 5  - 02 Alcance Mínimo y Focalizado: Prohibido modificar módulos fuera del plan.
+ 6  - 03 Verificación con Comandos Reales: Exit code 0 en tests de tu repositorio.
+ 7  - 04 Ergonomía de Interfaz: Cero plantillas genéricas; 4 estados obligatorios.
+ 8  
+ 9  ## 2. Invariantes de Dominio
+10  - Inyección automática según perfil (\`general\`, \`fintech\`, \`healthtech\`).`
+    },
+    manifest: {
+      name: "manifest.json",
+      path: "mi-proyecto > specs > manifest.json",
+      code: ` 1  {
+ 2    "schemaVersion": 1,
+ 3    "project": "mi-proyecto",
+ 4    "version": "0.5.1",
+ 5    "profile": "general",
+ 6    "active_spec": "001-landing-page",
+ 7    "specs": [
+ 8      {
+ 9        "id": "001",
+10        "slug": "001-landing-page",
+11        "type": "feature",
+12        "status": "COMPLETED"
+13      }
+14    ]
+15  }`
+    }
+  };
+
+  // Suite de 9 comandos con logs técnicos realistas
+  const skillLogs: Record<string, { cmd: string; output: string }> = {
+    init: {
+      cmd: "node specs/.omni/runtime/bin/omni-spec.mjs init --yes",
+      output: `[detect] Stack detectado: Astro + Tailwind CSS + TypeScript.<br />
+[init] Inyectando directivas en CONSTITUTION.md y specs/manifest.json.<br />
+[adapter] Instalando comandos en .agents/skills/ y adapters correspondientes.<br />
+<span class="text-emerald-400">[done] Repositorio inicializado con gobernanza OmniSpec.</span>`
+    },
+    discuss: {
+      cmd: "/omni-discuss \"Explorar viabilidad de rediseño a IDE\"",
+      output: `[discuss] Inspeccionando árbol de archivos en modo sólo lectura (0 mutaciones en disco).<br />
+[evidence] Contrastando dependencias existentes: Astro, Tailwind y TypeScript.<br />
+[proposal] Propuesta: Dividir ProductCanvas en Explorador + Editor Split.<br />
+<span class="text-emerald-400">[ready] Análisis fundamentado listo para formalizar en especificación.</span>`
+    },
+    clarify: {
+      cmd: "/omni-clarify",
+      output: `[clarify] Evaluando supuestos y ambigüedades del requerimiento.<br />
+[question] ¿El editor debe mostrar sintaxis de código real o texto simulado?<br />
+[resolved] Confirmado: Código Markdown y JSON coloreado con números de línea.<br />
+<span class="text-emerald-400">[aligned] Ambigüedades resueltas antes de tocar arquitectura.</span>`
+    },
+    specify: {
+      cmd: "node specs/.omni/runtime/bin/omni-spec.mjs create feature \"landing-page\"",
+      output: `[create] Generando specs/001-landing-page/spec.md.<br />
+[clarify] Parámetros validados: Astro + Tailwind CSS + TypeScript.<br />
+[ac] Registrados 7 criterios de aceptación verificables (AC-01..AC-07).<br />
+<span class="text-emerald-400">[done] Especificación formalizada y commiteable en Git.</span>`
+    },
+    plan: {
+      cmd: "node specs/.omni/runtime/bin/omni-spec.mjs plan 001",
+      output: `[plan] Generando arquitectura en specs/001-landing-page/plan.md.<br />
+[scope] Archivos autorizados para edición: 4 componentes visuales.<br />
+[lock] Rutas protegidas: specs/.omni/runtime/, package.json (bloqueadas).<br />
+<span class="text-emerald-400">[done] Límites de modificación fijados con cerrojo de manifest.</span>`
+    },
+    tasks: {
+      cmd: "node specs/.omni/runtime/bin/omni-spec.mjs tasks 001",
+      output: `[tasks] Descomponiendo plan en 10 tareas de ejecución atómica.<br />
+[link] Cada tarea vinculada 1:1 con un criterio de aceptación en tasks.md.<br />
+[order] Orden de dependencias resuelto: Scaffolding -> UI -> Verificación.<br />
+<span class="text-emerald-400">[ready] 10 tareas atómicas preparadas para implementación secuencial.</span>`
+    },
+    implement: {
+      cmd: "node specs/.omni/runtime/bin/omni-spec.mjs implement 001 --task 03",
+      output: `[task] Ejecutando TASK-03: Rediseño de ProductCanvas a explorador de IDE.<br />
+> Modificando src/components/ProductCanvas.astro.<br />
+[check] Comprobando que ninguna línea fuera de alcance fue alterada.<br />
+<span class="text-emerald-400">[done] Tarea completada. Código confinado al alcance del plan.</span>`
+    },
+    audit: {
+      cmd: "node specs/.omni/runtime/bin/omni-spec.mjs audit 001",
+      output: `[audit] Ejecutando comprobación documental y semántica (10/10 tareas).<br />
+[coherence] Verificando concordancia: Requerimiento -> Plan -> Tareas.<br />
+[check] 0 contradicciones detectadas entre non-goals y código modificado.<br />
+<span class="text-emerald-400">[audit passed] Estructura documental íntegra. Procediendo a Quality Gates.</span>`
+    },
+    converge: {
+      cmd: "node specs/.omni/runtime/bin/omni-spec.mjs complete 001",
+      output: `[fingerprint] Calculando hash SHA-256 de los archivos del repositorio.<br />
+[gates] Ejecutando: npm run build (astro check && astro build).<br />
+> Result: 0 errors, 0 warnings, 0 hints. Exit code: 0 (PASSED).<br />
+<span class="text-emerald-400">[closed] Especificación 001 completada y sellada con evidencia criptográfica.</span>`
+    }
+  };
+
+  function setupIdeWorkspace() {
+    // 1. Selector de Archivos del IDE
+    const fileButtons = document.querySelectorAll<HTMLButtonElement>('.ide-file-btn');
+    const breadcrumbEl = document.getElementById('ide-breadcrumb');
+    const filenameEl = document.getElementById('editor-filename');
+    const codeEl = document.getElementById('editor-code');
+
+    // Inicializar con spec.md
+    if (codeEl && fileContents.spec) {
+      codeEl.textContent = fileContents.spec.code;
+    }
+
+    fileButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const fileKey = btn.getAttribute('data-file');
+        if (!fileKey || !fileContents[fileKey]) return;
+
+        const data = fileContents[fileKey];
+
+        // Actualizar estilos activos de archivos
+        fileButtons.forEach((b) => {
+          b.classList.remove('bg-surface-elevated', 'dark:bg-white/10', 'text-primary', 'font-semibold');
+          b.classList.add('text-primary-muted');
+        });
+        btn.classList.add('bg-surface-elevated', 'dark:bg-white/10', 'text-primary', 'font-semibold');
+        btn.classList.remove('text-primary-muted');
+
+        // Actualizar editor y breadcrumb
+        if (breadcrumbEl) {
+          breadcrumbEl.innerHTML = data.path.replace(data.name, `<span class="text-primary font-semibold">${data.name}</span>`);
+        }
+        if (filenameEl) {
+          filenameEl.textContent = data.name;
+        }
+        if (codeEl) {
+          codeEl.textContent = data.code;
+        }
+      });
+    });
+
+    // 2. Selector de la Suite de 9 Comandos en Terminal
+    const skillButtons = document.querySelectorAll<HTMLButtonElement>('.skill-tab-btn');
+    const cmdEl = document.getElementById('terminal-cmd');
+    const outputEl = document.getElementById('terminal-output');
+
+    skillButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const skillKey = btn.getAttribute('data-skill');
+        if (!skillKey || !skillLogs[skillKey]) return;
+
+        const log = skillLogs[skillKey];
+
+        skillButtons.forEach((b) => {
+          b.classList.remove('bg-primary', 'text-background', 'font-bold', 'border-primary');
+          b.classList.add('bg-surface', 'text-primary-muted', 'border-border/70');
+          b.setAttribute('aria-selected', 'false');
+        });
+
+        btn.classList.add('bg-primary', 'text-background', 'font-bold', 'border-primary');
+        btn.classList.remove('bg-surface', 'text-primary-muted', 'border-border/70');
+        btn.setAttribute('aria-selected', 'true');
+
+        if (cmdEl) cmdEl.textContent = log.cmd;
+        if (outputEl) outputEl.innerHTML = log.output;
+      });
+    });
+  }
+
+  setupIdeWorkspace();
+  document.addEventListener('astro:page-load', setupIdeWorkspace);
+</script>

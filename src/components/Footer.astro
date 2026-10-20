@@ -1,0 +1,53 @@
+---
+---
+
+<footer class="border-t border-border bg-surface py-14 text-sm text-primary-muted relative z-10 transition-colors">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+      
+      <!-- Brand & Propósito -->
+      <div class="flex flex-col items-center md:items-start gap-2.5 text-center md:text-left">
+        <div class="flex items-center gap-2.5">
+          <img 
+            src="/assets/omni-spec-icon.svg" 
+            alt="OmniSpec" 
+            class="w-5 h-5 object-contain" 
+          />
+          <span class="font-bold text-primary text-base tracking-tight">OmniSpec</span>
+          <a 
+            href="/changelog" 
+            class="text-xs font-mono px-2 py-0.5 rounded bg-surface-elevated hover:bg-surface-hover border border-border text-primary-muted hover:text-accent font-medium transition-colors"
+            title="Ver historial de versiones (Changelog)"
+            data-i18n-title="footer.versionTitle"
+          >
+            v0.5.1
+          </a>
+        </div>
+        <p class="text-xs text-primary-muted max-w-[50ch]" data-i18n="footer.desc">
+          Framework universal de desarrollo guiado por especificaciones para agentes de IA de código.
+        </p>
+      </div>
+
+      <!-- Enlaces directos -->
+      <div class="flex flex-wrap items-center justify-center gap-6 text-xs font-mono">
+        <a href="/#canvas" class="hover:text-primary transition-colors" data-i18n="nav.howItWorks">Cómo Funciona</a>
+        <a href="/#caos-vs-spec" class="hover:text-primary transition-colors" data-i18n="nav.theProblem">Comparativa</a>
+        <a href="/#leyes" class="hover:text-primary transition-colors" data-i18n="nav.constitution">Constitución</a>
+        <a href="/#perfiles" class="hover:text-primary transition-colors" data-i18n="nav.profiles">Perfiles</a>
+        <a href="/docs" class="hover:text-primary transition-colors font-medium text-accent" data-i18n="nav.docs">Docs</a>
+        <a href="https://github.com/brahiandres1999-oss/omni-spec" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">GitHub</a>
+        <a href="https://github.com/brahiandres1999-oss/omni-spec/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors" data-i18n="footer.mitLicense">Licencia MIT</a>
+      </div>
+
+    </div>
+
+    <div class="mt-8 pt-6 border-t border-border flex flex-col items-center gap-3 text-center text-xs text-primary-muted font-mono">
+      <p class="max-w-[70ch] leading-relaxed text-primary-muted/80" data-i18n="footer.vision">
+        OmniSpec es un proyecto personal de código abierto en desarrollo activo continuo, creado para adaptarse con total libertad a cualquier flujo de trabajo con agentes de IA.
+      </p>
+      <div>
+        &copy; {new Date().getFullYear()} <span data-i18n="footer.copy">OmniSpec Authors. Publicado bajo licencia MIT de código abierto.</span>
+      </div>
+    </div>
+  </div>
+</footer>

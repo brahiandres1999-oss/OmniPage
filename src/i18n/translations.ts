@@ -1,0 +1,289 @@
+export type Language = 'es' | 'en';
+
+export const translations: Record<Language, Record<string, string>> = {
+  es: {
+    // Navbar
+    'nav.howItWorks': 'Cómo Funciona',
+    'nav.theProblem': 'El Problema',
+    'nav.constitution': 'La Constitución',
+    'nav.profiles': 'Perfiles',
+    'nav.agents': 'Agentes',
+    'nav.docs': 'Docs',
+    'nav.changelog': 'Changelog',
+    'nav.faq': 'FAQ',
+    'nav.installCli': 'Instalar CLI',
+    'nav.viewGithub': 'Ver en GitHub',
+    'nav.versionTitle': 'Ver novedades de la versión (Changelog)',
+
+    // Hero
+    'hero.title': 'Desarrollo guiado por especificaciones para agentes de código.',
+    'hero.subtitle': 'OmniSpec estructura el trabajo de tu agente mediante contratos técnicos versionados en Git: diagnóstico previo, alcance delimitado por archivo y verificación con los tests de tu repositorio.',
+    'hero.tag1': 'Sin dependencias externas (Node.js ESM)',
+    'hero.tag2': '100% local en tu repositorio',
+    'hero.tag3': 'Licencia MIT',
+
+    // CopySnippet
+    'copy.copy': 'Copiar',
+    'copy.copied': '¡Copiado!',
+    'copy.aria': 'Copiar comando al portapapeles',
+
+    // ProductCanvas (IDE & Suite)
+    'canvas.title': 'Cómo Opera OmniSpec en tu Repositorio',
+    'canvas.subtitle': 'Sin servidores externos ni paneles propietarios. OmniSpec es un motor CLI que opera directamente sobre tu árbol de archivos y se audita con Git en Markdown plano.',
+    'canvas.explorer': 'Explorador',
+    'canvas.workspace': 'mi-proyecto — OmniSpec Workspace',
+    'canvas.livePreview': 'Vista previa en tiempo real',
+    'canvas.terminalHeader': 'Terminal Integrada:',
+    'canvas.terminalSuite': 'Suite Completa de 9 Flujos de Trabajo',
+    'canvas.gitTracked': 'Git Tracked',
+    'canvas.localOnly': '100% Local',
+
+    // Chaos vs Spec
+    'chaos.title': 'Prompting sin control vs. Especificaciones ejecutables',
+    'chaos.subtitle': 'Los modelos de lenguaje generan código con rapidez, pero sin un contrato técnico claro introducen cambios no solicitados, asumen dependencias y rompen módulos adyacentes.',
+    'chaos.col1.tag': 'Sin OmniSpec',
+    'chaos.col1.sub': 'Flujo no estructurado',
+    'chaos.col1.item1.title': 'Asunciones no verificadas',
+    'chaos.col1.item1.desc': 'El agente infiere librerías, dependencias o patrones sin contrastar la arquitectura existente del repositorio.',
+    'chaos.col1.item2.title': 'Modificaciones expansivas no solicitadas',
+    'chaos.col1.item2.desc': 'Para resolver una tarea puntual reescribe archivos funcionales ajenos e introduce regresiones difíciles de detectar.',
+    'chaos.col1.item3.title': 'Falso estado de completitud',
+    'chaos.col1.item3.desc': 'El agente afirma en el chat que el cambio está listo sin haber ejecutado la suite de tests o el build del proyecto.',
+    'chaos.col1.item4.title': 'Pérdida de contexto entre sesiones',
+    'chaos.col1.item4.desc': 'Al abrir una nueva sesión o compactar el chat, el agente olvida los acuerdos y decisiones previas.',
+    'chaos.col1.impact': 'Impacto: Tiempo perdido depurando código generado y desconfianza en los cambios.',
+    
+    'chaos.col2.tag': 'Con OmniSpec',
+    'chaos.col2.sub': 'Ingeniería estructurada',
+    'chaos.col2.item1.title': 'Diagnóstico antes de codificar',
+    'chaos.col2.item1.desc': 'Separa hechos comprobados de hipótesis técnicas. Si algo no está definido, se formula la consulta antes de escribir código.',
+    'chaos.col2.item2.title': 'Alcance delimitado por tarea',
+    'chaos.col2.item2.desc': 'Modifica únicamente los archivos incluidos en el plan aprobado, previniendo alteraciones accidentales en código adyacente.',
+    'chaos.col2.item3.title': 'Quality Gates obligatorios',
+    'chaos.col2.item3.desc': 'El CLI ejecuta los tests y comprobaciones configuradas en el proyecto. Solo se permite el cierre si el exit code es 0.',
+    'chaos.col2.item4.title': 'Contexto persistido en el repositorio',
+    'chaos.col2.item4.desc': 'El estado y la justificación técnica quedan en specs/ y CONSTITUTION.md. Cualquier agente o sesión retoma el trabajo sin amnesia.',
+    'chaos.col2.impact': 'Impacto: Cambios predecibles, trazabilidad en Git y control humano verificable.',
+
+    // Constitution
+    'const.title': 'Las 4 Cláusulas de Gobernanza en CONSTITUTION.md',
+    'const.subtitle': 'Reglas de ingeniería inmutables que todo agente debe leer y respetar antes de proponer o aplicar cambios en el repositorio.',
+    'const.law1.title': 'Diagnóstico Pre-Ejecución',
+    'const.law1.sub': 'Análisis estructurado y confirmación de supuestos',
+    'const.law1.body': 'Antes de modificar código, el agente redacta un reporte con: <strong>Problema</strong>, <strong>Solución propuesta</strong> y <strong>Riesgos o consecuencias</strong>. Los cambios destructivos, refactors amplios o alteraciones de esquema requieren confirmación explícita del desarrollador. Si el modelo no puede verificar una ruta o API, debe detenerse y consultar.',
+    'const.law2.title': 'Alcance Mínimo y Focalizado',
+    'const.law2.sub': 'Preservación del código existente y contención',
+    'const.law2.body': 'Modifica <strong>exclusivamente</strong> los archivos y líneas contemplados en el plan. Queda prohibido alterar módulos adyacentes funcionales o introducir formateos masivos que dificulten la revisión en git. Se rechazan soluciones provisionales que introduzcan deuda técnica evitable.',
+    'const.law3.title': 'Verificación con Comandos Reales',
+    'const.law3.sub': 'Evidencia de ejecución con exit code 0',
+    'const.law3.body': 'La confirmación verbal del modelo no reemplaza la ejecución de software. Cada tarea se valida con los comandos de comprobación del proyecto (ej. <code class="code-inline">npm test</code>, <code class="code-inline">astro check</code>, <code class="code-inline">cargo test</code>, <code class="code-inline">pytest</code>). Solo se permite cerrar una especificación si los comandos devuelven código de salida 0 con evidencia registrada.',
+    'const.law4.title': 'Ergonomía y Estados de Interfaz',
+    'const.law4.sub': 'Experiencia de usuario completa y accesibilidad',
+    'const.law4.body': 'En tareas de frontend se rechazan componentes genéricos sin control de estados. Se exige contemplar los <strong>4 estados esenciales</strong> (Carga, Vacío, Error y Éxito/Completado), retroalimentación visual en microinteracciones y cumplimiento riguroso de contraste y navegación accesible por teclado.',
+
+    // Domain Profiles
+    'profiles.badge': 'Gobernanza por Industria',
+    'profiles.title': 'Perfiles de Dominio e Invariantes Regulatorias',
+    'profiles.subtitle': 'Un agente de código no debe tratar un e-commerce igual que una plataforma bancaria. OmniSpec inyecta invariantes de arquitectura y cumplimiento legal directamente en tu CONSTITUTION.md al inicializar el proyecto.',
+    'profiles.invariantsLabel': 'Invariantes inyectadas en tu CONSTITUTION.md:',
+    'profiles.initLabel': 'Inicialización con Perfil',
+    'profiles.agentNotice': 'El agente leerá las invariantes del perfil antes de diseñar o proponer cualquier solución técnica.',
+
+    // Agent Selector
+    'agents.badge': 'Compatibilidad Universal',
+    'agents.title': 'Soporte Multi-Agente Nativo',
+    'agents.subtitle': 'OmniSpec no te ata a un único modelo o entorno. Selecciona tu asistente para ver la estructura exacta que genera en tu repositorio y su comando de inicialización.',
+    'agents.tabUniversal': 'CLI Agnóstico',
+    'agents.formatLabel': 'Formato de Adaptador',
+    'agents.pathLabel': 'Ubicación en tu Repo',
+    'agents.invocationLabel': 'Modo de Invocación',
+    'agents.commandLabel': 'Comando de instalación con adaptador específico:',
+    'agents.copyBtn': 'Copiar',
+    'agents.copiedBtn': '¡Copiado!',
+
+    // FAQ
+    'faq.badge': 'Dudas Técnicas Frecuentes',
+    'faq.title': 'Preguntas Frecuentes de Desarrolladores',
+    'faq.subtitle': 'Respuestas directas sobre la arquitectura, privacidad y gobernanza de OmniSpec.',
+    'faq.q1': '¿Por qué un archivo de prompt no basta para controlar a un agente?',
+    'faq.a1': 'Un prompt en el chat o un system prompt genérico pierde efectividad a medida que la conversación avanza y el contexto se satura. OmniSpec traslada las reglas al repositorio mediante una constitución inmutable, especificaciones estructuradas en Markdown y comandos CLI locales que validan el avance antes de modificar código.',
+    'faq.q2': '¿OmniSpec envía mi código, tokens o contexto a servidores externos?',
+    'faq.a2': 'No. OmniSpec opera completamente en local. El código, las especificaciones y la constitución residen en tu disco dentro de specs/ y .agents/. No incluye telemetría ni llamadas a servicios propietarios.',
+    'faq.q3': '¿Cómo encaja OmniSpec con iniciativas de especificación previa?',
+    'faq.a3': 'A diferencia de simples plantillas de documentación, OmniSpec integra un motor CLI local que enlaza cada especificación con tareas atómicas y Quality Gates obligatorios conectados a los comandos de tu repositorio (npm test, linter, build).',
+    'faq.q4': '¿Necesito instalar dependencias npm adicionales en mi proyecto?',
+    'faq.a4': 'Ninguna dependencia externa de producción. El motor de OmniSpec (specs/.omni/runtime) está implementado con módulos estándar ESM de Node.js (requiere Node.js >=18.19.0).',
+    'faq.q5': '¿Puedo usarlo en proyectos existentes (brownfield) o solo nuevos?',
+    'faq.a5': 'Funciona en proyectos nuevos (greenfield) y existentes (brownfield). El comando /omni-init mapea los módulos y herramientas del repositorio de manera no destructiva, sin alterar archivos previos sin confirmación explícita.',
+    'faq.q6': '¿Qué licencia tiene el proyecto?',
+    'faq.a6': 'OmniSpec es software libre y de código abierto bajo la licencia MIT. Puede utilizarse e integrarse libremente en entornos personales, académicos o comerciales.',
+    'faq.q7': '¿Cuál es el origen y visión de OmniSpec?',
+    'faq.a7': 'OmniSpec nace como una iniciativa personal con el propósito de contar con un framework de Spec-Driven Development verdaderamente adaptable a cualquier necesidad, stack y agente de IA, sin dependencias externas ni flujos rígidos. El proyecto se encuentra en desarrollo activo continuo: de forma constante se incorporan mejoras y refinamientos, y cualquier sugerencia o caso de uso es bienvenido a través de GitHub Issues.',
+
+    // Footer
+    'footer.desc': 'Framework universal de desarrollo guiado por especificaciones para agentes de IA de código.',
+    'footer.vision': 'OmniSpec es un proyecto personal de código abierto en desarrollo activo continuo, creado para adaptarse con total libertad a cualquier flujo de trabajo con agentes de IA.',
+    'footer.copy': 'OmniSpec Authors. Publicado bajo licencia MIT de código abierto.',
+    'footer.backToTop': 'Volver arriba',
+    'footer.mitLicense': 'Licencia MIT',
+    'footer.versionTitle': 'Ver historial de versiones (Changelog)',
+
+    // Changelog
+    'changelog.title': 'Historial de Versiones (Changelog)',
+    'changelog.pageTitle': 'Changelog',
+    'changelog.pageSubtitle': 'Todas las mejoras, directivas de gobernanza y actualizaciones del motor CLI de OmniSpec registradas cronológicamente con rigor de ingeniería.',
+    'changelog.closeAria': 'Cerrar ventana de versiones',
+    'changelog.current': 'Actual',
+    'changelog.stable': 'Estable',
+    'changelog.license': 'Licencia de Código Abierto MIT',
+    'changelog.viewGithub': 'Ver release en GitHub →',
+
+    // Docs
+    'docs.badge': 'Guía Técnica del Framework',
+    'docs.title': 'Documentación de OmniSpec',
+    'docs.subtitle': 'OmniSpec traslada el desarrollo con agentes desde el "vibe coding" no determinista hacia la ingeniería guiada por especificaciones verificables en Git.'
+  },
+
+  en: {
+    // Navbar
+    'nav.howItWorks': 'How It Works',
+    'nav.theProblem': 'The Problem',
+    'nav.constitution': 'Constitution',
+    'nav.profiles': 'Profiles',
+    'nav.agents': 'Agents',
+    'nav.docs': 'Docs',
+    'nav.changelog': 'Changelog',
+    'nav.faq': 'FAQ',
+    'nav.installCli': 'Install CLI',
+    'nav.viewGithub': 'View on GitHub',
+    'nav.versionTitle': 'View release notes (Changelog)',
+
+    // Hero
+    'hero.title': 'Spec-driven development for AI coding agents.',
+    'hero.subtitle': 'OmniSpec structures agentic workflows through Git-versioned technical contracts: pre-execution diagnosis, strict file boundaries, and verification with your repository tests.',
+    'hero.tag1': 'Zero external dependencies (Node.js ESM)',
+    'hero.tag2': '100% local in your repository',
+    'hero.tag3': 'MIT License',
+
+    // CopySnippet
+    'copy.copy': 'Copy',
+    'copy.copied': 'Copied!',
+    'copy.aria': 'Copy command to clipboard',
+
+    // ProductCanvas (IDE & Suite)
+    'canvas.title': 'How OmniSpec Operates in Your Repository',
+    'canvas.subtitle': 'No external servers or proprietary dashboards. OmniSpec is a CLI runtime operating directly on your file tree and audited with Git in plain Markdown.',
+    'canvas.explorer': 'Explorer',
+    'canvas.workspace': 'my-project — OmniSpec Workspace',
+    'canvas.livePreview': 'Live preview',
+    'canvas.terminalHeader': 'Integrated Terminal:',
+    'canvas.terminalSuite': 'Complete 9-Workflow Suite',
+    'canvas.gitTracked': 'Git Tracked',
+    'canvas.localOnly': '100% Local',
+
+    // Chaos vs Spec
+    'chaos.title': 'Uncontrolled Prompting vs Executable Specifications',
+    'chaos.subtitle': 'Language models generate code rapidly, but without a clear technical contract they introduce unsolicited changes, assume dependencies, and break adjacent modules.',
+    'chaos.col1.tag': 'Without OmniSpec',
+    'chaos.col1.sub': 'Unstructured workflow',
+    'chaos.col1.item1.title': 'Unverified assumptions',
+    'chaos.col1.item1.desc': 'The agent assumes libraries, dependencies, or patterns without cross-checking the repository\'s existing architecture.',
+    'chaos.col1.item2.title': 'Unsolicited expansive modifications',
+    'chaos.col1.item2.desc': 'To solve a single task it rewrites unrelated functional files, introducing subtle regressions.',
+    'chaos.col1.item3.title': 'False sense of completion',
+    'chaos.col1.item3.desc': 'The agent claims in chat that the change is ready without ever running project tests or build commands.',
+    'chaos.col1.item4.title': 'Context loss between sessions',
+    'chaos.col1.item4.desc': 'When opening a new session or compacting chat, the agent loses track of past architectural agreements.',
+    'chaos.col1.impact': 'Impact: Wasted hours debugging generated code and team distrust in automated changes.',
+
+    'chaos.col2.tag': 'With OmniSpec',
+    'chaos.col2.sub': 'Structured engineering',
+    'chaos.col2.item1.title': 'Diagnosis before coding',
+    'chaos.col2.item1.desc': 'Separates verified facts from technical hypotheses. Unresolved ambiguities are clarified before writing code.',
+    'chaos.col2.item2.title': 'Scope delimited per task',
+    'chaos.col2.item2.desc': 'Modifies strictly the files authorized in the approved plan, shielding adjacent functional code.',
+    'chaos.col2.item3.title': 'Mandatory Quality Gates',
+    'chaos.col2.item3.desc': 'The CLI executes configured project tests and validation checks. Specifications can only be completed if the exit code is 0.',
+    'chaos.col2.item4.title': 'Context persisted in the repository',
+    'chaos.col2.item4.desc': 'Project state and architectural rationale live in specs/ and CONSTITUTION.md. Any agent or session resumes work with full context.',
+    'chaos.col2.impact': 'Impact: Predictable changes, immutable Git traceability, and verifiable human control.',
+
+    // Constitution
+    'const.title': 'The 4 Governance Clauses in CONSTITUTION.md',
+    'const.subtitle': 'Immutable engineering rules that every agent must read and respect before proposing or applying changes in the repository.',
+    'const.law1.title': 'Pre-Execution Diagnosis',
+    'const.law1.sub': 'Structured analysis and assumptions confirmation',
+    'const.law1.body': 'Before modifying code, the agent drafts a report detailing: <strong>Problem</strong>, <strong>Proposed Solution</strong>, and <strong>Risks or consequences</strong>. Destructive changes, large refactors, or schema modifications require explicit developer approval. If the model cannot verify a path or API, it must stop and inquire.',
+    'const.law2.title': 'Minimal & Focused Scope',
+    'const.law2.sub': 'Existing codebase preservation and containment',
+    'const.law2.body': 'Modifies <strong>strictly</strong> the files and line ranges defined in the approved plan. Touching adjacent working modules or introducing massive reformatting is prohibited. Temporary hacky workarounds that inject avoidable technical debt are rejected.',
+    'const.law3.title': 'Verification with Real Commands',
+    'const.law3.sub': 'Execution evidence with exit code 0',
+    'const.law3.body': 'The model\'s verbal confirmation never replaces actual software execution. Every task is validated against real project commands (e.g. <code class="code-inline">npm test</code>, <code class="code-inline">astro check</code>, <code class="code-inline">cargo test</code>, <code class="code-inline">pytest</code>). Specifications can only be completed when verification commands return exit code 0 with recorded evidence.',
+    'const.law4.title': 'Ergonomics & Interface States',
+    'const.law4.sub': 'Full user experience and accessibility',
+    'const.law4.body': 'In frontend tasks, generic unstyled components lacking state handling are rejected. Implementing the <strong>4 mandatory interface states</strong> (Loading, Empty, Error, and Success), immediate micro-interaction feedback, and strict keyboard accessibility is required.',
+
+    // Domain Profiles
+    'profiles.badge': 'Industry Governance',
+    'profiles.title': 'Domain Profiles & Regulatory Invariants',
+    'profiles.subtitle': "An AI coding agent shouldn't treat an e-commerce codebase the same as a banking system. OmniSpec injects architectural invariants and regulatory constraints directly into your CONSTITUTION.md upon project initialization.",
+    'profiles.invariantsLabel': 'Invariants injected into your CONSTITUTION.md:',
+    'profiles.initLabel': 'Profile Initialization',
+    'profiles.agentNotice': 'The agent will parse the profile invariants before designing or proposing any technical solution.',
+
+    // Agent Selector
+    'agents.badge': 'Universal Compatibility',
+    'agents.title': 'Native Multi-Agent Support',
+    'agents.subtitle': 'OmniSpec does not lock you into a single vendor or model. Select your assistant to see the exact structure it generates in your repository and its initialization command.',
+    'agents.tabUniversal': 'Agnostic CLI',
+    'agents.formatLabel': 'Adapter Format',
+    'agents.pathLabel': 'Location in your Repo',
+    'agents.invocationLabel': 'Invocation Method',
+    'agents.commandLabel': 'Install command with agent-specific adapter:',
+    'agents.copyBtn': 'Copy',
+    'agents.copiedBtn': 'Copied!',
+
+    // FAQ
+    'faq.badge': 'Frequently Asked Questions',
+    'faq.title': 'Developer Frequently Asked Questions',
+    'faq.subtitle': 'Straightforward answers about OmniSpec architecture, privacy, and engineering governance.',
+    'faq.q1': 'Why isn\'t a simple prompt file enough to control an agent?',
+    'faq.a1': 'A chat prompt or generic system prompt loses effectiveness as the conversation lengthens and context saturates. OmniSpec shifts governance to the repository through an immutable constitution, Markdown specifications, and local CLI commands that validate progress before writing code.',
+    'faq.q2': 'Does OmniSpec send my code, tokens, or context to external servers?',
+    'faq.a2': 'No. OmniSpec operates completely locally. Your code, specifications, and constitution live on disk inside specs/ and .agents/. It contains zero telemetry and zero calls to proprietary servers.',
+    'faq.q3': 'How does OmniSpec compare to prior specification initiatives?',
+    'faq.a3': 'Unlike simple documentation templates, OmniSpec embeds a local CLI runtime that binds each specification to atomic tasks and mandatory Quality Gates wired to your project test commands (npm test, linter, build).',
+    'faq.q4': 'Do I need to install additional npm dependencies in my project?',
+    'faq.a4': 'Zero external production dependencies. The OmniSpec runtime (specs/.omni/runtime) is implemented with standard Node.js ESM modules (requires Node.js >=18.19.0).',
+    'faq.q5': 'Can I use it in existing (brownfield) codebases or only new ones?',
+    'faq.a5': 'It supports both greenfield and existing brownfield projects. The /omni-init command inspects repository modules and tooling non-destructively without modifying existing files without confirmation.',
+    'faq.q6': 'What license does the project use?',
+    'faq.a6': 'OmniSpec is open-source software under the MIT license. It can be freely adopted in personal, academic, or commercial environments.',
+    'faq.q7': 'What is the origin and vision behind OmniSpec?',
+    'faq.a7': 'OmniSpec was born as a personal initiative to provide a Spec-Driven Development framework truly adaptable to any need, stack, and AI agent, without external dependencies or rigid lock-in. The project is under continuous active development: improvements and refinements are added regularly, and community suggestions or issues are warmly welcome on GitHub.',
+
+    // Footer
+    'footer.desc': 'Universal spec-driven development framework for AI coding agents.',
+    'footer.vision': 'OmniSpec is an open-source personal project under active continuous development, crafted to adapt freely to any AI agent workflow.',
+    'footer.copy': 'OmniSpec Authors. Released under the MIT open-source license.',
+    'footer.backToTop': 'Back to top',
+    'footer.mitLicense': 'MIT License',
+    'footer.versionTitle': 'View release history (Changelog)',
+
+    // Changelog
+    'changelog.title': 'Release History (Changelog)',
+    'changelog.pageTitle': 'Changelog',
+    'changelog.pageSubtitle': 'All improvements, governance rules, and updates to the OmniSpec CLI runtime recorded chronologically with engineering rigor.',
+    'changelog.closeAria': 'Close release history',
+    'changelog.current': 'Current',
+    'changelog.stable': 'Stable',
+    'changelog.license': 'MIT Open Source License',
+    'changelog.viewGithub': 'View on GitHub →',
+
+    // Docs
+    'docs.badge': 'Framework Technical Guide',
+    'docs.title': 'OmniSpec Documentation',
+    'docs.subtitle': 'OmniSpec shifts agentic development from non-deterministic "vibe coding" to contract-guided engineering verifiable in Git.'
+  }
+};

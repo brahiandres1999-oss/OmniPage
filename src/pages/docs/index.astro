@@ -1,0 +1,935 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import CopySnippet from '../../components/CopySnippet.astro';
+
+interface DocNavItem {
+  id: string;
+  title: string;
+}
+
+interface DocNavCategory {
+  category: string;
+  items: DocNavItem[];
+}
+
+const docNavByLang: Record<'es' | 'en', DocNavCategory[]> = {
+  es: [
+    {
+      category: "Primeros Pasos",
+      items: [
+        { id: "intro", title: "Introducción a SDD" },
+        { id: "instalacion", title: "Instalación y Requisitos" },
+        { id: "quickstart", title: "Guía de Inicio Rápido" },
+      ]
+    },
+    {
+      category: "Gobernanza & Invariantes",
+      items: [
+        { id: "constitucion", title: "CONSTITUTION.md" },
+        { id: "anti-slop", title: "Invariantes Anti-Slop" },
+        { id: "estructura", title: "Estructura en Disco (specs/)" },
+        { id: "arquetipos", title: "Los 4 Arquetipos de Trabajo" },
+        { id: "manifest-lock", title: "Manifiesto y Concurrencia" },
+      ]
+    },
+    {
+      category: "Suite de 9 Flujos de Trabajo",
+      items: [
+        { id: "flujo-descubrimiento", title: "Fase 1: Descubrimiento" },
+        { id: "flujo-contratos", title: "Fase 2: Contratos Técnicos" },
+        { id: "flujo-ejecucion", title: "Fase 3: Ejecución y Cierre" },
+      ]
+    },
+    {
+      category: "Perfiles de Dominio",
+      items: [
+        { id: "perfiles-intro", title: "Invariantes vs OpenSpec" },
+        { id: "perfiles-catalogo", title: "Catálogo de Perfiles" },
+      ]
+    },
+    {
+      category: "Agentes Soportados",
+      items: [
+        { id: "adaptadores-agentes", title: "Adaptadores Multi-Agente" },
+        { id: "quality-gates", title: "Quality Gates con Exit Code 0" },
+      ]
+    }
+  ],
+  en: [
+    {
+      category: "Getting Started",
+      items: [
+        { id: "intro", title: "Introduction to SDD" },
+        { id: "instalacion", title: "Installation & Requirements" },
+        { id: "quickstart", title: "Quickstart Guide" },
+      ]
+    },
+    {
+      category: "Governance & Invariants",
+      items: [
+        { id: "constitucion", title: "CONSTITUTION.md" },
+        { id: "anti-slop", title: "Anti-Slop Invariants" },
+        { id: "estructura", title: "Disk Structure (specs/)" },
+        { id: "arquetipos", title: "The 4 Work Archetypes" },
+        { id: "manifest-lock", title: "Manifest & Concurrency" },
+      ]
+    },
+    {
+      category: "9-Workflow Suite",
+      items: [
+        { id: "flujo-descubrimiento", title: "Phase 1: Discovery" },
+        { id: "flujo-contratos", title: "Phase 2: Technical Contracts" },
+        { id: "flujo-ejecucion", title: "Phase 3: Execution & Closure" },
+      ]
+    },
+    {
+      category: "Domain Profiles",
+      items: [
+        { id: "perfiles-intro", title: "Invariants vs OpenSpec" },
+        { id: "perfiles-catalogo", title: "Profile Catalog" },
+      ]
+    },
+    {
+      category: "Supported Agents",
+      items: [
+        { id: "adaptadores-agentes", title: "Multi-Agent Adapters" },
+        { id: "quality-gates", title: "Quality Gates with Exit Code 0" },
+      ]
+    }
+  ]
+};
+
+const initialDocNav = docNavByLang.es;
+---
+
+<Layout 
+  title="Documentación Oficial — OmniSpec"
+  description="Guía completa de arquitectura, comandos CLI, especificaciones en disco y perfiles de gobernanza de OmniSpec."
+>
+  <Navbar />
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Barra Lateral de Documentación (Desktop Sticky con Scroll Spy) -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-24 self-start max-h-[calc(100vh-7rem)] overflow-y-auto pr-4 font-mono text-xs border-r border-border space-y-6">
+        <div class="pb-2 border-b border-border flex items-center justify-between">
+          <span id="docs-sidebar-title" class="font-bold text-primary text-sm font-sans tracking-tight">Documentación</span>
+        </div>
+
+        <nav id="docs-sidebar-nav" aria-label="Navegación de documentación" class="space-y-6">
+          {initialDocNav.map((sec) => (
+            <div class="space-y-2">
+              <h3 class="font-bold text-primary-muted uppercase text-[10px] tracking-wider">
+                {sec.category}
+              </h3>
+              <ul class="space-y-1">
+                {sec.items.map((item) => (
+                  <li>
+                    <a 
+                      href={`#${item.id}`} 
+                      class="docs-nav-link block py-1 px-2 rounded text-primary-muted hover:text-primary hover:bg-surface border-l-2 border-transparent transition-all"
+                      data-section={item.id}
+                    >
+                      {item.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </nav>
+      </aside>
+
+      <!-- Contenido Principal de Documentación (9 Columnas) -->
+      <article class="lg:col-span-9 space-y-16 max-w-3xl leading-relaxed text-sm sm:text-base text-primary-muted">
+        
+        <!-- Header de Docs -->
+        <header class="border-b border-border pb-8">
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-surface-elevated border border-border text-xs font-mono text-accent mb-4">
+            <span data-i18n="docs.badge">Guía Técnica del Framework</span>
+          </div>
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-primary tracking-tight font-sans" data-i18n="docs.title">
+            Documentación de OmniSpec
+          </h1>
+          <p class="mt-4 text-base sm:text-lg text-primary-muted leading-relaxed" data-i18n="docs.subtitle">
+            OmniSpec traslada el desarrollo con agentes desde el "vibe coding" no determinista hacia la ingeniería guiada por especificaciones verificables en Git.
+          </p>
+        </header>
+
+        <!-- SECCIÓN 1: Introducción -->
+        <section id="intro" class="scroll-mt-24">
+          <!-- ES -->
+          <div data-docs-lang="es" class="space-y-4">
+            <h2 class="text-2xl font-bold text-primary font-sans">1. Introducción a Spec-Driven Development (SDD)</h2>
+            <p>
+              Cuando interactúas con un agente de código únicamente mediante la ventana de chat, el modelo tiende a cometer dos errores críticos conforme la conversación se alarga: <strong>olvida restricciones arquitectónicas previas</strong> y <strong>reescribe código funcional ajeno al objetivo</strong>.
+            </p>
+            <p>
+              Spec-Driven Development invierte esta dinámica: antes de escribir código en producción, el agente formaliza el contrato en archivos Markdown en tu disco local. Este contrato delimita los archivos a tocar, define criterios de aceptación (AC) y obliga a comprobar cada cambio mediante los tests reales de tu repositorio.
+            </p>
+          </div>
+          <!-- EN -->
+          <div data-docs-lang="en" class="space-y-4 hidden">
+            <h2 class="text-2xl font-bold text-primary font-sans">1. Introduction to Spec-Driven Development (SDD)</h2>
+            <p>
+              When interacting with a coding agent solely through a chat window, the model tends to make two critical mistakes as conversation depth grows: <strong>it forgets prior architectural constraints</strong> and <strong>rewrites functional code unrelated to the task</strong>.
+            </p>
+            <p>
+              Spec-Driven Development reverses this dynamic: prior to mutating production files, the agent formalizes a contract in local Markdown specifications on disk. This contract establishes strict file boundary scopes, defines verifiable acceptance criteria (AC), and mandates verification against your repository's real test suite.
+            </p>
+          </div>
+        </section>
+
+        <!-- SECCIÓN 2: Instalación -->
+        <section id="instalacion" class="scroll-mt-24">
+          <!-- ES -->
+          <div data-docs-lang="es" class="space-y-4">
+            <h2 class="text-2xl font-bold text-primary font-sans">2. Instalación y Requisitos del Entorno</h2>
+            <p>
+              OmniSpec opera como un ejecutable autónomo local con <strong>cero dependencias de producción</strong>. Solo requiere Node.js 18.19.0 o superior en tu máquina:
+            </p>
+            <div class="my-4">
+              <CopySnippet command="npx --yes omni-spec@latest init" />
+            </div>
+            <p class="text-xs font-mono text-primary-muted">
+              Al ejecutar el comando, OmniSpec inspecciona las herramientas y archivos de tu repositorio de forma no destructiva e inicializa el runtime bajo <code class="text-primary font-mono">specs/.omni/runtime/</code>.
+            </p>
+          </div>
+          <!-- EN -->
+          <div data-docs-lang="en" class="space-y-4 hidden">
+            <h2 class="text-2xl font-bold text-primary font-sans">2. Installation & Environment Requirements</h2>
+            <p>
+              OmniSpec operates as a self-contained local executable with <strong>zero production dependencies</strong>. It only requires Node.js 18.19.0 or higher on your machine:
+            </p>
+            <div class="my-4">
+              <CopySnippet command="npx --yes omni-spec@latest init" />
+            </div>
+            <p class="text-xs font-mono text-primary-muted">
+              Upon execution, OmniSpec inspects your repository tooling non-destructively and scaffolds the runtime under <code class="text-primary font-mono">specs/.omni/runtime/</code>.
+            </p>
+          </div>
+        </section>
+
+        <!-- SECCIÓN 2.1: Quickstart -->
+        <section id="quickstart" class="scroll-mt-24">
+          <!-- ES -->
+          <div data-docs-lang="es" class="space-y-4">
+            <h2 class="text-2xl font-bold text-primary font-sans">2.1 Guía de Inicio Rápido</h2>
+            <p>
+              Para inicializar un nuevo proyecto con un perfil de industria específico y adaptador para tu asistente preferido:
+            </p>
+            <div class="my-3">
+              <CopySnippet command="npx omni-spec init --profile fintech --agent opencode" />
+            </div>
+            <p class="text-xs text-primary-muted">
+              Esto compilará los comandos en <code class="text-primary font-mono">.opencode/commands/</code> e inyectará las invariantes financieras en <code class="text-primary font-mono">CONSTITUTION.md</code> de manera inmediata.
+            </p>
+          </div>
+          <!-- EN -->
+          <div data-docs-lang="en" class="space-y-4 hidden">
+            <h2 class="text-2xl font-bold text-primary font-sans">2.1 Quickstart Guide</h2>
+            <p>
+              To initialize a project with an industry-specific profile and an adapter for your preferred coding agent:
+            </p>
+            <div class="my-3">
+              <CopySnippet command="npx omni-spec init --profile fintech --agent opencode" />
+            </div>
+            <p class="text-xs text-primary-muted">
+              This compiles the commands into <code class="text-primary font-mono">.opencode/commands/</code> and injects financial governance invariants into <code class="text-primary font-mono">CONSTITUTION.md</code> immediately.
+            </p>
+          </div>
+        </section>
+
+        <!-- SECCIÓN 3: CONSTITUTION.md -->
+        <section id="constitucion" class="scroll-mt-24">
+          <!-- ES -->
+          <div data-docs-lang="es" class="space-y-4">
+            <h2 class="text-2xl font-bold text-primary font-sans">3. CONSTITUTION.md: Gobernanza Inmutable</h2>
+            <p>
+              En la raíz del proyecto reside <code class="text-primary font-mono font-semibold">CONSTITUTION.md</code>. Esta constitución contiene las 4 leyes inmutables que cualquier agente compatible debe consultar y acatar de manera obligatoria:
+            </p>
+            <div class="grid grid-cols-1 gap-4 font-mono text-xs">
+              <div class="p-4 rounded-lg bg-surface border border-border space-y-1">
+                <span class="text-accent font-bold">Ley 01: Diagnóstico Pre-Ejecución</span>
+                <p class="text-primary-muted">Prohibido escribir código sin antes emitir un reporte con: Problema, Solución y Riesgos. Si algo es ambiguo, el agente debe detenerse y preguntar.</p>
+              </div>
+              <div class="p-4 rounded-lg bg-surface border border-border space-y-1">
+                <span class="text-emerald-500 font-bold">Ley 02: Alcance Mínimo Estricto</span>
+                <p class="text-primary-muted">Modificar exclusivamente los archivos planificados. Queda vetado el formateo masivo de archivos ajenos o la introducción de soluciones provisionales.</p>
+              </div>
+              <div class="p-4 rounded-lg bg-surface border border-border space-y-1">
+                <span class="text-amber-500 font-bold">Ley 03: Verificación con Comandos Reales</span>
+                <p class="text-primary-muted">La confirmación verbal del modelo no tiene valor de ingeniería. Cada cambio debe verificarse con comandos reales del repositorio con exit code 0.</p>
+              </div>
+              <div class="p-4 rounded-lg bg-surface border border-border space-y-1">
+                <span class="text-cyan-500 font-bold">Ley 04: Ergonomía y Estados de Interfaz</span>
+                <p class="text-primary-muted">En componentes de interfaz se exige contemplar los 4 estados canónicos: Carga, Vacío, Error y Éxito, con accesibilidad probada.</p>
+              </div>
+            </div>
+          </div>
+          <!-- EN -->
+          <div data-docs-lang="en" class="space-y-4 hidden">
+            <h2 class="text-2xl font-bold text-primary font-sans">3. CONSTITUTION.md: Immutable Governance</h2>
+            <p>
+              At the root of the project resides <code class="text-primary font-mono font-semibold">CONSTITUTION.md</code>. This constitution defines the 4 immutable laws that every compatible agent is strictly obligated to inspect and obey:
+            </p>
+            <div class="grid grid-cols-1 gap-4 font-mono text-xs">
+              <div class="p-4 rounded-lg bg-surface border border-border space-y-1">
+                <span class="text-accent font-bold">Law 01: Pre-Execution Diagnosis</span>
+                <p class="text-primary-muted">Writing code without first outputting a report with: Problem, Proposed Solution, and Risks is prohibited. If requirements are ambiguous, the agent must pause and ask.</p>
+              </div>
+              <div class="p-4 rounded-lg bg-surface border border-border space-y-1">
+                <span class="text-emerald-500 font-bold">Law 02: Strict Scoped Surgery</span>
+                <p class="text-primary-muted">Modify exclusively the planned files. Blanket reformatting of unapproved files and temporary hacks are strictly forbidden.</p>
+              </div>
+              <div class="p-4 rounded-lg bg-surface border border-border space-y-1">
+                <span class="text-amber-500 font-bold">Law 03: Real Command Verification</span>
+                <p class="text-primary-muted">Verbal confirmation from the model holds zero engineering validity. Every change must be verified using real repository commands with exit code 0.</p>
+              </div>
+              <div class="p-4 rounded-lg bg-surface border border-border space-y-1">
+                <span class="text-cyan-500 font-bold">Law 04: Interface Ergonomics & States</span>
+                <p class="text-primary-muted">UI components must explicitly handle the 4 canonical states: Loading, Empty, Error, and Success, with verified accessibility.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECCIÓN 3.1: Invariantes Anti-Slop (UI & Backend) -->
+        <section id="anti-slop" class="scroll-mt-24">
+          <!-- ES -->
+          <div data-docs-lang="es" class="space-y-4">
+            <h2 class="text-2xl font-bold text-primary font-sans">3.1 Invariantes Anti-Slop en Frontend y Backend</h2>
+            <p>
+              Los agentes de IA tienden por defecto a generar "AI Slop": código defensivo excesivo, trampas silenciosas de errores, comentarios obvios de relleno y clichés visuales genéricos. OmniSpec combate esta degradación inyectando invariantes deterministas en el Core:
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+              <div class="p-4 rounded-lg bg-surface border border-border space-y-2">
+                <span class="text-accent font-bold block text-sm">Frontend Craft Impecable</span>
+                <ul class="space-y-1.5 text-primary-muted list-disc list-inside">
+                  <li><strong>4 Estados de UI:</strong> Exigencia de estado de carga (skeleton), error explícito, vacío ilustrativo y éxito interactivo.</li>
+                  <li><strong>Cero Clichés de IA:</strong> Prohibidos degradados violeta/cian genéricos, sombras borrosas flotantes o "card-itis" anidado.</li>
+                  <li><strong>Accesibilidad WCAG AA:</strong> Contraste de color medido, navegación por teclado y etiquetas aria descriptivas.</li>
+                  <li><strong>Micro-interacciones:</strong> Feedback visual táctil e instantáneo en botones y controles.</li>
+                </ul>
+              </div>
+              <div class="p-4 rounded-lg bg-surface border border-border space-y-2">
+                <span class="text-emerald-500 font-bold block text-sm">Backend Pragmático & YAGNI</span>
+                <ul class="space-y-1.5 text-primary-muted list-disc list-inside">
+                  <li><strong>YAGNI Estricto:</strong> Rechazo a fábricas abstractas, interfaces prematuras y patrones de diseño innecesarios.</li>
+                  <li><strong>Cero Comentarios Basura:</strong> Prohibido el "comment slop" que parafrasea lo evidente (ej. <code class="text-primary font-mono">// increments i</code>).</li>
+                  <li><strong>Fail-Fast Obligatorio:</strong> Prohibido silenciar excepciones con <code class="text-primary font-mono">try/catch</code> vacíos o devolver valores nulos que oculten causas raíz.</li>
+                  <li><strong>Contratos de Tipos:</strong> Estricta coherencia de firmas y validación en las fronteras de entrada/salida.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- EN -->
+          <div data-docs-lang="en" class="space-y-4 hidden">
+            <h2 class="text-2xl font-bold text-primary font-sans">3.1 Anti-Slop Invariants across Frontend & Backend</h2>
+            <p>
+              AI coding agents default to producing "AI Slop": excessive defensive abstractions, error swallowing, redundant parrot comments, and generic visual clichés. OmniSpec neutralizes this regression by embedding binding invariants into the Core:
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+              <div class="p-4 rounded-lg bg-surface border border-border space-y-2">
+                <span class="text-accent font-bold block text-sm">Impeccable Frontend Craft</span>
+                <ul class="space-y-1.5 text-primary-muted list-disc list-inside">
+                  <li><strong>4 UI States:</strong> Mandatory handling of loading (skeleton), explicit actionable error, clear empty state, and interactive success.</li>
+                  <li><strong>Zero AI Clichés:</strong> Prohibited ungrounded purple/cyan gradients, floaty blurry shadows, and nested card-itis.</li>
+                  <li><strong>WCAG AA Accessibility:</strong> Measured color contrast, complete keyboard navigability, and descriptive ARIA attributes.</li>
+                  <li><strong>Micro-interactions:</strong> Instant tactile feedback on clickable interactive controls.</li>
+                </ul>
+              </div>
+              <div class="p-4 rounded-lg bg-surface border border-border space-y-2">
+                <span class="text-emerald-500 font-bold block text-sm">Pragmatic Backend & YAGNI</span>
+                <ul class="space-y-1.5 text-primary-muted list-disc list-inside">
+                  <li><strong>Strict YAGNI:</strong> Outright rejection of premature interface factories and speculative architectural overhead.</li>
+                  <li><strong>Zero Comment Slop:</strong> Strict ban on trivial parrot comments that simply rephrase the code syntax.</li>
+                  <li><strong>Mandatory Fail-Fast:</strong> Banned empty defensive <code class="text-primary font-mono">try/catch</code> blocks swallowing runtime failures.</li>
+                  <li><strong>Strict Type Boundaries:</strong> Strict parameter signature enforcement and input/output schema validation.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECCIÓN 4: Estructura specs/ -->
+        <section id="estructura" class="scroll-mt-24">
+          <!-- ES -->
+          <div data-docs-lang="es" class="space-y-4">
+            <h2 class="text-2xl font-bold text-primary font-sans">4. Estructura en Disco del Directorio specs/</h2>
+            <p>
+              Cada unidad de trabajo (feature, bugfix, refactor o RFC) tiene su propio espacio aislado dentro de <code class="text-primary font-mono">specs/</code>:
+            </p>
+            <div class="p-4 rounded-lg bg-surface dark:bg-[#0d0e12] border border-border font-mono text-xs text-primary-muted space-y-1.5 shadow-sm transition-colors">
+              <div class="text-primary font-bold">specs/</div>
+              <div class="pl-4">├── <span class="text-amber-600 dark:text-amber-400 font-bold">manifest.json</span> <span class="text-primary-muted/70"># Registro atómico de especificaciones y locks</span></div>
+              <div class="pl-4">├── <span class="text-blue-600 dark:text-blue-400 font-bold">001-nombre-del-trabajo/</span></div>
+              <div class="pl-8">├── <span class="text-emerald-600 dark:text-emerald-400">spec.md</span> <span class="text-primary-muted/70"># Criterios de aceptación (AC) y requerimientos</span></div>
+              <div class="pl-8">├── <span class="text-emerald-600 dark:text-emerald-400">plan.md</span> <span class="text-primary-muted/70"># Arquitectura técnica y archivos a intervenir</span></div>
+              <div class="pl-8">├── <span class="text-emerald-600 dark:text-emerald-400">tasks.md</span> <span class="text-primary-muted/70"># Tareas atómicas con comandos de prueba asociados</span></div>
+              <div class="pl-8">└── <span class="text-emerald-600 dark:text-emerald-400">verification.md</span> <span class="text-primary-muted/70"># Evidencia de comandos y fingerprint SHA-256</span></div>
+            </div>
+          </div>
+          <!-- EN -->
+          <div data-docs-lang="en" class="space-y-4 hidden">
+            <h2 class="text-2xl font-bold text-primary font-sans">4. On-Disk Structure of the specs/ Directory</h2>
+            <p>
+              Every unit of work (feature, bugfix, refactor, or RFC) maintains its own isolated workspace inside <code class="text-primary font-mono">specs/</code>:
+            </p>
+            <div class="p-4 rounded-lg bg-surface dark:bg-[#0d0e12] border border-border font-mono text-xs text-primary-muted space-y-1.5 shadow-sm transition-colors">
+              <div class="text-primary font-bold">specs/</div>
+              <div class="pl-4">├── <span class="text-amber-600 dark:text-amber-400 font-bold">manifest.json</span> <span class="text-primary-muted/70"># Atomic specification registry & lock tracker</span></div>
+              <div class="pl-4">├── <span class="text-blue-600 dark:text-blue-400 font-bold">001-work-unit-name/</span></div>
+              <div class="pl-8">├── <span class="text-emerald-600 dark:text-emerald-400">spec.md</span> <span class="text-primary-muted/70"># Acceptance criteria (AC) & scope definitions</span></div>
+              <div class="pl-8">├── <span class="text-emerald-600 dark:text-emerald-400">plan.md</span> <span class="text-primary-muted/70"># Technical design & strict file boundaries</span></div>
+              <div class="pl-8">├── <span class="text-emerald-600 dark:text-emerald-400">tasks.md</span> <span class="text-primary-muted/70"># Atomic tasks linked to Quality Gate commands</span></div>
+              <div class="pl-8">└── <span class="text-emerald-600 dark:text-emerald-400">verification.md</span> <span class="text-primary-muted/70"># Command execution logs & SHA-256 fingerprint</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECCIÓN 4.1: Los 4 Arquetipos de Trabajo -->
+        <section id="arquetipos" class="scroll-mt-24">
+          <!-- ES -->
+          <div data-docs-lang="es" class="space-y-4">
+            <h2 class="text-2xl font-bold text-primary font-sans">4.1 Los 4 Arquetipos de Trabajo de Ingeniería</h2>
+            <p>
+              OmniSpec no trata todas las tareas por igual. Ofrece 4 arquetipos especializados con plantillas de rigor diseñadas para cada naturaleza de cambio:
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
+              <div class="p-3 rounded-lg bg-surface border border-border space-y-1">
+                <span class="text-primary font-bold">01-feature (Nueva Funcionalidad)</span>
+                <p class="text-primary-muted">Enfocado en Criterios de Aceptación (Gherkin), Fase 0 de aclaración, Non-Goals explícitos, contratos de datos y estrategia de rollback (down.sql).</p>
+              </div>
+              <div class="p-3 rounded-lg bg-surface border border-border space-y-1">
+                <span class="text-primary font-bold">02-bugfix (Resolución de Bugs)</span>
+                <p class="text-primary-muted">Análisis de Causa Raíz con estándar SRE de 5-Porqués (5 Whys), reproducción determinista con test fallido previo (Test-First) y cirugía mínima.</p>
+              </div>
+              <div class="p-3 rounded-lg bg-surface border border-border space-y-1">
+                <span class="text-primary font-bold">03-tech-debt (Deuda Técnica)</span>
+                <p class="text-primary-muted">Categorización de deuda, delimitación de radio de explosión (Blast Radius), migración progresiva bajo patrón Strangler Fig y gates anti-regresión.</p>
+              </div>
+              <div class="p-3 rounded-lg bg-surface border border-border space-y-1">
+                <span class="text-primary font-bold">04-rfc-idea (Decisión Arquitectónica)</span>
+                <p class="text-primary-muted">Registro de Decisiones Arquitectónicas (MADR) que evalúa motivadores, opciones consideradas, pros, contras y trade-offs sin alterar código base.</p>
+              </div>
+            </div>
+          </div>
+          <!-- EN -->
+          <div data-docs-lang="en" class="space-y-4 hidden">
+            <h2 class="text-2xl font-bold text-primary font-sans">4.1 The 4 Engineering Work Archetypes</h2>
+            <p>
+              OmniSpec does not treat every task the same. It provides 4 specialized archetypes with rigorous contract templates tailored to the nature of the change:
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
+              <div class="p-3 rounded-lg bg-surface border border-border space-y-1">
+                <span class="text-primary font-bold">01-feature (New Feature)</span>
+                <p class="text-primary-muted">Centered on Acceptance Criteria (Gherkin), Phase 0 clarification, explicit Non-Goals, data contracts, and rollback strategy (down.sql).</p>
+              </div>
+              <div class="p-3 rounded-lg bg-surface border border-border space-y-1">
+                <span class="text-primary font-bold">02-bugfix (Bug Resolution)</span>
+                <p class="text-primary-muted">Root Cause Analysis with SRE 5-Whys standard, deterministic reproduction via failing test first (Test-First), and minimal surgical scope.</p>
+              </div>
+              <div class="p-3 rounded-lg bg-surface border border-border space-y-1">
+                <span class="text-primary font-bold">03-tech-debt (Technical Debt)</span>
+                <p class="text-primary-muted">Debt categorization, Blast Radius containment, Strangler Fig progressive migration patterns, and anti-regression verification gates.</p>
+              </div>
+              <div class="p-3 rounded-lg bg-surface border border-border space-y-1">
+                <span class="text-primary font-bold">04-rfc-idea (Architectural Decision)</span>
+                <p class="text-primary-muted">Markdown Architectural Decision Records (MADR) evaluating decision drivers, considered options, trade-offs, and pros/cons before code writes.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECCIÓN 4.2: Manifiesto y Lock Concurrente -->
+        <section id="manifest-lock" class="scroll-mt-24">
+          <!-- ES -->
+          <div data-docs-lang="es" class="space-y-4">
+            <h2 class="text-2xl font-bold text-primary font-sans">4.2 Manifiesto y Bloqueo de Concurrencia (withManifestLock)</h2>
+            <p>
+              Para garantizar que múltiples subagentes paralelos no sobrescriban el estado del proyecto de forma concurrente, el motor implementa un mecanismo de exclusión mutua de archivos mediante <code class="text-primary font-mono font-semibold">withManifestLock</code>.
+            </p>
+            <p>
+              Cualquier mutación a <code class="text-primary font-mono">specs/manifest.json</code> adquiere un lock transaccional en disco con retry exponencial y tiempo de expiración determinista.
+            </p>
+          </div>
+          <!-- EN -->
+          <div data-docs-lang="en" class="space-y-4 hidden">
+            <h2 class="text-2xl font-bold text-primary font-sans">4.2 Manifest & Concurrency Locking (withManifestLock)</h2>
+            <p>
+              To ensure concurrent subagents never overwrite project state simultaneously, the CLI runtime implements file-level mutual exclusion using <code class="text-primary font-mono font-semibold">withManifestLock</code>.
+            </p>
+            <p>
+              Any mutation targeting <code class="text-primary font-mono">specs/manifest.json</code> acquires a transactional lock on disk backed by exponential retry backoff and deterministic expiration.
+            </p>
+          </div>
+        </section>
+
+        <!-- SECCIÓN 5.1: Flujo Fase 1 -->
+        <section id="flujo-descubrimiento" class="scroll-mt-24">
+          <!-- ES -->
+          <div data-docs-lang="es" class="space-y-4">
+            <h2 class="text-2xl font-bold text-primary font-sans">5. Suite de 9 Flujos — Fase 1: Descubrimiento & Análisis</h2>
+            <p>
+              Antes de definir especificaciones, OmniSpec establece el contexto del proyecto y aclara cualquier duda:
+            </p>
+            <div class="p-4 rounded-lg bg-surface border border-border">
+              <ul class="space-y-2 text-xs font-mono text-primary-muted">
+                <li><code class="text-accent font-bold">/omni-init</code> — Inspecciona la pila tecnológica del repositorio y genera los adaptadores para tus agentes.</li>
+                <li><code class="text-accent font-bold">/omni-discuss</code> — Debate técnico y exploración de diseño sin alterar código ni especificaciones.</li>
+                <li><code class="text-accent font-bold">/omni-clarify</code> — Plantea preguntas directas de opción múltiple para resolver ambigüedades previas al diseño.</li>
+              </ul>
+            </div>
+          </div>
+          <!-- EN -->
+          <div data-docs-lang="en" class="space-y-4 hidden">
+            <h2 class="text-2xl font-bold text-primary font-sans">5. 9-Workflow Suite — Phase 1: Discovery & Analysis</h2>
+            <p>
+              Before authoring contracts, OmniSpec anchors project context and resolves ambiguities:
+            </p>
+            <div class="p-4 rounded-lg bg-surface border border-border">
+              <ul class="space-y-2 text-xs font-mono text-primary-muted">
+                <li><code class="text-accent font-bold">/omni-init</code> — Inspects repository tech stacks and generates native agent adapters.</li>
+                <li><code class="text-accent font-bold">/omni-discuss</code> — Explores architectural trade-offs without editing code or specs.</li>
+                <li><code class="text-accent font-bold">/omni-clarify</code> — Solicits structured answers to eliminate ambiguities before technical planning.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECCIÓN 5.2: Flujo Fase 2 -->
+        <section id="flujo-contratos" class="scroll-mt-24">
+          <!-- ES -->
+          <div data-docs-lang="es" class="space-y-4">
+            <h2 class="text-2xl font-bold text-primary font-sans">5. Suite de 9 Flujos — Fase 2: Contratos Técnicos</h2>
+            <p>
+              Formalización matemática de los requerimientos y el desglose de implementación:
+            </p>
+            <div class="p-4 rounded-lg bg-surface border border-border">
+              <ul class="space-y-2 text-xs font-mono text-primary-muted">
+                <li><code class="text-accent font-bold">/omni-specify</code> — Crea la especificación (<code class="text-primary font-mono">spec.md</code>) con criterios de aceptación Gherkin y Non-Goals.</li>
+                <li><code class="text-accent font-bold">/omni-plan</code> — Diseña la solución acotada (<code class="text-primary font-mono">plan.md</code>) y lista los archivos exactos a modificar.</li>
+                <li><code class="text-accent font-bold">/omni-tasks</code> — Desglosa el plan en tareas atómicas (<code class="text-primary font-mono">tasks.md</code>) vinculadas a Quality Gates reales.</li>
+              </ul>
+            </div>
+          </div>
+          <!-- EN -->
+          <div data-docs-lang="en" class="space-y-4 hidden">
+            <h2 class="text-2xl font-bold text-primary font-sans">5. 9-Workflow Suite — Phase 2: Technical Contracts</h2>
+            <p>
+              Mathematical formalization of requirements and atomic execution planning:
+            </p>
+            <div class="p-4 rounded-lg bg-surface border border-border">
+              <ul class="space-y-2 text-xs font-mono text-primary-muted">
+                <li><code class="text-accent font-bold">/omni-specify</code> — Authors the specification (<code class="text-primary font-mono">spec.md</code>) with Gherkin acceptance criteria and Non-Goals.</li>
+                <li><code class="text-accent font-bold">/omni-plan</code> — Formulates the scoped architecture (<code class="text-primary font-mono">plan.md</code>) declaring strict file boundaries.</li>
+                <li><code class="text-accent font-bold">/omni-tasks</code> — Breaks down the plan into atomic tasks (<code class="text-primary font-mono">tasks.md</code>) tied to real Quality Gates.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECCIÓN 5.3: Flujo Fase 3 -->
+        <section id="flujo-ejecucion" class="scroll-mt-24">
+          <!-- ES -->
+          <div data-docs-lang="es" class="space-y-4">
+            <h2 class="text-2xl font-bold text-primary font-sans">5. Suite de 9 Flujos — Fase 3: Ejecución & Cierre Criptográfico</h2>
+            <p>
+              Cirugía de código rigurosa y verificación con huella digital inmutable:
+            </p>
+            <div class="p-4 rounded-lg bg-surface border border-border">
+              <ul class="space-y-2 text-xs font-mono text-primary-muted">
+                <li><code class="text-accent font-bold">/omni-implement</code> — Modifica estrictamente los archivos aprobados, ejecutando tests tras cada tarea.</li>
+                <li><code class="text-accent font-bold">/omni-audit</code> — Comprueba matemáticamente que la especificación cumple todos los requisitos y no tiene secciones vacías.</li>
+                <li><code class="text-accent font-bold">/omni-converge</code> — Ejecuta la suite de verificación completa, calcula el fingerprint SHA-256 y sella el trabajo en Git.</li>
+              </ul>
+            </div>
+          </div>
+          <!-- EN -->
+          <div data-docs-lang="en" class="space-y-4 hidden">
+            <h2 class="text-2xl font-bold text-primary font-sans">5. 9-Workflow Suite — Phase 3: Execution & Cryptographic Closure</h2>
+            <p>
+              Surgical implementation and deterministic verification sealed by immutable cryptographic fingerprints:
+            </p>
+            <div class="p-4 rounded-lg bg-surface border border-border">
+              <ul class="space-y-2 text-xs font-mono text-primary-muted">
+                <li><code class="text-accent font-bold">/omni-implement</code> — Applies scoped file modifications, executing Quality Gates after each task.</li>
+                <li><code class="text-accent font-bold">/omni-audit</code> — Mathematically checks specification completeness, flags placeholders, and prevents premature coding.</li>
+                <li><code class="text-accent font-bold">/omni-converge</code> — Runs final repository test suites, computes SHA-256 hash fingerprints, and seals work in Git.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECCIÓN 6: Perfiles de Dominio vs OpenSpec -->
+        <section id="perfiles-intro" class="scroll-mt-24">
+          <!-- ES -->
+          <div data-docs-lang="es" class="space-y-4">
+            <h2 class="text-2xl font-bold text-primary font-sans">6. Perfiles de Dominio Regulatorios (vs OpenSpec)</h2>
+            <p>
+              Una de las principales divergencias con OpenSpec es el rol de los perfiles:
+            </p>
+            <div class="p-4 rounded-lg bg-surface border border-accent/30 text-xs sm:text-sm text-primary-muted space-y-2">
+              <strong class="text-primary block font-sans">Diferencia con OpenSpec:</strong>
+              <p>
+                OpenSpec enfoca sus perfiles en la personalización de comandos de chat e interacciones con el usuario. 
+                <strong>OmniSpec</strong> utiliza los perfiles para inyectar <strong>invariantes legales y de arquitectura</strong> en tu <code class="text-primary font-mono">CONSTITUTION.md</code>.
+              </p>
+              <p>
+                Por ejemplo, con el perfil <code class="text-primary font-mono">--profile fintech</code>, el agente tiene terminantemente prohibido proponer mutaciones de balance sin idempotencia y contabilidad de doble partida, y los Quality Gates exigirán tests de concurrencia obligatorios.
+              </p>
+            </div>
+          </div>
+          <!-- EN -->
+          <div data-docs-lang="en" class="space-y-4 hidden">
+            <h2 class="text-2xl font-bold text-primary font-sans">6. Regulatory Domain Profiles (vs OpenSpec)</h2>
+            <p>
+              A fundamental divergence from OpenSpec is the engineering role of domain profiles:
+            </p>
+            <div class="p-4 rounded-lg bg-surface border border-accent/30 text-xs sm:text-sm text-primary-muted space-y-2">
+              <strong class="text-primary block font-sans">Architectural Distinction:</strong>
+              <p>
+                OpenSpec centers its profiles on customizing chat command aliases and persona prompts. 
+                <strong>OmniSpec</strong> leverages profiles to inject <strong>binding legal and architectural invariants</strong> into your <code class="text-primary font-mono">CONSTITUTION.md</code>.
+              </p>
+              <p>
+                For example, under <code class="text-primary font-mono">--profile fintech</code>, the agent is strictly prohibited from proposing balance mutations without double-entry bookkeeping and idempotency, while Quality Gates mandate real concurrency testing.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECCIÓN 6.1: Catálogo de Perfiles -->
+        <section id="perfiles-catalogo" class="scroll-mt-24">
+          <!-- ES -->
+          <div data-docs-lang="es" class="space-y-4">
+            <h2 class="text-2xl font-bold text-primary font-sans">6.1 Catálogo de Perfiles Disponibles</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
+              <div class="p-3 rounded-lg bg-surface border border-border">
+                <span class="text-primary font-bold">fintech</span>
+                <p class="text-primary-muted mt-1">PCI-DSS, contabilidad de doble partida e idempotencia en pagos.</p>
+              </div>
+              <div class="p-3 rounded-lg bg-surface border border-border">
+                <span class="text-primary font-bold">healthtech</span>
+                <p class="text-primary-muted mt-1">HIPAA, privacidad de datos clínicos PHI y trazabilidad inmutable.</p>
+              </div>
+              <div class="p-3 rounded-lg bg-surface border border-border">
+                <span class="text-primary font-bold">ecommerce</span>
+                <p class="text-primary-muted mt-1">Reserva atómica de inventario, carritos idempotentes y consistencia fiscal.</p>
+              </div>
+              <div class="p-3 rounded-lg bg-surface border border-border">
+                <span class="text-primary font-bold">bpo</span>
+                <p class="text-primary-muted mt-1">k-Anonimato en métricas de empleados y directivas de privacidad laboral.</p>
+              </div>
+            </div>
+          </div>
+          <!-- EN -->
+          <div data-docs-lang="en" class="space-y-4 hidden">
+            <h2 class="text-2xl font-bold text-primary font-sans">6.1 Available Profile Catalog</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
+              <div class="p-3 rounded-lg bg-surface border border-border">
+                <span class="text-primary font-bold">fintech</span>
+                <p class="text-primary-muted mt-1">PCI-DSS, double-entry bookkeeping, and idempotent payment processing.</p>
+              </div>
+              <div class="p-3 rounded-lg bg-surface border border-border">
+                <span class="text-primary font-bold">healthtech</span>
+                <p class="text-primary-muted mt-1">HIPAA, clinical PHI privacy barriers, and immutable access logging.</p>
+              </div>
+              <div class="p-3 rounded-lg bg-surface border border-border">
+                <span class="text-primary font-bold">ecommerce</span>
+                <p class="text-primary-muted mt-1">Atomic inventory reservation, idempotent carts, and fiscal consistency.</p>
+              </div>
+              <div class="p-3 rounded-lg bg-surface border border-border">
+                <span class="text-primary font-bold">bpo</span>
+                <p class="text-primary-muted mt-1">k-Anonymity on workforce metrics and labor privacy compliance.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECCIÓN 7: Adaptadores Multi-Agente -->
+        <section id="adaptadores-agentes" class="scroll-mt-24">
+          <!-- ES -->
+          <div data-docs-lang="es" class="space-y-4">
+            <h2 class="text-2xl font-bold text-primary font-sans">7. Adaptadores de Agentes Soportados</h2>
+            <p>
+              OmniSpec compila adaptadores nativos para cada asistente sin intermediarios propietarios:
+            </p>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left font-mono text-xs border border-border">
+                <thead class="bg-surface-elevated text-primary border-b border-border">
+                  <tr>
+                    <th class="p-3">Agente</th>
+                    <th class="p-3">Flag CLI</th>
+                    <th class="p-3">Ubicación en Repo</th>
+                    <th class="p-3">Invocación</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-border">
+                  <tr>
+                    <td class="p-3 font-semibold text-primary">Google Antigravity</td>
+                    <td class="p-3 text-accent">--agent antigravity</td>
+                    <td class="p-3 text-primary-muted">.agents/skills/omni-*/</td>
+                    <td class="p-3 text-accent">/omni-init</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-semibold text-primary">VS Code (GitHub Copilot)</td>
+                    <td class="p-3 text-accent">--agent copilot</td>
+                    <td class="p-3 text-primary-muted">.github/prompts/ & .github/copilot-instructions.md</td>
+                    <td class="p-3 text-accent">/omni-init (Chat)</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-semibold text-primary">Cursor AI</td>
+                    <td class="p-3 text-accent">--agent cursor</td>
+                    <td class="p-3 text-primary-muted">.cursor/rules/ & .cursorrules</td>
+                    <td class="p-3 text-accent">@omni-spec init</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-semibold text-primary">Anthropic Claude</td>
+                    <td class="p-3 text-accent">--agent claude</td>
+                    <td class="p-3 text-primary-muted">.claude/commands/ & CLAUDE.md</td>
+                    <td class="p-3 text-accent">/omni:init</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-semibold text-primary">OpenCode</td>
+                    <td class="p-3 text-accent">--agent opencode</td>
+                    <td class="p-3 text-primary-muted">.opencode/commands/ & AGENTS.md</td>
+                    <td class="p-3 text-accent">/omni-init (Command Picker)</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-semibold text-primary">Kilo Code</td>
+                    <td class="p-3 text-accent">--agent kilo</td>
+                    <td class="p-3 text-primary-muted">.kilo/rules/ & kilo.jsonc</td>
+                    <td class="p-3 text-accent">/omni-init</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-semibold text-primary">Universal (Todos)</td>
+                    <td class="p-3 text-accent">--agent all</td>
+                    <td class="p-3 text-primary-muted">Genera todos los adaptadores anteriores</td>
+                    <td class="p-3 text-accent">Nativo por asistente</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- EN -->
+          <div data-docs-lang="en" class="space-y-4 hidden">
+            <h2 class="text-2xl font-bold text-primary font-sans">7. Supported Agent Adapters</h2>
+            <p>
+              OmniSpec compiles native adapters for each coding assistant without proprietary middlemen:
+            </p>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left font-mono text-xs border border-border">
+                <thead class="bg-surface-elevated text-primary border-b border-border">
+                  <tr>
+                    <th class="p-3">Agent</th>
+                    <th class="p-3">CLI Flag</th>
+                    <th class="p-3">Repo Location</th>
+                    <th class="p-3">Invocation Mode</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-border">
+                  <tr>
+                    <td class="p-3 font-semibold text-primary">Google Antigravity</td>
+                    <td class="p-3 text-accent">--agent antigravity</td>
+                    <td class="p-3 text-primary-muted">.agents/skills/omni-*/</td>
+                    <td class="p-3 text-accent">/omni-init</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-semibold text-primary">VS Code (GitHub Copilot)</td>
+                    <td class="p-3 text-accent">--agent copilot</td>
+                    <td class="p-3 text-primary-muted">.github/prompts/ & .github/copilot-instructions.md</td>
+                    <td class="p-3 text-accent">/omni-init (Chat)</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-semibold text-primary">Cursor AI</td>
+                    <td class="p-3 text-accent">--agent cursor</td>
+                    <td class="p-3 text-primary-muted">.cursor/rules/ & .cursorrules</td>
+                    <td class="p-3 text-accent">@omni-spec init</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-semibold text-primary">Anthropic Claude</td>
+                    <td class="p-3 text-accent">--agent claude</td>
+                    <td class="p-3 text-primary-muted">.claude/commands/ & CLAUDE.md</td>
+                    <td class="p-3 text-accent">/omni:init</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-semibold text-primary">OpenCode</td>
+                    <td class="p-3 text-accent">--agent opencode</td>
+                    <td class="p-3 text-primary-muted">.opencode/commands/ & AGENTS.md</td>
+                    <td class="p-3 text-accent">/omni-init (Command Picker)</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-semibold text-primary">Kilo Code</td>
+                    <td class="p-3 text-accent">--agent kilo</td>
+                    <td class="p-3 text-primary-muted">.kilo/rules/ & kilo.jsonc</td>
+                    <td class="p-3 text-accent">/omni-init</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-semibold text-primary">Universal (All)</td>
+                    <td class="p-3 text-accent">--agent all</td>
+                    <td class="p-3 text-primary-muted">Scaffolds all supported adapters</td>
+                    <td class="p-3 text-accent">Native per assistant</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECCIÓN 7.1: Quality Gates -->
+        <section id="quality-gates" class="scroll-mt-24">
+          <!-- ES -->
+          <div data-docs-lang="es" class="space-y-4">
+            <h2 class="text-2xl font-bold text-primary font-sans">7.1 Quality Gates Deterministas con Exit Code 0</h2>
+            <p>
+              Cada tarea en <code class="text-primary font-mono">tasks.md</code> enlaza directamente con los comandos de comprobación del proyecto configurados durante la inicialización.
+            </p>
+            <p>
+              La regla es estricta: si el comando devuelve cualquier código de salida distinto de 0 (por ejemplo, errores de compilación en TypeScript, fallos en pruebas unitarias o warnings bloqueantes), la tarea queda en estado bloqueado y no puede procederse a <code class="text-primary font-mono">/omni-converge</code>.
+            </p>
+          </div>
+          <!-- EN -->
+          <div data-docs-lang="en" class="space-y-4 hidden">
+            <h2 class="text-2xl font-bold text-primary font-sans">7.1 Deterministic Quality Gates with Exit Code 0</h2>
+            <p>
+              Every task in <code class="text-primary font-mono">tasks.md</code> binds directly to the project validation commands configured during initialization.
+            </p>
+            <p>
+              The rule is absolute: if the command returns any exit code other than 0 (e.g. TypeScript typecheck errors, test failures, or lint regressions), the task remains blocked and the agent cannot proceed to <code class="text-primary font-mono">/omni-converge</code>.
+            </p>
+          </div>
+        </section>
+
+        <!-- Footer de Navegación de Docs -->
+        <footer class="pt-8 border-t border-border flex items-center justify-between text-xs font-mono">
+          <a id="docs-back-link" href="/#canvas" class="text-primary-muted hover:text-primary transition-colors">
+            &larr; Volver a la Landing Page
+          </a>
+          <a id="docs-changelog-link" href="/changelog" class="text-accent hover:underline">
+            Ver Changelog Oficial &rarr;
+          </a>
+        </footer>
+
+      </article>
+
+    </div>
+  </div>
+
+  <Footer />
+</Layout>
+
+<script define:vars={{ docNavByLang }}>
+  function setupDocsI18n() {
+    const sidebarTitle = document.getElementById('docs-sidebar-title');
+    const sidebarNav = document.getElementById('docs-sidebar-nav');
+    const backLink = document.getElementById('docs-back-link');
+    const changelogLink = document.getElementById('docs-changelog-link');
+
+    function applyLanguage(lang) {
+      const activeLang = lang === 'en' ? 'en' : 'es';
+
+      // 1. Alternar cuerpos de secciones
+      document.querySelectorAll('[data-docs-lang="es"]').forEach((el) => {
+        if (activeLang === 'en') el.classList.add('hidden');
+        else el.classList.remove('hidden');
+      });
+      document.querySelectorAll('[data-docs-lang="en"]').forEach((el) => {
+        if (activeLang === 'en') el.classList.remove('hidden');
+        else el.classList.add('hidden');
+      });
+
+      // 2. Actualizar encabezado del sidebar y links del footer
+      if (sidebarTitle) {
+        sidebarTitle.textContent = activeLang === 'en' ? 'Documentation' : 'Documentación';
+      }
+      if (backLink) {
+        backLink.innerHTML = activeLang === 'en' ? '&larr; Back to Landing Page' : '&larr; Volver a la Landing Page';
+      }
+      if (changelogLink) {
+        changelogLink.innerHTML = activeLang === 'en' ? 'View Official Changelog &rarr;' : 'Ver Changelog Oficial &rarr;';
+      }
+
+      // 3. Re-renderizar enlaces del sidebar
+      if (sidebarNav) {
+        const navData = docNavByLang[activeLang] || docNavByLang.es;
+        sidebarNav.innerHTML = navData.map((sec) => `
+          <div class="space-y-2">
+            <h3 class="font-bold text-primary-muted uppercase text-[10px] tracking-wider">
+              ${sec.category}
+            </h3>
+            <ul class="space-y-1">
+              ${sec.items.map((item) => `
+                <li>
+                  <a 
+                    href="#${item.id}" 
+                    class="docs-nav-link block py-1 px-2 rounded text-primary-muted hover:text-primary hover:bg-surface border-l-2 border-transparent transition-all"
+                    data-section="${item.id}"
+                  >
+                    ${item.title}
+                  </a>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        `).join('');
+
+        setupDocsScrollSpy();
+      }
+    }
+
+    function setupDocsScrollSpy() {
+      const links = document.querySelectorAll('.docs-nav-link');
+      const sections = Array.from(document.querySelectorAll('section[id]'));
+      if (!links.length || !sections.length) return;
+
+      const setActiveLink = (id) => {
+        links.forEach((link) => {
+          const targetId = link.getAttribute('data-section');
+          if (targetId === id) {
+            link.classList.remove('text-primary-muted', 'border-transparent', 'hover:bg-surface');
+            link.classList.add('text-accent', 'font-semibold', 'bg-accent/10', 'border-accent', 'pl-3');
+          } else {
+            link.classList.remove('text-accent', 'font-semibold', 'bg-accent/10', 'border-accent', 'pl-3');
+            link.classList.add('text-primary-muted', 'border-transparent', 'hover:bg-surface');
+          }
+        });
+      };
+
+      if (sections[0]) {
+        setActiveLink(sections[0].id);
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveLink(entry.target.id);
+          }
+        });
+      }, {
+        rootMargin: '-10% 0px -65% 0px',
+        threshold: 0
+      });
+
+      sections.forEach((s) => observer.observe(s));
+    }
+
+    const currentLang = localStorage.getItem('omni-lang') || 'es';
+    if (currentLang === 'en') {
+      applyLanguage('en');
+    } else {
+      setupDocsScrollSpy();
+    }
+
+    window.addEventListener('omni:language-change', (e) => {
+      applyLanguage(e.detail.lang);
+    });
+  }
+
+  setupDocsI18n();
+  document.addEventListener('astro:page-load', setupDocsI18n);
+</script>

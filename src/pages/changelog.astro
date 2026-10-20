@@ -1,0 +1,654 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+interface Highlight {
+  type: 'feat' | 'fix' | 'refactor';
+  title: string;
+  detail: string;
+}
+
+interface Release {
+  version: string;
+  date: string;
+  tag: string;
+  title: string;
+  description: string;
+  highlights: Highlight[];
+}
+
+const releasesByLang: Record<'es' | 'en', Release[]> = {
+  es: [
+    {
+      version: "v0.5.1",
+      date: "20 de Octubre, 2026",
+      tag: "Actual",
+      title: "Precisión de Primer Pase, Reglas Anti-Slop & Soporte Multi-Agente Universal",
+      description: "Esta versión elimina el código de relleno ('AI slop') mediante invariantes de diseño frontend impecable y backend pragmático integrados directamente en el Core, moderniza las guías de instalación y añade compatibilidad con VS Code (GitHub Copilot).",
+      highlights: [
+        {
+          type: "feat",
+          title: "Invariantes Anti-Slop de Frontend Craft",
+          detail: "Exigencia obligatoria de los 4 estados de interfaz (carga, error, vacío y éxito), contraste medido WCAG AA, jerarquía tipográfica y eliminación de clichés visuales de IA (card-itis, degradados genéricos)."
+        },
+        {
+          type: "feat",
+          title: "Backend Pragmático & Cero Comentarios Basura",
+          detail: "Inyección de principios YAGNI, fail-fast estricto y prohibición de comentarios redundantes que parafrasean código obvio o trampas de try/catch defensivas prematuras."
+        },
+        {
+          type: "feat",
+          title: "Adaptador Oficial para GitHub Copilot",
+          detail: "Generación de prompts estructurados en .github/prompts/ e instrucciones persistentes en .github/copilot-instructions.md para invocar /omni-init desde VS Code Chat."
+        },
+        {
+          type: "fix",
+          title: "Instalación Universal Simplificada (npx)",
+          detail: "Comandos directos npx omni-spec init --agent <cursor|copilot|claude|antigravity|all> sin necesidad de rutas complejas a tarballs locales ni dependencias npm globales."
+        }
+      ]
+    },
+    {
+      version: "v0.5.0",
+      date: "18 de Octubre, 2026",
+      tag: "Estable",
+      title: "Perfiles Regulatorios de Dominio & Soporte Nativo OpenCode",
+      description: "Esta versión introduce perfiles de gobernanza de industria que inyectan invariantes legales en CONSTITUTION.md, locking de manifiesto y añade compatibilidad con el estándar abierto de comandos de OpenCode.",
+      highlights: [
+        {
+          type: "feat",
+          title: "Perfiles de Dominio Regulatorios (--profile)",
+          detail: "5 perfiles disponibles en el motor CLI (fintech, healthtech, ecommerce, bpo, general). A diferencia de meros prompts de chat, OmniSpec compila leyes duras en CONSTITUTION.md como PCI-DSS, contabilidad de doble partida, HIPAA y k-anonimato."
+        },
+        {
+          type: "feat",
+          title: "Adaptador Nativo para OpenCode",
+          detail: "Generación automática de comandos en .opencode/commands/ y especificación de capacidades en AGENTS.md, permitiendo ejecutar todo el ciclo SDD directamente desde el command picker de OpenCode."
+        },
+        {
+          type: "feat",
+          title: "Suite Completa de 9 Flujos de Trabajo",
+          detail: "Despliegue de los 9 comandos deterministas: /omni-init, /omni-discuss, /omni-clarify, /omni-specify, /omni-plan, /omni-tasks, /omni-implement, /omni-audit y /omni-converge."
+        },
+        {
+          type: "feat",
+          title: "Huella Criptográfica SHA-256",
+          detail: "Cálculo determinista de fingerprinting de archivos de repositorio antes y después de cerrar especificaciones para garantizar trazabilidad inmutable."
+        },
+        {
+          type: "refactor",
+          title: "Motor CLI en Node.js ESM Puro",
+          detail: "Eliminadas todas las dependencias externas pesadas. El runtime opera 100% con módulos estándar de Node.js (fs, path, crypto, child_process)."
+        }
+      ]
+    },
+    {
+      version: "v0.4.1",
+      date: "17 de Octubre, 2026",
+      tag: "Estable",
+      title: "Hardening de Adopción Real & Generación Selectiva de Agentes",
+      description: "Blindaje de la CLI para entornos de producción reales: descubrimiento de raíz estilo Git, protección contra universos anidados y soporte selectivo para no ensuciar el repositorio.",
+      highlights: [
+        {
+          type: "fix",
+          title: "Descubrimiento de Raíz Estilo Git",
+          detail: "Los comandos localizan el proyecto OmniSpec recorriendo directorios hacia arriba hasta encontrar specs/manifest.json o CONSTITUTION.md, permitiendo operar desde subdirectorios."
+        },
+        {
+          type: "feat",
+          title: "Integración Selectiva de Agentes (--agent)",
+          detail: "Eliminada la contaminación de carpetas. OmniSpec ahora genera archivos exclusivamente para el agente seleccionado (antigravity, cursor, claude, copilot, kilo o all)."
+        },
+        {
+          type: "fix",
+          title: "Tolerancia a UTF-8 BOM en Windows",
+          detail: "Los archivos manifest.json y package.json guardados con BOM por PowerShell o Notepad ya no corrompen la máquina de estados del detector de stacks."
+        },
+        {
+          type: "fix",
+          title: "Transliteración de Slugs Amigable con Español",
+          detail: "El generador de slugs convierte caracteres acentuados correctamente (ej. 'Gestión Usuarios' genera 001-gestion-usuarios en lugar de caracteres mutilados)."
+        }
+      ]
+    },
+    {
+      version: "v0.4.0",
+      date: "16 de Octubre, 2026",
+      tag: "Estable",
+      title: "Quality Gates Deterministas, Motor de Foco & Slash Commands",
+      description: "Comprobaciones de software reales con código de salida 0, alternancia atómica de especificaciones activas y comandos de integración agéntica.",
+      highlights: [
+        {
+          type: "feat",
+          title: "Locking Transaccional (withManifestLock)",
+          detail: "Mecanismo de exclusión mutua a nivel de archivo specs/manifest.json para evitar corrupción de estado ante ejecuciones concurrentes de subagentes."
+        },
+        {
+          type: "feat",
+          title: "Motor de Foco y Listado (focus & list)",
+          detail: "Comandos omni-spec focus y omni-spec list para alternar atómicamente la especificación activa e inspeccionar el estado del backlog en consola."
+        },
+        {
+          type: "feat",
+          title: "Actualizador No Destructivo (omni-spec update)",
+          detail: "Actualización de plantillas en specs/_templates/ y reglas de agentes preservando íntegramente las especificaciones en curso y el CONSTITUTION.md."
+        },
+        {
+          type: "feat",
+          title: "Detección Profunda de Monorepos",
+          detail: "Inspección inteligente de carpetas frontend/ y backend/ para identificar dependencias TypeScript o ESM sin requerir intervención manual."
+        }
+      ]
+    },
+    {
+      version: "v0.3.1",
+      date: "16 de Octubre, 2026",
+      tag: "Histórico",
+      title: "Hardening de Concurrencia Atómica & Auditor Anti-Bypass",
+      description: "Coordinación entre procesos mediante tickets únicos PID/UUID, recuperación de dueños inactivos y validaciones estrictas del auditor.",
+      highlights: [
+        {
+          type: "fix",
+          title: "Concurrencia Atómica en Disco",
+          detail: "Coordinación robusta entre subagentes paralelos con claims únicos PID/UUID y escrituras atómicas mediante reemplazo seguro de archivos temporales."
+        },
+        {
+          type: "fix",
+          title: "Auditor Anti-Bypass",
+          detail: "Eliminación estricta de comentarios HTML antes de evaluar secciones obligatorias y validación de un umbral mínimo de 30 caracteres para evitar evasiones de contenido."
+        },
+        {
+          type: "fix",
+          title: "Sincronización del Wizard de Inicialización",
+          detail: "Alineación exacta entre las selecciones interactivas del asistente (stack, base de datos, pruebas) y los Quality Gates registrados en CONSTITUTION.md."
+        }
+      ]
+    },
+    {
+      version: "v0.3.0",
+      date: "16 de Octubre, 2026",
+      tag: "Histórico",
+      title: "Auditor Programático de Salud de Especificaciones",
+      description: "Primer validador programático que impide matemáticamente a los agentes codificar si faltan criterios de aceptación o fases de aclaración.",
+      highlights: [
+        {
+          type: "feat",
+          title: "Auditor de Especificaciones (omni-spec audit)",
+          detail: "Bloqueo determinista de agentes si se detectan secciones vacías, placeholders genéricos (SPEC-XXX) o preguntas de clarificación sin responder."
+        },
+        {
+          type: "feat",
+          title: "Códigos de Salida Deterministas POSIX",
+          detail: "Retorno estricto de exit code 0 para especificaciones aprobadas y exit code 1 para especificaciones bloqueadas, apto para CI/CD y hooks de Git."
+        },
+        {
+          type: "feat",
+          title: "Cálculo Dinámico de Progreso de Tareas",
+          detail: "Inspección automática de tasks.md para reportar el porcentaje real de avance completado por los agentes de codificación."
+        }
+      ]
+    },
+    {
+      version: "v0.2.0",
+      date: "16 de Octubre, 2026",
+      tag: "Histórico",
+      title: "Detector Inteligente de Entornos & Stacks Tecnológicos",
+      description: "Clasificación automática de proyectos nuevos (Greenfield) vs existentes (Brownfield) e inferencia automática de herramientas de testing.",
+      highlights: [
+        {
+          type: "feat",
+          title: "Auto-Detección de Stacks Tecnológicos",
+          detail: "Reconocimiento automático de ecosistemas Node.js (React, Next.js, Vue, NestJS), Python (FastAPI, Django), Java (Maven, Gradle), Go y Rust."
+        },
+        {
+          type: "feat",
+          title: "Extracción Automática de Quality Gates",
+          detail: "Extracción de comandos de prueba, linters y suites de validación desde package.json, pom.xml, requirements.txt, go.mod y Cargo.toml."
+        },
+        {
+          type: "fix",
+          title: "Aislamiento de Streams y Concurrencia en Tests",
+          detail: "Ejecución serial determinista en Node.js 18, 20 y 22 eliminando errores de serialización IPC en runners de CI."
+        }
+      ]
+    },
+    {
+      version: "v0.1.0",
+      date: "16 de Octubre, 2026",
+      tag: "Histórico",
+      title: "Fundamentos de Spec-Driven Development (SDD) Zero-Dependency",
+      description: "Lanzamiento fundacional de OmniSpec con los 4 arquetipos de trabajo, 5 perfiles regulatorios y motor en Node.js puro.",
+      highlights: [
+        {
+          type: "feat",
+          title: "Los 4 Arquetipos de Trabajo",
+          detail: "Estructuras estandarizadas para Feature (01-feature), Bugfix con 5 Whys (02-bugfix), Deuda Técnica con Strangler Fig (03-tech-debt) y RFCs arquitectónicos (04-rfc-idea)."
+        },
+        {
+          type: "feat",
+          title: "5 Perfiles Regulatorios de Dominio",
+          detail: "Inyección de directivas industriales para Fintech (PCI-DSS), Healthtech (HIPAA), Ecommerce, BPO (k-anonimato) y General SaaS."
+        },
+        {
+          type: "feat",
+          title: "Gobernanza Inmutable en CONSTITUTION.md",
+          detail: "Establecimiento de las 4 leyes fundamentales de ingeniería: Diagnóstico previo, cirugía de alcance mínimo, verificación con comandos reales y ergonomía de estados de UI."
+        },
+        {
+          type: "feat",
+          title: "Manifiesto de Estados (specs/manifest.json)",
+          detail: "Máquina de estados local para registrar especificaciones activas y prevenir la deriva de contexto en modelos de IA."
+        }
+      ]
+    }
+  ],
+  en: [
+    {
+      version: "v0.5.1",
+      date: "October 20, 2026",
+      tag: "Current",
+      title: "First-Pass Precision, Anti-Slop Rules & Universal Multi-Agent Support",
+      description: "This release eliminates AI slop via impeccable frontend design and pragmatic backend invariants baked into the Core, modernizes universal installation guides, and adds official GitHub Copilot support.",
+      highlights: [
+        {
+          type: "feat",
+          title: "Frontend Craft Anti-Slop Invariants",
+          detail: "Mandatory requirement of 4 UI states (loading, error, empty, and success), WCAG AA measured contrast, typography hierarchy, and zero generic AI visual clichés."
+        },
+        {
+          type: "feat",
+          title: "Pragmatic Backend & Zero Comment Slop",
+          detail: "Enforcement of YAGNI, strict fail-fast error handling, and prohibition of redundant parrot comments or premature defensive try/catch traps."
+        },
+        {
+          type: "feat",
+          title: "Official GitHub Copilot Adapter",
+          detail: "Generation of structured prompt files in .github/prompts/ and persistent instructions in .github/copilot-instructions.md to run /omni-init directly in VS Code Chat."
+        },
+        {
+          type: "fix",
+          title: "Streamlined Universal Installation (npx)",
+          detail: "Direct npx omni-spec init --agent <cursor|copilot|claude|antigravity|all> commands eliminating legacy tarball paths and global npm dependency requirements."
+        }
+      ]
+    },
+    {
+      version: "v0.5.0",
+      date: "October 18, 2026",
+      tag: "Stable",
+      title: "Regulatory Domain Profiles & Native OpenCode Support",
+      description: "This release introduces industry governance profiles injecting legal invariants into CONSTITUTION.md, manifest locking, and adds native support for OpenCode command picker.",
+      highlights: [
+        {
+          type: "feat",
+          title: "Regulatory Domain Profiles (--profile)",
+          detail: "5 profiles available in the CLI engine (fintech, healthtech, ecommerce, bpo, general). Unlike plain chat prompts, OmniSpec compiles hard laws into CONSTITUTION.md such as PCI-DSS, double-entry bookkeeping, HIPAA, and k-anonymity."
+        },
+        {
+          type: "feat",
+          title: "Native OpenCode Adapter",
+          detail: "Automatic command generation in .opencode/commands/ and capability specs in AGENTS.md, enabling the entire SDD lifecycle directly from the OpenCode command picker."
+        },
+        {
+          type: "feat",
+          title: "Complete 9-Workflow Suite",
+          detail: "Rollout of all 9 deterministic commands: /omni-init, /omni-discuss, /omni-clarify, /omni-specify, /omni-plan, /omni-tasks, /omni-implement, /omni-audit, and /omni-converge."
+        },
+        {
+          type: "feat",
+          title: "SHA-256 Cryptographic Fingerprint",
+          detail: "Deterministic repository file fingerprinting before and after closing specifications to ensure immutable traceability."
+        },
+        {
+          type: "refactor",
+          title: "Pure Node.js ESM CLI Engine",
+          detail: "Zero heavy external dependencies. The runtime operates 100% on standard Node.js modules (fs, path, crypto, child_process)."
+        }
+      ]
+    },
+    {
+      version: "v0.4.1",
+      date: "October 17, 2026",
+      tag: "Stable",
+      title: "Real-World Adoption Hardening & Selective Agent Generation",
+      description: "Production-grade CLI hardening: Git-style root discovery, nested universe prevention, and targeted agent scaffolding preventing repository clutter.",
+      highlights: [
+        {
+          type: "fix",
+          title: "Git-Style Project Root Discovery",
+          detail: "Commands locate the enclosing OmniSpec project by walking upward to specs/manifest.json or CONSTITUTION.md, enabling execution from any subdirectory."
+        },
+        {
+          type: "feat",
+          title: "Selective Agent Generation (--agent)",
+          detail: "Eliminated repository pollution: OmniSpec selectively generates configuration exclusively for the designated target agent (antigravity, cursor, claude, copilot, kilo, or all)."
+        },
+        {
+          type: "fix",
+          title: "Windows UTF-8 BOM Tolerance",
+          detail: "manifest.json and package.json saved with UTF-8 BOM by PowerShell or Notepad no longer corrupt the state machine or stack detector."
+        },
+        {
+          type: "fix",
+          title: "International Slug Transliteration",
+          detail: "Slug generator properly converts accented characters (e.g. 'Gestión Usuarios' safely generates 001-gestion-usuarios without mangling)."
+        }
+      ]
+    },
+    {
+      version: "v0.4.0",
+      date: "October 16, 2026",
+      tag: "Stable",
+      title: "Deterministic Quality Gates, Focus Engine & Slash Commands",
+      description: "Real software checks bound to exit code 0, atomic active spec switching, and multi-agent command scaffolding.",
+      highlights: [
+        {
+          type: "feat",
+          title: "Transactional Concurrency Locking (withManifestLock)",
+          detail: "File-level mutual exclusion on specs/manifest.json preventing race conditions and state corruption across concurrent subagents."
+        },
+        {
+          type: "feat",
+          title: "Specification Focus & Listing Engine (focus & list)",
+          detail: "Deterministic omni-spec focus and omni-spec list commands to atomically switch active specs and inspect backlog state."
+        },
+        {
+          type: "feat",
+          title: "Non-Destructive Project Updater (omni-spec update)",
+          detail: "Refreshes templates in specs/_templates/ and agent integrations while keeping active specifications and CONSTITUTION.md 100% intact."
+        },
+        {
+          type: "feat",
+          title: "Deep Monorepo Stack Detection",
+          detail: "Introspects frontend/ and backend/ directories to accurately identify TypeScript, ESM, and dependency environments."
+        }
+      ]
+    },
+    {
+      version: "v0.3.1",
+      date: "October 16, 2026",
+      tag: "Historical",
+      title: "Atomic Concurrency Hardening & Anti-Bypass Auditor",
+      description: "Multi-process coordination via PID/UUID tickets, dead-owner recovery, and strict auditor structural validation.",
+      highlights: [
+        {
+          type: "fix",
+          title: "Atomic Storage Locking",
+          detail: "Cross-process coordination with unique PID/UUID claims and atomic writes through temporary file replacements."
+        },
+        {
+          type: "fix",
+          title: "Auditor Anti-Bypass Validation",
+          detail: "Strips HTML comments before inspecting mandatory sections and requires at least 30 trimmed characters to prevent empty boilerplate bypasses."
+        },
+        {
+          type: "fix",
+          title: "Initialization Wizard Stack Synchronization",
+          detail: "Guarantees that interactively chosen stacks, databases, and test runners directly match the Quality Gates seeded in CONSTITUTION.md."
+        }
+      ]
+    },
+    {
+      version: "v0.3.0",
+      date: "October 16, 2026",
+      tag: "Historical",
+      title: "Programmatic Specification Health Auditor",
+      description: "First programmatic gate mathematically preventing AI agents from writing code if acceptance criteria or Phase 0 questions are missing.",
+      highlights: [
+        {
+          type: "feat",
+          title: "Specification Auditor (omni-spec audit)",
+          detail: "Deterministic barrier that flags unreplaced template placeholders (SPEC-XXX) and missing clarification questions before coding begins."
+        },
+        {
+          type: "feat",
+          title: "Deterministic POSIX Exit Codes",
+          detail: "Outputs exit code 0 for approved specs and exit code 1 for blocked specs, enabling seamless integration into Git pre-commit hooks and CI."
+        },
+        {
+          type: "feat",
+          title: "Checklist Progress Calculation",
+          detail: "Automatically parses tasks.md to report real completion percentages across engineering work units."
+        }
+      ]
+    },
+    {
+      version: "v0.2.0",
+      date: "October 16, 2026",
+      tag: "Historical",
+      title: "Intelligent Environment & Stack Detector",
+      description: "Automatic classification of Greenfield vs Brownfield repositories and automatic inference of testing quality gates.",
+      highlights: [
+        {
+          type: "feat",
+          title: "Smart Stack Detection",
+          detail: "Auto-discovers Node.js (React, Next.js, Vue, NestJS), Python (FastAPI, Django), Java (Maven, Gradle), Go, and Rust."
+        },
+        {
+          type: "feat",
+          title: "Quality Gate Extraction",
+          detail: "Extracts real test runners, linters, and typecheck commands from package.json, pom.xml, requirements.txt, go.mod, and Cargo.toml."
+        },
+        {
+          type: "fix",
+          title: "Stream Isolation in Test Runners",
+          detail: "Silences stray console streams and enforces serial test concurrency across Node 18, 20, and 22 CI runners."
+        }
+      ]
+    },
+    {
+      version: "v0.1.0",
+      date: "October 16, 2026",
+      tag: "Historical",
+      title: "Zero-Dependency Spec-Driven Development (SDD) Foundations",
+      description: "Foundational release introducing 4 work archetypes, 5 regulatory domain profiles, and pure Node.js CLI runtime.",
+      highlights: [
+        {
+          type: "feat",
+          title: "The 4 Work Archetypes",
+          detail: "Standardized templates for Features (01-feature), Bugfix with 5 Whys (02-bugfix), Tech Debt with Strangler Fig (03-tech-debt), and RFC Decisions (04-rfc-idea)."
+        },
+        {
+          type: "feat",
+          title: "5 Regulatory Domain Profiles",
+          detail: "Injects strict industry directives for Fintech (PCI-DSS), Healthtech (HIPAA), Ecommerce, BPO (k-anonymity), and General SaaS."
+        },
+        {
+          type: "feat",
+          title: "Immutable Governance in CONSTITUTION.md",
+          detail: "Defines the 4 core engineering laws: Pre-execution diagnosis, minimal scoped surgery, real command verification, and UI ergonomics."
+        },
+        {
+          type: "feat",
+          title: "State Machine Manifest (specs/manifest.json)",
+          detail: "Local state machine tracking active specs and preventing AI agent context drift across sessions."
+        }
+      ]
+    }
+  ]
+};
+
+const initialReleases = releasesByLang.es;
+---
+
+<Layout 
+  title="Historial de Versiones (Changelog) — OmniSpec"
+  description="Registro cronológico y detallado de versiones, nuevas funcionalidades, perfiles regulatorios y mejoras de arquitectura de OmniSpec."
+>
+  <Navbar />
+  
+  <main class="flex-1 py-16 md:py-24 transition-colors">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Encabezado de la Página -->
+      <div class="mb-14 border-b border-border pb-8">
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-primary tracking-tight" data-i18n="changelog.pageTitle">
+          Changelog
+        </h1>
+        <p class="mt-4 text-base sm:text-lg text-primary-muted leading-relaxed max-w-[65ch]" data-i18n="changelog.pageSubtitle">
+          Todas las mejoras, directivas de gobernanza y actualizaciones del motor CLI de OmniSpec registradas cronológicamente con rigor de ingeniería.
+        </p>
+      </div>
+
+      <!-- Timeline de Versiones -->
+      <div id="changelog-timeline" class="space-y-16">
+        {initialReleases.map((release) => (
+          <article class="relative pl-6 sm:pl-8 border-l-2 border-border space-y-6">
+            <!-- Marcador circular del timeline -->
+            <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-surface border-2 border-accent"></div>
+
+            <!-- Cabecera de versión -->
+            <div>
+              <div class="flex flex-wrap items-center gap-3">
+                <span class="text-xl font-bold font-mono text-primary">{release.version}</span>
+                <span class={`text-[11px] font-mono px-2 py-0.5 rounded border ${
+                  release.tag === 'Actual' || release.tag === 'Current'
+                    ? 'bg-accent/10 border-accent/30 text-accent font-bold' 
+                    : 'bg-surface-elevated border-border text-primary-muted'
+                }`}>
+                  {release.tag}
+                </span>
+                <span class="text-xs font-mono text-primary-muted">{release.date}</span>
+              </div>
+              <h2 class="text-2xl font-bold text-primary mt-2">
+                {release.title}
+              </h2>
+              <p class="text-sm text-primary-muted mt-2 leading-relaxed">
+                {release.description}
+              </p>
+            </div>
+
+            <!-- Lista de Novedades y Cambios Técnicos -->
+            <div class="space-y-3">
+              {release.highlights.map((item) => (
+                <div class="p-4 rounded-lg bg-surface border border-border flex flex-col gap-1.5 transition-colors">
+                  <div class="flex items-center gap-2">
+                    <span class={`text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded ${
+                      item.type === 'feat' 
+                        ? 'bg-emerald-500/10 text-emerald-500 dark:text-emerald-400 border border-emerald-500/30' 
+                        : item.type === 'fix' 
+                        ? 'bg-amber-500/10 text-amber-500 dark:text-amber-400 border border-amber-500/30'
+                        : 'bg-blue-500/10 text-blue-500 dark:text-blue-400 border border-blue-500/30'
+                    }`}>
+                      {item.type}
+                    </span>
+                    <h3 class="text-sm font-semibold text-primary">{item.title}</h3>
+                  </div>
+                  <p class="text-xs sm:text-sm text-primary-muted leading-relaxed pl-1">
+                    {item.detail}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <!-- Enlace directo a GitHub Release Tag -->
+            <div class="pt-2">
+              <a 
+                href={`https://github.com/brahiandres1999-oss/omni-spec/releases/tag/${release.version}`}
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 text-xs font-mono text-accent hover:underline"
+              >
+                <span class="release-github-text">Ver release en GitHub</span>
+                <span>&rarr;</span>
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<script define:vars={{ releasesByLang }}>
+  function setupChangelogI18n() {
+    const container = document.getElementById('changelog-timeline');
+    if (!container) return;
+
+    function renderReleases(lang) {
+      const activeLang = lang === 'en' ? 'en' : 'es';
+      const releases = releasesByLang[activeLang] || releasesByLang.es;
+      const githubLabel = activeLang === 'en' ? 'View release on GitHub' : 'Ver release en GitHub';
+
+      container.innerHTML = releases.map((release) => {
+        const isCurrent = release.tag === 'Actual' || release.tag === 'Current';
+        const tagClass = isCurrent
+          ? 'bg-accent/10 border-accent/30 text-accent font-bold'
+          : 'bg-surface-elevated border-border text-primary-muted';
+
+        const highlightsHtml = release.highlights.map((item) => {
+          const badgeClass = item.type === 'feat'
+            ? 'bg-emerald-500/10 text-emerald-500 dark:text-emerald-400 border border-emerald-500/30'
+            : item.type === 'fix'
+            ? 'bg-amber-500/10 text-amber-500 dark:text-amber-400 border border-amber-500/30'
+            : 'bg-blue-500/10 text-blue-500 dark:text-blue-400 border border-blue-500/30';
+
+          return `
+            <div class="p-4 rounded-lg bg-surface border border-border flex flex-col gap-1.5 transition-colors">
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded ${badgeClass}">
+                  ${item.type}
+                </span>
+                <h3 class="text-sm font-semibold text-primary">${item.title}</h3>
+              </div>
+              <p class="text-xs sm:text-sm text-primary-muted leading-relaxed pl-1">
+                ${item.detail}
+              </p>
+            </div>
+          `;
+        }).join('');
+
+        return `
+          <article class="relative pl-6 sm:pl-8 border-l-2 border-border space-y-6">
+            <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-surface border-2 border-accent"></div>
+            <div>
+              <div class="flex flex-wrap items-center gap-3">
+                <span class="text-xl font-bold font-mono text-primary">${release.version}</span>
+                <span class="text-[11px] font-mono px-2 py-0.5 rounded border ${tagClass}">
+                  ${release.tag}
+                </span>
+                <span class="text-xs font-mono text-primary-muted">${release.date}</span>
+              </div>
+              <h2 class="text-2xl font-bold text-primary mt-2">
+                ${release.title}
+              </h2>
+              <p class="text-sm text-primary-muted mt-2 leading-relaxed">
+                ${release.description}
+              </p>
+            </div>
+            <div class="space-y-3">
+              ${highlightsHtml}
+            </div>
+            <div class="pt-2">
+              <a 
+                href="https://github.com/brahiandres1999-oss/omni-spec/releases/tag/${release.version}" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 text-xs font-mono text-accent hover:underline"
+              >
+                <span>${githubLabel}</span>
+                <span>&rarr;</span>
+              </a>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    const currentLang = localStorage.getItem('omni-lang') || 'es';
+    if (currentLang === 'en') {
+      renderReleases('en');
+    }
+
+    window.addEventListener('omni:language-change', (e) => {
+      renderReleases(e.detail.lang);
+    });
+  }
+
+  setupChangelogI18n();
+  document.addEventListener('astro:page-load', setupChangelogI18n);
+</script>
