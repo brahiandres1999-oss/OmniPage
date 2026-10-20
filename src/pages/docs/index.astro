@@ -4,6 +4,8 @@ import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import CopySnippet from '../../components/CopySnippet.astro';
 
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
 interface DocNavItem {
   id: string;
   title: string;
@@ -807,10 +809,10 @@ const initialDocNav = docNavByLang.es;
 
         <!-- Footer de Navegación de Docs -->
         <footer class="pt-8 border-t border-border flex items-center justify-between text-xs font-mono">
-          <a id="docs-back-link" href="/#canvas" class="text-primary-muted hover:text-primary transition-colors">
+          <a id="docs-back-link" href={`${base}/#canvas`} class="text-primary-muted hover:text-primary transition-colors">
             &larr; Volver a la Landing Page
           </a>
-          <a id="docs-changelog-link" href="/changelog" class="text-accent hover:underline">
+          <a id="docs-changelog-link" href={`${base}/changelog`} class="text-accent hover:underline">
             Ver Changelog Oficial &rarr;
           </a>
         </footer>
