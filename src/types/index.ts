@@ -18,6 +18,10 @@ export interface AgentData {
   path: string;
   invocation: string;
   cmd: string;
+  altCmd?: {
+    label: string;
+    cmd: string;
+  };
 }
 
 export interface FaqItem {

@@ -217,6 +217,24 @@
           </div>
         </div>
 
+        <!-- Caja alternativa para Plugin Global (solo si aplica) -->
+        <div id="agent-alt-box" class="flex flex-col gap-2">
+          <span id="agent-alt-label" class="text-xs font-mono text-primary-muted">O instálalo como Plugin Global en tu entorno Antigravity:</span>
+          <div class="flex items-center justify-between p-3.5 rounded-lg bg-background border border-border">
+            <code id="agent-alt-cmd" class="text-xs sm:text-sm font-mono text-primary overflow-x-auto pr-3">
+              git clone https://github.com/brahiandres1999-oss/omni-spec.git "$HOME/.gemini/config/plugins/omni-spec"
+            </code>
+            <button
+              type="button"
+              id="agent-alt-copy-btn"
+              class="shrink-0 px-3 py-1.5 rounded text-xs font-mono font-medium bg-surface hover:bg-surface-elevated text-primary-muted hover:text-primary border border-border transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-accent"
+              aria-label="Copiar comando de clonación al portapapeles"
+            >
+              <span id="agent-alt-copy-label">Copiar</span>
+            </button>
+          </div>
+        </div>
+
       </div>
 
     </div>
@@ -236,7 +254,11 @@
         format: "Plugin Oficial (plugin.json) + Skills Nativas",
         path: "~/.gemini/config/plugins/omni-spec o .agents/skills/",
         invocation: "/omni-init o subagente omni-auditor",
-        cmd: "npx --yes omni-spec@latest init --yes --agent antigravity"
+        cmd: "npx --yes omni-spec@latest init --yes --agent antigravity",
+        altCmd: {
+          label: "O instálalo como Plugin Global en tu entorno Antigravity:",
+          cmd: 'git clone https://github.com/brahiandres1999-oss/omni-spec.git "$HOME/.gemini/config/plugins/omni-spec"'
+        }
       },
       opencode: {
         title: "OpenCode",
@@ -294,7 +316,11 @@
         format: "Official Plugin (plugin.json) + Native Skills",
         path: "~/.gemini/config/plugins/omni-spec or .agents/skills/",
         invocation: "/omni-init or omni-auditor subagent",
-        cmd: "npx --yes omni-spec@latest init --yes --agent antigravity"
+        cmd: "npx --yes omni-spec@latest init --yes --agent antigravity",
+        altCmd: {
+          label: "Or install as a Global Plugin in your Antigravity environment:",
+          cmd: 'git clone https://github.com/brahiandres1999-oss/omni-spec.git "$HOME/.gemini/config/plugins/omni-spec"'
+        }
       },
       opencode: {
         title: "OpenCode",
@@ -370,6 +396,20 @@
     if (pathEl) pathEl.textContent = data.path;
     if (invocationEl) invocationEl.textContent = data.invocation;
     if (cmdEl) cmdEl.textContent = data.cmd;
+
+    const altBoxEl = document.getElementById('agent-alt-box');
+    const altLabelEl = document.getElementById('agent-alt-label');
+    const altCmdEl = document.getElementById('agent-alt-cmd');
+
+    if (altBoxEl) {
+      if (data.altCmd) {
+        altBoxEl.classList.remove('hidden');
+        if (altLabelEl) altLabelEl.textContent = data.altCmd.label;
+        if (altCmdEl) altCmdEl.textContent = data.altCmd.cmd;
+      } else {
+        altBoxEl.classList.add('hidden');
+      }
+    }
   }
 
   function setupAgentSelector() {
@@ -430,6 +470,30 @@
           setTimeout(() => {
             if (copyLabel) copyLabel.textContent = lang === 'en' ? 'Copy' : 'Copiar';
             copyBtn.classList.remove('text-emerald-500', 'dark:text-emerald-400');
+          }, 2000);
+        } catch (err) {
+          console.error(err);
+        }
+      });
+    }
+
+    const altCopyBtn = document.getElementById('agent-alt-copy-btn');
+    const altCopyLabel = document.getElementById('agent-alt-copy-label');
+
+    if (altCopyBtn && !altCopyBtn.dataset.bound) {
+      altCopyBtn.dataset.bound = 'true';
+      altCopyBtn.addEventListener('click', async () => {
+        const lang = (localStorage.getItem('omni-lang') as Language) || 'es';
+        const agents = agentsByLang[lang] || agentsByLang.es;
+        const altCmd = agents[activeAgentKey]?.altCmd?.cmd;
+        if (!altCmd) return;
+        try {
+          await navigator.clipboard.writeText(altCmd);
+          if (altCopyLabel) altCopyLabel.textContent = lang === 'en' ? 'Copied!' : '¡Copiado!';
+          altCopyBtn.classList.add('text-emerald-500', 'dark:text-emerald-400');
+          setTimeout(() => {
+            if (altCopyLabel) altCopyLabel.textContent = lang === 'en' ? 'Copy' : 'Copiar';
+            altCopyBtn.classList.remove('text-emerald-500', 'dark:text-emerald-400');
           }, 2000);
         } catch (err) {
           console.error(err);
