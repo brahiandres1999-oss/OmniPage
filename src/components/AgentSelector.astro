@@ -172,7 +172,7 @@
             <div>
               <h3 id="agent-title" class="text-xl font-bold text-primary tracking-tight">Google Antigravity</h3>
               <p id="agent-desc" class="text-sm text-primary-muted mt-0.5 max-w-[65ch]">
-                Integración nativa basada en habilidades estructuradas. Descubrimiento automático de slash commands y directivas constitucionales inyectadas en tiempo de ejecución.
+                Integración nativa dual: como Plugin Oficial de Antigravity (global o de workspace) o Skills estructuradas en .agents/skills/. Descubrimiento automático de los 9 slash commands y subagente autónomo omni-auditor.
               </p>
             </div>
           </div>
@@ -183,19 +183,19 @@
           <!-- Col 1: Formato -->
           <div class="p-3.5 flex flex-col gap-1">
             <span class="text-primary-muted text-[11px] uppercase tracking-wider" data-i18n="agents.formatLabel">Formato de Adaptador</span>
-            <span id="agent-format" class="text-primary font-semibold truncate">Skills Nativas (SKILL.md)</span>
+            <span id="agent-format" class="text-primary font-semibold truncate">Plugin Oficial (plugin.json) + Skills Nativas</span>
           </div>
 
           <!-- Col 2: Ubicación en Disco -->
           <div class="p-3.5 flex flex-col gap-1">
             <span class="text-primary-muted text-[11px] uppercase tracking-wider" data-i18n="agents.pathLabel">Ubicación en tu Repo</span>
-            <span id="agent-path" class="text-emerald-600 dark:text-emerald-400 font-semibold truncate">.agents/skills/</span>
+            <span id="agent-path" class="text-emerald-600 dark:text-emerald-400 font-semibold truncate">~/.gemini/config/plugins/omni-spec o .agents/skills/</span>
           </div>
 
           <!-- Col 3: Modo de Invocación -->
           <div class="p-3.5 flex flex-col gap-1">
             <span class="text-primary-muted text-[11px] uppercase tracking-wider" data-i18n="agents.invocationLabel">Modo de Invocación</span>
-            <span id="agent-invocation" class="text-accent font-semibold truncate">/omni-init</span>
+            <span id="agent-invocation" class="text-accent font-semibold truncate">/omni-init o subagente omni-auditor</span>
           </div>
         </div>
 
@@ -232,10 +232,10 @@
     es: {
       antigravity: {
         title: "Google Antigravity",
-        desc: "Integración nativa basada en habilidades estructuradas. Descubrimiento automático de slash commands (/omni-init, /omni-specify, /omni-plan) y directivas constitucionales inyectadas en tiempo de ejecución.",
-        format: "Skills Nativas (SKILL.md)",
-        path: ".agents/skills/omni-*/",
-        invocation: "/omni-init o subagente",
+        desc: "Integración nativa dual: como Plugin Oficial de Antigravity (global o de workspace) o Skills estructuradas en .agents/skills/. Descubrimiento automático de los 9 slash commands y subagente autónomo omni-auditor.",
+        format: "Plugin Oficial (plugin.json) + Skills Nativas",
+        path: "~/.gemini/config/plugins/omni-spec o .agents/skills/",
+        invocation: "/omni-init o subagente omni-auditor",
         cmd: "npx --yes omni-spec@latest init --yes --agent antigravity"
       },
       opencode: {
@@ -290,10 +290,10 @@
     en: {
       antigravity: {
         title: "Google Antigravity",
-        desc: "Native integration based on structured agent skills. Automatic discovery of slash commands (/omni-init, /omni-specify, /omni-plan) and runtime-injected constitutional directives.",
-        format: "Native Skills (SKILL.md)",
-        path: ".agents/skills/omni-*/",
-        invocation: "/omni-init or subagent",
+        desc: "Dual native integration: as an Official Antigravity Plugin (global or workspace) or structured skills in .agents/skills/. Automatic discovery of all 9 slash commands and autonomous omni-auditor subagent.",
+        format: "Official Plugin (plugin.json) + Native Skills",
+        path: "~/.gemini/config/plugins/omni-spec or .agents/skills/",
+        invocation: "/omni-init or omni-auditor subagent",
         cmd: "npx --yes omni-spec@latest init --yes --agent antigravity"
       },
       opencode: {

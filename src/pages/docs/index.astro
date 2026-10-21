@@ -514,7 +514,7 @@ const initialDocNav = docNavByLang.es;
             <div class="p-4 rounded-lg bg-surface border border-border">
               <ul class="space-y-2 text-xs font-mono text-primary-muted">
                 <li><code class="text-accent font-bold">/omni-specify</code> — Crea la especificación (<code class="text-primary font-mono">spec.md</code>) con criterios de aceptación Gherkin y Non-Goals.</li>
-                <li><code class="text-accent font-bold">/omni-plan</code> — Diseña la solución acotada (<code class="text-primary font-mono">plan.md</code>) y lista los archivos exactos a modificar.</li>
+                <li><code class="text-accent font-bold">/omni-plan</code> — Diseña la solución acotada (<code class="text-primary font-mono">plan.md</code>), directivas de UI/UX ProMax y autoriza inspección empírica de tests para diagnósticos de bugs.</li>
                 <li><code class="text-accent font-bold">/omni-tasks</code> — Desglosa el plan en tareas atómicas (<code class="text-primary font-mono">tasks.md</code>) vinculadas a Quality Gates reales.</li>
               </ul>
             </div>
@@ -528,7 +528,7 @@ const initialDocNav = docNavByLang.es;
             <div class="p-4 rounded-lg bg-surface border border-border">
               <ul class="space-y-2 text-xs font-mono text-primary-muted">
                 <li><code class="text-accent font-bold">/omni-specify</code> — Authors the specification (<code class="text-primary font-mono">spec.md</code>) with Gherkin acceptance criteria and Non-Goals.</li>
-                <li><code class="text-accent font-bold">/omni-plan</code> — Formulates the scoped architecture (<code class="text-primary font-mono">plan.md</code>) declaring strict file boundaries.</li>
+                <li><code class="text-accent font-bold">/omni-plan</code> — Formulates the scoped architecture (<code class="text-primary font-mono">plan.md</code>), UI/UX ProMax directives, and unblocks empirical test inspection for bug fixes.</li>
                 <li><code class="text-accent font-bold">/omni-tasks</code> — Breaks down the plan into atomic tasks (<code class="text-primary font-mono">tasks.md</code>) tied to real Quality Gates.</li>
               </ul>
             </div>
@@ -546,7 +546,7 @@ const initialDocNav = docNavByLang.es;
             <div class="p-4 rounded-lg bg-surface border border-border">
               <ul class="space-y-2 text-xs font-mono text-primary-muted">
                 <li><code class="text-accent font-bold">/omni-implement</code> — Modifica estrictamente los archivos aprobados, ejecutando tests tras cada tarea.</li>
-                <li><code class="text-accent font-bold">/omni-audit</code> — Comprueba matemáticamente que la especificación cumple todos los requisitos y no tiene secciones vacías.</li>
+                <li><code class="text-accent font-bold">/omni-audit</code> — Comprueba matemáticamente que la especificación cumple todos los requisitos (o invoca al subagente autónomo <code class="text-primary font-mono">omni-auditor</code> en segundo plano).</li>
                 <li><code class="text-accent font-bold">/omni-converge</code> — Ejecuta la suite de verificación completa, calcula el fingerprint SHA-256 y sella el trabajo en Git.</li>
               </ul>
             </div>
@@ -560,7 +560,7 @@ const initialDocNav = docNavByLang.es;
             <div class="p-4 rounded-lg bg-surface border border-border">
               <ul class="space-y-2 text-xs font-mono text-primary-muted">
                 <li><code class="text-accent font-bold">/omni-implement</code> — Applies scoped file modifications, executing Quality Gates after each task.</li>
-                <li><code class="text-accent font-bold">/omni-audit</code> — Mathematically checks specification completeness, flags placeholders, and prevents premature coding.</li>
+                <li><code class="text-accent font-bold">/omni-audit</code> — Mathematically checks specification completeness, flags placeholders (or delegates to the isolated background <code class="text-primary font-mono">omni-auditor</code> subagent).</li>
                 <li><code class="text-accent font-bold">/omni-converge</code> — Runs final repository test suites, computes SHA-256 hash fingerprints, and seals work in Git.</li>
               </ul>
             </div>
@@ -675,8 +675,8 @@ const initialDocNav = docNavByLang.es;
                   <tr>
                     <td class="p-3 font-semibold text-primary">Google Antigravity</td>
                     <td class="p-3 text-accent">--agent antigravity</td>
-                    <td class="p-3 text-primary-muted">.agents/skills/omni-*/</td>
-                    <td class="p-3 text-accent">/omni-init</td>
+                    <td class="p-3 text-primary-muted">.agents/skills/omni-*/ o Plugin Oficial (~/.gemini/config/plugins/omni-spec)</td>
+                    <td class="p-3 text-accent">/omni-init o subagente omni-auditor</td>
                   </tr>
                   <tr>
                     <td class="p-3 font-semibold text-primary">VS Code (GitHub Copilot)</td>
@@ -738,8 +738,8 @@ const initialDocNav = docNavByLang.es;
                   <tr>
                     <td class="p-3 font-semibold text-primary">Google Antigravity</td>
                     <td class="p-3 text-accent">--agent antigravity</td>
-                    <td class="p-3 text-primary-muted">.agents/skills/omni-*/</td>
-                    <td class="p-3 text-accent">/omni-init</td>
+                    <td class="p-3 text-primary-muted">.agents/skills/omni-*/ or Official Plugin (~/.gemini/config/plugins/omni-spec)</td>
+                    <td class="p-3 text-accent">/omni-init or omni-auditor subagent</td>
                   </tr>
                   <tr>
                     <td class="p-3 font-semibold text-primary">VS Code (GitHub Copilot)</td>

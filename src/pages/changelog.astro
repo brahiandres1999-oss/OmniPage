@@ -21,9 +21,38 @@ interface Release {
 const releasesByLang: Record<'es' | 'en', Release[]> = {
   es: [
     {
-      version: "v0.5.1",
+      version: "v0.6.0",
       date: "20 de Octubre, 2026",
       tag: "Actual",
+      title: "Plugin Oficial Google Antigravity, Subagente Autónomo omni-auditor & Desbloqueo de Bugs",
+      description: "Esta versión convierte a OmniSpec en un Plugin Oficial de Google Antigravity con distribución modular de habilidades, introduce el subagente autónomo omni-auditor en segundo plano para auditorías de especificaciones, autoriza la inspección empírica y ejecución de tests en /omni-plan para diagnósticos de bugs, y estandariza las directivas de UI/UX ProMax en la planificación de features.",
+      highlights: [
+        {
+          type: "feat",
+          title: "Plugin Oficial Google Antigravity",
+          detail: "Empaquetado modular con manifest plugin.json, AGENTS.md constitucional y 9 skills estructuradas auto-descubiertas por el IDE mediante npm run sync:plugin o instalación en workspace."
+        },
+        {
+          type: "feat",
+          title: "Subagente Autónomo omni-auditor",
+          detail: "Nuevo subagente de auditoría independiente que analiza planes y tareas en segundo plano sin contaminar el contexto principal del modelo, previniendo errores antes de codificar."
+        },
+        {
+          type: "feat",
+          title: "Desbloqueo de Inspección Empírica en /omni-plan",
+          detail: "Autorización controlada de comandos de lectura, grep y ejecución de tests en modo read-only durante el arquetipo 02-bugfix para reproducir y aislar la causa raíz con certeza."
+        },
+        {
+          type: "feat",
+          title: "Directiva UI/UX ProMax en Planificación",
+          detail: "Exigencia explícita de arquitectura de interacción, micro-interacciones, animaciones y los 4 estados de pantalla (carga, error, vacío y éxito) en todos los planes de features."
+        }
+      ]
+    },
+    {
+      version: "v0.5.1",
+      date: "20 de Octubre, 2026",
+      tag: "Estable",
       title: "Precisión de Primer Pase, Reglas Anti-Slop & Soporte Multi-Agente Universal",
       description: "Esta versión elimina el código de relleno ('AI slop') mediante invariantes de diseño frontend impecable y backend pragmático integrados directamente en el Core, moderniza las guías de instalación y añade compatibilidad con VS Code (GitHub Copilot).",
       highlights: [
@@ -245,9 +274,38 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
   ],
   en: [
     {
-      version: "v0.5.1",
+      version: "v0.6.0",
       date: "October 20, 2026",
       tag: "Current",
+      title: "Official Google Antigravity Plugin, Autonomous omni-auditor Subagent & Bug Diagnostic Unblock",
+      description: "This release elevates OmniSpec to an official Google Antigravity Plugin with modular skill distribution, introduces the autonomous background omni-auditor subagent for specification reviews, unblocks empirical inspection and test execution in /omni-plan for bug diagnostics, and standardizes UI/UX ProMax directives during feature planning.",
+      highlights: [
+        {
+          type: "feat",
+          title: "Official Google Antigravity Plugin",
+          detail: "Packaged with plugin.json manifest, AGENTS.md constitution, and 9 structured skills discovered automatically by the IDE via npm run sync:plugin or workspace install."
+        },
+        {
+          type: "feat",
+          title: "Autonomous omni-auditor Subagent",
+          detail: "New isolated reviewer subagent that audits plans and tasks in the background without polluting the main model context window, catching design flaws before coding begins."
+        },
+        {
+          type: "feat",
+          title: "Empirical Bug Inspection in /omni-plan",
+          detail: "Scoped read-only command authorization, file grepping, and test suite execution during the 02-bugfix archetype to empirically isolate root causes before proposing fixes."
+        },
+        {
+          type: "feat",
+          title: "UI/UX ProMax Directives in Feature Planning",
+          detail: "Mandatory interaction architecture, micro-interactions, animations, and the 4 essential UI states (loading, error, empty, and success) in every feature plan."
+        }
+      ]
+    },
+    {
+      version: "v0.5.1",
+      date: "October 20, 2026",
+      tag: "Stable",
       title: "First-Pass Precision, Anti-Slop Rules & Universal Multi-Agent Support",
       description: "This release eliminates AI slop via impeccable frontend design and pragmatic backend invariants baked into the Core, modernizes universal installation guides, and adds official GitHub Copilot support.",
       highlights: [
