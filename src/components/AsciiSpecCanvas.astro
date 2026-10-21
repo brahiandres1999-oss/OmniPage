@@ -1,0 +1,577 @@
+---
+/**
+ * AsciiSpecCanvas — Lienzo interactivo de partículas ASCII del logo OmniSpec.
+ *
+ * Renderiza la geometría isométrica real del icono de OmniSpec (plinto constitucional,
+ * 4 cuadrantes de arquetipos con caras 3D, compuerta central y joya focal) como una
+ * nube de caracteres ASCII, rodeada de una lluvia de ASCII en caída continua.
+ *
+ * Características:
+ * - Decorativo (`aria-hidden`), sin bloquear la interacción (`pointer-events-none`).
+ * - Figura fija: al pasar el cursor o interactuar táctilmente, el ASCII se dispersa y vuelve solo.
+ * - Destinos de reposo pre-calculados (`hx`, `hy`) para máxima eficiencia de CPU (60/120fps).
+ * - Pausa real del bucle rAF fuera del viewport (`IntersectionObserver`) para ahorro de batería.
+ * - Cacheo de geometría de pantalla para evitar layout thrashing (`getBoundingClientRect`).
+ * - Ciclo de vida robusto compatible con Astro ViewTransitions (`astro:before-swap` y `astro:page-load`).
+ * - Tema claro/oscuro reactivo en memoria con `MutationObserver`.
+ * - `prefers-reduced-motion`: render estático sin animación.
+ */
+---
+
+<div
+  id="ascii-spec-wrap"
+  class="w-full h-[220px] sm:h-[280px] lg:h-[470px] relative select-none"
+  aria-hidden="true"
+>
+  <canvas id="ascii-spec-canvas" class="w-full h-full block pointer-events-none"></canvas>
+</div>
+
+<script>
+  /** Región geométrica de la figura muestreada (define el color base). */
+  type RegionId = 'plinth' | 'feature' | 'bugfix' | 'techdebt' | 'rfc' | 'gate' | 'jewel';
+
+  /** Partícula ASCII de la figura, con objetivo normalizado y sombreado de cara. */
+  interface AsciiParticle {
+    /** Posición normalizada X de destino (0..1). */
+    nx: number;
+    /** Posición normalizada Y de destino (0..1). */
+    ny: number;
+    /** Región de origen (color base). */
+    region: RegionId;
+    /** Multiplicador de sombreado (1 = cara superior, menor = cara lateral). */
+    shade: number;
+    /** Carácter ASCII actual. */
+    char: string;
+    /** Posición de render X (px). */
+    x: number;
+    /** Posición de render Y (px). */
+    y: number;
+    /** Posición de reposo X (px) pre-calculada en resize. */
+    hx: number;
+    /** Posición de reposo Y (px) pre-calculada en resize. */
+    hy: number;
+    /** Velocidad X (px/frame) — dispersión por cursor. */
+    vx: number;
+    /** Velocidad Y (px/frame) — dispersión por cursor. */
+    vy: number;
+    /** Opacidad de render (0..1). */
+    alpha: number;
+  }
+
+  /** Gota de la lluvia ASCII: una columna en caída con estela. */
+  interface RainDrop {
+    /** Posición X de la cabeza (px). */
+    x: number;
+    /** Posición Y de la cabeza (px). */
+    y: number;
+    /** Velocidad de caída (px/frame). */
+    speed: number;
+    /** Longitud de la estela (nº de caracteres). */
+    len: number;
+    /** Color CSS de la gota. */
+    color: string;
+    /** Opacidad base de la gota (0..1). */
+    alpha: number;
+  }
+
+  /** Controlador de ciclo de vida de una instancia del canvas. */
+  interface CanvasController {
+    /** Detiene el bucle y elimina todos los listeners/observers. */
+    destroy: () => void;
+  }
+
+  /** Lado del espacio de muestreo (px lógicos) usado para perfilar la figura. */
+  const SAMPLE_SIZE = 360;
+  /** Paso de muestreo (px lógicos) entre partículas candidatas (bajo = ASCII fino y denso). */
+  const SAMPLE_STEP = 3;
+  /** Rigidez del resorte que devuelve cada partícula a su sitio. */
+  const SPRING = 0.06;
+  /** Amortiguación de velocidad por frame. */
+  const DAMPING = 0.82;
+  /** Radio de dispersión del cursor como fracción de la escala de la figura. */
+  const REPEL_RADIUS_FRAC = 0.18;
+  /** Fuerza de dispersión máxima del cursor (px/frame²). */
+  const REPEL_STRENGTH = 2.6;
+  /** Escala de la figura como fracción del lado menor del lienzo (presencia visual). */
+  const FIGURE_SCALE_FRAC = 1.35;
+
+  /** Código de región en el canal rojo del sampler; sombra en el canal verde. */
+  const REGION_CODE: Record<RegionId, number> = {
+    plinth: 1,
+    feature: 2,
+    bugfix: 3,
+    techdebt: 4,
+    rfc: 5,
+    gate: 6,
+    jewel: 7,
+  };
+
+  /** Mapa inverso: código de canal -> región. */
+  const REGION_BY_CODE = new Map<number, RegionId>(
+    (Object.entries(REGION_CODE) as [RegionId, number][]).map(([id, code]) => [code, id])
+  );
+
+  /** Rampa de caracteres densa (caras principales de la figura). */
+  const DENSE_RAMP = ['#', '@', '%', '8', '&', '$', '=', '+', '*', 'x'];
+  /** Rampa de caracteres dispersa (caras laterales y sombreado). */
+  const SPARSE_RAMP = ['.', '.', ':', '-', '~', '+', '=', '|', '/', '\\'];
+  /** Rampa de la lluvia ASCII (estética de terminal). */
+  const RAIN_RAMP = ['0', '1', '<', '>', '/', '\\', '|', ';', ':', ',', '.', '+', '*', '$', '#'];
+
+  /** Variable CSS de color por región. */
+  const REGION_COLOR_VAR: Record<RegionId, string> = {
+    plinth: '--text-secondary',
+    feature: '--accent',
+    bugfix: '--accent-amber',
+    techdebt: '--accent-emerald',
+    rfc: '--text-secondary',
+    gate: '--accent-amber',
+    jewel: '--accent-amber',
+  };
+
+  /** Opacidad base por región. */
+  const REGION_ALPHA: Record<RegionId, number> = {
+    plinth: 0.55,
+    feature: 0.95,
+    bugfix: 0.9,
+    techdebt: 0.9,
+    rfc: 0.8,
+    gate: 1,
+    jewel: 1,
+  };
+
+  /** Instancia activa (una sola por documento; se destruye al re-inicializar). */
+  let activeController: CanvasController | null = null;
+
+  /**
+   * Dibuja la geometría del logo OmniSpec (fiel al omni-spec-icon.svg) sobre un
+   * canvas 2D usando colores sampler: canal rojo = región, canal verde = sombreado
+   * (1 = cara superior, 2 = cara lateral).
+   */
+  function drawLogoGeometry(ctx: CanvasRenderingContext2D, size: number): void {
+    const s = size / 256;
+    ctx.save();
+    ctx.scale(s, s);
+    ctx.translate(128, 128);
+
+    const face = (points: [number, number][], region: RegionId, shade: 1 | 2): void => {
+      ctx.fillStyle = `rgb(${REGION_CODE[region] * 26},${shade * 128},0)`;
+      ctx.beginPath();
+      ctx.moveTo(points[0][0], points[0][1]);
+      for (let i = 1; i < points.length; i++) {
+        ctx.lineTo(points[i][0], points[i][1]);
+      }
+      ctx.closePath();
+      ctx.fill();
+    };
+
+    const isoCube = (cx: number, cy: number, w: number, h: number, d: number, region: RegionId): void => {
+      face([[cx, cy - h], [cx + w, cy], [cx, cy + h], [cx - w, cy]], region, 1);
+      face([[cx - w, cy], [cx, cy + h], [cx, cy + h + d], [cx - w, cy + d]], region, 2);
+      face([[cx, cy + h], [cx + w, cy], [cx + w, cy + d], [cx, cy + h + d]], region, 2);
+    };
+
+    // Plinto base isométrico (Constitución)
+    face([[0, -22], [68, 17], [0, 56], [-68, 17]], 'plinth', 1);
+    face([[-68, 17], [0, 56], [0, 66], [-68, 27]], 'plinth', 2);
+    face([[0, 56], [68, 17], [68, 27], [0, 66]], 'plinth', 2);
+
+    // 4 cuadrantes de arquetipos: FEATURE, BUGFIX, TECH DEBT, RFC/ADR.
+    isoCube(0, -22, 32, 19, 10, 'feature');
+    isoCube(30, -5, 28, 18, 9, 'bugfix');
+    isoCube(0, 12, 28, 17, 7, 'techdebt');
+    isoCube(-30, -5, 28, 18, 9, 'rfc');
+
+    // Compuerta central y joya focal
+    face([[0, -12], [18, -2], [0, 8], [-18, -2]], 'gate', 1);
+    face([[0, -8], [12, -2], [0, 4], [-12, -2]], 'jewel', 1);
+
+    ctx.restore();
+  }
+
+  /**
+   * Perfila la figura del logo y genera las partículas ASCII normalizadas.
+   */
+  function buildParticles(): AsciiParticle[] {
+    const off = document.createElement('canvas');
+    off.width = SAMPLE_SIZE;
+    off.height = SAMPLE_SIZE;
+    const ctx = off.getContext('2d');
+    if (!ctx) return [];
+
+    drawLogoGeometry(ctx, SAMPLE_SIZE);
+    const { data } = ctx.getImageData(0, 0, SAMPLE_SIZE, SAMPLE_SIZE);
+
+    const particles: AsciiParticle[] = [];
+    for (let y = 0; y < SAMPLE_SIZE; y += SAMPLE_STEP) {
+      for (let x = 0; x < SAMPLE_SIZE; x += SAMPLE_STEP) {
+        const i = (y * SAMPLE_SIZE + x) * 4;
+        if (data[i + 3] < 100) continue;
+        const region = REGION_BY_CODE.get(Math.round(data[i] / 26)) ?? 'plinth';
+        const isSideFace = data[i + 1] > 128;
+        const shade = isSideFace ? 0.55 : 1;
+        const ramp = isSideFace ? SPARSE_RAMP : DENSE_RAMP;
+        particles.push({
+          nx: x / SAMPLE_SIZE,
+          ny: y / SAMPLE_SIZE,
+          region,
+          shade,
+          char: ramp[Math.floor(Math.random() * ramp.length)],
+          x: 0,
+          y: 0,
+          hx: 0,
+          hy: 0,
+          vx: 0,
+          vy: 0,
+          alpha: REGION_ALPHA[region] * shade * (0.78 + Math.random() * 0.22),
+        });
+      }
+    }
+    return particles;
+  }
+
+  /**
+   * Lee un color de las variables CSS del documento.
+   */
+  function readCssColor(name: string): string {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || '#888888';
+  }
+
+  /**
+   * Genera las gotas de la lluvia ASCII alrededor de la figura.
+   */
+  function buildRain(
+    width: number,
+    height: number,
+    clearRadius: number,
+    colors: string[]
+  ): RainDrop[] {
+    const drops: RainDrop[] = [];
+    const columns = Math.max(12, Math.floor(width / 26));
+    for (let i = 0; i < columns; i++) {
+      const x = ((i + 0.5) / columns) * width + (Math.random() - 0.5) * 18;
+      const dxCenter = x - width / 2;
+      if (Math.abs(dxCenter) < clearRadius) {
+        const yTop = height / 2 - Math.sqrt(Math.max(0, clearRadius * clearRadius - dxCenter * dxCenter));
+        if (yTop <= 4) continue;
+      }
+      drops.push({
+        x,
+        y: Math.random() * height,
+        speed: 0.45 + Math.random() * 1.1,
+        len: 4 + Math.floor(Math.random() * 10),
+        color: colors[Math.floor(Math.random() * colors.length)],
+        alpha: 0.14 + Math.random() * 0.3,
+      });
+    }
+    return drops;
+  }
+
+  /**
+   * Dibuja y actualiza la lluvia ASCII en caída con estelas que se desvanecen.
+   */
+  function drawRain(
+    ctx: CanvasRenderingContext2D,
+    drops: RainDrop[],
+    width: number,
+    height: number,
+    fontSize: number,
+    clearRadius: number,
+    alphaBoost: number
+  ): void {
+    const step = fontSize * 1.05;
+    for (const drop of drops) {
+      for (let j = 0; j < drop.len; j++) {
+        const yChar = drop.y - j * step;
+        if (yChar < -step || yChar > height + step) continue;
+        const dx = drop.x - width / 2;
+        const dy = yChar - height / 2;
+        if (dx * dx + dy * dy < clearRadius * clearRadius) continue;
+
+        const fade = 1 - j / drop.len;
+        ctx.globalAlpha = Math.min(1, drop.alpha * alphaBoost * fade * fade);
+        ctx.fillStyle = drop.color;
+        const idx = ((Math.floor(yChar / step) + j * 7 + Math.floor(drop.x)) % RAIN_RAMP.length + RAIN_RAMP.length) % RAIN_RAMP.length;
+        ctx.fillText(RAIN_RAMP[idx], drop.x, yChar);
+      }
+
+      drop.y += drop.speed;
+      const tailY = drop.y - drop.len * step;
+      if (tailY > height + step) {
+        drop.y = -Math.random() * height * 0.35;
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  /**
+   * Inicializa el canvas de partículas ASCII y devuelve su controlador de vida.
+   */
+  function setupAsciiSpecCanvas(): CanvasController | null {
+    const wrap = document.getElementById('ascii-spec-wrap');
+    const canvas = document.getElementById('ascii-spec-canvas') as HTMLCanvasElement | null;
+    if (!wrap || !canvas) return null;
+    wrap.dataset.bound = 'true';
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return null;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const particles = buildParticles();
+    const colors = new Map<RegionId, string>();
+    for (const id of Object.keys(REGION_COLOR_VAR) as RegionId[]) {
+      colors.set(id, readCssColor(REGION_COLOR_VAR[id]));
+    }
+    const rainPalette = [
+      readCssColor('--text-tertiary'),
+      readCssColor('--text-secondary'),
+      readCssColor('--accent'),
+    ];
+
+    let isDark = document.documentElement.classList.contains('dark');
+    let width = 0;
+    let height = 0;
+    let mouseX = -9999;
+    let mouseY = -9999;
+    let mouseActive = false;
+    let cachedRect: DOMRect | null = null;
+    let rain: RainDrop[] = [];
+    let rafId = 0;
+    let visible = true;
+    let destroyed = false;
+
+    /** Actualiza la geometría en caché del canvas (evita layout thrashing en mousemove). */
+    const updateRect = (): void => {
+      if (!canvas || destroyed) return;
+      cachedRect = canvas.getBoundingClientRect();
+    };
+
+    /** Posiciona el cursor en coordenadas del canvas a partir de un evento. */
+    const setCursorPos = (clientX: number, clientY: number): void => {
+      if (!cachedRect) updateRect();
+      if (!cachedRect) return;
+      mouseX = clientX - cachedRect.left;
+      mouseY = clientY - cachedRect.top;
+      mouseActive = true;
+    };
+
+    /** Dibuja la figura en las posiciones actuales de las partículas (p.x, p.y). */
+    const drawFigure = (): void => {
+      const fontSize = Math.max(3, (Math.min(width, height) * FIGURE_SCALE_FRAC * SAMPLE_STEP) / SAMPLE_SIZE * 1.05);
+      const figureBoost = isDark ? 1 : 1.4;
+      ctx.font = `500 ${fontSize}px "JetBrains Mono", ui-monospace, monospace`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      for (const p of particles) {
+        ctx.globalAlpha = Math.min(1, p.alpha * figureBoost);
+        ctx.fillStyle = colors.get(p.region) ?? '#888888';
+        ctx.fillText(p.char, p.x, p.y);
+      }
+      ctx.globalAlpha = 1;
+    };
+
+    /** Dibuja un frame estático (modo movimiento reducido). */
+    const drawStatic = (): void => {
+      ctx.clearRect(0, 0, width, height);
+      drawFigure();
+    };
+
+    /** Ajusta el buffer del canvas al tamaño CSS, pre-calcula destinos y reconstruye la lluvia. */
+    const resize = (): void => {
+      if (destroyed) return;
+      const rect = wrap.getBoundingClientRect();
+      updateRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = rect.width;
+      height = rect.height;
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      // Pre-cálculo de destinos fijos para eliminar ~8.000 operaciones matemáticas redundantes por frame
+      const scale = Math.min(width, height) * FIGURE_SCALE_FRAC;
+      const cx = width / 2;
+      const cy = height / 2;
+      for (const p of particles) {
+        p.hx = cx + (p.nx - 0.5) * scale;
+        p.hy = cy + (p.ny - 0.5) * scale;
+        p.x = p.hx;
+        p.y = p.hy;
+        p.vx = 0;
+        p.vy = 0;
+      }
+      rain = buildRain(width, height, Math.min(width, height) * 0.42, rainPalette);
+      if (reduceMotion) drawStatic();
+    };
+
+    /** Inicia el bucle de animación si está visible y no se encuentra activo. */
+    const startLoop = (): void => {
+      if (destroyed || !visible || reduceMotion || rafId !== 0) return;
+      rafId = requestAnimationFrame(frame);
+    };
+
+    /** Detiene el bucle de animación para liberar CPU/GPU al 100%. */
+    const stopLoop = (): void => {
+      if (rafId !== 0) {
+        cancelAnimationFrame(rafId);
+        rafId = 0;
+      }
+    };
+
+    /** Bucle de animación: física de partículas pre-calculadas y lluvia continua. */
+    const frame = (): void => {
+      if (destroyed || !visible) {
+        rafId = 0;
+        return;
+      }
+      rafId = requestAnimationFrame(frame);
+      if (width === 0) return;
+
+      const scale = Math.min(width, height) * FIGURE_SCALE_FRAC;
+      const repelRadius = scale * REPEL_RADIUS_FRAC;
+      const repelRadiusSq = repelRadius * repelRadius;
+
+      // Guarda de proximidad: omite la física de dispersión si el cursor está fuera del rango del canvas
+      const isCursorNear =
+        mouseActive &&
+        mouseX >= -repelRadius &&
+        mouseX <= width + repelRadius &&
+        mouseY >= -repelRadius &&
+        mouseY <= height + repelRadius;
+
+      // Física de la figura: resorte hacia destino pre-calculado + dispersión opcional
+      for (const p of particles) {
+        p.vx += (p.hx - p.x) * SPRING;
+        p.vy += (p.hy - p.y) * SPRING;
+
+        if (isCursorNear) {
+          const dx = p.x - mouseX;
+          const dy = p.y - mouseY;
+          const d2 = dx * dx + dy * dy;
+          if (d2 < repelRadiusSq && d2 > 0.01) {
+            const d = Math.sqrt(d2);
+            const force = (1 - d / repelRadius) * REPEL_STRENGTH;
+            p.vx += (dx / d) * force;
+            p.vy += (dy / d) * force;
+          }
+        }
+
+        p.vx *= DAMPING;
+        p.vy *= DAMPING;
+        p.x += p.vx;
+        p.y += p.vy;
+      }
+
+      ctx.clearRect(0, 0, width, height);
+
+      // Lluvia ASCII en caída continua alrededor de la figura
+      const rainBoost = isDark ? 1 : 2.2;
+      const rainFontSize = Math.max(8, Math.min(width, height) * 0.032);
+      ctx.font = `500 ${rainFontSize}px "JetBrains Mono", ui-monospace, monospace`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      drawRain(ctx, rain, width, height, rainFontSize, Math.min(width, height) * 0.42, rainBoost);
+
+      // Figura OmniSpec fija
+      drawFigure();
+    };
+
+    /** Manejador pasivo de movimiento de ratón. */
+    const onMouseMove = (e: MouseEvent): void => {
+      setCursorPos(e.clientX, e.clientY);
+    };
+
+    /** Manejador táctil para móviles y tablets. */
+    const onTouchMove = (e: TouchEvent): void => {
+      if (e.touches.length > 0) {
+        setCursorPos(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    };
+
+    /** Neutraliza la dispersión al salir del área o terminar toque. */
+    const onPointerLeave = (): void => {
+      mouseActive = false;
+      mouseX = -9999;
+      mouseY = -9999;
+    };
+
+    /** Controla apagado y reanudación real del loop rAF según visibilidad en pantalla. */
+    const io = new IntersectionObserver((entries) => {
+      visible = entries[0]?.isIntersecting ?? true;
+      if (visible) {
+        startLoop();
+      } else {
+        stopLoop();
+      }
+    });
+    io.observe(wrap);
+
+    /** Re-lee colores y sincroniza tema en memoria cuando cambia la clase `dark`. */
+    const themeObserver = new MutationObserver(() => {
+      isDark = document.documentElement.classList.contains('dark');
+      for (const id of Object.keys(REGION_COLOR_VAR) as RegionId[]) {
+        colors.set(id, readCssColor(REGION_COLOR_VAR[id]));
+      }
+      rainPalette[0] = readCssColor('--text-tertiary');
+      rainPalette[1] = readCssColor('--text-secondary');
+      rainPalette[2] = readCssColor('--accent');
+      for (const drop of rain) {
+        drop.color = rainPalette[Math.floor(Math.random() * rainPalette.length)];
+      }
+      if (reduceMotion) drawStatic();
+    });
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+    const ro = new ResizeObserver(resize);
+    ro.observe(wrap);
+
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
+    window.addEventListener('scroll', updateRect, { passive: true });
+    window.addEventListener('touchmove', onTouchMove, { passive: true });
+    window.addEventListener('touchend', onPointerLeave, { passive: true });
+    document.addEventListener('mouseleave', onPointerLeave);
+
+    resize();
+
+    if (reduceMotion) {
+      drawStatic();
+    } else {
+      startLoop();
+    }
+
+    return {
+      destroy: () => {
+        destroyed = true;
+        stopLoop();
+        io.disconnect();
+        themeObserver.disconnect();
+        ro.disconnect();
+        window.removeEventListener('mousemove', onMouseMove);
+        window.removeEventListener('scroll', updateRect);
+        window.removeEventListener('touchmove', onTouchMove);
+        window.removeEventListener('touchend', onPointerLeave);
+        document.removeEventListener('mouseleave', onPointerLeave);
+        delete wrap.dataset.bound;
+      },
+    };
+  }
+
+  /**
+   * Inicializa (o re-inicializa tras navegación SPA) el canvas de partículas.
+   */
+  function bootAsciiSpecCanvas(): void {
+    const wrap = document.getElementById('ascii-spec-wrap');
+    if (wrap && wrap.dataset.bound === 'true' && activeController) return;
+    activeController?.destroy();
+    activeController = setupAsciiSpecCanvas();
+  }
+
+  // Desconecta y limpia el controlador antes de que Astro capture la instantánea del DOM
+  document.addEventListener('astro:before-swap', () => {
+    activeController?.destroy();
+    activeController = null;
+  });
+
+  bootAsciiSpecCanvas();
+  document.addEventListener('astro:page-load', bootAsciiSpecCanvas);
+</script>

@@ -16,8 +16,11 @@ export const translations: Record<Language, Record<string, string>> = {
     'nav.versionTitle': 'Ver novedades de la versión (Changelog)',
 
     // Hero
-    'hero.title': 'Desarrollo guiado por especificaciones para agentes de código.',
-    'hero.subtitle': 'OmniSpec estructura el trabajo de tu agente mediante contratos técnicos versionados en Git: diagnóstico previo, alcance delimitado por archivo y verificación con los tests de tu repositorio.',
+    'hero.eyebrow': 'Spec-Driven Development',
+    'hero.titleL': 'Desarrollo guiado por',
+    'hero.titleWord': 'especificaciones',
+    'hero.titleR': 'para agentes de código.',
+    'hero.subtitle': 'Contratos técnicos versionados en Git: alcance delimitado por tarea y verificación con los tests de tu repositorio.',
     'hero.tag1': 'Sin dependencias externas (Node.js ESM)',
     'hero.tag2': '100% local en tu repositorio',
     'hero.tag3': 'Licencia MIT',
@@ -159,8 +162,11 @@ export const translations: Record<Language, Record<string, string>> = {
     'nav.versionTitle': 'View release notes (Changelog)',
 
     // Hero
-    'hero.title': 'Spec-driven development for AI coding agents.',
-    'hero.subtitle': 'OmniSpec structures agentic workflows through Git-versioned technical contracts: pre-execution diagnosis, strict file boundaries, and verification with your repository tests.',
+    'hero.eyebrow': 'Spec-Driven Development',
+    'hero.titleL': 'Development driven by',
+    'hero.titleWord': 'specifications',
+    'hero.titleR': 'for AI coding agents.',
+    'hero.subtitle': 'Git-versioned technical contracts: strict task boundaries and verification with your repository tests.',
     'hero.tag1': 'Zero external dependencies (Node.js ESM)',
     'hero.tag2': '100% local in your repository',
     'hero.tag3': 'MIT License',

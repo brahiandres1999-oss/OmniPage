@@ -5,20 +5,20 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 <header class="sticky top-0 z-50 w-full border-b border-border bg-background/90 backdrop-blur-md transition-colors">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
     <!-- Brand / Logotipo y Versión Cohesionados -->
-    <div class="flex items-center gap-2.5 sm:gap-3">
-      <a href={`${base}/`} class="flex items-center gap-2.5 sm:gap-3 group" aria-label="OmniSpec Inicio">
+    <div class="flex items-center gap-2 sm:gap-3 min-w-0 shrink">
+      <a href={`${base}/`} class="flex items-center gap-2 sm:gap-2.5 group shrink-0" aria-label="OmniSpec Inicio">
         <img 
           src={`${base}/assets/omni-spec-icon.svg`} 
           alt="OmniSpec Logo" 
-          class="w-10 h-10 object-contain transition-transform group-hover:scale-105" 
+          class="w-9 h-9 sm:w-10 sm:h-10 object-contain transition-transform group-hover:scale-105 shrink-0" 
         />
-        <span class="font-bold text-lg sm:text-xl tracking-tight text-primary group-hover:text-accent transition-colors">OmniSpec</span>
+        <span class="font-bold text-lg sm:text-xl tracking-tight text-primary group-hover:text-accent transition-colors truncate">OmniSpec</span>
       </a>
 
-      <!-- Badge Changelog Trigger Contiguo -->
+      <!-- Badge Changelog Trigger Contiguo: visible a partir de sm: -->
       <a
         href={`${base}/changelog`}
-        class="inline-flex items-center gap-1.5 text-xs font-mono px-2 py-0.5 rounded bg-surface-elevated hover:bg-surface-hover border border-border text-primary-muted hover:text-accent font-medium transition-colors group/ver"
+        class="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono px-2 py-0.5 rounded bg-surface-elevated hover:bg-surface-hover border border-border text-primary-muted hover:text-accent font-medium transition-colors group/ver shrink-0"
         title="Ver novedades de la versión (Changelog)"
         aria-label="Ver historial de versiones (Changelog)"
         data-i18n-title="nav.versionTitle"
@@ -37,8 +37,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <a href={`${base}/changelog`} class="hover:text-primary transition-colors" data-i18n="nav.changelog">Changelog</a>
     </nav>
 
-    <!-- Acciones: 3 Iconos limpios (sin marco, sin texto) + CTA Principal -->
-    <div class="flex items-center gap-1 sm:gap-2">
+    <!-- Acciones: Iconos limpios + CTA Principal -->
+    <div class="flex items-center gap-0.5 sm:gap-2 shrink-0">
       <!-- 1. Selector de Idioma (Icono Globo sin texto ni caja) -->
       <button
         type="button"
@@ -73,12 +73,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </svg>
       </button>
 
-      <!-- 3. GitHub (Icono Octocat sin texto ni caja) -->
+      <!-- 3. GitHub (Icono Octocat sin texto ni caja) — visible a partir de sm: -->
       <a 
         href="https://github.com/brahiandres1999-oss/omni-spec" 
         target="_blank" 
         rel="noopener noreferrer"
-        class="p-2 text-primary-muted hover:text-primary transition-transform active:scale-90 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent rounded-lg"
+        class="hidden sm:inline-flex p-2 text-primary-muted hover:text-primary transition-transform active:scale-90 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent rounded-lg"
         aria-label="Repositorio en GitHub"
         title="GitHub"
       >
@@ -87,11 +87,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </svg>
       </a>
 
-      <!-- CTA Principal: Copia comando y guía a configuración de agentes -->
+      <!-- CTA Principal: Copia comando y guía a configuración de agentes — visible a partir de sm: -->
       <button 
         type="button"
         id="nav-install-btn" 
-        class="ml-1 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-primary text-background hover:opacity-90 transition-all active:scale-95 cursor-pointer"
+        class="hidden sm:inline-flex ml-1 items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-primary text-background hover:opacity-90 transition-all active:scale-95 cursor-pointer"
         aria-label="Copiar comando de instalación e ir a configuración de agentes"
         title="Copiar comando npx omni-spec init"
       >
@@ -105,7 +105,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <button
         type="button"
         id="mobile-menu-btn"
-        class="md:hidden p-2 rounded-lg text-primary-muted hover:text-primary transition-colors active:scale-95 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent ml-1"
+        class="md:hidden p-2 rounded-lg text-primary-muted hover:text-primary transition-colors active:scale-95 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent ml-0.5 sm:ml-1"
         aria-expanded="false"
         aria-controls="mobile-menu"
         aria-label="Abrir menú de navegación"
@@ -127,6 +127,21 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     id="mobile-menu" 
     class="hidden md:hidden border-b border-border bg-background/95 backdrop-blur-md px-4 py-5 transition-all"
   >
+    <!-- CTA Principal de Instalación en Móvil -->
+    <div class="pb-3 mb-2 border-b border-border/70">
+      <button
+        type="button"
+        id="mobile-install-btn"
+        class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-semibold bg-primary text-background hover:opacity-90 transition-all active:scale-95 cursor-pointer shadow-sm"
+        aria-label="Copiar comando de instalación e ir a configuración de agentes"
+      >
+        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+        </svg>
+        <span id="mobile-install-text" data-i18n="nav.installCli">Instalar CLI</span>
+      </button>
+    </div>
+
     <nav class="flex flex-col gap-3.5 text-sm font-medium text-primary">
       <a href={`${base}/#canvas`} class="mobile-nav-link py-2 px-3 rounded-lg hover:bg-surface transition-colors" data-i18n="nav.howItWorks">Cómo Funciona</a>
       <a href={`${base}/#caos-vs-spec`} class="mobile-nav-link py-2 px-3 rounded-lg hover:bg-surface transition-colors" data-i18n="nav.theProblem">El Problema</a>
@@ -286,22 +301,24 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       });
     }
 
-    // Botón de instalación CLI en Navbar (copia interactiva + navegación a agentes)
-    const installBtn = document.getElementById('nav-install-btn');
-    const installText = document.getElementById('nav-install-text');
-    if (installBtn && installText) {
-      installBtn.addEventListener('click', async () => {
+    // Botones de instalación CLI en Navbar y Menú Móvil (copia interactiva + navegación a agentes)
+    const attachInstallAction = (btnId: string, textId: string) => {
+      const btn = document.getElementById(btnId);
+      const text = document.getElementById(textId);
+      if (!btn || !text) return;
+
+      btn.addEventListener('click', async () => {
         const cmd = 'npx --yes omni-spec@latest init';
         const lang = (localStorage.getItem('omni-lang') as Language) || 'es';
         try {
           await navigator.clipboard.writeText(cmd);
-          const originalText = installText.textContent || 'Instalar CLI';
-          installText.textContent = lang === 'en' ? '✓ Copied!' : '✓ ¡Copiado!';
-          installBtn.classList.add('bg-emerald-600', 'text-white');
+          const originalText = text.textContent || 'Instalar CLI';
+          text.textContent = lang === 'en' ? '✓ Copied!' : '✓ ¡Copiado!';
+          btn.classList.add('bg-emerald-600', 'text-white');
           
           setTimeout(() => {
-            installText.textContent = originalText;
-            installBtn.classList.remove('bg-emerald-600', 'text-white');
+            text.textContent = originalText;
+            btn.classList.remove('bg-emerald-600', 'text-white');
           }, 2200);
 
           const agentesSection = document.getElementById('agentes');
@@ -309,10 +326,14 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             agentesSection.scrollIntoView({ behavior: 'smooth' });
           }
         } catch {
-          window.location.href = '/#agentes';
+          const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+          window.location.href = `${baseUrl}/#agentes`;
         }
       });
-    }
+    };
+
+    attachInstallAction('nav-install-btn', 'nav-install-text');
+    attachInstallAction('mobile-install-btn', 'mobile-install-text');
   }
 
   setupNavbar();
