@@ -21,9 +21,38 @@ interface Release {
 const releasesByLang: Record<'es' | 'en', Release[]> = {
   es: [
     {
+      version: "v0.6.1",
+      date: "21 de Octubre, 2026",
+      tag: "Actual",
+      title: "Plugin Manager Nativo, Modo Zero-Bloat y Migración Limpia de Proyectos",
+      description: "Esta versión introduce el gestor nativo de plugins con instalación en 100 ms (~180 KB), elimina la necesidad de clonar repositorios completos con git clone, desacopla el motor CLI de los repositorios de usuario y añade el comando clean para migrar proyectos existentes al modo plugin sin tocar especificaciones.",
+      highlights: [
+        {
+          type: "feat",
+          title: "Plugin Manager Nativo (npx omni-spec plugin install)",
+          detail: "Instalación y actualización atómica del plugin global (~180 KB) directamente desde npm en ~/.gemini/config/plugins/omni-spec/, sin historial .git ni dependencias de desarrollo."
+        },
+        {
+          type: "feat",
+          title: "Modo Proyecto Limpio (Zero-Bloat Project Mode)",
+          detail: "Soporte para agent: 'plugin' en specs/manifest.json, eliminando la duplicación de código de runtime (specs/.omni/runtime) y carpetas .agents/ en los repositorios."
+        },
+        {
+          type: "feat",
+          title: "Comando de Limpieza Segura (npx omni-spec clean)",
+          detail: "Comando interactivo para limpiar de forma segura runtimes antiguos y carpetas .agents/ preservando el 100% de las especificaciones y contratos existentes."
+        },
+        {
+          type: "feat",
+          title: "Resolución Dinámica de CLI en Skills",
+          detail: "Las 9 habilidades resuelven el motor ejecutable en orden: Plugin Global -> Runtime local si existe -> npx omni-spec."
+        }
+      ]
+    },
+    {
       version: "v0.6.0",
       date: "20 de Octubre, 2026",
-      tag: "Actual",
+      tag: "Estable",
       title: "Plugin Oficial Google Antigravity, Subagente Autónomo omni-auditor & Desbloqueo de Bugs",
       description: "Esta versión convierte a OmniSpec en un Plugin Oficial de Google Antigravity con distribución modular de habilidades, introduce el subagente autónomo omni-auditor en segundo plano para auditorías de especificaciones, autoriza la inspección empírica y ejecución de tests en /omni-plan para diagnósticos de bugs, y estandariza las directivas de UI/UX ProMax en la planificación de features.",
       highlights: [
@@ -274,9 +303,38 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
   ],
   en: [
     {
+      version: "v0.6.1",
+      date: "October 21, 2026",
+      tag: "Current",
+      title: "Native Plugin Manager, Zero-Bloat Project Mode & Safe Clean Migration",
+      description: "This release introduces the native Antigravity Plugin Manager with 100ms clean installs (~180 KB), removes the need for full repository git clones, decouples the CLI engine from user repositories, and adds the clean command to migrate existing projects into lightweight plugin mode preserving all specs.",
+      highlights: [
+        {
+          type: "feat",
+          title: "Native Plugin Manager (npx omni-spec plugin install)",
+          detail: "Atomic installation and upgrade of the clean global plugin (~180 KB) directly from npm into ~/.gemini/config/plugins/omni-spec/, without .git history or dev overhead."
+        },
+        {
+          type: "feat",
+          title: "Zero-Bloat Project Mode",
+          detail: "Full support for agent: 'plugin' in specs/manifest.json, eliminating vendored runtime code (specs/.omni/runtime) and .agents/ folders in user repositories."
+        },
+        {
+          type: "feat",
+          title: "Safe Cleanup & Migration (npx omni-spec clean)",
+          detail: "Interactive command to safely purge legacy in-repo runtimes and .agents/ folders while preserving 100% of existing specifications and project context."
+        },
+        {
+          type: "feat",
+          title: "Dynamic CLI Resolution in Skills",
+          detail: "All 9 official skills resolve the executable engine in priority order: Global Plugin CLI -> Local CLI if present -> npx omni-spec."
+        }
+      ]
+    },
+    {
       version: "v0.6.0",
       date: "October 20, 2026",
-      tag: "Current",
+      tag: "Stable",
       title: "Official Google Antigravity Plugin, Autonomous omni-auditor Subagent & Bug Diagnostic Unblock",
       description: "This release elevates OmniSpec to an official Google Antigravity Plugin with modular skill distribution, introduces the autonomous background omni-auditor subagent for specification reviews, unblocks empirical inspection and test execution in /omni-plan for bug diagnostics, and standardizes UI/UX ProMax directives during feature planning.",
       highlights: [
