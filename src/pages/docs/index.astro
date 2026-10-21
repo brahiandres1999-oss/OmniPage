@@ -726,13 +726,13 @@ const initialDocNav = docNavByLang.es;
                 <span>Instalación Global del Plugin para Google Antigravity</span>
               </h3>
               <p class="text-xs text-primary-muted leading-relaxed">
-                Si deseas que OmniSpec esté disponible en todos tus proyectos de Antigravity sin generar carpetas de configuración locales en tu repositorio, clona el plugin directamente en el directorio global:
+                Si deseas que OmniSpec esté disponible en todos tus proyectos de Antigravity sin generar carpetas de configuración locales en tu repositorio, instala el plugin limpio (~180 KB) con un solo comando:
               </p>
               <div class="my-2">
-                <CopySnippet command='git clone https://github.com/brahiandres1999-oss/omni-spec.git "$HOME/.gemini/config/plugins/omni-spec"' />
+                <CopySnippet command='npx omni-spec plugin install' />
               </div>
               <p class="text-[11px] font-mono text-primary-muted">
-                Una vez clonado, reinicia Antigravity para activar los 9 comandos y el subagente <code class="text-primary font-bold">omni-auditor</code> de forma global.
+                Para actualizarlo en el futuro, ejecuta <code class="text-primary font-bold">npx omni-spec plugin update</code>. Para migrar un proyecto existente a modo limpio ejecuta <code class="text-primary font-bold">npx omni-spec clean</code>.
               </p>
             </div>
           </div>
@@ -807,13 +807,13 @@ const initialDocNav = docNavByLang.es;
                 <span>Global Plugin Installation for Google Antigravity</span>
               </h3>
               <p class="text-xs text-primary-muted leading-relaxed">
-                If you want OmniSpec available globally across all your Antigravity workspaces without scaffolding local agent skill folders in your repository, clone the official plugin directly into your global configuration path:
+                If you want OmniSpec available globally across all your Antigravity workspaces without scaffolding local agent skill folders in your repository, install the clean plugin bundle (~180 KB) with a single command:
               </p>
               <div class="my-2">
-                <CopySnippet command='git clone https://github.com/brahiandres1999-oss/omni-spec.git "$HOME/.gemini/config/plugins/omni-spec"' />
+                <CopySnippet command='npx omni-spec plugin install' />
               </div>
               <p class="text-[11px] font-mono text-primary-muted">
-                Once cloned, restart Antigravity to activate all 9 commands and the <code class="text-primary font-bold">omni-auditor</code> subagent globally.
+                To upgrade in the future, run <code class="text-primary font-bold">npx omni-spec plugin update</code>. To migrate an existing workspace to lightweight mode, run <code class="text-primary font-bold">npx omni-spec clean</code>.
               </p>
             </div>
           </div>

@@ -222,13 +222,13 @@
           <span id="agent-alt-label" class="text-xs font-mono text-primary-muted">O instálalo como Plugin Global en tu entorno Antigravity:</span>
           <div class="flex items-center justify-between p-3.5 rounded-lg bg-background border border-border">
             <code id="agent-alt-cmd" class="text-xs sm:text-sm font-mono text-primary overflow-x-auto pr-3">
-              git clone https://github.com/brahiandres1999-oss/omni-spec.git "$HOME/.gemini/config/plugins/omni-spec"
+              npx omni-spec plugin install
             </code>
             <button
               type="button"
               id="agent-alt-copy-btn"
               class="shrink-0 px-3 py-1.5 rounded text-xs font-mono font-medium bg-surface hover:bg-surface-elevated text-primary-muted hover:text-primary border border-border transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-accent"
-              aria-label="Copiar comando de clonación al portapapeles"
+              aria-label="Copiar comando de instalación al portapapeles"
             >
               <span id="agent-alt-copy-label">Copiar</span>
             </button>
@@ -257,7 +257,7 @@
         cmd: "npx --yes omni-spec@latest init --yes --agent antigravity",
         altCmd: {
           label: "O instálalo como Plugin Global en tu entorno Antigravity:",
-          cmd: 'git clone https://github.com/brahiandres1999-oss/omni-spec.git "$HOME/.gemini/config/plugins/omni-spec"'
+          cmd: 'npx omni-spec plugin install'
         }
       },
       opencode: {
@@ -319,7 +319,7 @@
         cmd: "npx --yes omni-spec@latest init --yes --agent antigravity",
         altCmd: {
           label: "Or install as a Global Plugin in your Antigravity environment:",
-          cmd: 'git clone https://github.com/brahiandres1999-oss/omni-spec.git "$HOME/.gemini/config/plugins/omni-spec"'
+          cmd: 'npx omni-spec plugin install'
         }
       },
       opencode: {
