@@ -21,6 +21,13 @@ CONSTITUTION.md
 /CONSTITUTION.md
 mcp_config.json
 /mcp_config.json
+/.audit
+/.audit/
+
+# Dev server logs
+dev-server.log
+preview-out.log
+preview-err.log
 
 # Native binaries & heavy caches
 *.exe
