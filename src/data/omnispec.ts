@@ -3,12 +3,12 @@ import type { Language } from '../i18n/translations';
 
 /** Prepared release. Confirm npm/GitHub publication before marking this as published. */
 export const omniSpecRelease = {
-  "version": "0.7.0-preview.1",
+  "version": "0.7.0-preview.2",
   "label": "0.7.0 Preview",
   "channel": "preview",
   "stableVersion": "0.6.1",
   "published": false,
-  "tagPublished": true,
+  "tagPublished": false,
   "releasePublished": false
 } as const;
 export const installCommand = 'npx --yes omni-spec@preview init';

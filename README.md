@@ -57,7 +57,7 @@ MIT © [OmniSpec Authors](https://github.com/brahiandres1999-oss/omni-spec/blob/
 
 ## OmniSpec release displayed by the site
 
-This update prepares **0.7.0-preview.1** in npm channel **preview**. The previous publication **0.6.1** remains latest. src/data/omnispec.ts centralizes release metadata, install commands, agent paths and domain profile descriptions. src/data/docs.ts contains the current bilingual documentation.
+This update prepares **0.7.0-preview.2** in npm channel **preview**. The previous publication **0.6.1** remains latest. src/data/omnispec.ts centralizes release metadata, install commands, agent paths and domain profile descriptions. src/data/docs.ts contains the current bilingual documentation.
 
 Publish the npm Preview before deploying a website that announces it as available. After confirming npm and GitHub publication, update the publication flags/status in the release data and changelog. Until then the site labels the Preview as preparing release. The verified Git tag is marked present; npm and GitHub Release remain pending. Track these independently through published (npm), tagPublished and releasePublished.
 

@@ -24,7 +24,7 @@ export const docsSections = [
     "es": {
       "title": "2. Instalar la Preview",
       "paragraphs": [
-        "Requiere <strong>Node.js ≥22.19.0</strong>; no tiene dependencias runtime externas. Usa la raíz de tu proyecto o una carpeta nueva. El canal <code>preview</code> seleccionará 0.7.0-preview.1 cuando se publique; <code>latest</code> conserva 0.6.1.",
+        "Requiere <strong>Node.js ≥22.19.0</strong>; no tiene dependencias runtime externas. Usa la raíz de tu proyecto o una carpeta nueva. El canal <code>preview</code> seleccionará 0.7.0-preview.2 cuando se publique; <code>latest</code> conserva 0.6.1.",
         "El <code>--yes</code> de npm acepta obtener el paquete. OmniSpec mantiene sus preguntas: idioma, herramienta con IA y confirmación de carpeta. Puedes elegir varias herramientas o <code>generic</code>. Usa flechas, Espacio y Enter; Esc o Ctrl+C cancelan antes de instalar.",
         "init instala archivos y comprueba integridad y versión local. No ejecuta scripts de tu aplicación. El descubrimiento del host y el onboarding conversacional siguen pendientes. Antes de publicar, utiliza el tarball local descrito en el repositorio de OmniSpec."
       ]
@@ -32,7 +32,7 @@ export const docsSections = [
     "en": {
       "title": "2. Install the Preview",
       "paragraphs": [
-        "Requires <strong>Node.js ≥22.19.0</strong> with no external runtime dependencies. Use your project root or a new folder. The <code>preview</code> channel will select 0.7.0-preview.1 when published; <code>latest</code> stays on 0.6.1.",
+        "Requires <strong>Node.js ≥22.19.0</strong> with no external runtime dependencies. Use your project root or a new folder. The <code>preview</code> channel will select 0.7.0-preview.2 when published; <code>latest</code> stays on 0.6.1.",
         "npm’s <code>--yes</code> accepts obtaining the package. OmniSpec still asks for language, AI tool and folder confirmation. Choose multiple tools or <code>generic</code>. Use arrows, Space and Enter; Esc or Ctrl+C cancel before installation.",
         "init installs files and checks integrity and local version. It does not run application scripts. Host discovery and conversational onboarding remain pending. Before publication, use the local tarball described in the OmniSpec repository."
       ]
