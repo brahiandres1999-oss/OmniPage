@@ -1,4 +1,6 @@
 ---
+import { agentsByLang } from '../data/omnispec';
+const initialAgent = agentsByLang.es.antigravity;
 ---
 
 <section id="agentes" class="py-16 md:py-24 border-t border-border transition-colors">
@@ -143,6 +145,8 @@
         </button>
 
         <!-- CLI Agnóstico (GNU Bash) -->
+<button type="button" role="tab" id="tab-kilo" aria-selected="false" aria-controls="agent-details-panel" class="agent-nav-btn px-5 py-3.5 text-xs font-mono font-semibold text-primary-muted hover:text-primary border-b-2 border-transparent transition-colors shrink-0 flex items-center gap-2.5" data-agent="kilo"><svg class="w-4 h-4" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor"/><text x="12" y="16" text-anchor="middle" font-size="13" fill="currentColor">K</text></svg><span>Kilo</span></button>
+<button type="button" role="tab" id="tab-gemini" aria-selected="false" aria-controls="agent-details-panel" class="agent-nav-btn px-5 py-3.5 text-xs font-mono font-semibold text-primary-muted hover:text-primary border-b-2 border-transparent transition-colors shrink-0 flex items-center gap-2.5" data-agent="gemini"><svg class="w-4 h-4" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor"/><text x="12" y="16" text-anchor="middle" font-size="13" fill="currentColor">G</text></svg><span>Gemini CLI</span></button>
         <button 
           type="button" 
           role="tab"
@@ -171,9 +175,7 @@
             </div>
             <div>
               <h3 id="agent-title" class="text-xl font-bold text-primary tracking-tight">Google Antigravity</h3>
-              <p id="agent-desc" class="text-sm text-primary-muted mt-0.5 max-w-[65ch]">
-                Integración nativa dual: como Plugin Oficial de Antigravity (global o de workspace) o Skills estructuradas en .agents/skills/. Descubrimiento automático de los 9 slash commands y subagente autónomo omni-auditor.
-              </p>
+              <p id="agent-desc" class="text-sm text-primary-muted mt-0.5 max-w-[65ch]">{initialAgent.desc}</p>
             </div>
           </div>
         </div>
@@ -181,21 +183,21 @@
         <!-- Matriz Estandarizada de Metadatos de Ingeniería (Segmentada con Divisores) -->
         <div class="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-border border border-border rounded-lg bg-surface-elevated/40 font-mono text-xs overflow-hidden">
           <!-- Col 1: Formato -->
-          <div class="p-3.5 flex flex-col gap-1">
+          <div class="p-3.5 flex min-w-0 flex-col gap-1">
             <span class="text-primary-muted text-[11px] uppercase tracking-wider" data-i18n="agents.formatLabel">Formato de Adaptador</span>
-            <span id="agent-format" class="text-primary font-semibold truncate">Plugin Oficial (plugin.json) + Skills Nativas</span>
+            <span id="agent-format" class="text-primary font-semibold break-words [overflow-wrap:anywhere]">{initialAgent.format}</span>
           </div>
 
           <!-- Col 2: Ubicación en Disco -->
-          <div class="p-3.5 flex flex-col gap-1">
+          <div class="p-3.5 flex min-w-0 flex-col gap-1">
             <span class="text-primary-muted text-[11px] uppercase tracking-wider" data-i18n="agents.pathLabel">Ubicación en tu Repo</span>
-            <span id="agent-path" class="text-emerald-600 dark:text-emerald-400 font-semibold truncate">~/.gemini/config/plugins/omni-spec o .agents/skills/</span>
+            <span id="agent-path" class="text-emerald-600 dark:text-emerald-400 font-semibold break-words [overflow-wrap:anywhere]">{initialAgent.path}</span>
           </div>
 
           <!-- Col 3: Modo de Invocación -->
-          <div class="p-3.5 flex flex-col gap-1">
+          <div class="p-3.5 flex min-w-0 flex-col gap-1">
             <span class="text-primary-muted text-[11px] uppercase tracking-wider" data-i18n="agents.invocationLabel">Modo de Invocación</span>
-            <span id="agent-invocation" class="text-accent font-semibold truncate">/omni-init o subagente omni-auditor</span>
+            <span id="agent-invocation" class="text-accent font-semibold break-words [overflow-wrap:anywhere]">{initialAgent.invocation}</span>
           </div>
         </div>
 
@@ -203,9 +205,7 @@
         <div class="flex flex-col gap-2">
           <span class="text-xs font-mono text-primary-muted" data-i18n="agents.commandLabel">Comando de instalación con adaptador específico:</span>
           <div class="flex items-center justify-between p-3.5 rounded-lg bg-background border border-border">
-            <code id="agent-cmd" class="text-xs sm:text-sm font-mono text-primary overflow-x-auto pr-3">
-              npx --yes omni-spec@latest init --yes --agent antigravity
-            </code>
+            <code id="agent-cmd" class="text-xs sm:text-sm font-mono text-primary overflow-x-auto pr-3">{initialAgent.cmd}</code>
             <button
               type="button"
               id="agent-copy-btn"
@@ -243,135 +243,8 @@
 </section>
 
 <script>
-  import type { AgentData } from '../types';
+  import { agentsByLang, installCommand } from '../data/omnispec';
   import type { Language } from '../i18n/translations';
-
-  const agentsByLang: Record<Language, Record<string, AgentData>> = {
-    es: {
-      antigravity: {
-        title: "Google Antigravity",
-        desc: "Integración nativa dual: como Plugin Oficial de Antigravity (global o de workspace) o Skills estructuradas en .agents/skills/. Descubrimiento automático de los 9 slash commands y subagente autónomo omni-auditor.",
-        format: "Plugin Oficial (plugin.json) + Skills Nativas",
-        path: "~/.gemini/config/plugins/omni-spec o .agents/skills/",
-        invocation: "/omni-init o subagente omni-auditor",
-        cmd: "npx --yes omni-spec@latest init --yes --agent antigravity",
-        altCmd: {
-          label: "O instálalo como Plugin Global en tu entorno Antigravity:",
-          cmd: 'npx omni-spec plugin install'
-        }
-      },
-      opencode: {
-        title: "OpenCode",
-        desc: "Comandos de ingeniería inyectados en el estándar abierto de OpenCode. Permite ejecutar el ciclo SDD de forma transparente desde el panel de comandos del asistente con control estricto de diffs.",
-        format: "Markdown Commands + AGENTS.md",
-        path: ".opencode/commands/ & AGENTS.md",
-        invocation: "/omni-init (Command Picker)",
-        cmd: "npx --yes omni-spec@latest init --yes --agent opencode"
-      },
-      claude: {
-        title: "Anthropic Claude Code",
-        desc: "Instalación en el directorio supervisado de Claude. Ejecuta comandos de desarrollo guiado desde la consola interactiva con confirmación humana previa a cualquier escritura en disco.",
-        format: "Skills Supervisadas CLI",
-        path: ".claude/skills/omni-*/",
-        invocation: "/omni-init en consola",
-        cmd: "npx --yes omni-spec@latest init --yes --agent claude"
-      },
-      cursor: {
-        title: "Cursor AI",
-        desc: "Reglas de repositorio inyectadas en .cursor/rules/. Composer y Chat leen la constitución como directiva inmutable antes de proponer o aplicar cualquier bloque de código.",
-        format: "System Rules MDC",
-        path: ".cursor/rules/omni-spec.mdc",
-        invocation: "/omni-init en Composer",
-        cmd: "npx --yes omni-spec@latest init --yes --agent cursor"
-      },
-      copilot: {
-        title: "VS Code (GitHub Copilot)",
-        desc: "Prompts ejecutables e instrucciones personalizadas. Permite invocar /omni-init y todo el ciclo SDD directamente desde la interfaz de chat de GitHub Copilot en VS Code.",
-        format: "Prompt Files (.prompt.md) + Instrucciones",
-        path: ".github/prompts/ & copilot-instructions.md",
-        invocation: "/omni-init en VS Code Chat",
-        cmd: "npx --yes omni-spec@latest init --yes --agent copilot"
-      },
-      codex: {
-        title: "OpenAI Codex CLI",
-        desc: "Directivas de razonamiento estructurado para entornos Codex. Impone los contratos de especificación antes de generar cualquier bloque de código.",
-        format: "Skills Nativas + AGENTS.md",
-        path: ".agents/skills/ & AGENTS.md",
-        invocation: "$omni-init (Skill Picker)",
-        cmd: "npx --yes omni-spec@latest init --yes --agent codex"
-      },
-      universal: {
-        title: "Cualquier Agente CLI (Aider, Goose, Qwen, etc.)",
-        desc: "Ejecución estándar y desacoplada mediante node specs/.omni/runtime/bin/omni-spec.mjs. El agente solo requiere leer archivos markdown y ejecutar comandos de terminal.",
-        format: "Node.js ESM Estándar",
-        path: "specs/ + .omni/runtime/",
-        invocation: "node specs/... status",
-        cmd: "npx --yes omni-spec@latest init --yes"
-      }
-    },
-    en: {
-      antigravity: {
-        title: "Google Antigravity",
-        desc: "Dual native integration: as an Official Antigravity Plugin (global or workspace) or structured skills in .agents/skills/. Automatic discovery of all 9 slash commands and autonomous omni-auditor subagent.",
-        format: "Official Plugin (plugin.json) + Native Skills",
-        path: "~/.gemini/config/plugins/omni-spec or .agents/skills/",
-        invocation: "/omni-init or omni-auditor subagent",
-        cmd: "npx --yes omni-spec@latest init --yes --agent antigravity",
-        altCmd: {
-          label: "Or install as a Global Plugin in your Antigravity environment:",
-          cmd: 'npx omni-spec plugin install'
-        }
-      },
-      opencode: {
-        title: "OpenCode",
-        desc: "Engineering commands integrated into OpenCode's open standard. Run the full SDD cycle transparently from the assistant's command picker with strict diff containment.",
-        format: "Markdown Commands + AGENTS.md",
-        path: ".opencode/commands/ & AGENTS.md",
-        invocation: "/omni-init (Command Picker)",
-        cmd: "npx --yes omni-spec@latest init --yes --agent opencode"
-      },
-      claude: {
-        title: "Anthropic Claude Code",
-        desc: "Installation inside Claude's supervised directory. Executes spec-driven commands from the interactive console with human confirmation required prior to disk mutations.",
-        format: "CLI Supervised Skills",
-        path: ".claude/skills/omni-*/",
-        invocation: "/omni-init in console",
-        cmd: "npx --yes omni-spec@latest init --yes --agent claude"
-      },
-      cursor: {
-        title: "Cursor AI",
-        desc: "Repository governance injected into .cursor/rules/. Composer and Chat consult the constitution as an immutable contract before generating or applying any code chunk.",
-        format: "System Rules MDC",
-        path: ".cursor/rules/omni-spec.mdc",
-        invocation: "/omni-init in Composer",
-        cmd: "npx --yes omni-spec@latest init --yes --agent cursor"
-      },
-      copilot: {
-        title: "VS Code (GitHub Copilot)",
-        desc: "Executable prompt files and custom instructions. Run /omni-init and the complete SDD cycle directly from GitHub Copilot Chat in VS Code.",
-        format: "Prompt Files (.prompt.md) + Instructions",
-        path: ".github/prompts/ & copilot-instructions.md",
-        invocation: "/omni-init in VS Code Chat",
-        cmd: "npx --yes omni-spec@latest init --yes --agent copilot"
-      },
-      codex: {
-        title: "OpenAI Codex CLI",
-        desc: "Structured reasoning directives for Codex workflows. Enforces specification contracts and test verification before generating code modifications.",
-        format: "Native Skills + AGENTS.md",
-        path: ".agents/skills/ & AGENTS.md",
-        invocation: "$omni-init (Skill Picker)",
-        cmd: "npx --yes omni-spec@latest init --yes --agent codex"
-      },
-      universal: {
-        title: "Any CLI Agent (Aider, Goose, Qwen, etc.)",
-        desc: "Decoupled and standard execution via node specs/.omni/runtime/bin/omni-spec.mjs. The agent only needs to read markdown contracts and run project terminal commands.",
-        format: "Standard Node.js ESM",
-        path: "specs/ + .omni/runtime/",
-        invocation: "node specs/... status",
-        cmd: "npx --yes omni-spec@latest init --yes"
-      }
-    }
-  };
 
   let activeAgentKey = 'antigravity';
 
@@ -462,7 +335,7 @@
       copyBtn.addEventListener('click', async () => {
         const lang = (localStorage.getItem('omni-lang') as Language) || 'es';
         const agents = agentsByLang[lang] || agentsByLang.es;
-        const currentCmd = agents[activeAgentKey]?.cmd || "npx --yes omni-spec@latest init --yes";
+        const currentCmd = agents[activeAgentKey]?.cmd || installCommand;
         try {
           await navigator.clipboard.writeText(currentCmd);
           if (copyLabel) copyLabel.textContent = lang === 'en' ? 'Copied!' : '¡Copiado!';

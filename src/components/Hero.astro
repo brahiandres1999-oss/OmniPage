@@ -1,6 +1,7 @@
 ---
 import CopySnippet from './CopySnippet.astro';
 import AsciiSpecCanvas from './AsciiSpecCanvas.astro';
+import { omniSpecRelease, installCommand } from '../data/omnispec';
 ---
 
 <section class="pt-10 pb-14 md:pt-14 md:pb-20 transition-colors">
@@ -29,11 +30,17 @@ import AsciiSpecCanvas from './AsciiSpecCanvas.astro';
 
       <!-- Caja de Comando npx con CopySnippet -->
       <div class="mt-6 w-full flex flex-col items-center lg:items-start gap-3" id="instalar">
-        <CopySnippet command="npx --yes omni-spec@latest init" />
+        <div class="flex flex-wrap items-center gap-2 text-xs font-mono text-amber-600 dark:text-amber-400">
+          <span class="rounded border border-amber-500/30 px-2 py-1">{omniSpecRelease.version}</span>
+          <span data-i18n={omniSpecRelease.published ? "hero.previewPublished" : "hero.previewStatus"}>Preview · lanzamiento en preparación</span>
+        </div>
+        <CopySnippet command={installCommand} />
+        <p class="text-xs text-primary-muted max-w-[65ch] leading-relaxed" data-i18n={omniSpecRelease.published ? "hero.previewReady" : "hero.previewNotice"}>El comando estará disponible al publicar la Preview. latest conserva 0.6.1.</p>
+        <p class="text-sm text-primary-muted max-w-[60ch] leading-relaxed" data-i18n="hero.setupHint">Idioma → herramienta → confirmar carpeta. Después, tu agente te ayuda a definir qué construir.</p>
         <!-- Tags mono sin separadores sueltos (wrap seguro: nada de "·" colgantes) -->
         <div class="flex flex-wrap items-center justify-center lg:justify-start gap-x-4 gap-y-1.5 text-xs font-mono text-primary-muted mt-2">
-          <span data-i18n="hero.tag1">Sin dependencias externas (Node.js ESM)</span>
-          <span data-i18n="hero.tag2">100% local en tu repositorio</span>
+          <span data-i18n="hero.tag1">Node.js ≥22.19 · sin dependencias runtime</span>
+          <span data-i18n="hero.tag2">Sin telemetría ni servidores</span>
           <span data-i18n="hero.tag3">Licencia MIT</span>
         </div>
       </div>

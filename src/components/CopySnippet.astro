@@ -1,11 +1,12 @@
 ---
+import { installCommand } from '../data/omnispec';
 interface Props {
   command?: string;
   prefix?: string;
 }
 
 const {
-  command = "npx --yes omni-spec@latest init --yes --agent antigravity",
+  command = installCommand,
   prefix = "$"
 } = Astro.props;
 ---

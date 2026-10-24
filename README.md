@@ -2,7 +2,7 @@
 
 Website and documentation portal for **OmniSpec** (Spec-Driven Development Framework for AI Coding Agents).
 
-Built with **Astro 5**, **Tailwind CSS**, and **TypeScript**.
+Built with **Astro 4**, **Tailwind CSS**, and **TypeScript**.
 
 ---
 
@@ -54,3 +54,11 @@ OmniSpec was created by Brahiam Andres as a personal open-source initiative with
 ## License
 
 MIT © [OmniSpec Authors](https://github.com/brahiandres1999-oss/omni-spec/blob/main/LICENSE)
+
+## OmniSpec release displayed by the site
+
+This update prepares **0.7.0-preview.1** in npm channel **preview**. The previous publication **0.6.1** remains latest. src/data/omnispec.ts centralizes release metadata, install commands, agent paths and domain profile descriptions. src/data/docs.ts contains the current bilingual documentation.
+
+Publish the npm Preview before deploying a website that announces it as available. After confirming npm and GitHub publication, update the publication flags/status in the release data and changelog. Until then the site labels the Preview as preparing release. The verified Git tag is marked present; npm and GitHub Release remain pending. Track these independently through published (npm), tagPublished and releasePublished.
+
+The main install command is npx --yes omni-spec@preview init. Node.js >=22.19.0 is an OmniSpec requirement; the website's build runtime is configured independently. The ASCII hero geometry is preserved.

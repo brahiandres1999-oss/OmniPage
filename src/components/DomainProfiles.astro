@@ -1,73 +1,7 @@
 ---
-import type { DomainProfile } from '../types';
+import { profileDataByLang, installCommand } from '../data/omnispec';
 
-const profiles: DomainProfile[] = [
-  {
-    id: "fintech",
-    name: "Fintech & Pagos",
-    flag: "--profile fintech",
-    tag: "PCI-DSS · Idempotencia · Doble Partida",
-    description: "Inyecta directivas financieras inmutables: obliga al agente a diseñar mecanismos de idempotencia en cobros, contabilidad de doble partida y tests de concurrencia en balances.",
-    invariants: [
-      "Idempotencia obligatoria en operaciones transaccionales",
-      "Invariantes contables de doble partida (debe y haber)",
-      "Aislamiento de balance y tests de concurrencia de datastore",
-      "Minimización y delimitación de datos de tarjetas (PCI-DSS)"
-    ]
-  },
-  {
-    id: "healthtech",
-    name: "Healthtech & Salud",
-    flag: "--profile healthtech",
-    tag: "HIPAA · PHI · Límites Clínicos",
-    description: "Diseñado para aplicaciones médicas o clínicas. Impone barreras estrictas de datos de salud protegidos (PHI), auditoría inmutable de accesos y consentimiento.",
-    invariants: [
-      "Límites estrictos de exposición de datos clínicos y PHI",
-      "Auditoría inmutable de accesos y trazabilidad médica",
-      "Aislamiento de datos de pacientes en entornos compartidos",
-      "Validación de límites para interfaces de telemedicina"
-    ]
-  },
-  {
-    id: "ecommerce",
-    name: "E-Commerce",
-    flag: "--profile ecommerce",
-    tag: "Inventario Atómico · Checkout · Impuestos",
-    description: "Previene inconsistencias en compras online: reserva atómica de stock para evitar sobreventa, cálculo determinista de impuestos y carritos idempotentes.",
-    invariants: [
-      "Reserva atómica de inventario antes de procesar el pago",
-      "Idempotencia en checkout para evitar cobros duplicados",
-      "Consistencia transaccional de precios, promociones e impuestos",
-      "Recuperabilidad de carritos y gestión de estados de orden"
-    ]
-  },
-  {
-    id: "bpo",
-    name: "BPO & Workplace",
-    flag: "--profile bpo",
-    tag: "k-Anonimato · Privacidad Laboral · SST",
-    description: "Para herramientas de gestión de empleados y bienestar. Establece k-anonimato en métricas grupales, confidencialidad de notas y normativas laborales.",
-    invariants: [
-      "k-Anonimato en métricas agregadas de desempeño",
-      "Confidencialidad de notas privadas frente a supervisores",
-      "Directivas de privacidad laboral y salud ocupacional",
-      "Protección contra inferencia estadística de identidad"
-    ]
-  },
-  {
-    id: "general",
-    name: "General Software",
-    flag: "--profile general",
-    tag: "Clean Architecture · Minimal Touch",
-    description: "El perfil estándar para cualquier proyecto. Impone mínima modificación, pruebas automatizadas obligatorias y prevención activa de deuda técnica.",
-    invariants: [
-      "Diagnóstico pre-ejecución obligatorio antes de escribir",
-      "Modificación confinada exclusivamente al alcance aprobado",
-      "Quality Gates del proyecto con exit code 0",
-      "Cero dependencias o servicios remotos innecesarios"
-    ]
-  }
-];
+const profiles = Object.values(profileDataByLang.es);
 ---
 
 <section id="perfiles" class="py-16 md:py-24 border-t border-border transition-colors">
@@ -77,12 +11,8 @@ const profiles: DomainProfile[] = [
       <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-surface-elevated border border-border text-xs font-mono text-primary-muted mb-4">
         <span class="text-accent font-semibold" data-i18n="profiles.badge">Gobernanza por Industria</span>
       </div>
-      <h2 class="text-3xl sm:text-4xl font-extrabold text-primary tracking-tight" data-i18n="profiles.title">
-        Perfiles de Dominio e Invariantes Regulatorias
-      </h2>
-      <p class="mt-4 text-base sm:text-lg text-primary-muted leading-relaxed max-w-[65ch]" data-i18n="profiles.subtitle">
-        Un agente de código no debe tratar un e-commerce igual que una plataforma bancaria. OmniSpec inyecta invariantes de arquitectura y cumplimiento legal directamente en tu <code class="code-inline">CONSTITUTION.md</code> al inicializar el proyecto.
-      </p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-primary tracking-tight" data-i18n="profiles.title">Perfiles de dominio: controles a revisar</h2>
+      <p class="mt-4 text-base sm:text-lg text-primary-muted leading-relaxed max-w-[65ch]" data-i18n="profiles.subtitle">Elige un perfil si ya conoces el dominio. El agente revisará su aplicabilidad; no impone arquitectura ni certifica cumplimiento.</p>
     </div>
 
     <!-- Pestañas Interactivas de Perfiles de Dominio -->
@@ -129,9 +59,7 @@ const profiles: DomainProfile[] = [
 
           <!-- Invariantes Inyectadas -->
           <div class="pt-3">
-            <span class="text-xs font-mono text-primary-muted block mb-2 font-medium" data-i18n="profiles.invariantsLabel">
-              Invariantes inyectadas en tu CONSTITUTION.md:
-            </span>
+            <span class="text-xs font-mono text-primary-muted block mb-2 font-medium" data-i18n="profiles.invariantsLabel">Controles para revisar y adaptar:</span>
             <ul id="profile-invariants" class="space-y-2 text-xs font-mono text-primary-muted">
               {profiles[0].invariants.map((inv) => (
                 <li class="flex items-start gap-2">
@@ -151,11 +79,9 @@ const profiles: DomainProfile[] = [
             Inicialización con Perfil
           </span>
           <div class="p-2.5 rounded-lg bg-background border border-border text-primary text-xs overflow-x-auto">
-            <span class="text-emerald-500">$</span> <span id="profile-cmd">npx omni-spec init --profile fintech</span>
+            <span class="text-emerald-500">$</span> <span id="profile-cmd">{installCommand} --profile fintech</span>
           </div>
-          <p class="text-xs text-primary-muted leading-relaxed" data-i18n="profiles.agentNotice">
-            El agente leerá las invariantes del perfil antes de diseñar o proponer cualquier solución técnica.
-          </p>
+          <p class="text-xs text-primary-muted leading-relaxed" data-i18n="profiles.agentNotice">Es una decisión opcional. Producto, tecnologías y checks se acuerdan durante el onboarding.</p>
         </div>
 
       </div>
@@ -166,145 +92,8 @@ const profiles: DomainProfile[] = [
 </section>
 
 <script>
-  import type { DomainProfile } from '../types';
+  import { profileDataByLang, installCommand } from '../data/omnispec';
   import type { Language } from '../i18n/translations';
-
-  const profileDataByLang: Record<Language, Record<string, DomainProfile>> = {
-    es: {
-      fintech: {
-        id: "fintech",
-        name: "Fintech & Pagos",
-        flag: "--profile fintech",
-        tag: "PCI-DSS · Idempotencia · Doble Partida",
-        description: "Inyecta directivas financieras inmutables: obliga al agente a diseñar mecanismos de idempotencia en cobros, contabilidad de doble partida y tests de concurrencia en balances.",
-        invariants: [
-          "Idempotencia obligatoria en operaciones transaccionales",
-          "Invariantes contables de doble partida (debe y haber)",
-          "Aislamiento de balance y tests de concurrencia de datastore",
-          "Minimización y delimitación de datos de tarjetas (PCI-DSS)"
-        ]
-      },
-      healthtech: {
-        id: "healthtech",
-        name: "Healthtech & Salud",
-        flag: "--profile healthtech",
-        tag: "HIPAA · PHI · Límites Clínicos",
-        description: "Diseñado para aplicaciones médicas o clínicas. Impone barreras estrictas de datos de salud protegidos (PHI), auditoría inmutable de accesos y consentimiento.",
-        invariants: [
-          "Límites estrictos de exposición de datos clínicos y PHI",
-          "Auditoría inmutable de accesos y trazabilidad médica",
-          "Aislamiento de datos de pacientes en entornos compartidos",
-          "Validación de límites para interfaces de telemedicina"
-        ]
-      },
-      ecommerce: {
-        id: "ecommerce",
-        name: "E-Commerce",
-        flag: "--profile ecommerce",
-        tag: "Inventario Atómico · Checkout · Impuestos",
-        description: "Previene inconsistencias en compras online: reserva atómica de stock para evitar sobreventa, cálculo determinista de impuestos y carritos idempotentes.",
-        invariants: [
-          "Reserva atómica de inventario antes de procesar el pago",
-          "Idempotencia en checkout para evitar cobros duplicados",
-          "Consistencia transaccional de precios, promociones e impuestos",
-          "Recuperabilidad de carritos y gestión de estados de orden"
-        ]
-      },
-      bpo: {
-        id: "bpo",
-        name: "BPO & Workplace",
-        flag: "--profile bpo",
-        tag: "k-Anonimato · Privacidad Laboral · SST",
-        description: "Para herramientas de gestión de empleados y bienestar. Establece k-anonimato en métricas grupales, confidencialidad de notas y normativas laborales.",
-        invariants: [
-          "k-Anonimato en métricas agregadas de desempeño",
-          "Confidencialidad de notas privadas frente a supervisores",
-          "Directivas de privacidad laboral y salud ocupacional",
-          "Protección contra inferencia estadística de identidad"
-        ]
-      },
-      general: {
-        id: "general",
-        name: "General Software",
-        flag: "--profile general",
-        tag: "Clean Architecture · Minimal Touch",
-        description: "El perfil estándar para cualquier proyecto. Impone mínima modificación, pruebas automatizadas obligatorias y prevención activa de deuda técnica.",
-        invariants: [
-          "Diagnóstico pre-ejecución obligatorio antes de escribir",
-          "Modificación confinada exclusivamente al alcance aprobado",
-          "Quality Gates del proyecto con exit code 0",
-          "Cero dependencias o servicios remotos innecesarios"
-        ]
-      }
-    },
-    en: {
-      fintech: {
-        id: "fintech",
-        name: "Fintech & Payments",
-        flag: "--profile fintech",
-        tag: "PCI-DSS · Idempotency · Double-Entry",
-        description: "Injects strict financial directives: enforces idempotency on transactions, double-entry ledger invariants, and concurrency testing on balance updates.",
-        invariants: [
-          "Mandatory idempotency keys on payment operations",
-          "Double-entry bookkeeping invariants (debits match credits)",
-          "Balance isolation and datastore concurrency tests",
-          "Cardholder data minimization and tokenization (PCI-DSS)"
-        ]
-      },
-      healthtech: {
-        id: "healthtech",
-        name: "Healthtech & Clinical",
-        flag: "--profile healthtech",
-        tag: "HIPAA · PHI · Clinical Boundaries",
-        description: "Designed for healthcare and clinical systems. Enforces protected health information (PHI) barriers, immutable access audit trails, and patient consent verification.",
-        invariants: [
-          "Strict exposure boundaries for clinical records and PHI",
-          "Immutable access audit logging and medical traceability",
-          "Patient tenant isolation in multi-tenant environments",
-          "Boundary validation for telemedicine interfaces"
-        ]
-      },
-      ecommerce: {
-        id: "ecommerce",
-        name: "E-Commerce",
-        flag: "--profile ecommerce",
-        tag: "Atomic Inventory · Checkout · Taxes",
-        description: "Prevents transactional anomalies in digital stores: atomic inventory reservations to prevent overselling, deterministic tax computation, and idempotent carts.",
-        invariants: [
-          "Atomic inventory reservation prior to payment capture",
-          "Checkout idempotency to prevent duplicate charges",
-          "Transactional consistency across prices, coupons, and taxes",
-          "Cart session recoverability and order state transitions"
-        ]
-      },
-      bpo: {
-        id: "bpo",
-        name: "BPO & Workplace",
-        flag: "--profile bpo",
-        tag: "k-Anonymity · Worker Privacy · Compliance",
-        description: "For workforce management and employee well-being platforms. Enforces k-anonymity on aggregated feedback, private note segregation, and labor law boundaries.",
-        invariants: [
-          "k-Anonymity on aggregated performance dashboards",
-          "Confidentiality of private notes against supervisor escalation",
-          "Worker privacy directives and occupational health standards",
-          "Protection against statistical identity re-identification"
-        ]
-      },
-      general: {
-        id: "general",
-        name: "General Software",
-        flag: "--profile general",
-        tag: "Clean Architecture · Minimal Touch",
-        description: "The baseline governance profile for any codebase. Mandates pre-execution diagnosis, automated testing gates, and active technical debt prevention.",
-        invariants: [
-          "Mandatory pre-execution diagnosis before writing to disk",
-          "Code modification strictly confined to approved task scope",
-          "Repository Quality Gates passing with exit code 0",
-          "Zero unnecessary dependencies or external network services"
-        ]
-      }
-    }
-  };
 
   let activeProfileKey = 'fintech';
 
@@ -325,7 +114,7 @@ const profiles: DomainProfile[] = [
     if (titleEl) titleEl.textContent = data.name;
     if (tagEl) tagEl.textContent = data.tag;
     if (descEl) descEl.textContent = data.description;
-    if (cmdEl) cmdEl.textContent = `npx omni-spec init ${data.flag}`;
+    if (cmdEl) cmdEl.textContent = `${installCommand} ${data.flag}`;
 
     if (invariantsEl) {
       invariantsEl.innerHTML = data.invariants.map(inv => `

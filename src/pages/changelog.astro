@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
+import { omniSpecRelease } from '../data/omnispec';
 
 interface Highlight {
   type: 'feat' | 'fix' | 'refactor';
@@ -13,6 +14,9 @@ interface Release {
   version: string;
   date: string;
   tag: string;
+  npm: boolean;
+  git: boolean;
+  release: boolean;
   title: string;
   description: string;
   highlights: Highlight[];
@@ -21,9 +25,44 @@ interface Release {
 const releasesByLang: Record<'es' | 'en', Release[]> = {
   es: [
     {
+  "version": "v0.7.0-preview.1",
+  "date": "Lanzamiento en preparación",
+  "tag": "Preview",
+  "npm": omniSpecRelease.published,
+  "git": omniSpecRelease.tagPublished,
+  "release": omniSpecRelease.releasePublished,
+  "title": "0.7.0 Preview: instalación guiada y evidencia con alcance",
+  "description": "Preview para pruebas y feedback. init pregunta idioma, herramienta y carpeta; la aplicación se define con el agente. latest conserva 0.6.1.",
+  "highlights": [
+    {
+      "type": "feat",
+      "title": "Instalador con identidad de OmniSpec",
+      "detail": "Logo ASCII adaptable, menús de teclado, varias integraciones, cancelación y resultado por bloques. Node.js ≥22.19.0; sin dependencias runtime externas."
+    },
+    {
+      "type": "fix",
+      "title": "Auditor y recuperación sin duplicación",
+      "detail": "Antigravity recibe .agents/agents/omni-auditor.md. La entrada de recuperación apunta a la skill; el descubrimiento se verifica en el host."
+    },
+    {
+      "type": "feat",
+      "title": "Checks y evidencia por criterio",
+      "detail": "Checks por módulo, historial de sesiones, decisiones y verificación v3. Las salidas generadas no invalidan la huella cuando están correctamente ignoradas."
+    },
+    {
+      "type": "refactor",
+      "title": "Distribución Preview",
+      "detail": "Versión 0.7.0-preview.1, canal npm preview y GitHub prerelease. La publicación está pendiente; la validación de hosts y modelos continúa."
+    }
+  ]
+},
+    {
       version: "v0.6.1",
       date: "21 de Octubre, 2026",
-      tag: "Actual",
+      tag: "latest",
+      npm: true,
+      git: true,
+      release: true,
       title: "Plugin Manager Nativo, Modo Zero-Bloat y Migración Limpia de Proyectos",
       description: "Esta versión introduce el gestor nativo de plugins con instalación en 100 ms (~180 KB), elimina la necesidad de clonar repositorios completos con git clone, desacopla el motor CLI de los repositorios de usuario y añade el comando clean para migrar proyectos existentes al modo plugin sin tocar especificaciones.",
       highlights: [
@@ -53,6 +92,9 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
       version: "v0.6.0",
       date: "20 de Octubre, 2026",
       tag: "Estable",
+      npm: true,
+      git: true,
+      release: true,
       title: "Plugin Oficial Google Antigravity, Subagente Autónomo omni-auditor & Desbloqueo de Bugs",
       description: "Esta versión convierte a OmniSpec en un Plugin Oficial de Google Antigravity con distribución modular de habilidades, introduce el subagente autónomo omni-auditor en segundo plano para auditorías de especificaciones, autoriza la inspección empírica y ejecución de tests en /omni-plan para diagnósticos de bugs, y estandariza las directivas de UI/UX ProMax en la planificación de features.",
       highlights: [
@@ -80,8 +122,11 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
     },
     {
       version: "v0.5.1",
-      date: "20 de Octubre, 2026",
+      date: "19 de Octubre, 2026",
       tag: "Estable",
+      npm: true,
+      git: true,
+      release: true,
       title: "Precisión de Primer Pase, Reglas Anti-Slop & Soporte Multi-Agente Universal",
       description: "Esta versión elimina el código de relleno ('AI slop') mediante invariantes de diseño frontend impecable y backend pragmático integrados directamente en el Core, moderniza las guías de instalación y añade compatibilidad con VS Code (GitHub Copilot).",
       highlights: [
@@ -111,6 +156,9 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
       version: "v0.5.0",
       date: "18 de Octubre, 2026",
       tag: "Estable",
+      npm: false,
+      git: true,
+      release: true,
       title: "Perfiles Regulatorios de Dominio & Soporte Nativo OpenCode",
       description: "Esta versión introduce perfiles de gobernanza de industria que inyectan invariantes legales en CONSTITUTION.md, locking de manifiesto y añade compatibilidad con el estándar abierto de comandos de OpenCode.",
       highlights: [
@@ -142,9 +190,39 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
       ]
     },
     {
+      version: "v0.5.0-rc.1",
+      date: "18 de Octubre, 2026",
+      tag: "RC",
+      npm: false,
+      git: true,
+      release: true,
+      title: "Candidato de Release: Evidencia por Criterio, Onboarding y Adaptadores Reales",
+      description: "Prerelease distribuido por GitHub antes de la publicación en npm: cobertura de aceptación por criterio, comandos verify y configure, contexto de proyecto propio y adaptadores reales por host.",
+      highlights: [
+        {
+          type: "feat",
+          title: "Cobertura de Aceptación por Criterio (acceptance.json)",
+          detail: "verify y complete exigen cobertura individual por criterio, separada de los resultados automáticos. Criterios pendientes, fallidos, ausentes, duplicados u obsoletos bloquean el cierre."
+        },
+        {
+          type: "feat",
+          title: "Onboarding de Proyecto y Contexto Propio",
+          detail: "omni-init y omni-discuss se unen a los flujos existentes, con contexto de proyecto propiedad del usuario y un esquema de manifiesto resoluble localmente. Adaptadores ejecutables para Cursor, Copilot, Kilo, OpenCode y Gemini."
+        },
+        {
+          type: "fix",
+          title: "Advertencia Explícita de Alcance",
+          detail: "La documentación aclara que las verificaciones son estructurales y que la revisión semántica y la evidencia ejecutada siguen correspondiendo al agente o a la persona."
+        }
+      ]
+    },
+    {
       version: "v0.4.1",
       date: "17 de Octubre, 2026",
       tag: "Estable",
+      npm: false,
+      git: false,
+      release: false,
       title: "Hardening de Adopción Real & Generación Selectiva de Agentes",
       description: "Blindaje de la CLI para entornos de producción reales: descubrimiento de raíz estilo Git, protección contra universos anidados y soporte selectivo para no ensuciar el repositorio.",
       highlights: [
@@ -174,6 +252,9 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
       version: "v0.4.0",
       date: "16 de Octubre, 2026",
       tag: "Estable",
+      npm: false,
+      git: true,
+      release: true,
       title: "Quality Gates Deterministas, Motor de Foco & Slash Commands",
       description: "Comprobaciones de software reales con código de salida 0, alternancia atómica de especificaciones activas y comandos de integración agéntica.",
       highlights: [
@@ -203,6 +284,9 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
       version: "v0.3.1",
       date: "16 de Octubre, 2026",
       tag: "Histórico",
+      npm: false,
+      git: true,
+      release: true,
       title: "Hardening de Concurrencia Atómica & Auditor Anti-Bypass",
       description: "Coordinación entre procesos mediante tickets únicos PID/UUID, recuperación de dueños inactivos y validaciones estrictas del auditor.",
       highlights: [
@@ -227,6 +311,9 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
       version: "v0.3.0",
       date: "16 de Octubre, 2026",
       tag: "Histórico",
+      npm: false,
+      git: true,
+      release: true,
       title: "Auditor Programático de Salud de Especificaciones",
       description: "Primer validador programático que impide matemáticamente a los agentes codificar si faltan criterios de aceptación o fases de aclaración.",
       highlights: [
@@ -251,6 +338,9 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
       version: "v0.2.0",
       date: "16 de Octubre, 2026",
       tag: "Histórico",
+      npm: false,
+      git: true,
+      release: false,
       title: "Detector Inteligente de Entornos & Stacks Tecnológicos",
       description: "Clasificación automática de proyectos nuevos (Greenfield) vs existentes (Brownfield) e inferencia automática de herramientas de testing.",
       highlights: [
@@ -275,6 +365,9 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
       version: "v0.1.0",
       date: "16 de Octubre, 2026",
       tag: "Histórico",
+      npm: false,
+      git: true,
+      release: false,
       title: "Fundamentos de Spec-Driven Development (SDD) Zero-Dependency",
       description: "Lanzamiento fundacional de OmniSpec con los 4 arquetipos de trabajo, 5 perfiles regulatorios y motor en Node.js puro.",
       highlights: [
@@ -303,9 +396,44 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
   ],
   en: [
     {
+  "version": "v0.7.0-preview.1",
+  "date": "Preparing release",
+  "tag": "Preview",
+  "npm": omniSpecRelease.published,
+  "git": omniSpecRelease.tagPublished,
+  "release": omniSpecRelease.releasePublished,
+  "title": "0.7.0 Preview: guided setup and scoped evidence",
+  "description": "Preview for testing and feedback. init asks for language, tool and folder; the application is defined with the agent. latest stays on 0.6.1.",
+  "highlights": [
+    {
+      "type": "feat",
+      "title": "OmniSpec terminal experience",
+      "detail": "Responsive ASCII logo, keyboard menus, multiple integrations, cancellation and grouped results. Node.js ≥22.19.0; no external runtime dependencies."
+    },
+    {
+      "type": "fix",
+      "title": "Auditor and recovery without duplicated workflows",
+      "detail": "Antigravity receives .agents/agents/omni-auditor.md. Recovery points to the installed skill; discovery is verified in the host."
+    },
+    {
+      "type": "feat",
+      "title": "Checks and evidence per criterion",
+      "detail": "Checks per module, session history, decisions and verification v3. Properly ignored generated outputs stay outside the fingerprint."
+    },
+    {
+      "type": "refactor",
+      "title": "Preview distribution",
+      "detail": "Version 0.7.0-preview.1, npm preview channel and GitHub prerelease. Publication is pending; host and model validation continues."
+    }
+  ]
+},
+    {
       version: "v0.6.1",
       date: "October 21, 2026",
-      tag: "Current",
+      tag: "latest",
+      npm: true,
+      git: true,
+      release: true,
       title: "Native Plugin Manager, Zero-Bloat Project Mode & Safe Clean Migration",
       description: "This release introduces the native Antigravity Plugin Manager with 100ms clean installs (~180 KB), removes the need for full repository git clones, decouples the CLI engine from user repositories, and adds the clean command to migrate existing projects into lightweight plugin mode preserving all specs.",
       highlights: [
@@ -335,6 +463,9 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
       version: "v0.6.0",
       date: "October 20, 2026",
       tag: "Stable",
+      npm: true,
+      git: true,
+      release: true,
       title: "Official Google Antigravity Plugin, Autonomous omni-auditor Subagent & Bug Diagnostic Unblock",
       description: "This release elevates OmniSpec to an official Google Antigravity Plugin with modular skill distribution, introduces the autonomous background omni-auditor subagent for specification reviews, unblocks empirical inspection and test execution in /omni-plan for bug diagnostics, and standardizes UI/UX ProMax directives during feature planning.",
       highlights: [
@@ -362,8 +493,11 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
     },
     {
       version: "v0.5.1",
-      date: "October 20, 2026",
+      date: "October 19, 2026",
       tag: "Stable",
+      npm: true,
+      git: true,
+      release: true,
       title: "First-Pass Precision, Anti-Slop Rules & Universal Multi-Agent Support",
       description: "This release eliminates AI slop via impeccable frontend design and pragmatic backend invariants baked into the Core, modernizes universal installation guides, and adds official GitHub Copilot support.",
       highlights: [
@@ -393,6 +527,9 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
       version: "v0.5.0",
       date: "October 18, 2026",
       tag: "Stable",
+      npm: false,
+      git: true,
+      release: true,
       title: "Regulatory Domain Profiles & Native OpenCode Support",
       description: "This release introduces industry governance profiles injecting legal invariants into CONSTITUTION.md, manifest locking, and adds native support for OpenCode command picker.",
       highlights: [
@@ -424,9 +561,39 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
       ]
     },
     {
+      version: "v0.5.0-rc.1",
+      date: "October 18, 2026",
+      tag: "RC",
+      npm: false,
+      git: true,
+      release: true,
+      title: "Release Candidate: Per-Criterion Evidence, Onboarding and Real Adapters",
+      description: "Prerelease distributed through GitHub before npm publication: per-criterion acceptance coverage, verify and configure commands, user-owned project context, and real per-host adapters.",
+      highlights: [
+        {
+          type: "feat",
+          title: "Per-Criterion Acceptance Coverage (acceptance.json)",
+          detail: "verify and complete require per-criterion coverage, separate from general automated gate results. Pending, failed, missing, duplicated and stale criterion IDs block closure."
+        },
+        {
+          type: "feat",
+          title: "Project Onboarding and User-Owned Context",
+          detail: "omni-init and omni-discuss join the existing workflows, with user-owned project context and a locally resolvable manifest schema. Runnable adapters for Cursor, Copilot, Kilo, OpenCode and Gemini."
+        },
+        {
+          type: "fix",
+          title: "Explicit Scope Disclaimer",
+          detail: "Documentation clarifies that checks are structural, and that semantic source review and executed evidence remain the responsibility of the agent or human."
+        }
+      ]
+    },
+    {
       version: "v0.4.1",
       date: "October 17, 2026",
       tag: "Stable",
+      npm: false,
+      git: false,
+      release: false,
       title: "Real-World Adoption Hardening & Selective Agent Generation",
       description: "Production-grade CLI hardening: Git-style root discovery, nested universe prevention, and targeted agent scaffolding preventing repository clutter.",
       highlights: [
@@ -456,6 +623,9 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
       version: "v0.4.0",
       date: "October 16, 2026",
       tag: "Stable",
+      npm: false,
+      git: true,
+      release: true,
       title: "Deterministic Quality Gates, Focus Engine & Slash Commands",
       description: "Real software checks bound to exit code 0, atomic active spec switching, and multi-agent command scaffolding.",
       highlights: [
@@ -485,6 +655,9 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
       version: "v0.3.1",
       date: "October 16, 2026",
       tag: "Historical",
+      npm: false,
+      git: true,
+      release: true,
       title: "Atomic Concurrency Hardening & Anti-Bypass Auditor",
       description: "Multi-process coordination via PID/UUID tickets, dead-owner recovery, and strict auditor structural validation.",
       highlights: [
@@ -509,6 +682,9 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
       version: "v0.3.0",
       date: "October 16, 2026",
       tag: "Historical",
+      npm: false,
+      git: true,
+      release: true,
       title: "Programmatic Specification Health Auditor",
       description: "First programmatic gate mathematically preventing AI agents from writing code if acceptance criteria or Phase 0 questions are missing.",
       highlights: [
@@ -533,6 +709,9 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
       version: "v0.2.0",
       date: "October 16, 2026",
       tag: "Historical",
+      npm: false,
+      git: true,
+      release: false,
       title: "Intelligent Environment & Stack Detector",
       description: "Automatic classification of Greenfield vs Brownfield repositories and automatic inference of testing quality gates.",
       highlights: [
@@ -557,6 +736,9 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
       version: "v0.1.0",
       date: "October 16, 2026",
       tag: "Historical",
+      npm: false,
+      git: true,
+      release: false,
       title: "Zero-Dependency Spec-Driven Development (SDD) Foundations",
       description: "Foundational release introducing 4 work archetypes, 5 regulatory domain profiles, and pure Node.js CLI runtime.",
       highlights: [
@@ -619,13 +801,28 @@ const initialReleases = releasesByLang.es;
               <div class="flex flex-wrap items-center gap-3">
                 <span class="text-xl font-bold font-mono text-primary">{release.version}</span>
                 <span class={`text-[11px] font-mono px-2 py-0.5 rounded border ${
-                  release.tag === 'Actual' || release.tag === 'Current'
+                  release.tag === 'Preview' || release.tag === 'Actual' || release.tag === 'Current'
                     ? 'bg-accent/10 border-accent/30 text-accent font-bold' 
                     : 'bg-surface-elevated border-border text-primary-muted'
                 }`}>
                   {release.tag}
                 </span>
                 <span class="text-xs font-mono text-primary-muted">{release.date}</span>
+                {release.npm && (
+                  <span class="text-[10px] font-mono px-1.5 py-0.5 rounded border border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                    npm
+                  </span>
+                )}
+                {!release.npm && release.git && (
+                  <span class="text-[10px] font-mono px-1.5 py-0.5 rounded border border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400">
+                    {release.release ? 'GitHub Release' : 'Git tag'}
+                  </span>
+                )}
+                {!release.npm && !release.git && (
+                  <span class="text-[10px] font-mono px-1.5 py-0.5 rounded border border-border bg-surface-elevated text-primary-muted">
+                    {release.release ? 'GitHub Release' : 'Sin publicar'}
+                  </span>
+                )}
               </div>
               <h2 class="text-2xl font-bold text-primary mt-2">
                 {release.title}
@@ -658,17 +855,39 @@ const initialReleases = releasesByLang.es;
               ))}
             </div>
 
-            <!-- Enlace directo a GitHub Release Tag -->
-            <div class="pt-2">
-              <a 
-                href={`https://github.com/brahiandres1999-oss/omni-spec/releases/tag/${release.version}`}
-                target="_blank" 
-                rel="noopener noreferrer"
-                class="inline-flex items-center gap-1.5 text-xs font-mono text-accent hover:underline"
-              >
-                <span class="release-github-text">Ver release en GitHub</span>
-                <span>&rarr;</span>
-              </a>
+            <div class="pt-2 flex flex-wrap items-center gap-x-4 gap-y-2">
+              {release.release ? (
+                <a
+                  href={`https://github.com/brahiandres1999-oss/omni-spec/releases/tag/${release.version}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1.5 text-xs font-mono text-accent hover:underline"
+                >
+                  <span class="release-github-text">Ver release en GitHub</span>
+                  <span>&rarr;</span>
+                </a>
+              ) : (
+                <a
+                  href="https://github.com/brahiandres1999-oss/omni-spec/blob/main/CHANGELOG.md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1.5 text-xs font-mono text-accent hover:underline"
+                >
+                  <span class="release-github-text">Ver en CHANGELOG</span>
+                  <span>&rarr;</span>
+                </a>
+              )}
+              {release.npm && (
+                <a
+                  href={`https://www.npmjs.com/package/omni-spec/v/${release.version.replace(/^v/, '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1.5 text-xs font-mono text-accent hover:underline"
+                >
+                  <span class="release-npm-text">Ver en npm</span>
+                  <span>&rarr;</span>
+                </a>
+              )}
             </div>
           </article>
         ))}
@@ -689,9 +908,11 @@ const initialReleases = releasesByLang.es;
       const activeLang = lang === 'en' ? 'en' : 'es';
       const releases = releasesByLang[activeLang] || releasesByLang.es;
       const githubLabel = activeLang === 'en' ? 'View release on GitHub' : 'Ver release en GitHub';
+      const changelogLabel = activeLang === 'en' ? 'View in CHANGELOG' : 'Ver en CHANGELOG';
+      const npmLabel = activeLang === 'en' ? 'View on npm' : 'Ver en npm';
 
       container.innerHTML = releases.map((release) => {
-        const isCurrent = release.tag === 'Actual' || release.tag === 'Current';
+        const isCurrent = release.tag === 'Preview' || release.tag === 'Actual' || release.tag === 'Current';
         const tagClass = isCurrent
           ? 'bg-accent/10 border-accent/30 text-accent font-bold'
           : 'bg-surface-elevated border-border text-primary-muted';
@@ -728,6 +949,12 @@ const initialReleases = releasesByLang.es;
                   ${release.tag}
                 </span>
                 <span class="text-xs font-mono text-primary-muted">${release.date}</span>
+                ${release.npm ? `
+                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded border border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">npm</span>` : ''}
+                ${!release.npm && release.git ? `
+                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded border border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400">${release.release ? 'GitHub Release' : 'Git tag'}</span>` : ''}
+                ${!release.npm && !release.git ? `
+                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded border border-border bg-surface-elevated text-primary-muted">${release.release ? 'GitHub Release' : (activeLang === 'en' ? 'Not published' : 'Sin publicar')}</span>` : ''}
               </div>
               <h2 class="text-2xl font-bold text-primary mt-2">
                 ${release.title}
@@ -739,16 +966,36 @@ const initialReleases = releasesByLang.es;
             <div class="space-y-3">
               ${highlightsHtml}
             </div>
-            <div class="pt-2">
-              <a 
-                href="https://github.com/brahiandres1999-oss/omni-spec/releases/tag/${release.version}" 
-                target="_blank" 
+            <div class="pt-2 flex flex-wrap items-center gap-x-4 gap-y-2">
+              ${release.release ? `
+              <a
+                href="https://github.com/brahiandres1999-oss/omni-spec/releases/tag/${release.version}"
+                target="_blank"
                 rel="noopener noreferrer"
                 class="inline-flex items-center gap-1.5 text-xs font-mono text-accent hover:underline"
               >
                 <span>${githubLabel}</span>
                 <span>&rarr;</span>
-              </a>
+              </a>` : `
+              <a
+                href="https://github.com/brahiandres1999-oss/omni-spec/blob/main/CHANGELOG.md"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 text-xs font-mono text-accent hover:underline"
+              >
+                <span>${changelogLabel}</span>
+                <span>&rarr;</span>
+              </a>`}
+              ${release.npm ? `
+              <a
+                href="https://www.npmjs.com/package/omni-spec/v/${release.version.replace(/^v/, '')}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 text-xs font-mono text-accent hover:underline"
+              >
+                <span>${npmLabel}</span>
+                <span>&rarr;</span>
+              </a>` : ''}
             </div>
           </article>
         `;

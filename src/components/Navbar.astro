@@ -1,4 +1,5 @@
 ---
+import { omniSpecRelease } from '../data/omnispec';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
@@ -24,7 +25,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         data-i18n-title="nav.versionTitle"
       >
         <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
-        <span>v0.6.1</span>
+        <span>{omniSpecRelease.label}</span>
       </a>
     </div>
 
@@ -93,7 +94,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         id="nav-install-btn" 
         class="hidden sm:inline-flex ml-1 items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-primary text-background hover:opacity-90 transition-all active:scale-95 cursor-pointer"
         aria-label="Copiar comando de instalación e ir a configuración de agentes"
-        title="Copiar comando npx omni-spec init"
+        title="Copiar comando de instalación de la Preview"
       >
         <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
@@ -168,7 +169,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           href={`${base}/changelog`}
           class="text-xs font-mono px-2 py-0.5 rounded bg-surface-elevated border border-border text-primary-muted hover:text-accent transition-colors"
         >
-          v0.6.1
+          {omniSpecRelease.label}
         </a>
       </div>
     </nav>
@@ -177,6 +178,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 <script>
   import { translations, type Language } from '../i18n/translations';
+  import { installCommand } from '../data/omnispec';
 
   function applyLanguage(lang: Language) {
     const dict = translations[lang] || translations.es;
@@ -308,7 +310,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       if (!btn || !text) return;
 
       btn.addEventListener('click', async () => {
-        const cmd = 'npx --yes omni-spec@latest init';
+        const cmd = installCommand;
         const lang = (localStorage.getItem('omni-lang') as Language) || 'es';
         try {
           await navigator.clipboard.writeText(cmd);

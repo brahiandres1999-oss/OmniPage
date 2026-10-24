@@ -143,11 +143,11 @@
                         <span class="text-[11px] text-primary-muted font-mono">10/10</span>
                       </button>
 
-                      <!-- verification.md -->
+                      <!-- verification.json -->
                       <button type="button" class="ide-file-btn w-full text-left py-1 px-2 rounded hover:bg-surface-hover dark:hover:bg-white/5 text-primary-muted hover:text-primary flex items-center justify-between transition-colors" data-file="verification">
                         <span class="flex items-center gap-1.5 truncate">
                           <span class="text-blue-400 font-bold text-[11px]">M↓</span>
-                          verification.md
+                          verification.json
                         </span>
                         <span class="text-[11px] text-emerald-400 font-mono">exit 0</span>
                       </button>
@@ -171,7 +171,7 @@
           <!-- Pie del Explorador -->
           <div class="pt-3 mt-4 border-t border-border text-[11px] text-primary-muted flex items-center justify-between">
             <span data-i18n="canvas.gitTracked">Git Tracked</span>
-            <span class="text-emerald-500 font-medium" data-i18n="canvas.localOnly">100% Local</span>
+            <span class="text-emerald-500 font-medium" data-i18n="canvas.localOnly">Local</span>
           </div>
         </div>
 
@@ -185,9 +185,7 @@
               <span id="editor-filename">spec.md</span>
               <span class="text-primary-muted/50 text-xs ml-1">×</span>
             </div>
-            <div class="px-3 text-xs font-mono text-primary-muted/40" data-i18n="canvas.livePreview">
-              Vista previa en tiempo real
-            </div>
+            <div class="px-3 text-xs font-mono text-primary-muted/40" data-i18n="canvas.livePreview">Ejemplo ilustrativo del flujo</div>
           </div>
 
           <!-- Vista de Código con Números de Línea -->
@@ -199,11 +197,11 @@
           <div class="border-t border-border bg-surface-elevated/40 dark:bg-[#111319] p-3 flex flex-col gap-3">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2">
-                <span class="text-xs font-mono font-semibold text-primary uppercase tracking-wider" data-i18n="canvas.terminalHeader">Terminal Integrada:</span>
+                <span class="text-xs font-mono font-semibold text-primary uppercase tracking-wider" data-i18n="canvas.terminalHeader">Ejemplo de conversación y CLI:</span>
                 <span class="text-[11px] font-mono text-primary-muted" data-i18n="canvas.terminalSuite">Suite Completa de 9 Flujos de Trabajo</span>
               </div>
-              <span id="terminal-exit-badge" class="text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-500 dark:text-emerald-400 border border-emerald-500/30">
-                Exit Code: 0 (PASSED)
+              <span id="terminal-exit-badge" data-i18n="canvas.demoStatus" class="text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-500 dark:text-emerald-400 border border-emerald-500/30">
+                Demo · salida ilustrativa
               </span>
             </div>
 
@@ -245,7 +243,7 @@
             <div class="rounded-lg bg-surface-elevated dark:bg-black/60 border border-border p-3.5 font-mono text-xs space-y-1.5 min-h-[140px] max-h-[160px] overflow-y-auto">
               <div class="text-primary font-medium flex items-center gap-1.5">
                 <span class="text-emerald-500 dark:text-emerald-400 font-bold">$</span>
-                <span id="terminal-cmd" class="text-primary">node specs/.omni/runtime/bin/omni-spec.mjs create feature "Landing Page Oficial"</span>
+                <span id="terminal-cmd" class="text-primary">npx omni-spec@preview create feature "Landing Page Oficial"</span>
               </div>
               <div id="terminal-output" class="text-primary-muted text-xs leading-relaxed pt-1 max-w-[70ch]">
                 [create] Generando specs/001-landing-page/spec.md<br />
@@ -307,27 +305,23 @@
       code: ` 1  # [TASKS-001] Tareas de Implementación Atómicas
  2  
  3  - [x] TASK-01 / AC-01: Scaffolding Astro con TypeScript y Tailwind.
- 4  - [x] TASK-02 / AC-02: Hero con comando universal \`npx omni-spec init\`.
+ 4  - [x] TASK-02 / AC-02: Hero con comando universal \`npx omni-spec@preview init\`.
  5  - [x] TASK-03 / AC-04: Explorador interactivo estilo IDE con editor split.
  6  - [x] TASK-04 / AC-05: Incorporación de OpenCode y matriz de integración.
  7  - [x] TASK-05 / AC-06: Acordeón accesible por teclado sin JS runtime.
  8  - [x] TASK-06 / AC-07: Drawer de navegación móvil con roles WAI-ARIA.`
     },
     verification: {
-      name: "verification.md",
-      path: "mi-proyecto > specs > 001-landing-page > verification.md",
-      code: ` 1  # Verification evidence — SPEC-001
- 2  
- 3  Snapshot SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e5f6a7b8c...
- 4  Verification Mode: automated
- 5  
- 6  Comprobaciones de Calidad Ejecutadas:
- 7  $ npm run build
- 8  > astro check: 16 files, 0 errors, 0 warnings, 0 hints.
- 9  > astro build: Complete in 1.09s (Exit Code: 0)
-10  
-11  $ npx impeccable detect http://localhost:4321
-12  > Result: 0 anti-patrones detectados (PASSED)`
+      name: "verification.json",
+      path: "mi-proyecto > specs > 001-landing-page > verification.json",
+      code: ` 1  {
+ 2    "version": 3,
+ 3    "id": "001",
+ 4    "mode": "automated",
+ 5    "passed": true,
+ 6    "sourceChangedDuringVerification": false,
+ 7    "changedDuringVerification": []
+ 8  }`
     },
     constitution: {
       name: "CONSTITUTION.md",
@@ -347,31 +341,40 @@
       name: "manifest.json",
       path: "mi-proyecto > specs > manifest.json",
       code: ` 1  {
- 2    "schemaVersion": 1,
- 3    "project": "mi-proyecto",
- 4    "version": "0.6.1",
- 5    "profile": "general",
- 6    "active_spec": "001-landing-page",
- 7    "specs": [
- 8      {
- 9        "id": "001",
-10        "slug": "001-landing-page",
-11        "type": "feature",
-12        "status": "COMPLETED"
-13      }
-14    ]
-15  }`
+ 2    "$schema": "https://raw.githubusercontent.com/brahiandres1999-oss/omni-spec/main/schema/manifest.schema.json",
+ 3    "schemaVersion": 1,
+ 4    "project": "mi-proyecto",
+ 5    "version": "0.7.0-preview.1",
+ 6    "profile": "general",
+ 7    "stack": "astro",
+ 8    "documentationStandard": "TSDoc",
+ 9    "qualityGates": "npm run build",
+10    "agent": "claude",
+11    "active_spec": "001-landing-page",
+12    "active_archetype": "feature",
+13    "specs": [
+14      {
+15        "id": "001",
+16        "type": "feature",
+17        "slug": "001-landing-page",
+18        "title": "Landing page",
+19        "status": "IN_PROGRESS",
+20        "created_at": "2026-10-21",
+21        "branch": "main"
+22      }
+23    ]
+24  }`
     }
   };
 
   // Suite de 9 comandos con logs técnicos realistas
   const skillLogs: Record<string, { cmd: string; output: string }> = {
     init: {
-      cmd: "node specs/.omni/runtime/bin/omni-spec.mjs init --yes",
-      output: `[detect] Stack detectado: Astro + Tailwind CSS + TypeScript.<br />
-[init] Inyectando directivas en CONSTITUTION.md y specs/manifest.json.<br />
-[adapter] Instalando comandos en .agents/skills/ y adapters correspondientes.<br />
-<span class="text-emerald-400">[done] Repositorio inicializado con gobernanza OmniSpec.</span>`
+      cmd: "/omni-init (después de instalar OmniSpec)",
+      output: `[read] Leer instalación y confirmar versión 0.7.0-preview.1.<br />
+[context] Reconocer carpeta nueva o existente; conservar decisiones previas.<br />
+[next] Aclarar objetivo, decisiones pendientes y primer resultado verificable.<br />
+<span class="text-emerald-400">[ready] Contexto y siguiente acción; la aplicación aún no está validada.</span>`
     },
     discuss: {
       cmd: "/omni-discuss \"Explorar viabilidad de rediseño a IDE\"",
@@ -388,46 +391,47 @@
 <span class="text-emerald-400">[aligned] Ambigüedades resueltas antes de tocar arquitectura.</span>`
     },
     specify: {
-      cmd: "node specs/.omni/runtime/bin/omni-spec.mjs create feature \"landing-page\"",
+      cmd: "npx omni-spec@preview create feature \"landing-page\"",
       output: `[create] Generando specs/001-landing-page/spec.md.<br />
 [clarify] Parámetros validados: Astro + Tailwind CSS + TypeScript.<br />
 [ac] Registrados 7 criterios de aceptación verificables (AC-01..AC-07).<br />
 <span class="text-emerald-400">[done] Especificación formalizada y commiteable en Git.</span>`
     },
     plan: {
-      cmd: "node specs/.omni/runtime/bin/omni-spec.mjs plan 001",
+      cmd: "/omni-plan  (habilidad del agente)",
       output: `[plan] Generando arquitectura en specs/001-landing-page/plan.md.<br />
 [scope] Archivos autorizados para edición: 4 componentes visuales.<br />
-[lock] Rutas protegidas: specs/.omni/runtime/, package.json (bloqueadas).<br />
-<span class="text-emerald-400">[done] Límites de modificación fijados con cerrojo de manifest.</span>`
+[scope] Alcance acordado; revisar el diff antes de cerrar.<br />
+<span class="text-emerald-400">[done] Alcance documentado; no se bloquea el sistema de archivos.</span>`
     },
     tasks: {
-      cmd: "node specs/.omni/runtime/bin/omni-spec.mjs tasks 001",
+      cmd: "/omni-tasks  (habilidad del agente)",
       output: `[tasks] Descomponiendo plan en 10 tareas de ejecución atómica.<br />
 [link] Cada tarea vinculada 1:1 con un criterio de aceptación en tasks.md.<br />
 [order] Orden de dependencias resuelto: Scaffolding -> UI -> Verificación.<br />
 <span class="text-emerald-400">[ready] 10 tareas atómicas preparadas para implementación secuencial.</span>`
     },
     implement: {
-      cmd: "node specs/.omni/runtime/bin/omni-spec.mjs implement 001 --task 03",
+      cmd: "/omni-implement  (habilidad del agente)",
       output: `[task] Ejecutando TASK-03: Rediseño de ProductCanvas a explorador de IDE.<br />
 > Modificando src/components/ProductCanvas.astro.<br />
 [check] Comprobando que ninguna línea fuera de alcance fue alterada.<br />
 <span class="text-emerald-400">[done] Tarea completada. Código confinado al alcance del plan.</span>`
     },
     audit: {
-      cmd: "node specs/.omni/runtime/bin/omni-spec.mjs audit 001",
-      output: `[audit] Ejecutando comprobación documental y semántica (10/10 tareas).<br />
+      cmd: "npx omni-spec@preview audit 001",
+      output: `[audit] Comprobando estructura documental; revisión semántica pendiente del agente.<br />
 [coherence] Verificando concordancia: Requerimiento -> Plan -> Tareas.<br />
-[check] 0 contradicciones detectadas entre non-goals y código modificado.<br />
+[review] Contrastar requisitos, plan, tareas y evidencia.<br />
 <span class="text-emerald-400">[audit passed] Estructura documental íntegra. Procediendo a Quality Gates.</span>`
     },
     converge: {
-      cmd: "node specs/.omni/runtime/bin/omni-spec.mjs complete 001",
+      cmd: "npx omni-spec@preview verify 001 && npx omni-spec@preview complete 001",
       output: `[fingerprint] Calculando hash SHA-256 de los archivos del repositorio.<br />
 [gates] Ejecutando: npm run build (astro check && astro build).<br />
 > Result: 0 errors, 0 warnings, 0 hints. Exit code: 0 (PASSED).<br />
-<span class="text-emerald-400">[closed] Especificación 001 completada y sellada con evidencia criptográfica.</span>`
+[evidence] Escrito specs/001-landing-page/verification.json.<br />
+<span class="text-emerald-400">[closed] Cierre permitido con criterios cubiertos y evidencia vigente.</span>`
     }
   };
 
