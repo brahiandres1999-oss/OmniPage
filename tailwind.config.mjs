@@ -20,6 +20,9 @@ const borderColor = (alphaToken) => ({ opacityVariable, opacityValue }) => {
 
 /** @type {import('tailwindcss').Config} */
 export default {
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   darkMode: 'class',
   theme: {

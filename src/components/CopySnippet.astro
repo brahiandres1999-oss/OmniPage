@@ -11,29 +11,32 @@ const {
 } = Astro.props;
 ---
 
-<div class="relative flex items-center justify-between w-full max-w-2xl px-4 py-3 rounded-xl bg-surface border border-border transition-all shadow-xl group">
+<div class="relative flex items-center justify-between w-full max-w-2xl px-4 py-3 rounded-2xl bg-surface border border-border shadow-sm group">
   <!-- Snippet de comando -->
   <div class="flex items-center gap-3 overflow-x-auto no-scrollbar font-mono text-xs sm:text-sm text-left pr-3">
     <span class="text-accent font-semibold select-none">{prefix}</span>
     <span class="text-primary whitespace-nowrap" id="cmd-text">{command}</span>
   </div>
 
-  <!-- Botón de copiado con microinteracción -->
+  <!-- Botón de copiado con microinteracción calibrada -->
   <button
     type="button"
-    class="copy-btn shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-surface-elevated hover:bg-surface-hover text-primary-muted hover:text-primary border border-border transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-accent"
+    class="copy-btn shrink-0 inline-flex items-center gap-1.5 ps-2.5 pe-3.5 py-1.5 rounded-lg text-xs font-mono font-medium bg-surface-elevated hover:bg-surface-hover text-primary-muted hover:text-primary border border-border transition-[background-color,border-color,transform] motion-safe:duration-150 motion-safe:ease-out enabled:active:scale-[0.96] focus:outline-none focus:ring-2 focus:ring-accent [-webkit-tap-highlight-color:transparent]"
     data-copy={command}
     aria-label="Copiar comando al portapapeles"
     data-i18n-aria="copy.aria"
   >
-    <!-- Icono Copiar (Default) -->
-    <svg class="copy-icon w-3.5 h-3.5 text-primary-muted transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-    </svg>
-    <!-- Icono Check (Éxito) -->
-    <svg class="check-icon w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400 hidden transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
-    </svg>
+    <!-- Contenedor de iconos con fundido cruzado óptico -->
+    <span class="relative w-3.5 h-3.5 shrink-0 flex items-center justify-center">
+      <!-- Icono Copiar (Default) -->
+      <svg class="copy-icon absolute inset-0 w-3.5 h-3.5 text-primary-muted transition-[opacity,transform,filter] duration-300 ease-[cubic-bezier(0.2,0,0,1)] opacity-100 scale-100 blur-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+      </svg>
+      <!-- Icono Check (Éxito) -->
+      <svg class="check-icon absolute inset-0 w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400 transition-[opacity,transform,filter] duration-300 ease-[cubic-bezier(0.2,0,0,1)] opacity-0 scale-[0.25] blur-[4px] pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+      </svg>
+    </span>
     <span class="copy-label" data-i18n="copy.copy">Copiar</span>
   </button>
 </div>
@@ -54,15 +57,19 @@ const {
 
           if (copyIcon && checkIcon && label) {
             const currentLang = (localStorage.getItem('omni-lang') as 'es' | 'en') || 'es';
-            copyIcon.classList.add('hidden');
-            checkIcon.classList.remove('hidden');
+            copyIcon.classList.remove('opacity-100', 'scale-100', 'blur-0');
+            copyIcon.classList.add('opacity-0', 'scale-[0.25]', 'blur-[4px]');
+            checkIcon.classList.remove('opacity-0', 'scale-[0.25]', 'blur-[4px]');
+            checkIcon.classList.add('opacity-100', 'scale-100', 'blur-0');
             label.textContent = currentLang === 'en' ? 'Copied!' : '¡Copiado!';
             btn.classList.add('border-emerald-500/40', 'bg-emerald-500/10');
 
             setTimeout(() => {
               const activeLang = (localStorage.getItem('omni-lang') as 'es' | 'en') || 'es';
-              copyIcon.classList.remove('hidden');
-              checkIcon.classList.add('hidden');
+              copyIcon.classList.remove('opacity-0', 'scale-[0.25]', 'blur-[4px]');
+              copyIcon.classList.add('opacity-100', 'scale-100', 'blur-0');
+              checkIcon.classList.remove('opacity-100', 'scale-100', 'blur-0');
+              checkIcon.classList.add('opacity-0', 'scale-[0.25]', 'blur-[4px]');
               label.textContent = activeLang === 'en' ? 'Copy' : 'Copiar';
               btn.classList.remove('border-emerald-500/40', 'bg-emerald-500/10');
             }, 2000);

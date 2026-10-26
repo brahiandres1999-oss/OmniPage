@@ -64,7 +64,7 @@ const profiles = Object.values(profileDataByLang.es);
               {profiles[0].invariants.map((inv) => (
                 <li class="flex items-start gap-2">
                   <svg class="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                   </svg>
                   <span class="text-primary">{inv}</span>
                 </li>
@@ -120,7 +120,7 @@ const profiles = Object.values(profileDataByLang.es);
       invariantsEl.innerHTML = data.invariants.map(inv => `
         <li class="flex items-start gap-2">
           <svg class="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
           </svg>
           <span class="text-primary">${inv}</span>
         </li>

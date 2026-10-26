@@ -14,7 +14,7 @@
     </div>
 
     <!-- Ventana Principal Estilo IDE Real (VS Code / Cursor) -->
-    <div class="rounded-xl border border-border bg-surface dark:bg-[#0d0e12] overflow-hidden shadow-xl dark:shadow-2xl transition-colors">
+    <div class="rounded-xl border border-border bg-surface dark:bg-[#0d0e12] overflow-hidden shadow-sm transition-colors">
       
       <!-- Barra Superior de Ventana del IDE -->
       <div class="flex items-center justify-between px-4 py-2.5 bg-surface-elevated dark:bg-[#14161d] border-b border-border select-none text-xs font-mono">
@@ -240,7 +240,7 @@
             </div>
 
             <!-- Terminal Output Box con Logs Fidedignos -->
-            <div class="rounded-lg bg-surface-elevated dark:bg-black/60 border border-border p-3.5 font-mono text-xs space-y-1.5 min-h-[140px] max-h-[160px] overflow-y-auto">
+            <div class="rounded-lg bg-surface-elevated dark:bg-black/60 border border-border p-3.5 font-mono text-xs space-y-1.5 min-h-[140px] max-h-[160px] overflow-y-auto overscroll-contain">
               <div class="text-primary font-medium flex items-center gap-1.5">
                 <span class="text-emerald-500 dark:text-emerald-400 font-bold">$</span>
                 <span id="terminal-cmd" class="text-primary">npx omni-spec@preview create feature "Landing Page Oficial"</span>

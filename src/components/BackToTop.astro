@@ -5,7 +5,7 @@
 <button
   type="button"
   id="back-to-top-btn"
-  class="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-xl bg-surface/85 hover:bg-surface-elevated border border-border hover:border-accent text-primary-muted hover:text-primary shadow-xl backdrop-blur-md opacity-0 translate-y-4 scale-90 pointer-events-none transition-all duration-300 ease-out flex items-center justify-center group active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent cursor-pointer"
+  class="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-xl bg-surface/85 hover:bg-surface-elevated border border-border hover:border-accent text-primary-muted hover:text-primary shadow-sm backdrop-blur-md opacity-0 motion-safe:translate-y-4 motion-safe:scale-90 pointer-events-none transition-[opacity,transform,background-color,border-color] duration-300 ease-out flex items-center justify-center group enabled:active:scale-[0.96] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent cursor-pointer [-webkit-tap-highlight-color:transparent]"
   aria-label="Volver al inicio de la página"
   title="Volver arriba"
   data-i18n-aria="footer.backToTop"
@@ -33,16 +33,16 @@
       stroke-dasharray="113.1"
       stroke-dashoffset="113.1"
       stroke-linecap="round"
-      class="text-accent transition-all duration-75"
+      class="text-accent transition-[stroke-dashoffset] duration-75"
     />
   </svg>
 
   <!-- Icono Flecha hacia arriba -->
   <svg 
-    class="w-4 h-4 transition-transform duration-200 group-hover:-translate-y-0.5" 
+    class="w-4 h-4 motion-safe:transition-transform duration-200 motion-safe:group-hover:-translate-y-0.5" 
     fill="none" 
     stroke="currentColor" 
-    stroke-width="2.2" 
+    stroke-width="2" 
     viewBox="0 0 24 24"
   >
     <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
@@ -69,11 +69,11 @@
 
       // Activar botón solo cuando se supera el 15% de scroll o más de 300px
       if (scrollPercent > 0.15 || scrollTop > 350) {
-        btn.classList.remove('opacity-0', 'translate-y-4', 'scale-90', 'pointer-events-none');
-        btn.classList.add('opacity-100', 'translate-y-0', 'scale-100', 'pointer-events-auto');
+        btn.classList.remove('opacity-0', 'motion-safe:translate-y-4', 'motion-safe:scale-90', 'pointer-events-none');
+        btn.classList.add('opacity-100', 'motion-safe:translate-y-0', 'motion-safe:scale-100', 'pointer-events-auto');
       } else {
-        btn.classList.add('opacity-0', 'translate-y-4', 'scale-90', 'pointer-events-none');
-        btn.classList.remove('opacity-100', 'translate-y-0', 'scale-100', 'pointer-events-auto');
+        btn.classList.add('opacity-0', 'motion-safe:translate-y-4', 'motion-safe:scale-90', 'pointer-events-none');
+        btn.classList.remove('opacity-100', 'motion-safe:translate-y-0', 'motion-safe:scale-100', 'pointer-events-auto');
       }
     };
 
