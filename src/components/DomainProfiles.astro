@@ -26,6 +26,7 @@ const profiles = Object.values(profileDataByLang.es);
             role="tab"
             id={`tab-profile-${p.id}`}
             aria-selected={idx === 0 ? "true" : "false"}
+            tabindex={idx === 0 ? 0 : -1}
             aria-controls="profile-content-panel"
             class={`profile-tab-btn px-5 py-3.5 text-xs font-mono font-semibold transition-colors shrink-0 flex items-center gap-2 ${
               idx === 0 
@@ -142,26 +143,49 @@ const profiles = Object.values(profileDataByLang.es);
     const buttons = document.querySelectorAll<HTMLButtonElement>('.profile-tab-btn');
     const panel = document.getElementById('profile-content-panel');
 
-    buttons.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const profileKey = btn.getAttribute('data-profile');
-        if (!profileKey) return;
+    const selectTab = (btn: HTMLButtonElement) => {
+      const profileKey = btn.getAttribute('data-profile');
+      if (!profileKey) return;
 
-        buttons.forEach((b) => {
-          b.classList.remove('text-primary', 'bg-surface', 'border-accent');
-          b.classList.add('text-primary-muted', 'border-transparent');
-          b.setAttribute('aria-selected', 'false');
-        });
+      buttons.forEach((b) => {
+        b.classList.remove('text-primary', 'bg-surface', 'border-accent');
+        b.classList.add('text-primary-muted', 'border-transparent');
+        b.setAttribute('aria-selected', 'false');
+        b.setAttribute('tabindex', '-1');
+      });
 
-        btn.classList.add('text-primary', 'bg-surface', 'border-accent');
-        btn.classList.remove('text-primary-muted', 'border-transparent');
-        btn.setAttribute('aria-selected', 'true');
+      btn.classList.add('text-primary', 'bg-surface', 'border-accent');
+      btn.classList.remove('text-primary-muted', 'border-transparent');
+      btn.setAttribute('aria-selected', 'true');
+      btn.setAttribute('tabindex', '0');
+      btn.focus();
 
-        if (panel) {
-          panel.setAttribute('aria-labelledby', btn.id);
+      if (panel) {
+        panel.setAttribute('aria-labelledby', btn.id);
+      }
+
+      renderProfile(profileKey);
+    };
+
+    buttons.forEach((btn, index) => {
+      btn.addEventListener('click', () => selectTab(btn));
+
+      btn.addEventListener('keydown', (e) => {
+        let newIndex = -1;
+        if (e.key === 'ArrowRight') {
+          newIndex = (index + 1) % buttons.length;
+        } else if (e.key === 'ArrowLeft') {
+          newIndex = (index - 1 + buttons.length) % buttons.length;
+        } else if (e.key === 'Home') {
+          newIndex = 0;
+        } else if (e.key === 'End') {
+          newIndex = buttons.length - 1;
         }
 
-        renderProfile(profileKey);
+        if (newIndex !== -1) {
+          e.preventDefault();
+          selectTab(buttons[newIndex]);
+        }
       });
     });
 

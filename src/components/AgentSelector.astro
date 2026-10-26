@@ -27,6 +27,7 @@ const initialAgent = agentsByLang.es.antigravity;
           role="tab"
           id="tab-antigravity"
           aria-selected="true"
+          tabindex="0"
           aria-controls="agent-details-panel"
           class="agent-nav-btn px-5 py-3.5 text-xs font-mono font-semibold text-primary bg-surface border-b-2 border-accent transition-colors shrink-0 flex items-center gap-2.5" 
           data-agent="antigravity"
@@ -70,6 +71,7 @@ const initialAgent = agentsByLang.es.antigravity;
           role="tab"
           id="tab-opencode"
           aria-selected="false"
+          tabindex="-1"
           aria-controls="agent-details-panel"
           class="agent-nav-btn px-5 py-3.5 text-xs font-mono font-semibold text-primary-muted hover:text-primary border-b-2 border-transparent transition-colors shrink-0 flex items-center gap-2.5" 
           data-agent="opencode"
@@ -86,6 +88,7 @@ const initialAgent = agentsByLang.es.antigravity;
           role="tab"
           id="tab-claude"
           aria-selected="false"
+          tabindex="-1"
           aria-controls="agent-details-panel"
           class="agent-nav-btn px-5 py-3.5 text-xs font-mono font-semibold text-primary-muted hover:text-primary border-b-2 border-transparent transition-colors shrink-0 flex items-center gap-2.5" 
           data-agent="claude"
@@ -102,6 +105,7 @@ const initialAgent = agentsByLang.es.antigravity;
           role="tab"
           id="tab-cursor"
           aria-selected="false"
+          tabindex="-1"
           aria-controls="agent-details-panel"
           class="agent-nav-btn px-5 py-3.5 text-xs font-mono font-semibold text-primary-muted hover:text-primary border-b-2 border-transparent transition-colors shrink-0 flex items-center gap-2.5" 
           data-agent="cursor"
@@ -118,6 +122,7 @@ const initialAgent = agentsByLang.es.antigravity;
           role="tab"
           id="tab-copilot"
           aria-selected="false"
+          tabindex="-1"
           aria-controls="agent-details-panel"
           class="agent-nav-btn px-5 py-3.5 text-xs font-mono font-semibold text-primary-muted hover:text-primary border-b-2 border-transparent transition-colors shrink-0 flex items-center gap-2.5" 
           data-agent="copilot"
@@ -134,6 +139,7 @@ const initialAgent = agentsByLang.es.antigravity;
           role="tab"
           id="tab-codex"
           aria-selected="false"
+          tabindex="-1"
           aria-controls="agent-details-panel"
           class="agent-nav-btn px-5 py-3.5 text-xs font-mono font-semibold text-primary-muted hover:text-primary border-b-2 border-transparent transition-colors shrink-0 flex items-center gap-2.5" 
           data-agent="codex"
@@ -145,13 +151,16 @@ const initialAgent = agentsByLang.es.antigravity;
         </button>
 
         <!-- CLI Agnóstico (GNU Bash) -->
-<button type="button" role="tab" id="tab-kilo" aria-selected="false" aria-controls="agent-details-panel" class="agent-nav-btn px-5 py-3.5 text-xs font-mono font-semibold text-primary-muted hover:text-primary border-b-2 border-transparent transition-colors shrink-0 flex items-center gap-2.5" data-agent="kilo"><svg class="w-4 h-4" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor"/><text x="12" y="16" text-anchor="middle" font-size="13" fill="currentColor">K</text></svg><span>Kilo</span></button>
-<button type="button" role="tab" id="tab-gemini" aria-selected="false" aria-controls="agent-details-panel" class="agent-nav-btn px-5 py-3.5 text-xs font-mono font-semibold text-primary-muted hover:text-primary border-b-2 border-transparent transition-colors shrink-0 flex items-center gap-2.5" data-agent="gemini"><svg class="w-4 h-4" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor"/><text x="12" y="16" text-anchor="middle" font-size="13" fill="currentColor">G</text></svg><span>Gemini CLI</span></button>
+<button type="button" role="tab" id="tab-kilo" aria-selected="false"
+          tabindex="-1" aria-controls="agent-details-panel" class="agent-nav-btn px-5 py-3.5 text-xs font-mono font-semibold text-primary-muted hover:text-primary border-b-2 border-transparent transition-colors shrink-0 flex items-center gap-2.5" data-agent="kilo"><svg class="w-4 h-4" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor"/><text x="12" y="16" text-anchor="middle" font-size="13" fill="currentColor">K</text></svg><span>Kilo</span></button>
+<button type="button" role="tab" id="tab-gemini" aria-selected="false"
+          tabindex="-1" aria-controls="agent-details-panel" class="agent-nav-btn px-5 py-3.5 text-xs font-mono font-semibold text-primary-muted hover:text-primary border-b-2 border-transparent transition-colors shrink-0 flex items-center gap-2.5" data-agent="gemini"><svg class="w-4 h-4" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor"/><text x="12" y="16" text-anchor="middle" font-size="13" fill="currentColor">G</text></svg><span>Gemini CLI</span></button>
         <button 
           type="button" 
           role="tab"
           id="tab-universal"
           aria-selected="false"
+          tabindex="-1"
           aria-controls="agent-details-panel"
           class="agent-nav-btn px-5 py-3.5 text-xs font-mono font-semibold text-primary-muted hover:text-primary border-b-2 border-transparent transition-colors shrink-0 flex items-center gap-2.5" 
           data-agent="universal"
@@ -301,31 +310,54 @@ const initialAgent = agentsByLang.es.antigravity;
       }
     }
 
-    buttons.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const agentKey = btn.getAttribute('data-agent');
-        if (!agentKey) return;
+    const selectAgentTab = (btn: HTMLButtonElement) => {
+      const agentKey = btn.getAttribute('data-agent');
+      if (!agentKey) return;
 
-        buttons.forEach((b) => {
-          b.classList.remove('bg-surface', 'text-primary', 'border-accent');
-          b.classList.add('text-primary-muted', 'border-transparent');
-          b.setAttribute('aria-selected', 'false');
-        });
+      buttons.forEach((b) => {
+        b.classList.remove('bg-surface', 'text-primary', 'border-accent');
+        b.classList.add('text-primary-muted', 'border-transparent');
+        b.setAttribute('aria-selected', 'false');
+        b.setAttribute('tabindex', '-1');
+      });
 
-        btn.classList.add('bg-surface', 'text-primary', 'border-accent');
-        btn.classList.remove('text-primary-muted', 'border-transparent');
-        btn.setAttribute('aria-selected', 'true');
+      btn.classList.add('bg-surface', 'text-primary', 'border-accent');
+      btn.classList.remove('text-primary-muted', 'border-transparent');
+      btn.setAttribute('aria-selected', 'true');
+      btn.setAttribute('tabindex', '0');
+      btn.focus();
 
-        if (panel) {
-          panel.setAttribute('aria-labelledby', btn.id);
+      if (panel) {
+        panel.setAttribute('aria-labelledby', btn.id);
+      }
+
+      renderAgent(agentKey);
+
+      // Sincronizar icono del botón seleccionado
+      const btnSvg = btn.querySelector('svg');
+      if (btnSvg && iconWrapper) {
+        iconWrapper.replaceChildren(btnSvg.cloneNode(true));
+      }
+    };
+
+    buttons.forEach((btn, index) => {
+      btn.addEventListener('click', () => selectAgentTab(btn));
+
+      btn.addEventListener('keydown', (e) => {
+        let newIndex = -1;
+        if (e.key === 'ArrowRight') {
+          newIndex = (index + 1) % buttons.length;
+        } else if (e.key === 'ArrowLeft') {
+          newIndex = (index - 1 + buttons.length) % buttons.length;
+        } else if (e.key === 'Home') {
+          newIndex = 0;
+        } else if (e.key === 'End') {
+          newIndex = buttons.length - 1;
         }
 
-        renderAgent(agentKey);
-        
-        // Sincronizar icono del botón seleccionado
-        const btnSvg = btn.querySelector('svg');
-        if (btnSvg && iconWrapper) {
-          iconWrapper.replaceChildren(btnSvg.cloneNode(true));
+        if (newIndex !== -1) {
+          e.preventDefault();
+          selectAgentTab(buttons[newIndex]);
         }
       });
     });

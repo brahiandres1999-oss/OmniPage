@@ -71,6 +71,12 @@ const bannerUrl = `${siteUrl}${base}/assets/omni-spec-banner.svg`;
     <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   </head>
   <body class="bg-background text-primary min-h-screen relative flex flex-col font-sans">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-accent focus:text-white focus:font-mono focus:text-xs focus:rounded-md focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-accent-hover"
+    >
+      Saltar al contenido principal
+    </a>
     <div class="relative z-10 flex flex-col flex-1">
       <slot />
     </div>

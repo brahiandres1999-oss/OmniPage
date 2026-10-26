@@ -58,7 +58,7 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
 },
     {
       version: "v0.6.1",
-      date: "21 de Octubre, 2026",
+      date: "21 de octubre de 2026",
       tag: "latest",
       npm: true,
       git: true,
@@ -90,7 +90,7 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
     },
     {
       version: "v0.6.0",
-      date: "20 de Octubre, 2026",
+      date: "20 de octubre de 2026",
       tag: "Estable",
       npm: true,
       git: true,
@@ -122,7 +122,7 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
     },
     {
       version: "v0.5.1",
-      date: "19 de Octubre, 2026",
+      date: "19 de octubre de 2026",
       tag: "Estable",
       npm: true,
       git: true,
@@ -154,7 +154,7 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
     },
     {
       version: "v0.5.0",
-      date: "18 de Octubre, 2026",
+      date: "18 de octubre de 2026",
       tag: "Estable",
       npm: false,
       git: true,
@@ -191,7 +191,7 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
     },
     {
       version: "v0.5.0-rc.1",
-      date: "18 de Octubre, 2026",
+      date: "18 de octubre de 2026",
       tag: "RC",
       npm: false,
       git: true,
@@ -218,7 +218,7 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
     },
     {
       version: "v0.4.1",
-      date: "17 de Octubre, 2026",
+      date: "17 de octubre de 2026",
       tag: "Estable",
       npm: false,
       git: false,
@@ -250,7 +250,7 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
     },
     {
       version: "v0.4.0",
-      date: "16 de Octubre, 2026",
+      date: "16 de octubre de 2026",
       tag: "Estable",
       npm: false,
       git: true,
@@ -282,7 +282,7 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
     },
     {
       version: "v0.3.1",
-      date: "16 de Octubre, 2026",
+      date: "16 de octubre de 2026",
       tag: "Histórico",
       npm: false,
       git: true,
@@ -309,7 +309,7 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
     },
     {
       version: "v0.3.0",
-      date: "16 de Octubre, 2026",
+      date: "16 de octubre de 2026",
       tag: "Histórico",
       npm: false,
       git: true,
@@ -336,7 +336,7 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
     },
     {
       version: "v0.2.0",
-      date: "16 de Octubre, 2026",
+      date: "16 de octubre de 2026",
       tag: "Histórico",
       npm: false,
       git: true,
@@ -363,7 +363,7 @@ const releasesByLang: Record<'es' | 'en', Release[]> = {
     },
     {
       version: "v0.1.0",
-      date: "16 de Octubre, 2026",
+      date: "16 de octubre de 2026",
       tag: "Histórico",
       npm: false,
       git: true,
@@ -776,7 +776,7 @@ const initialReleases = releasesByLang.es;
 >
   <Navbar />
   
-  <main class="flex-1 py-16 md:py-24 transition-colors">
+  <main id="main-content" class="flex-1 py-16 md:py-24 transition-colors">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <!-- Encabezado de la Página -->
@@ -790,11 +790,11 @@ const initialReleases = releasesByLang.es;
       </div>
 
       <!-- Timeline de Versiones -->
-      <div id="changelog-timeline" class="space-y-16">
+      <div id="changelog-timeline">
         {initialReleases.map((release) => (
-          <article class="relative pl-6 sm:pl-8 border-l-2 border-border space-y-6">
+          <article class="relative pl-6 sm:pl-8 border-l-2 border-border pb-16 last:pb-0 space-y-6">
             <!-- Marcador circular del timeline -->
-            <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-surface border-2 border-accent"></div>
+            <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-surface border-2 border-accent"></div>
 
             <!-- Cabecera de versión -->
             <div>
@@ -809,12 +809,12 @@ const initialReleases = releasesByLang.es;
                 </span>
                 <span class="text-xs font-mono text-primary-muted">{release.date}</span>
                 {release.npm && (
-                  <span class="text-[10px] font-mono px-1.5 py-0.5 rounded border border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                  <span class="text-[10px] font-mono px-1.5 py-0.5 rounded border border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
                     npm
                   </span>
                 )}
                 {!release.npm && release.git && (
-                  <span class="text-[10px] font-mono px-1.5 py-0.5 rounded border border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400">
+                  <span class="text-[10px] font-mono px-1.5 py-0.5 rounded border border-amber-500/30 bg-amber-500/10 text-amber-800 dark:text-amber-400">
                     {release.release ? 'GitHub Release' : 'Git tag'}
                   </span>
                 )}
@@ -836,13 +836,13 @@ const initialReleases = releasesByLang.es;
             <div class="space-y-3">
               {release.highlights.map((item) => (
                 <div class="p-4 rounded-lg bg-surface border border-border flex flex-col gap-1.5 transition-colors">
-                  <div class="flex items-center gap-2">
+                  <div class="flex items-start gap-2">
                     <span class={`text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded ${
                       item.type === 'feat' 
-                        ? 'bg-emerald-500/10 text-emerald-500 dark:text-emerald-400 border border-emerald-500/30' 
+                        ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30' 
                         : item.type === 'fix' 
-                        ? 'bg-amber-500/10 text-amber-500 dark:text-amber-400 border border-amber-500/30'
-                        : 'bg-blue-500/10 text-blue-500 dark:text-blue-400 border border-blue-500/30'
+                        ? 'bg-amber-500/10 text-amber-800 dark:text-amber-400 border border-amber-500/30'
+                        : 'bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-500/30'
                     }`}>
                       {item.type}
                     </span>
@@ -861,20 +861,20 @@ const initialReleases = releasesByLang.es;
                   href={`https://github.com/brahiandres1999-oss/omni-spec/releases/tag/${release.version}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="inline-flex items-center gap-1.5 text-xs font-mono text-accent hover:underline"
+                  class="inline-flex items-center gap-1.5 py-1 text-xs font-mono text-accent hover:underline focus:outline-none focus:ring-1 focus:ring-accent rounded"
                 >
-                  <span class="release-github-text">Ver release en GitHub</span>
-                  <span>&rarr;</span>
+                  <span class="release-github-text">Ver release en GitHub</span><span class="sr-only"> de la versión {release.version}</span>
+                  <span aria-hidden="true">&rarr;</span>
                 </a>
               ) : (
                 <a
                   href="https://github.com/brahiandres1999-oss/omni-spec/blob/main/CHANGELOG.md"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="inline-flex items-center gap-1.5 text-xs font-mono text-accent hover:underline"
+                  class="inline-flex items-center gap-1.5 py-1 text-xs font-mono text-accent hover:underline focus:outline-none focus:ring-1 focus:ring-accent rounded"
                 >
-                  <span class="release-github-text">Ver en CHANGELOG</span>
-                  <span>&rarr;</span>
+                  <span class="release-github-text">Ver en CHANGELOG</span><span class="sr-only"> de la versión {release.version}</span>
+                  <span aria-hidden="true">&rarr;</span>
                 </a>
               )}
               {release.npm && (
@@ -882,10 +882,10 @@ const initialReleases = releasesByLang.es;
                   href={`https://www.npmjs.com/package/omni-spec/v/${release.version.replace(/^v/, '')}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="inline-flex items-center gap-1.5 text-xs font-mono text-accent hover:underline"
+                  class="inline-flex items-center gap-1.5 py-1 text-xs font-mono text-accent hover:underline focus:outline-none focus:ring-1 focus:ring-accent rounded"
                 >
-                  <span class="release-npm-text">Ver en npm</span>
-                  <span>&rarr;</span>
+                  <span class="release-npm-text">Ver en npm</span><span class="sr-only"> de la versión {release.version}</span>
+                  <span aria-hidden="true">&rarr;</span>
                 </a>
               )}
             </div>
@@ -900,6 +900,7 @@ const initialReleases = releasesByLang.es;
 </Layout>
 
 <script define:vars={{ releasesByLang }}>
+  let changelogLangHandler = null;
   function setupChangelogI18n() {
     const container = document.getElementById('changelog-timeline');
     if (!container) return;
@@ -919,14 +920,14 @@ const initialReleases = releasesByLang.es;
 
         const highlightsHtml = release.highlights.map((item) => {
           const badgeClass = item.type === 'feat'
-            ? 'bg-emerald-500/10 text-emerald-500 dark:text-emerald-400 border border-emerald-500/30'
+            ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30'
             : item.type === 'fix'
-            ? 'bg-amber-500/10 text-amber-500 dark:text-amber-400 border border-amber-500/30'
-            : 'bg-blue-500/10 text-blue-500 dark:text-blue-400 border border-blue-500/30';
+            ? 'bg-amber-500/10 text-amber-800 dark:text-amber-400 border border-amber-500/30'
+            : 'bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-500/30';
 
           return `
             <div class="p-4 rounded-lg bg-surface border border-border flex flex-col gap-1.5 transition-colors">
-              <div class="flex items-center gap-2">
+              <div class="flex items-start gap-2">
                 <span class="text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded ${badgeClass}">
                   ${item.type}
                 </span>
@@ -940,8 +941,8 @@ const initialReleases = releasesByLang.es;
         }).join('');
 
         return `
-          <article class="relative pl-6 sm:pl-8 border-l-2 border-border space-y-6">
-            <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-surface border-2 border-accent"></div>
+          <article class="relative pl-6 sm:pl-8 border-l-2 border-border pb-16 last:pb-0 space-y-6">
+            <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-surface border-2 border-accent"></div>
             <div>
               <div class="flex flex-wrap items-center gap-3">
                 <span class="text-xl font-bold font-mono text-primary">${release.version}</span>
@@ -950,9 +951,9 @@ const initialReleases = releasesByLang.es;
                 </span>
                 <span class="text-xs font-mono text-primary-muted">${release.date}</span>
                 ${release.npm ? `
-                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded border border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">npm</span>` : ''}
+                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded border border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">npm</span>` : ''}
                 ${!release.npm && release.git ? `
-                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded border border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400">${release.release ? 'GitHub Release' : 'Git tag'}</span>` : ''}
+                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded border border-amber-500/30 bg-amber-500/10 text-amber-800 dark:text-amber-400">${release.release ? 'GitHub Release' : 'Git tag'}</span>` : ''}
                 ${!release.npm && !release.git ? `
                 <span class="text-[10px] font-mono px-1.5 py-0.5 rounded border border-border bg-surface-elevated text-primary-muted">${release.release ? 'GitHub Release' : (activeLang === 'en' ? 'Not published' : 'Sin publicar')}</span>` : ''}
               </div>
@@ -972,29 +973,29 @@ const initialReleases = releasesByLang.es;
                 href="https://github.com/brahiandres1999-oss/omni-spec/releases/tag/${release.version}"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center gap-1.5 text-xs font-mono text-accent hover:underline"
+                class="inline-flex items-center gap-1.5 py-1 text-xs font-mono text-accent hover:underline focus:outline-none focus:ring-1 focus:ring-accent rounded"
               >
-                <span>${githubLabel}</span>
-                <span>&rarr;</span>
+                <span>${githubLabel}</span><span class="sr-only"> ${activeLang === 'en' ? 'for version' : 'de la versión'} ${release.version}</span>
+                <span aria-hidden="true">&rarr;</span>
               </a>` : `
               <a
                 href="https://github.com/brahiandres1999-oss/omni-spec/blob/main/CHANGELOG.md"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center gap-1.5 text-xs font-mono text-accent hover:underline"
+                class="inline-flex items-center gap-1.5 py-1 text-xs font-mono text-accent hover:underline focus:outline-none focus:ring-1 focus:ring-accent rounded"
               >
-                <span>${changelogLabel}</span>
-                <span>&rarr;</span>
+                <span>${changelogLabel}</span><span class="sr-only"> ${activeLang === 'en' ? 'for version' : 'de la versión'} ${release.version}</span>
+                <span aria-hidden="true">&rarr;</span>
               </a>`}
               ${release.npm ? `
               <a
                 href="https://www.npmjs.com/package/omni-spec/v/${release.version.replace(/^v/, '')}"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center gap-1.5 text-xs font-mono text-accent hover:underline"
+                class="inline-flex items-center gap-1.5 py-1 text-xs font-mono text-accent hover:underline focus:outline-none focus:ring-1 focus:ring-accent rounded"
               >
-                <span>${npmLabel}</span>
-                <span>&rarr;</span>
+                <span>${npmLabel}</span><span class="sr-only"> ${activeLang === 'en' ? 'for version' : 'de la versión'} ${release.version}</span>
+                <span aria-hidden="true">&rarr;</span>
               </a>` : ''}
             </div>
           </article>
@@ -1007,9 +1008,16 @@ const initialReleases = releasesByLang.es;
       renderReleases('en');
     }
 
-    window.addEventListener('omni:language-change', (e) => {
-      renderReleases(e.detail.lang);
-    });
+    if (changelogLangHandler) window.removeEventListener('omni:language-change', changelogLangHandler);
+    changelogLangHandler = (e) => { renderReleases(e.detail.lang); };
+
+
+
+    window.addEventListener('omni:language-change', changelogLangHandler);
+
+
+
+
   }
 
   setupChangelogI18n();
