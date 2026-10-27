@@ -1,0 +1,49 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+@font-face {
+	font-family: "codicon";
+	font-display: block;
+	src: url("./codicon.ttf?9aab6318a6710999273bab9c78a9fd71") format("truetype");
+}
+
+.codicon[class*='codicon-'] {
+	font: normal normal normal 16px/1 codicon;
+	display: inline-block;
+	text-decoration: none;
+	text-rendering: auto;
+	text-align: center;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+}
+
+
+
+.codicon-files:before { content: "\eaf0" }
+.codicon-search:before { content: "\ea6d" }
+.codicon-source-control:before { content: "\ea68" }
+.codicon-extensions:before { content: "\eae6" }
+.codicon-terminal:before { content: "\ea85" }
+.codicon-chevron-right:before { content: "\eab6" }
+.codicon-chevron-down:before { content: "\eab4" }
+.codicon-close:before { content: "\ea76" }
+.codicon-split-horizontal:before { content: "\eb56" }
+.codicon-layout:before { content: "\ebeb" }
+.codicon-play:before { content: "\eb2c" }
+.codicon-debug-pause:before { content: "\ead1" }
+.codicon-refresh:before { content: "\eb37" }
+.codicon-settings-gear:before { content: "\eb51" }
+.codicon-account:before { content: "\eb99" }
+.codicon-chrome-close:before { content: "\eab8" }
+.codicon-chrome-minimize:before { content: "\eaba" }
+.codicon-chrome-maximize:before { content: "\eab9" }
+.codicon-arrow-left:before { content: "\ea9b" }
+.codicon-arrow-right:before { content: "\ea9c" }
+.codicon-check:before { content: "\eab2" }
+.codicon-circle-filled:before { content: "\ea71" }
+.codicon-git-branch:before { content: "\ec6f" }

@@ -1,60 +1,20 @@
 ---
+import { translations } from '../i18n/translations';
+import Icon from './Icon.astro';
+const t = translations.es;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
-
-<section id="leyes" class="py-16 md:py-24 border-t border-border transition-colors">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    
-    <div class="max-w-3xl mb-14">
-      <h2 class="text-3xl sm:text-4xl font-extrabold text-primary tracking-tight" data-i18n="const.title">
-        Las 4 Cláusulas de Gobernanza en CONSTITUTION.md
-      </h2>
-      <p class="mt-4 text-base sm:text-lg text-primary-muted leading-relaxed max-w-[65ch]" data-i18n="const.subtitle">Acuerdos de alcance, documentación y evidencia que el agente consulta antes de proponer cambios.</p>
+<section id="leyes" class="section-space">
+  <div class="page-shell context-grid">
+    <div><p class="eyebrow" data-i18n="context.eyebrow">{t['context.eyebrow']}</p><h2 class="section-title" data-i18n="context.title">{t['context.title']}</h2><p class="body-copy" data-i18n="context.body">{t['context.body']}</p><a class="quiet-link" href={base + '/docs/#estructura'}><span data-i18n="context.link">{t['context.link']}</span><span aria-hidden="true">↗</span></a></div>
+    <div class="repository-map">
+      <div class="repository-crown" aria-hidden="true"><Icon name="layers" size={46}/><span>OmniSpec</span></div>
+      <p class="file-label"><Icon name="folder"/>mi-proyecto/</p>
+      <dl>
+        <div><dt><Icon name="shield"/><code>CONSTITUTION.md</code></dt><dd data-i18n="context.rules">{t['context.rules']}</dd></div>
+        <div><dt><Icon name="message"/><code>specs/project-context.md</code></dt><dd data-i18n="context.saved">{t['context.saved']}</dd></div>
+        <div><dt><Icon name="folder"/><code>specs/001-dark-mode/</code></dt><dd data-i18n="context.work">{t['context.work']}</dd><div class="repository-files" aria-hidden="true"><span>spec.md</span><span>plan.md</span><span>acceptance.json</span></div></div>
+      </dl>
     </div>
-
-    <!-- Lista Editorial estructurada en cláusulas legales de ingeniería -->
-    <div class="flex flex-col divide-y divide-border border-y border-border">
-      
-      <!-- Cláusula 1 -->
-      <div class="py-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-baseline">
-        <div class="md:col-span-1 font-mono text-xl font-bold text-accent">01</div>
-        <div class="md:col-span-4">
-          <h3 class="text-xl font-bold text-primary tracking-tight" data-i18n="const.law1.title">Diagnóstico Pre-Ejecución</h3>
-          <span class="text-xs font-mono text-primary-muted mt-1 block" data-i18n="const.law1.sub">Análisis estructurado y confirmación de supuestos</span>
-        </div>
-        <div class="md:col-span-7 text-sm sm:text-base text-primary-muted leading-relaxed max-w-[55ch]" data-i18n="const.law1.body">Inspecciona la evidencia disponible, explica el cambio y aclara solo decisiones materiales. Las capacidades y permisos dependen de la sesión.</div>
-      </div>
-
-      <!-- Cláusula 2 -->
-      <div class="py-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-baseline">
-        <div class="md:col-span-1 font-mono text-xl font-bold text-emerald-600 dark:text-emerald-400">02</div>
-        <div class="md:col-span-4">
-          <h3 class="text-xl font-bold text-primary tracking-tight" data-i18n="const.law2.title">Alcance Mínimo y Focalizado</h3>
-          <span class="text-xs font-mono text-primary-muted mt-1 block" data-i18n="const.law2.sub">Preservación del código existente y contención</span>
-        </div>
-        <div class="md:col-span-7 text-sm sm:text-base text-primary-muted leading-relaxed max-w-[55ch]" data-i18n="const.law2.body">Acuerda alcance y exclusiones, conserva decisiones previas y revisa el diff. Las instrucciones del agente no equivalen a un bloqueo del sistema de archivos.</div>
-      </div>
-
-      <!-- Cláusula 3 -->
-      <div class="py-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-baseline">
-        <div class="md:col-span-1 font-mono text-xl font-bold text-amber-600 dark:text-amber-400">03</div>
-        <div class="md:col-span-4">
-          <h3 class="text-xl font-bold text-primary tracking-tight" data-i18n="const.law3.title">Verificación con Comandos Reales</h3>
-          <span class="text-xs font-mono text-primary-muted mt-1 block" data-i18n="const.law3.sub">Evidencia de ejecución con exit code 0</span>
-        </div>
-        <div class="md:col-span-7 text-sm sm:text-base text-primary-muted leading-relaxed max-w-[55ch]" data-i18n="const.law3.body">Configura checks pertinentes al proyecto y registra su ejecución. El cierre requiere criterios cubiertos y evidencia vigente; una prueba aprobada no demuestra calidad universal.</div>
-      </div>
-
-      <!-- Cláusula 4 -->
-      <div class="py-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-baseline">
-        <div class="md:col-span-1 font-mono text-xl font-bold text-cyan-600 dark:text-cyan-400">04</div>
-        <div class="md:col-span-4">
-          <h3 class="text-xl font-bold text-primary tracking-tight" data-i18n="const.law4.title">Ergonomía y Estados de Interfaz</h3>
-          <span class="text-xs font-mono text-primary-muted mt-1 block" data-i18n="const.law4.sub">Experiencia de usuario completa y accesibilidad</span>
-        </div>
-        <div class="md:col-span-7 text-sm sm:text-base text-primary-muted leading-relaxed max-w-[55ch]" data-i18n="const.law4.body">Define una dirección visual y los estados que necesita el producto. Revisa interfaz, teclado y accesibilidad con evidencia sobre el resultado renderizado.</div>
-      </div>
-
-    </div>
-
   </div>
 </section>

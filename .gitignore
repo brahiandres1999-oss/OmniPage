@@ -1,5 +1,6 @@
 # Dependencies
 node_modules/
+test-results/
 
 # Production & Build outputs
 dist/
@@ -9,6 +10,12 @@ dist/
 .env
 .env.*
 *.local
+
+# Video Authoring Workbench & Offline Scripts (not part of the website)
+/media/
+/scripts/
+/PROTOCOL.md
+/skills-lock.json
 
 # OmniSpec Internal & Agent Artifacts (not part of the website)
 specs/

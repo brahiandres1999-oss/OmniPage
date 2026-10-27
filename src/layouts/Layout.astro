@@ -1,85 +1,59 @@
 ---
-import { ViewTransitions } from 'astro:transitions';
 import '../styles/global.css';
 import BackToTop from '../components/BackToTop.astro';
-
 interface Props {
   title?: string;
+  titleEn?: string;
   description?: string;
+  descriptionEn?: string;
 }
-
 const {
-  title = "OmniSpec — Spec-Driven Development para Agentes de Código",
-  description = "Framework de desarrollo guiado por especificaciones con motor CLI local y gobernanza versionada en Git para agentes en Antigravity, OpenCode, Claude Code, Cursor y Codex."
+  title = 'OmniSpec — Tu agente, con contexto. Cada cambio, con evidencia.',
+  titleEn = 'OmniSpec — Your agent, with context. Every change, with evidence.',
+  description = 'Acuerda qué construir, conserva el contexto y revisa los resultados con tu agente de IA. Conoce OmniSpec y empieza en tu repositorio.',
+  descriptionEn = 'Agree on what to build, keep the context and review results with your AI agent. Explore OmniSpec and get started in your repository.'
 } = Astro.props;
-
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const siteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://brahiandres1999-oss.github.io';
-const currentUrl = new URL(Astro.url.pathname, Astro.site || 'https://brahiandres1999-oss.github.io').href;
-const bannerUrl = `${siteUrl}${base}/assets/omni-spec-banner.svg`;
+const siteUrl = Astro.site!.toString().replace(/\/$/, '');
+const currentUrl = new URL(Astro.url.pathname, Astro.site).href;
+const bannerUrl = siteUrl + base + '/assets/omni-spec-banner.svg';
 ---
-
 <!doctype html>
-<html lang="es">
+<html lang="es" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <link rel="icon" type="image/svg+xml" href={base + '/favicon.svg'} />
     <meta name="generator" content={Astro.generator} />
-    <meta name="theme-color" content="#0a0b0e" />
-    
+    <meta name="theme-color" content="#09090b" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={currentUrl} />
-
-    <!-- SPA ViewTransitions de Astro -->
-    <ViewTransitions />
-
     <script is:inline>
-      function applyThemeAndLang() {
-        const theme = localStorage.getItem('omni-theme') || 'dark';
-        if (theme === 'light') {
-          document.documentElement.classList.remove('dark');
-        } else {
-          document.documentElement.classList.add('dark');
-        }
-        const rawLang = localStorage.getItem('omni-lang');
-        const lang = (rawLang === 'en' || rawLang === 'es') ? rawLang : 'es';
-        document.documentElement.lang = lang;
+      try {
+        document.documentElement.classList.toggle('dark', localStorage.getItem('omni-theme') !== 'light');
+        document.documentElement.lang = localStorage.getItem('omni-lang') === 'en' ? 'en' : 'es';
+      } catch {
+        document.documentElement.dataset.preferences = 'session-only';
       }
-
-      applyThemeAndLang();
-      document.addEventListener('astro:after-swap', applyThemeAndLang);
     </script>
-
-    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={currentUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={bannerUrl} />
-
-    <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={bannerUrl} />
-
-    <!-- Tipografía: Albert Sans y JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   </head>
-  <body class="bg-background text-primary min-h-screen relative flex flex-col font-sans">
-    <a
-      href="#main-content"
-      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-accent focus:text-white focus:font-mono focus:text-xs focus:rounded-md focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-accent-hover"
-    >
-      Saltar al contenido principal
-    </a>
-    <div class="relative z-10 flex flex-col flex-1">
-      <slot />
-    </div>
+  <body id="top" data-title-es={title} data-title-en={titleEn} data-description-es={description} data-description-en={descriptionEn}>
+    <a class="skip-link" href="#main-content" data-i18n="skip">Saltar al contenido</a>
+    <slot />
     <BackToTop />
+    <script>import '../scripts/preferences';</script>
   </body>
 </html>

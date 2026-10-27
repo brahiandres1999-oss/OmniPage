@@ -1,417 +1,241 @@
 ---
+import CopySnippet from './CopySnippet.astro';
+import AgentLogo from './AgentLogo.astro';
 import { agentsByLang } from '../data/omnispec';
-const initialAgent = agentsByLang.es.antigravity;
+import { translations } from '../i18n/translations';
+const t = translations.es;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
-
-<section id="agentes" class="py-16 md:py-24 border-t border-border transition-colors">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    
-    <div class="max-w-3xl mb-12">
-      <h2 class="text-3xl sm:text-4xl font-extrabold text-primary tracking-tight" data-i18n="agents.title">
-        Soporte Multi-Agente Nativo
-      </h2>
-      <p class="mt-4 text-base sm:text-lg text-primary-muted leading-relaxed max-w-[65ch]" data-i18n="agents.subtitle">
-        OmniSpec no te ata a un único modelo o entorno. Selecciona tu asistente para ver la estructura exacta que genera en tu repositorio y su comando de inicialización.
-      </p>
-    </div>
-
-    <!-- Contenedor del Selector Interactivo de Agente -->
-    <div class="rounded-xl overflow-hidden border border-border bg-surface transition-colors shadow-sm">
-      
-      <!-- Pestañas de Agentes con Logotipos SVG Oficiales Reales -->
-      <div role="tablist" aria-label="Asistentes y agentes compatibles con OmniSpec" class="flex overflow-x-auto border-b border-border bg-surface-elevated no-scrollbar">
-        
-        <!-- Google Antigravity -->
-        <button 
-          type="button" 
-          role="tab"
-          id="tab-antigravity"
-          aria-selected="true"
-          tabindex="0"
-          aria-controls="agent-details-panel"
-          class="agent-nav-btn px-5 py-3.5 text-xs font-mono font-semibold text-primary bg-surface border-b-2 border-accent transition-colors shrink-0 flex items-center gap-2.5" 
-          data-agent="antigravity"
-        >
-          <svg class="w-4 h-4 shrink-0" viewBox="0 0 16 15" fill="none">
-            <defs>
-              <path id="btn_SVGwVZ" fill="#00b95c" d="M-8.053 6.345c.866 3.044 4.764 4.602 8.707 3.481s6.438-4.498 5.572-7.541s-4.764-4.603-8.707-3.481S-8.918 3.3-8.053 6.345"/>
-              <mask id="btn_SVGacq" width="16" height="15" x="0" y="0" maskUnits="userSpaceOnUse" style="mask-type:alpha">
-                <path fill="#fff" d="M14.078 13.984c.867.65 2.168.217.975-.976C11.476 9.54 12.235 0 7.79 0C3.346 0 4.105 9.54.527 13.008c-1.3 1.301.109 1.627.976.976c3.36-2.276 3.144-6.287 6.287-6.287c3.144 0 2.927 4.01 6.288 6.287"/>
-              </mask>
-              <filter id="btn_SVGw62" width="12.839" height="11.383" x="-2.128" y="-8.36" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1" stdDeviation=".723"/></filter>
-              <filter id="btn_SVGHdD" width="25.176" height="24.96" x="2.752" y="-9.381" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1" stdDeviation="3.495"/></filter>
-              <filter id="btn_SVGLWw" width="26.507" height="23.634" x="-14.167" y="-7.502" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1" stdDeviation="2.971"/></filter>
-              <filter id="btn_SVGxCJ" width="23.709" height="23.685" x="-12.361" y="-7.3" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1" stdDeviation="2.971"/></filter>
-              <filter id="btn_SVGy1H" width="21.703" height="22.062" x=".635" y="5.021" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1" stdDeviation="2.824"/></filter>
-              <filter id="btn_SVGCy2" width="23.286" height="22.831" x="-3.975" y="-14.667" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1" stdDeviation="2.559"/></filter>
-              <filter id="btn_SVG728" width="29.198" height="30.11" x="-7.741" y="-.945" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1" stdDeviation="2.285"/></filter>
-              <filter id="btn_SVGiyg" width="16.241" height="15.568" x="6.786" y="-.272" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1" stdDeviation="2.045"/></filter>
-              <filter id="btn_SVGHJb" width="21.687" height="19.421" x="3.775" y="-8.717" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1" stdDeviation="1.727"/></filter>
-              <filter id="btn_SVGY0i" width="14.364" height="16.925" x="-5.407" y="-6.392" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1" stdDeviation="2.138"/></filter>
-            </defs>
-            <g mask="url(#btn_SVGacq)">
-              <g filter="url(#btn_SVGw62)"><path fill="#ffe432" d="M-.659-3.23C-.923-.908 1.08 1.228 3.814 1.538S8.978.217 9.242-2.107s-1.739-4.459-4.473-4.77S-.395-5.553-.659-3.23"/></g>
-              <g filter="url(#btn_SVGHdD)"><path fill="#fc413d" d="M9.882 4.366c.685 2.95 3.684 4.773 6.698 4.073s4.902-3.658 4.217-6.608S17.114-2.94 14.1-2.24S9.197 1.417 9.882 4.366"/></g>
-              <g filter="url(#btn_SVGLWw)"><use href="#btn_SVGwVZ"/></g>
-              <g filter="url(#btn_SVGxCJ)"><path fill="#00b95c" d="M-4.924 8.867c2.17 2.217 5.907 2.077 8.347-.312S6.08 2.433 3.912.217s-5.907-2.076-8.347.312c-2.44 2.39-2.659 6.122-.489 8.338"/></g>
-              <g filter="url(#btn_SVGy1H)"><path fill="#3186ff" d="M6.428 17.226c.674 2.901 3.485 4.727 6.278 4.078c2.794-.649 4.512-3.526 3.838-6.427s-3.484-4.727-6.278-4.078s-4.512 3.526-3.838 6.427"/></g>
-              <g filter="url(#btn_SVGCy2)"><path fill="#fbbc04" d="M1.665-5.945C.255-2.803 1.798.952 5.113 2.44s7.146.146 8.557-2.996c1.41-3.143-.133-6.897-3.448-8.386s-7.146-.146-8.557 2.997"/></g>
-              <g filter="url(#btn_SVG728)"><path fill="#3186ff" d="M-2.114 24.39C-5.53 23.05.307 12.018 1.759 8.32C3.21 4.623 7.156 2.713 10.57 4.054c3.416 1.34 7.464 8.726 6.013 12.423S1.3 25.731-2.114 24.39"/></g>
-              <g filter="url(#btn_SVGiyg)"><path fill="#749bff" d="M18.581 10.66c-.914 1.067-3.3.523-5.33-1.216c-2.029-1.738-2.932-4.013-2.018-5.08s3.3-.523 5.33 1.215c2.029 1.739 2.933 4.013 2.018 5.08"/></g>
-              <g filter="url(#btn_SVGHJb)"><path fill="#fc413d" d="M11.755 5.227c3.761 2.544 8.092 2.711 9.674.373s-.186-6.295-3.947-8.84c-3.76-2.543-8.092-2.71-9.673-.373c-1.582 2.338.185 6.296 3.946 8.84"/></g>
-              <g filter="url(#btn_SVGY0i)"><path fill="#ffee48" d="M-.592 1.089c-.932 2.248-.628 4.509.68 5.05c1.307.543 3.122-.84 4.053-3.088c.932-2.247.628-4.509-.68-5.05C2.156-2.543.34-1.16-.591 1.088"/></g>
-            </g>
-          </svg>
-          <span>Google Antigravity</span>
-        </button>
-
-        <!-- OpenCode (NUEVO) -->
-        <button 
-          type="button" 
-          role="tab"
-          id="tab-opencode"
-          aria-selected="false"
-          tabindex="-1"
-          aria-controls="agent-details-panel"
-          class="agent-nav-btn px-5 py-3.5 text-xs font-mono font-semibold text-primary-muted hover:text-primary border-b-2 border-transparent transition-colors shrink-0 flex items-center gap-2.5" 
-          data-agent="opencode"
-        >
-          <svg class="w-4 h-4 shrink-0 text-amber-500" viewBox="0 0 24 24" fill="currentColor">
-            <path fill-rule="evenodd" d="M16 6H8v12h8zm4 16H4V2h16z"/>
-          </svg>
-          <span>OpenCode</span>
-        </button>
-
-        <!-- Anthropic Claude Code -->
-        <button 
-          type="button" 
-          role="tab"
-          id="tab-claude"
-          aria-selected="false"
-          tabindex="-1"
-          aria-controls="agent-details-panel"
-          class="agent-nav-btn px-5 py-3.5 text-xs font-mono font-semibold text-primary-muted hover:text-primary border-b-2 border-transparent transition-colors shrink-0 flex items-center gap-2.5" 
-          data-agent="claude"
-        >
-          <svg class="w-4 h-4 shrink-0 text-[#D97757]" viewBox="0 0 256 257" fill="currentColor">
-            <path fill="#D97757" d="m50.228 170.321l50.357-28.257l.843-2.463l-.843-1.361h-2.462l-8.426-.518l-28.775-.778l-24.952-1.037l-24.175-1.296l-6.092-1.297L0 125.796l.583-3.759l5.12-3.434l7.324.648l16.202 1.101l24.304 1.685l17.629 1.037l26.118 2.722h4.148l.583-1.685l-1.426-1.037l-1.101-1.037l-25.147-17.045l-27.22-18.017l-14.258-10.37l-7.713-5.25l-3.888-4.925l-1.685-10.758l7-7.713l9.397.649l2.398.648l9.527 7.323l20.35 15.75L94.817 91.9l3.889 3.24l1.555-1.102l.195-.777l-1.75-2.917l-14.453-26.118l-15.425-26.572l-6.87-11.018l-1.814-6.61c-.648-2.723-1.102-4.991-1.102-7.778l7.972-10.823L71.42 0l10.63 1.426l4.472 3.888l6.61 15.101l10.694 23.786l16.591 32.34l4.861 9.592l2.592 8.879l.973 2.722h1.685v-1.556l1.36-18.211l2.528-22.36l2.463-28.776l.843-8.1l4.018-9.722l7.971-5.25l6.222 2.981l5.12 7.324l-.713 4.73l-3.046 19.768l-5.962 30.98l-3.889 20.739h2.268l2.593-2.593l10.499-13.934l17.628-22.036l7.778-8.749l9.073-9.657l5.833-4.601h11.018l8.1 12.055l-3.628 12.443l-11.342 14.388l-9.398 12.184l-13.48 18.147l-8.426 14.518l.778 1.166l2.01-.194l30.46-6.481l16.462-2.982l19.637-3.37l8.88 4.148l.971 4.213l-3.5 8.62l-20.998 5.184l-24.628 4.926l-36.682 8.685l-.454.324l.519.648l16.526 1.555l7.065.389h17.304l32.21 2.398l8.426 5.574l5.055 6.805l-.843 5.184l-12.962 6.611l-17.498-4.148l-40.83-9.721l-14-3.5h-1.944v1.167l11.666 11.406l21.387 19.314l26.767 24.887l1.36 6.157l-3.434 4.86l-3.63-.518l-23.526-17.693l-9.073-7.972l-20.545-17.304h-1.36v1.814l4.73 6.935l25.017 37.59l1.296 11.536l-1.814 3.76l-6.481 2.268l-7.13-1.297l-14.647-20.544l-15.1-23.138l-12.185-20.739l-1.49.843l-7.194 77.448l-3.37 3.953l-7.778 2.981l-6.48-4.925l-3.436-7.972l3.435-15.749l4.148-20.544l3.37-16.333l3.046-20.285l1.815-6.74l-.13-.454l-1.49.194l-15.295 20.999l-23.267 31.433l-18.406 19.702l-4.407 1.75l-7.648-3.954l.713-7.064l4.277-6.286l25.47-32.405l15.36-20.092l9.917-11.6l-.065-1.686h-.583L44.07 198.125l-12.055 1.555l-5.185-4.86l.648-7.972l2.463-2.593l20.35-13.999z"/>
-          </svg>
-          <span>Anthropic Claude</span>
-        </button>
-
-        <!-- Cursor AI -->
-        <button 
-          type="button" 
-          role="tab"
-          id="tab-cursor"
-          aria-selected="false"
-          tabindex="-1"
-          aria-controls="agent-details-panel"
-          class="agent-nav-btn px-5 py-3.5 text-xs font-mono font-semibold text-primary-muted hover:text-primary border-b-2 border-transparent transition-colors shrink-0 flex items-center gap-2.5" 
-          data-agent="cursor"
-        >
-          <svg class="w-4 h-4 shrink-0" viewBox="0 0 466.73 532.09" fill="currentColor">
-            <path d="M457.43,125.94L244.42,2.96c-6.84-3.95-15.28-3.95-22.12,0L9.3,125.94c-5.75,3.32-9.3,9.46-9.3,16.11v247.99c0,6.65,3.55,12.79,9.3,16.11l213.01,122.98c6.84,3.95,15.28,3.95,22.12,0l213.01-122.98c5.75-3.32,9.3-9.46,9.3-16.11v-247.99c0-6.65-3.55-12.79-9.3-16.11h-.01ZM444.05,151.99l-205.63,356.16c-1.39,2.4-5.06,1.42-5.06-1.36v-233.21c0-4.66-2.49-8.97-6.53-11.31L24.87,145.67c-2.4-1.39-1.42-5.06,1.36-5.06h411.26c5.84,0,9.49,6.33,6.57,11.39h-.01Z"/>
-          </svg>
-          <span>Cursor AI</span>
-        </button>
-
-        <!-- VS Code (GitHub Copilot) -->
-        <button 
-          type="button" 
-          role="tab"
-          id="tab-copilot"
-          aria-selected="false"
-          tabindex="-1"
-          aria-controls="agent-details-panel"
-          class="agent-nav-btn px-5 py-3.5 text-xs font-mono font-semibold text-primary-muted hover:text-primary border-b-2 border-transparent transition-colors shrink-0 flex items-center gap-2.5" 
-          data-agent="copilot"
-        >
-          <svg class="w-4 h-4 shrink-0 text-violet-500" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
-          </svg>
-          <span>GitHub Copilot</span>
-        </button>
-
-        <!-- OpenAI Codex -->
-        <button 
-          type="button" 
-          role="tab"
-          id="tab-codex"
-          aria-selected="false"
-          tabindex="-1"
-          aria-controls="agent-details-panel"
-          class="agent-nav-btn px-5 py-3.5 text-xs font-mono font-semibold text-primary-muted hover:text-primary border-b-2 border-transparent transition-colors shrink-0 flex items-center gap-2.5" 
-          data-agent="codex"
-        >
-          <svg class="w-4 h-4 shrink-0 text-[#10a37f]" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"/>
-          </svg>
-          <span>OpenAI Codex</span>
-        </button>
-
-        <!-- CLI Agnóstico (GNU Bash) -->
-<button type="button" role="tab" id="tab-kilo" aria-selected="false"
-          tabindex="-1" aria-controls="agent-details-panel" class="agent-nav-btn px-5 py-3.5 text-xs font-mono font-semibold text-primary-muted hover:text-primary border-b-2 border-transparent transition-colors shrink-0 flex items-center gap-2.5" data-agent="kilo"><svg class="w-4 h-4" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor"/><text x="12" y="16" text-anchor="middle" font-size="13" fill="currentColor">K</text></svg><span>Kilo</span></button>
-<button type="button" role="tab" id="tab-gemini" aria-selected="false"
-          tabindex="-1" aria-controls="agent-details-panel" class="agent-nav-btn px-5 py-3.5 text-xs font-mono font-semibold text-primary-muted hover:text-primary border-b-2 border-transparent transition-colors shrink-0 flex items-center gap-2.5" data-agent="gemini"><svg class="w-4 h-4" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor"/><text x="12" y="16" text-anchor="middle" font-size="13" fill="currentColor">G</text></svg><span>Gemini CLI</span></button>
-        <button 
-          type="button" 
-          role="tab"
-          id="tab-universal"
-          aria-selected="false"
-          tabindex="-1"
-          aria-controls="agent-details-panel"
-          class="agent-nav-btn px-5 py-3.5 text-xs font-mono font-semibold text-primary-muted hover:text-primary border-b-2 border-transparent transition-colors shrink-0 flex items-center gap-2.5" 
-          data-agent="universal"
-        >
-          <svg class="w-4 h-4 shrink-0 text-primary-muted" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M11.996 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12 12 12 0 0 0-12.004-12zm-4.777 5.76a.715.715 0 0 1 .494.205l4.887 4.792a.684.684 0 0 1 0 .973L7.713 16.52a.688.688 0 0 1-.973-.974l4.4-4.306-4.4-4.316a.685.685 0 0 1 .479-1.165zm5.727 9.479h5.056c.38 0 .688.308.688.688s-.308.688-.688.688h-5.056a.688.688 0 0 1-.688-.688c0-.38.308-.688.688-.688z"/>
-          </svg>
-          <span data-i18n="agents.tabUniversal">CLI Agnóstico</span>
-        </button>
-
-      </div>
-
-      <!-- Contenido Estandarizado de la Integración -->
-      <div id="agent-details-panel" role="tabpanel" aria-labelledby="tab-antigravity" class="p-6 sm:p-8 flex flex-col gap-6 bg-surface">
-        
-        <!-- Cabecera con Nombre y Descripción -->
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div class="flex items-center gap-3.5">
-            <div id="agent-icon-wrapper" class="w-10 h-10 rounded-lg bg-surface-elevated border border-border flex items-center justify-center shrink-0 p-2 text-primary">
-              <!-- Sincronizado dinámicamente -->
+<section id="empezar" class="section-space start-section">
+  <span id="instalar" class="anchor-alias" aria-hidden="true"></span>
+  <div class="page-shell">
+    <div class="section-intro"><p class="eyebrow" data-i18n="start.eyebrow">{t['start.eyebrow']}</p><h2 class="section-title" data-i18n="start.title">{t['start.title']}</h2><p class="body-copy" data-i18n="start.intro">{t['start.intro']}</p></div>
+    <div class="start-steps">
+      <article class="start-step">
+        <span class="step-number" aria-hidden="true">01</span>
+        <div><h3 data-i18n="start.1.title">{t['start.1.title']}</h3><p class="body-copy" data-i18n="start.1.body">{t['start.1.body']}</p>
+          <CopySnippet />
+          <p class="small-note" data-i18n="start.channel">{t['start.channel']}</p>
+        </div>
+      </article>
+      <article class="start-step" id="agentes">
+        <span class="step-number" aria-hidden="true">02</span>
+        <div>
+          <h3 data-i18n="start.2.title">{t['start.2.title']}</h3>
+          <p class="body-copy" data-i18n="start.2.body">{t['start.2.body']}</p>
+          
+          <fieldset class="agent-picker" aria-describedby="agent-hint">
+            <legend class="field-label sr-only" data-i18n="start.agent">{t['start.agent']}</legend>
+            <div class="agent-options">
+              {Object.entries(agentsByLang.es).map(([key, agent]) => (
+                <label class="agent-option">
+                  <input type="radio" name="agent-choice" value={key} checked={key === 'claude'} />
+                  <span class="agent-option-content">
+                    <AgentLogo agent={key} size={18} />
+                    <span data-agent-label={key}>{agent.title}</span>
+                  </span>
+                </label>
+              ))}
             </div>
-            <div>
-              <h3 id="agent-title" class="text-xl font-bold text-primary tracking-tight">Google Antigravity</h3>
-              <p id="agent-desc" class="text-sm text-primary-muted mt-0.5 max-w-[65ch]">{initialAgent.desc}</p>
+          </fieldset>
+          
+          <p id="agent-hint" class="small-note" data-i18n="start.selectHint">{t['start.selectHint']}</p>
+
+          <div id="agent-guidance" class="agent-guidance-card" hidden>
+            <div class="guidance-header">
+              <span id="agent-card-title" class="guidance-agent-title"></span>
+              <span id="agent-format-badge" class="guidance-format-badge"></span>
+            </div>
+            <p id="agent-description" class="body-copy guidance-desc"></p>
+            <CopySnippet id="agent-invocation" command="" prefix="›" />
+            <div class="guidance-meta">
+              <span class="meta-label" data-i18n="start.paths">{t['start.paths']}:</span>
+              <code id="agent-path" class="meta-path"></code>
+              <a href={base + '/docs/#recuperacion'} class="quiet-link recovery-link" data-i18n="start.recovery">{t['start.recovery']}</a>
             </div>
           </div>
         </div>
-
-        <!-- Matriz Estandarizada de Metadatos de Ingeniería (Segmentada con Divisores) -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-border border border-border rounded-lg bg-surface-elevated/40 font-mono text-xs overflow-hidden">
-          <!-- Col 1: Formato -->
-          <div class="p-3.5 flex min-w-0 flex-col gap-1">
-            <span class="text-primary-muted text-[11px] uppercase tracking-wider" data-i18n="agents.formatLabel">Formato de Adaptador</span>
-            <span id="agent-format" class="text-primary font-semibold [overflow-wrap:anywhere]">{initialAgent.format}</span>
-          </div>
-
-          <!-- Col 2: Ubicación en Disco -->
-          <div class="p-3.5 flex min-w-0 flex-col gap-1">
-            <span class="text-primary-muted text-[11px] uppercase tracking-wider" data-i18n="agents.pathLabel">Ubicación en tu Repo</span>
-            <span id="agent-path" class="text-emerald-600 dark:text-emerald-400 font-semibold [overflow-wrap:anywhere]">{initialAgent.path}</span>
-          </div>
-
-          <!-- Col 3: Modo de Invocación -->
-          <div class="p-3.5 flex min-w-0 flex-col gap-1">
-            <span class="text-primary-muted text-[11px] uppercase tracking-wider" data-i18n="agents.invocationLabel">Modo de Invocación</span>
-            <span id="agent-invocation" class="text-accent font-semibold [overflow-wrap:anywhere]">{initialAgent.invocation}</span>
-          </div>
-        </div>
-
-        <!-- Caja de Comando interactiva específica para el agente -->
-        <div class="flex flex-col gap-2">
-          <span class="text-xs font-mono text-primary-muted" data-i18n="agents.commandLabel">Comando de instalación con adaptador específico:</span>
-          <div class="flex items-center justify-between p-3.5 rounded-lg bg-background border border-border">
-            <code id="agent-cmd" class="text-xs sm:text-sm font-mono text-primary overflow-x-auto pr-3">{initialAgent.cmd}</code>
-            <button
-              type="button"
-              id="agent-copy-btn"
-              class="shrink-0 px-3 py-1.5 rounded text-xs font-mono font-medium bg-surface hover:bg-surface-elevated text-primary-muted hover:text-primary border border-border transition-[background-color,color,border-color,transform] motion-safe:duration-150 motion-safe:ease-out enabled:active:scale-[0.96] focus:outline-none focus:ring-2 focus:ring-accent [-webkit-tap-highlight-color:transparent]"
-              aria-label="Copiar comando de inicialización al portapapeles"
-            >
-              <span id="agent-copy-label" data-i18n="agents.copyBtn">Copiar</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Caja alternativa para Plugin Global (solo si aplica) -->
-        <div id="agent-alt-box" class="flex flex-col gap-2">
-          <span id="agent-alt-label" class="text-xs font-mono text-primary-muted">O instálalo como Plugin Global en tu entorno Antigravity:</span>
-          <div class="flex items-center justify-between p-3.5 rounded-lg bg-background border border-border">
-            <code id="agent-alt-cmd" class="text-xs sm:text-sm font-mono text-primary overflow-x-auto pr-3">
-              npx omni-spec plugin install
-            </code>
-            <button
-              type="button"
-              id="agent-alt-copy-btn"
-              class="shrink-0 px-3 py-1.5 rounded text-xs font-mono font-medium bg-surface hover:bg-surface-elevated text-primary-muted hover:text-primary border border-border transition-[background-color,color,border-color,transform] motion-safe:duration-150 motion-safe:ease-out enabled:active:scale-[0.96] focus:outline-none focus:ring-2 focus:ring-accent [-webkit-tap-highlight-color:transparent]"
-              aria-label="Copiar comando de instalación al portapapeles"
-            >
-              <span id="agent-alt-copy-label">Copiar</span>
-            </button>
-          </div>
-        </div>
-
-      </div>
-
+      </article>
+      <article class="start-step">
+        <span class="step-number" aria-hidden="true">03</span>
+        <div><h3 data-i18n="start.3.title">{t['start.3.title']}</h3><p class="body-copy" data-i18n="start.3.body">{t['start.3.body']}</p><blockquote class="example-request" data-i18n="start.prompt">{t['start.prompt']}</blockquote><a class="quiet-link" href={base + '/docs/#quickstart'}><span data-i18n="start.docs">{t['start.docs']}</span><span aria-hidden="true">↗</span></a></div>
+      </article>
     </div>
-
+    <p class="start-scope small-note" data-i18n="start.scope">{t['start.scope']}</p>
   </div>
 </section>
 
+<style>
+  .agent-picker {
+    padding: 0;
+    margin: 1rem 0 0 0;
+    border: 0;
+    min-width: 0;
+  }
+  .agent-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .agent-option {
+    position: relative;
+    cursor: pointer;
+  }
+  .agent-option input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+  .agent-option-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.25rem;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid rgb(var(--border-rgb) / var(--border-subtle-alpha));
+    border-radius: 9999px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: rgb(var(--text-secondary));
+    background: rgb(var(--bg-surface) / 0.6);
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+  .agent-option:hover .agent-option-content {
+    background: rgb(var(--bg-surface));
+    color: rgb(var(--text-primary));
+    border-color: rgb(var(--text-secondary));
+  }
+  .agent-option input:checked + .agent-option-content {
+    border-color: rgb(var(--text-primary));
+    background: rgb(var(--bg-surface-elevated));
+    color: rgb(var(--text-primary));
+    box-shadow: inset 0 0 0 1px rgb(var(--text-primary));
+  }
+  .agent-option input:focus-visible + .agent-option-content {
+    outline: 2px solid rgb(var(--focus));
+    outline-offset: 2px;
+  }
+  #agent-hint {
+    margin-block: 0.75rem 1rem;
+    font-size: 0.8125rem;
+    color: rgb(var(--text-tertiary));
+  }
+  .agent-guidance-card {
+    border: 1px solid rgb(var(--border-rgb) / var(--border-subtle-alpha));
+    border-radius: 0.75rem;
+    background: rgb(var(--bg-surface));
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .guidance-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+  .guidance-agent-title {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: rgb(var(--text-primary));
+  }
+  .guidance-format-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    background: rgb(var(--bg-base));
+    border: 1px solid rgb(var(--border-rgb) / var(--border-subtle-alpha));
+    color: rgb(var(--text-secondary));
+  }
+  .guidance-desc {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: rgb(var(--text-secondary));
+    margin: 0;
+  }
+  .guidance-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.8125rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgb(var(--border-rgb) / var(--border-subtle-alpha));
+  }
+  .meta-label {
+    color: rgb(var(--text-tertiary));
+  }
+  .meta-path {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.75rem;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    background: rgb(var(--bg-base));
+    color: rgb(var(--text-secondary));
+    overflow-wrap: anywhere;
+  }
+  .recovery-link {
+    margin-left: auto;
+    font-size: 0.75rem;
+  }
+  @media (max-width: 640px) {
+    .guidance-meta {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.35rem;
+    }
+    .recovery-link {
+      margin-left: 0;
+    }
+  }
+</style>
+
 <script>
-  import { agentsByLang, installCommand } from '../data/omnispec';
-  import type { Language } from '../i18n/translations';
-
-  let activeAgentKey = 'antigravity';
-
-  function renderAgent(agentKey: string) {
-    const lang = (localStorage.getItem('omni-lang') as Language) || 'es';
-    const agents = agentsByLang[lang] || agentsByLang.es;
-    const data = agents[agentKey];
-    if (!data) return;
-
-    activeAgentKey = agentKey;
-
-    const titleEl = document.getElementById('agent-title');
-    const descEl = document.getElementById('agent-desc');
-    const formatEl = document.getElementById('agent-format');
-    const pathEl = document.getElementById('agent-path');
-    const invocationEl = document.getElementById('agent-invocation');
-    const cmdEl = document.getElementById('agent-cmd');
-
-    if (titleEl) titleEl.textContent = data.title;
-    if (descEl) descEl.textContent = data.desc;
-    if (formatEl) formatEl.textContent = data.format;
-    if (pathEl) pathEl.textContent = data.path;
-    if (invocationEl) invocationEl.textContent = data.invocation;
-    if (cmdEl) cmdEl.textContent = data.cmd;
-
-    const altBoxEl = document.getElementById('agent-alt-box');
-    const altLabelEl = document.getElementById('agent-alt-label');
-    const altCmdEl = document.getElementById('agent-alt-cmd');
-
-    if (altBoxEl) {
-      if (data.altCmd) {
-        altBoxEl.classList.remove('hidden');
-        if (altLabelEl) altLabelEl.textContent = data.altCmd.label;
-        if (altCmdEl) altCmdEl.textContent = data.altCmd.cmd;
-      } else {
-        altBoxEl.classList.add('hidden');
-      }
-    }
-  }
-
-  function setupAgentSelector() {
-    const buttons = document.querySelectorAll<HTMLButtonElement>('.agent-nav-btn');
-    const iconWrapper = document.getElementById('agent-icon-wrapper');
-    const copyBtn = document.getElementById('agent-copy-btn');
-    const copyLabel = document.getElementById('agent-copy-label');
-    const panel = document.getElementById('agent-details-panel');
-
-    // Sincronizar el icono inicial a partir del primer botón activo
-    const firstActiveBtn = document.querySelector<HTMLButtonElement>('.agent-nav-btn[data-agent="antigravity"]');
-    if (firstActiveBtn && iconWrapper) {
-      const initialSvg = firstActiveBtn.querySelector('svg');
-      if (initialSvg) {
-        iconWrapper.replaceChildren(initialSvg.cloneNode(true));
-      }
-    }
-
-    const selectAgentTab = (btn: HTMLButtonElement) => {
-      const agentKey = btn.getAttribute('data-agent');
-      if (!agentKey) return;
-
-      buttons.forEach((b) => {
-        b.classList.remove('bg-surface', 'text-primary', 'border-accent');
-        b.classList.add('text-primary-muted', 'border-transparent');
-        b.setAttribute('aria-selected', 'false');
-        b.setAttribute('tabindex', '-1');
-      });
-
-      btn.classList.add('bg-surface', 'text-primary', 'border-accent');
-      btn.classList.remove('text-primary-muted', 'border-transparent');
-      btn.setAttribute('aria-selected', 'true');
-      btn.setAttribute('tabindex', '0');
-      btn.focus();
-
-      if (panel) {
-        panel.setAttribute('aria-labelledby', btn.id);
-      }
-
-      renderAgent(agentKey);
-
-      // Sincronizar icono del botón seleccionado
-      const btnSvg = btn.querySelector('svg');
-      if (btnSvg && iconWrapper) {
-        iconWrapper.replaceChildren(btnSvg.cloneNode(true));
-      }
-    };
-
-    buttons.forEach((btn, index) => {
-      btn.addEventListener('click', () => selectAgentTab(btn));
-
-      btn.addEventListener('keydown', (e) => {
-        let newIndex = -1;
-        if (e.key === 'ArrowRight') {
-          newIndex = (index + 1) % buttons.length;
-        } else if (e.key === 'ArrowLeft') {
-          newIndex = (index - 1 + buttons.length) % buttons.length;
-        } else if (e.key === 'Home') {
-          newIndex = 0;
-        } else if (e.key === 'End') {
-          newIndex = buttons.length - 1;
-        }
-
-        if (newIndex !== -1) {
-          e.preventDefault();
-          selectAgentTab(buttons[newIndex]);
-        }
-      });
+  import { agentsByLang } from '../data/omnispec';
+  import { getLanguage } from '../scripts/preferences';
+  const choices = Array.from(document.querySelectorAll<HTMLInputElement>('input[name="agent-choice"]'));
+  const guidance = document.getElementById('agent-guidance')!;
+  let displayedAgent = '';
+  const render = () => {
+    const catalog = agentsByLang[getLanguage()];
+    document.querySelectorAll<HTMLElement>('[data-agent-label]').forEach(label => {
+      if (catalog[label.dataset.agentLabel!]) label.textContent = catalog[label.dataset.agentLabel!].title;
     });
+    const key = choices.find(choice => choice.checked)?.value || 'claude';
+    const agent = catalog[key];
+    guidance.hidden = !agent;
+    if (!agent) return;
+    const invocation = document.querySelector('#agent-invocation [data-copy-text]')!;
+    const changed = displayedAgent !== key || invocation.textContent !== agent.invocation;
+    displayedAgent = key;
+    
+    const cardTitle = document.getElementById('agent-card-title');
+    if (cardTitle) cardTitle.textContent = agent.title;
+    const formatBadge = document.getElementById('agent-format-badge');
+    if (formatBadge) formatBadge.textContent = agent.format;
 
-    if (copyBtn && !copyBtn.dataset.bound) {
-      copyBtn.dataset.bound = 'true';
-      copyBtn.addEventListener('click', async () => {
-        const lang = (localStorage.getItem('omni-lang') as Language) || 'es';
-        const agents = agentsByLang[lang] || agentsByLang.es;
-        const currentCmd = agents[activeAgentKey]?.cmd || installCommand;
-        try {
-          await navigator.clipboard.writeText(currentCmd);
-          if (copyLabel) copyLabel.textContent = lang === 'en' ? 'Copied!' : '¡Copiado!';
-          copyBtn.classList.add('text-emerald-500', 'dark:text-emerald-400');
-          setTimeout(() => {
-            if (copyLabel) copyLabel.textContent = lang === 'en' ? 'Copy' : 'Copiar';
-            copyBtn.classList.remove('text-emerald-500', 'dark:text-emerald-400');
-          }, 2000);
-        } catch (err) {
-          console.error(err);
-        }
-      });
-    }
-
-    const altCopyBtn = document.getElementById('agent-alt-copy-btn');
-    const altCopyLabel = document.getElementById('agent-alt-copy-label');
-
-    if (altCopyBtn && !altCopyBtn.dataset.bound) {
-      altCopyBtn.dataset.bound = 'true';
-      altCopyBtn.addEventListener('click', async () => {
-        const lang = (localStorage.getItem('omni-lang') as Language) || 'es';
-        const agents = agentsByLang[lang] || agentsByLang.es;
-        const altCmd = agents[activeAgentKey]?.altCmd?.cmd;
-        if (!altCmd) return;
-        try {
-          await navigator.clipboard.writeText(altCmd);
-          if (altCopyLabel) altCopyLabel.textContent = lang === 'en' ? 'Copied!' : '¡Copiado!';
-          altCopyBtn.classList.add('text-emerald-500', 'dark:text-emerald-400');
-          setTimeout(() => {
-            if (altCopyLabel) altCopyLabel.textContent = lang === 'en' ? 'Copy' : 'Copiar';
-            altCopyBtn.classList.remove('text-emerald-500', 'dark:text-emerald-400');
-          }, 2000);
-        } catch (err) {
-          console.error(err);
-        }
-      });
-    }
-
-    renderAgent(activeAgentKey);
-  }
-
-  setupAgentSelector();
-  document.addEventListener('astro:page-load', setupAgentSelector);
-  window.addEventListener('omni:language-change', () => {
-    renderAgent(activeAgentKey);
-  });
+    document.getElementById('agent-description')!.textContent = agent.desc;
+    invocation.textContent = agent.invocation;
+    document.getElementById('agent-path')!.textContent = agent.path;
+    if (!changed) return;
+    const status = guidance.querySelector<HTMLElement>('.copy-status')!;
+    status.textContent = '';
+    delete status.dataset.i18n;
+    guidance.querySelector<HTMLButtonElement>('.copy-select')!.hidden = true;
+    const copyLabel = guidance.querySelector<HTMLElement>('[data-copy-label]')!;
+    copyLabel.dataset.i18n = 'copy.copy';
+    copyLabel.textContent = getLanguage() === 'es' ? 'Copiar' : 'Copy';
+  };
+  choices.forEach(choice => choice.addEventListener('change', render));
+  window.addEventListener('omni:language-change', render);
+  render();
 </script>
+<noscript><p class="page-shell body-copy">Consulta las invocaciones de cada herramienta en la <a href={base + '/docs/#adaptadores-agentes'}>documentación de integraciones</a>.</p></noscript>

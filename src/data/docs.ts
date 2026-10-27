@@ -24,7 +24,7 @@ export const docsSections = [
     "es": {
       "title": "2. Instalar la Preview",
       "paragraphs": [
-        "Requiere <strong>Node.js ≥22.19.0</strong>; no tiene dependencias runtime externas. Usa la raíz de tu proyecto o una carpeta nueva. El canal <code>preview</code> seleccionará 0.7.0-preview.2 cuando se publique; <code>latest</code> conserva 0.6.1.",
+        "Requiere <strong>Node.js ≥22.19.0</strong>; no tiene dependencias runtime externas. Usa la raíz de tu proyecto o una carpeta nueva. El canal <code>preview</code> selecciona 0.7.0-preview.2, publicada el 24 de octubre de 2026; <code>latest</code> conserva 0.6.1.",
         "El <code>--yes</code> de npm acepta obtener el paquete. OmniSpec mantiene sus preguntas: idioma, herramienta con IA y confirmación de carpeta. Puedes elegir varias herramientas o <code>generic</code>. Usa flechas, Espacio y Enter; Esc o Ctrl+C cancelan antes de instalar.",
         "init instala archivos y comprueba integridad y versión local. No ejecuta scripts de tu aplicación. Tras la inicialización, tu agente de IA asiste en el onboarding conversacional guiado."
       ]
@@ -32,7 +32,7 @@ export const docsSections = [
     "en": {
       "title": "2. Install the Preview",
       "paragraphs": [
-        "Requires <strong>Node.js ≥22.19.0</strong> with no external runtime dependencies. Use your project root or a new folder. The <code>preview</code> channel will select 0.7.0-preview.2 when published; <code>latest</code> stays on 0.6.1.",
+        "Requires <strong>Node.js ≥22.19.0</strong> with no external runtime dependencies. Use your project root or a new folder. The <code>preview</code> channel selects 0.7.0-preview.2, published on October 24, 2026; <code>latest</code> stays on 0.6.1.",
         "npm’s <code>--yes</code> accepts obtaining the package. OmniSpec still asks for language, AI tool and folder confirmation. Choose multiple tools or <code>generic</code>. Use arrows, Space and Enter; Esc or Ctrl+C cancel before installation.",
         "init installs files and checks integrity and local version. It does not run application scripts. Following initialization, your AI agent guides the conversational onboarding process."
       ]
@@ -280,14 +280,14 @@ export const docsSections = [
       "title": "7.1 Checks, criterios y evidencia",
       "paragraphs": [
         "Configura checks por módulo con ID, comando, cwd y timeout, o conserva los gates heredados del proyecto. Los comandos detectados no se ejecutan durante la instalación. verify registra resultados; un comando inexistente o un timeout no cuenta como aprobación.",
-        "acceptance.json vincula cada criterio a pruebas o evidencia específica. Una observación visual requiere una superficie renderizada; el código o un build no la sustituyen. La huella respeta .gitignore, .omnispecignore y exclusiones de salidas generadas, y detecta cambios posteriores; no demuestra ausencia universal de defectos."
+        "acceptance.json vincula cada criterio a pruebas o evidencia específica. Una observación visual requiere una superficie renderizada; el código o un build no la sustituyen. La huella respeta .gitignore, .omnispecignore y exclusiones de salidas generadas, salvo los artefactos de la spec activa, que se incluyen para proteger su contrato. Detecta cambios posteriores; no demuestra ausencia universal de defectos."
       ]
     },
     "en": {
       "title": "7.1 Checks, criteria and evidence",
       "paragraphs": [
         "Configure checks per module with ID, command, cwd and timeout, or preserve legacy project gates. Detected commands are not run during installation. verify records results; a missing command or timeout is not a pass.",
-        "acceptance.json links each criterion to tests or specific evidence. Visual observations require a rendered surface; source or a build cannot replace it. The fingerprint respects .gitignore, .omnispecignore and generated-output exclusions and detects later changes; it does not prove universal absence of defects."
+        "acceptance.json links each criterion to tests or specific evidence. Visual observations require a rendered surface; source or a build cannot replace it. The fingerprint respects .gitignore, .omnispecignore and generated-output exclusions, except for the active spec’s artifacts, which are included to protect its contract. It detects later changes; it does not prove universal absence of defects."
       ]
     },
     "commands": [],

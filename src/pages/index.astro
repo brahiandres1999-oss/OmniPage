@@ -5,23 +5,19 @@ import Hero from '../components/Hero.astro';
 import ProductCanvas from '../components/ProductCanvas.astro';
 import ChaosVsSpec from '../components/ChaosVsSpec.astro';
 import ConstitutionSection from '../components/ConstitutionSection.astro';
-import DomainProfiles from '../components/DomainProfiles.astro';
 import AgentSelector from '../components/AgentSelector.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
 import Footer from '../components/Footer.astro';
+import ProfileShowcase from '../components/ProfileShowcase.astro';
 ---
-
-<Layout 
-  title="OmniSpec — Spec-Driven Development para Agentes de Código"
-  description="Framework de desarrollo guiado por especificaciones con motor CLI local y gobernanza versionada en Git para agentes en Antigravity, OpenCode, Claude Code, Cursor y Codex."
->
+<Layout>
   <Navbar />
-  <main id="main-content" class="flex-1 flex flex-col">
+  <main id="main-content" tabindex="-1">
     <Hero />
     <ProductCanvas />
     <ChaosVsSpec />
     <ConstitutionSection />
-    <DomainProfiles />
+    <ProfileShowcase />
     <AgentSelector />
     <FaqAccordion />
   </main>

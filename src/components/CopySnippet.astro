@@ -1,86 +1,55 @@
 ---
 import { installCommand } from '../data/omnispec';
-interface Props {
-  command?: string;
-  prefix?: string;
-}
-
-const {
-  command = installCommand,
-  prefix = "$"
-} = Astro.props;
+interface Props { command?: string; id?: string; prefix?: string; }
+const { command = installCommand, id, prefix = '$' } = Astro.props;
 ---
-
-<div class="relative flex items-center justify-between w-full max-w-2xl px-4 py-3 rounded-2xl bg-surface border border-border shadow-sm group">
-  <!-- Snippet de comando -->
-  <div class="flex items-center gap-3 overflow-x-auto no-scrollbar font-mono text-xs sm:text-sm text-left pr-3">
-    <span class="text-accent font-semibold select-none">{prefix}</span>
-    <span class="text-primary whitespace-nowrap" id="cmd-text">{command}</span>
+<div class="copy-snippet" id={id}>
+  <div class="command-row">
+    <pre tabindex="0" role="region" aria-label="Comando completo" data-i18n-aria="copy.region"><span class="command-prefix" aria-hidden="true">{prefix} </span><code data-copy-text>{command}</code></pre>
+    <button type="button" class="copy-button" data-copy-button aria-label="Copiar comando" data-i18n-aria="copy.aria"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V4H4v12h4"/></svg><span data-copy-label data-i18n="copy.copy">Copiar</span></button>
   </div>
-
-  <!-- Botón de copiado con microinteracción calibrada -->
-  <button
-    type="button"
-    class="copy-btn shrink-0 inline-flex items-center gap-1.5 ps-2.5 pe-3.5 py-1.5 rounded-lg text-xs font-mono font-medium bg-surface-elevated hover:bg-surface-hover text-primary-muted hover:text-primary border border-border transition-[background-color,border-color,transform] motion-safe:duration-150 motion-safe:ease-out enabled:active:scale-[0.96] focus:outline-none focus:ring-2 focus:ring-accent [-webkit-tap-highlight-color:transparent]"
-    data-copy={command}
-    aria-label="Copiar comando al portapapeles"
-    data-i18n-aria="copy.aria"
-  >
-    <!-- Contenedor de iconos con fundido cruzado óptico -->
-    <span class="relative w-3.5 h-3.5 shrink-0 flex items-center justify-center">
-      <!-- Icono Copiar (Default) -->
-      <svg class="copy-icon absolute inset-0 w-3.5 h-3.5 text-primary-muted transition-[opacity,transform,filter] duration-300 ease-[cubic-bezier(0.2,0,0,1)] opacity-100 scale-100 blur-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-      </svg>
-      <!-- Icono Check (Éxito) -->
-      <svg class="check-icon absolute inset-0 w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400 transition-[opacity,transform,filter] duration-300 ease-[cubic-bezier(0.2,0,0,1)] opacity-0 scale-[0.25] blur-[4px] pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-      </svg>
-    </span>
-    <span class="copy-label" data-i18n="copy.copy">Copiar</span>
-  </button>
+  <p class="copy-status" role="status" aria-atomic="true"></p>
+  <button type="button" class="text-button copy-select" hidden data-i18n="copy.select">Seleccionar comando</button>
 </div>
-
 <script>
-  function setupCopyButtons() {
-    const buttons = document.querySelectorAll('.copy-btn');
-    buttons.forEach((btn) => {
-      btn.addEventListener('click', async () => {
-        const textToCopy = btn.getAttribute('data-copy');
-        if (!textToCopy) return;
-
-        try {
-          await navigator.clipboard.writeText(textToCopy);
-          const copyIcon = btn.querySelector('.copy-icon');
-          const checkIcon = btn.querySelector('.check-icon');
-          const label = btn.querySelector('.copy-label');
-
-          if (copyIcon && checkIcon && label) {
-            const currentLang = (localStorage.getItem('omni-lang') as 'es' | 'en') || 'es';
-            copyIcon.classList.remove('opacity-100', 'scale-100', 'blur-0');
-            copyIcon.classList.add('opacity-0', 'scale-[0.25]', 'blur-[4px]');
-            checkIcon.classList.remove('opacity-0', 'scale-[0.25]', 'blur-[4px]');
-            checkIcon.classList.add('opacity-100', 'scale-100', 'blur-0');
-            label.textContent = currentLang === 'en' ? 'Copied!' : '¡Copiado!';
-            btn.classList.add('border-emerald-500/40', 'bg-emerald-500/10');
-
-            setTimeout(() => {
-              const activeLang = (localStorage.getItem('omni-lang') as 'es' | 'en') || 'es';
-              copyIcon.classList.remove('opacity-0', 'scale-[0.25]', 'blur-[4px]');
-              copyIcon.classList.add('opacity-100', 'scale-100', 'blur-0');
-              checkIcon.classList.remove('opacity-100', 'scale-100', 'blur-0');
-              checkIcon.classList.add('opacity-0', 'scale-[0.25]', 'blur-[4px]');
-              label.textContent = activeLang === 'en' ? 'Copy' : 'Copiar';
-              btn.classList.remove('border-emerald-500/40', 'bg-emerald-500/10');
-            }, 2000);
-          }
-        } catch (err) {
-          console.error('Error al copiar:', err);
-        }
-      });
+  import { translations } from '../i18n/translations';
+  import { getLanguage } from '../scripts/preferences';
+  document.querySelectorAll<HTMLElement>('.copy-snippet').forEach(root => {
+    const code = root.querySelector<HTMLElement>('[data-copy-text]')!;
+    const button = root.querySelector<HTMLButtonElement>('[data-copy-button]')!;
+    const label = root.querySelector<HTMLElement>('[data-copy-label]')!;
+    const status = root.querySelector<HTMLElement>('.copy-status')!;
+    const select = root.querySelector<HTMLButtonElement>('.copy-select')!;
+    const setMessage = (success: boolean) => {
+      const dict = translations[getLanguage()];
+      status.dataset.i18n = success ? 'copy.success' : 'copy.error';
+      status.textContent = dict[status.dataset.i18n];
+      status.dataset.state = success ? 'success' : 'error';
+      label.dataset.i18n = success ? 'copy.copied' : 'copy.copy';
+      label.textContent = dict[label.dataset.i18n];
+      select.hidden = success;
+    };
+    button.addEventListener('click', async () => {
+      const copiedText = code.textContent || '';
+      button.disabled = true;
+      button.setAttribute('aria-busy', 'true');
+      try {
+        await navigator.clipboard.writeText(copiedText);
+        if (code.textContent === copiedText) setMessage(true);
+      } catch {
+        if (code.textContent === copiedText) setMessage(false);
+      } finally {
+        button.disabled = false;
+        button.removeAttribute('aria-busy');
+      }
     });
-  }
-
-  setupCopyButtons();
-  document.addEventListener('astro:page-load', setupCopyButtons);
+    select.addEventListener('click', () => {
+      const range = document.createRange();
+      range.selectNodeContents(code);
+      const selection = window.getSelection();
+      selection?.removeAllRanges();
+      selection?.addRange(range);
+      code.parentElement?.focus();
+    });
+  });
 </script>

@@ -3,405 +3,67 @@ import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import CopySnippet from '../../components/CopySnippet.astro';
+import DomainProfiles from '../../components/DomainProfiles.astro';
+import AgentLogo from '../../components/AgentLogo.astro';
+import Icon from '../../components/Icon.astro';
 import { docsSections } from '../../data/docs';
-import { agentsByLang, profileDataByLang, omniSpecRelease } from '../../data/omnispec';
-
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-
-interface DocNavItem {
-  id: string;
-  title: string;
-}
-
-interface DocNavCategory {
-  category: string;
-  items: DocNavItem[];
-}
-
-const docNavByLang: Record<'es' | 'en', DocNavCategory[]> = {
-  es: [
-    {
-      category: "Primeros Pasos",
-      items: [
-        { id: "intro", title: "1. Desarrollo guiado por especificaciones" },
-        { id: "instalacion", title: "2. Instalar la Preview" },
-        { id: "quickstart", title: "2.1 Una carpeta, dos puntos de partida" },
-      ]
-    },
-    {
-      category: "Gobernanza & Invariantes",
-      items: [
-        { id: "constitucion", title: "3. CONSTITUTION.md: acuerdos del proyecto" },
-        { id: "anti-slop", title: "3.1 Diseño y revisión con evidencia" },
-        { id: "estructura", title: "4. Estructura en disco (specs/)" },
-        { id: "arquetipos", title: "4.1 Los 4 arquetipos de trabajo" },
-        { id: "manifest-lock", title: "4.2 Manifiesto y concurrencia" },
-      ]
-    },
-    {
-      category: "Suite de 9 Flujos de Trabajo",
-      items: [
-        { id: "flujo-descubrimiento", title: "5. Fase 1: Descubrimiento" },
-        { id: "flujo-contratos", title: "5.1 Fase 2: Contratos técnicos" },
-        { id: "flujo-ejecucion", title: "5.2 Implementar, auditar y cerrar" },
-      ]
-    },
-    {
-      category: "Perfiles de Dominio",
-      items: [
-        { id: "perfiles-intro", title: "6. Perfiles como revisión de aplicabilidad" },
-        { id: "perfiles-catalogo", title: "6.1 Perfiles disponibles" },
-      ]
-    },
-    {
-      category: "Agentes Soportados",
-      items: [
-        { id: "adaptadores-agentes", title: "7. Integraciones y recuperación" },
-        { id: "quality-gates", title: "7.1 Checks, criterios y evidencia" },
-      ]
-    }
-  ],
-  en: [
-    {
-      category: "Getting Started",
-      items: [
-        { id: "intro", title: "1. Spec-driven development" },
-        { id: "instalacion", title: "2. Install the Preview" },
-        { id: "quickstart", title: "2.1 One folder, two starting points" },
-      ]
-    },
-    {
-      category: "Governance & Invariants",
-      items: [
-        { id: "constitucion", title: "3. CONSTITUTION.md: project agreements" },
-        { id: "anti-slop", title: "3.1 Design and review with evidence" },
-        { id: "estructura", title: "4. Disk structure (specs/)" },
-        { id: "arquetipos", title: "4.1 The 4 work archetypes" },
-        { id: "manifest-lock", title: "4.2 Manifest and concurrency" },
-      ]
-    },
-    {
-      category: "9-Workflow Suite",
-      items: [
-        { id: "flujo-descubrimiento", title: "5. Phase 1: Discovery" },
-        { id: "flujo-contratos", title: "5.1 Phase 2: Technical contracts" },
-        { id: "flujo-ejecucion", title: "5.2 Implement, audit and close" },
-      ]
-    },
-    {
-      category: "Domain Profiles",
-      items: [
-        { id: "perfiles-intro", title: "6. Profiles as applicability reviews" },
-        { id: "perfiles-catalogo", title: "6.1 Available profiles" },
-      ]
-    },
-    {
-      category: "Supported Agents",
-      items: [
-        { id: "adaptadores-agentes", title: "7. Integrations and recovery" },
-        { id: "quality-gates", title: "7.1 Checks, criteria and evidence" },
-      ]
-    }
-  ]
-};
-
-const initialDocNav = docNavByLang.es;
+import { agentsByLang, omniSpecRelease } from '../../data/omnispec';
+import { translations } from '../../i18n/translations';
+const t=translations.es;
+const title=(text:string)=>text.replace(/^\d+(?:\.\d+)?\.?\s+/,'');
+const extra=[
+ {id:'mantenimiento',es:'Actualizar una instalación',en:'Update an installation'},
+ {id:'recuperacion',es:'Si algo no funciona',en:'If something goes wrong'}
+];
+const nav=docsSections.map(s=>({id:s.id,es:title(s.es.title),en:title(s.en.title)})).concat(extra);
+const base=import.meta.env.BASE_URL.replace(/\/$/,'');
 ---
-
-<Layout 
-  title="Documentación Oficial — OmniSpec"
-  description="Guía completa de arquitectura, comandos CLI, especificaciones en disco y perfiles de gobernanza de OmniSpec."
->
-  <Navbar />
-
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-      
-      <!-- Barra Lateral de Documentación (Desktop Sticky con Scroll Spy) -->
-      <aside class="hidden lg:block lg:col-span-3 sticky top-24 self-start max-h-[calc(100dvh-7rem)] overflow-y-auto overscroll-contain pr-4 font-mono text-xs border-r border-border space-y-6">
-        <div class="pb-2 border-b border-border flex items-center justify-between">
-          <span id="docs-sidebar-title" class="font-bold text-primary text-sm font-sans tracking-tight">Documentación</span>
-        </div>
-
-        <nav id="docs-sidebar-nav" aria-label="Navegación de documentación" class="space-y-6">
-          {initialDocNav.map((sec) => (
-            <div class="space-y-2">
-              <h3 class="font-bold text-primary-muted uppercase text-[10px] tracking-wider">
-                {sec.category}
-              </h3>
-              <ul class="space-y-1">
-                {sec.items.map((item) => (
-                  <li>
-                    <a 
-                      href={`#${item.id}`} 
-                      class="docs-nav-link block py-1.5 px-3 rounded text-primary-muted hover:text-primary hover:bg-surface border-l-2 border-transparent transition-colors"
-                      data-section={item.id}
-                    >
-                      {item.title}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </nav>
-      </aside>
-
-      <!-- Índice Móvil Colapsable (< 1024px / Zoom 200%) -->
-      <details class="lg:hidden col-span-1 border border-border rounded-lg bg-surface-elevated p-3 text-xs font-mono">
-        <summary class="font-bold text-primary cursor-pointer select-none py-1 flex items-center justify-between">
-          <span class="flex items-center gap-2">
-            <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
-            </svg>
-            <span id="docs-mobile-index-title">Índice de Secciones</span>
-          </span>
-          <span class="text-primary-muted text-[10px]">▼</span>
-        </summary>
-        <nav id="docs-mobile-nav" class="mt-3 pt-3 border-t border-border space-y-4">
-          {initialDocNav.map((sec) => (
-            <div class="space-y-1">
-              <div class="text-[10px] font-bold text-primary-muted uppercase tracking-wider">{sec.category}</div>
-              <ul class="space-y-1 pl-2">
-                {sec.items.map((item) => (
-                  <li>
-                    <a href={`#${item.id}`} class="block py-1 text-primary-muted hover:text-accent transition-colors">
-                      {item.title}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </nav>
-      </details>
-
-      <!-- Contenido Principal de Documentación (9 Columnas) -->
-      <main id="main-content" class="lg:col-span-9 space-y-16 max-w-3xl leading-relaxed text-sm sm:text-base text-primary-muted">
-        
-        <!-- Header de Docs -->
-        <header class="border-b border-border pb-8">
-          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-surface-elevated border border-border text-xs font-mono text-accent mb-4">
-            <span data-i18n="docs.badge">Guía Técnica del Framework</span>
-          </div>
-          <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-primary tracking-tight font-sans" data-i18n="docs.title">
-            Documentación de OmniSpec
-          </h1>
-          <p class="mt-4 text-base sm:text-lg text-primary-muted leading-relaxed" data-i18n="docs.subtitle">
-            OmniSpec traslada el desarrollo con agentes desde el "vibe coding" no determinista hacia la ingeniería guiada por especificaciones verificables en Git.
-          </p>
-        </header>
-
-        <div class="border-l-2 border-amber-500 pl-4 text-sm">
-          <p class="font-mono text-amber-800 dark:text-amber-400">{omniSpecRelease.version} · Preview</p>
-          <p data-docs-lang="es" class="mt-2">Lanzamiento en preparación. El canal preview se podrá usar al publicar; latest conserva 0.6.1.</p>
-          <p data-docs-lang="en" class="mt-2 hidden">Preparing release. The preview channel becomes available on publication; latest stays on 0.6.1.</p>
-        </div>
-        {docsSections.map((section) => (
-          <section id={section.id} class="scroll-mt-24">
-            {(['es', 'en'] as const).map((lang) => (
-              <div data-docs-lang={lang} class:list={['space-y-4', { hidden: lang === 'en' }]}>
-                <h2 class="text-2xl font-bold text-primary font-sans">{section[lang].title}</h2>
-                {section[lang].paragraphs.map((paragraph) => <p set:html={paragraph} />)}
-                {section.commands.map((command) => <CopySnippet command={command} />)}
-                {section.code && (
-                  <pre
-                    tabindex="0"
-                    role="region"
-                    aria-label={lang === 'es' ? `Bloque de código de ${section[lang].title}` : `Code block for ${section[lang].title}`}
-                    class="overflow-x-auto rounded-lg border border-border bg-surface p-4 text-xs leading-relaxed text-primary focus:outline-none focus:ring-1 focus:ring-accent"
-                  ><code>{section.code}</code></pre>
-                )}
-                {section.id === 'perfiles-catalogo' && (
-                  <dl class="divide-y divide-border border-y border-border">
-                    {Object.values(profileDataByLang[lang]).map((profile) => (
-                      <div class="py-4"><dt class="font-semibold text-primary">{profile.name} <code class="text-xs text-accent">{profile.flag}</code></dt><dd class="mt-1 text-sm">{profile.description}</dd></div>
-                    ))}
-                  </dl>
-                )}
-                {section.id === 'adaptadores-agentes' && (
-                  <div
-                    tabindex="0"
-                    role="region"
-                    aria-label={lang === 'es' ? 'Tabla de adaptadores de agentes' : 'Agent adapters table'}
-                    class="overflow-x-auto rounded-lg border border-border focus:outline-none focus:ring-1 focus:ring-accent"
-                  >
-                    <table class="w-full text-left text-xs">
-                      <caption class="sr-only">{lang === 'es' ? 'Herramientas de IA y archivos de configuración' : 'AI tools and configuration files'}</caption>
-                      <thead class="bg-surface">
-                        <tr>
-                          <th scope="col" class="p-3">{lang === 'es' ? 'Herramienta' : 'Tool'}</th>
-                          <th scope="col" class="p-3">{lang === 'es' ? 'Archivos' : 'Files'}</th>
-                          <th scope="col" class="p-3">{lang === 'es' ? 'Invocación' : 'Invocation'}</th>
-                        </tr>
-                      </thead>
-                      <tbody class="divide-y divide-border">
-                        {Object.values(agentsByLang[lang]).map((agent) => (
-                          <tr>
-                            <th scope="row" class="p-3 font-semibold text-primary text-left">{agent.title}</th>
-                            <td class="p-3 font-mono break-words">{agent.path}</td>
-                            <td class="p-3 font-mono">{agent.invocation}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
-              </div>
-            ))}
-          </section>
-        ))}
-
-        <!-- Footer de Navegación de Docs -->
-        <footer class="pt-8 border-t border-border flex items-center justify-between text-xs font-mono">
-          <a id="docs-back-link" href={`${base}/#canvas`} class="text-primary-muted hover:text-primary transition-colors">
-            &larr; Volver a la Landing Page
-          </a>
-          <a id="docs-changelog-link" href={`${base}/changelog`} class="text-accent hover:underline">
-            Ver Changelog Oficial &rarr;
-          </a>
-        </footer>
-
-      </main>
-
-    </div>
+<Layout title="Documentación — OmniSpec" titleEn="Documentation — OmniSpec" description="Guía de OmniSpec: instalación, primer cambio, archivos, integraciones y evidencia." descriptionEn="OmniSpec guide: installation, first change, files, integrations and evidence.">
+<Navbar/>
+<div class="page-shell">
+  <header class="page-heading docs-heading"><p class="eyebrow">OMNISPEC / {omniSpecRelease.version}</p><h1 data-i18n="docs.title">{t['docs.title']}</h1><p class="body-copy" data-i18n="docs.subtitle">{t['docs.subtitle']}</p></header>
+  <div class="docs-layout">
+    <aside class="docs-sidebar"><h2 data-i18n="docs.nav">{t['docs.nav']}</h2><nav aria-label={t['docs.nav']} data-i18n-aria="docs.nav">{nav.map(item=><a href={'#'+item.id}>{(['es','en'] as const).map(lang=><span data-locale={lang} hidden={lang==='en'}>{item[lang]}</span>)}</a>)}</nav></aside>
+    <details class="docs-mobile-nav"><summary data-i18n="docs.nav">{t['docs.nav']}</summary><nav aria-label={t['docs.nav']} data-i18n-aria="docs.nav">{nav.map(item=><a href={'#'+item.id}>{(['es','en'] as const).map(lang=><span data-locale={lang} hidden={lang==='en'}>{item[lang]}</span>)}</a>)}</nav></details>
+    <main id="main-content" class="prose" tabindex="-1">
+      <div class="docs-shortcuts">
+        {[['terminal','instalacion','Instalar','Install'],['file','estructura','Conocer los archivos','Understand the files'],['checklist','quality-gates','Revisar una entrega','Review a delivery']].map(([icon,id,es,en])=><a href={'#'+id}><Icon name={icon} size={25}/><span data-locale="es">{es}</span><span data-locale="en" hidden>{en}</span><Icon name="arrow" size={16}/></a>)}
+      </div>
+      {docsSections.map(section=><section id={section.id}>
+        {(['es','en'] as const).map(lang=><div data-locale={lang} hidden={lang==='en'}><h2>{title(section[lang].title)}</h2>{section[lang].paragraphs.map(p=><p set:html={p}/>)}</div>)}
+        {section.commands.map(command=><CopySnippet command={command}/>)}
+        {section.code && <pre tabindex="0" role="region" aria-label={t['docs.code']} data-i18n-aria="docs.code"><code>{section.code}</code></pre>}
+        {section.id==='perfiles-catalogo' && <DomainProfiles/>}
+        {section.id==='adaptadores-agentes' && (['es','en'] as const).map(lang=><dl class="integration-list" data-locale={lang} hidden={lang==='en'}>{Object.entries(agentsByLang[lang]).map(([key,agent])=><div><dt><AgentLogo agent={key} size={23}/>{agent.title}</dt><dd>{agent.desc}</dd><dd><strong>{lang==='es'?'Inicio:':'Start:'}</strong> <code>{agent.invocation}</code></dd><dd><code>{agent.path}</code></dd></div>)}</dl>)}
+      </section>)}
+      <section id="mantenimiento">
+        <div data-locale="es"><h2>Actualizar una instalación</h2><p>Ejecuta primero el diagnóstico desde la raíz del proyecto. Revisa la propuesta de actualización antes de aplicarla. <code>init</code> prepara una instalación; no migra otra versión.</p></div>
+        <div data-locale="en" hidden><h2>Update an installation</h2><p>Run diagnostics from the project root first. Review the proposed update before applying it. <code>init</code> prepares an installation; it does not migrate another version.</p></div>
+        <CopySnippet command="npx --yes omni-spec@preview doctor"/>
+        <CopySnippet command="npx --yes omni-spec@preview update --dry-run"/>
+        <div data-locale="es"><p>Si la propuesta corresponde a lo que buscas, ejecuta <code>npx --yes omni-spec@preview update</code>. Conserva una copia de tus cambios y revisa los conflictos que indique el CLI; no uses <code>--force</code> como solución automática.</p></div>
+        <div data-locale="en" hidden><p>If the proposal matches your intent, run <code>npx --yes omni-spec@preview update</code>. Keep a copy of your changes and review conflicts reported by the CLI; do not use <code>--force</code> as an automatic fix.</p></div>
+      </section>
+      <section id="recuperacion">
+        <div data-locale="es"><h2>Si algo no funciona</h2><ul class="recovery-list"><li><strong>La skill no aparece.</strong> Abre la raíz del proyecto, reinicia la herramienta y pide al agente que lea la ruta que imprimió el instalador. Consulta las <a href="#adaptadores-agentes">rutas de cada integración</a>.</li><li><strong>La instalación se interrumpió.</strong> Ejecuta <code>doctor</code> y revisa <code>update --dry-run</code>. Una salida con error puede dejar escritura parcial.</li><li><strong>Hay otra versión o instalación global.</strong> Comprueba qué CLI y qué instrucciones está leyendo el agente. El plugin global de Antigravity se gestiona por separado.</li><li><strong>Un check falla o expira.</strong> Lee el comando, la carpeta de trabajo y su salida. Corrige la causa y repite la verificación; un fallo no cuenta como evidencia de aprobación.</li><li><strong>No se puede copiar.</strong> Usa la acción «Seleccionar comando» y copia con el teclado. El contenido permanece visible para poder recuperarlo.</li></ul></div>
+        <div data-locale="en" hidden><h2>If something goes wrong</h2><ul class="recovery-list"><li><strong>A skill is missing.</strong> Open the project root, restart your tool and ask the agent to read the path printed by the installer. See the <a href="#adaptadores-agentes">integration paths</a>.</li><li><strong>Installation was interrupted.</strong> Run <code>doctor</code> and review <code>update --dry-run</code>. An error exit may leave partially written files.</li><li><strong>Another version or global install exists.</strong> Check which CLI and instructions the agent reads. The global Antigravity plugin is managed separately.</li><li><strong>A check fails or times out.</strong> Read its command, working directory and output. Fix the cause and verify again; a failure is not approval evidence.</li><li><strong>Copy is unavailable.</strong> Use “Select command” and copy with your keyboard. The content remains visible for recovery.</li></ul></div>
+      </section>
+      <p class="docs-source"><a class="quiet-link" href="https://github.com/brahiandres1999-oss/omni-spec/tree/v0.7.0-preview.2/docs"><Icon name="book"/><span data-i18n="docs.source">{t['docs.source']}</span></a></p>
+      <a class="quiet-link" href={base+'/changelog/'} data-i18n="nav.changelog">{t['nav.changelog']}</a>
+    </main>
   </div>
-
-  <Footer />
+</div>
+<Footer/>
 </Layout>
-
-<script define:vars={{ docNavByLang }}>
-  function setupDocsI18n() {
-    const sidebarTitle = document.getElementById('docs-sidebar-title');
-    const sidebarNav = document.getElementById('docs-sidebar-nav');
-    const backLink = document.getElementById('docs-back-link');
-    const changelogLink = document.getElementById('docs-changelog-link');
-
-    function applyLanguage(lang) {
-      const activeLang = lang === 'en' ? 'en' : 'es';
-
-      // 1. Alternar cuerpos de secciones
-      document.querySelectorAll('[data-docs-lang="es"]').forEach((el) => {
-        if (activeLang === 'en') el.classList.add('hidden');
-        else el.classList.remove('hidden');
-      });
-      document.querySelectorAll('[data-docs-lang="en"]').forEach((el) => {
-        if (activeLang === 'en') el.classList.remove('hidden');
-        else el.classList.add('hidden');
-      });
-
-      // 2. Actualizar encabezado del sidebar y links del footer
-      if (sidebarTitle) {
-        sidebarTitle.textContent = activeLang === 'en' ? 'Documentation' : 'Documentación';
-      }
-      const mobileTitle = document.getElementById('docs-mobile-index-title');
-      const mobileNav = document.getElementById('docs-mobile-nav');
-      if (mobileTitle) {
-        mobileTitle.textContent = activeLang === 'en' ? 'Section Index' : 'Índice de Secciones';
-      }
-      if (backLink) {
-        backLink.innerHTML = activeLang === 'en' ? '&larr; Back to Landing Page' : '&larr; Volver a la Landing Page';
-      }
-      if (changelogLink) {
-        changelogLink.innerHTML = activeLang === 'en' ? 'View Official Changelog &rarr;' : 'Ver Changelog Oficial &rarr;';
-      }
-
-      const navData = docNavByLang[activeLang] || docNavByLang.es;
-
-      // 3. Re-renderizar enlaces del sidebar y menú móvil
-      if (mobileNav) {
-        mobileNav.innerHTML = navData.map((sec) => `
-          <div class="space-y-1">
-            <div class="text-[10px] font-bold text-primary-muted uppercase tracking-wider">${sec.category}</div>
-            <ul class="space-y-1 pl-2">
-              ${sec.items.map((item) => `
-                <li>
-                  <a href="#${item.id}" class="block py-1 text-primary-muted hover:text-accent transition-colors">
-                    ${item.title}
-                  </a>
-                </li>
-              `).join('')}
-            </ul>
-          </div>
-        `).join('');
-      }
-
-      if (sidebarNav) {
-        sidebarNav.innerHTML = navData.map((sec) => `
-          <div class="space-y-2">
-            <h3 class="font-bold text-primary-muted uppercase text-[10px] tracking-wider">
-              ${sec.category}
-            </h3>
-            <ul class="space-y-1">
-              ${sec.items.map((item) => `
-                <li>
-                  <a 
-                    href="#${item.id}" 
-                    class="docs-nav-link block py-1.5 px-3 rounded text-primary-muted hover:text-primary hover:bg-surface border-l-2 border-transparent transition-colors"
-                    data-section="${item.id}"
-                  >
-                    ${item.title}
-                  </a>
-                </li>
-              `).join('')}
-            </ul>
-          </div>
-        `).join('');
-
-        setupDocsScrollSpy();
-      }
-    }
-
-    function setupDocsScrollSpy() {
-      const links = document.querySelectorAll('.docs-nav-link');
-      const sections = Array.from(document.querySelectorAll('section[id]'));
-      if (!links.length || !sections.length) return;
-
-      const setActiveLink = (id) => {
-        links.forEach((link) => {
-          const targetId = link.getAttribute('data-section');
-          if (targetId === id) {
-            link.classList.remove('text-primary-muted', 'border-transparent', 'hover:bg-surface');
-            link.classList.add('text-accent', 'font-semibold', 'bg-accent/10', 'border-accent');
-            link.setAttribute('aria-current', 'location');
-          } else {
-            link.classList.remove('text-accent', 'font-semibold', 'bg-accent/10', 'border-accent');
-            link.classList.add('text-primary-muted', 'border-transparent', 'hover:bg-surface');
-            link.removeAttribute('aria-current');
-          }
-        });
-      };
-
-      if (sections[0]) {
-        setActiveLink(sections[0].id);
-      }
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveLink(entry.target.id);
-          }
-        });
-      }, {
-        rootMargin: '-10% 0px -65% 0px',
-        threshold: 0
-      });
-
-      sections.forEach((s) => observer.observe(s));
-    }
-
-    const currentLang = localStorage.getItem('omni-lang') || 'es';
-    if (currentLang === 'en') {
-      applyLanguage('en');
-    } else {
-      setupDocsScrollSpy();
-    }
-
-    window.addEventListener('omni:language-change', (e) => {
-      applyLanguage(e.detail.lang);
-    });
-  }
-
-  setupDocsI18n();
-  document.addEventListener('astro:page-load', setupDocsI18n);
+<script>
+ const links=Array.from(document.querySelectorAll<HTMLAnchorElement>('.docs-sidebar a'));
+ const observer=new IntersectionObserver(entries=>{
+  const entry=entries.find(item=>item.isIntersecting);
+  if(!entry)return;
+  links.forEach(link=>{if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');});
+ },{rootMargin:'-100px 0px -65% 0px',threshold:0});
+ document.querySelectorAll('.prose > section[id]').forEach(section=>observer.observe(section));
+ const menu=document.querySelector<HTMLDetailsElement>('.docs-mobile-nav');
+ menu?.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{menu.open=false;}));
+ menu?.addEventListener('keydown',event=>{if(event.key==='Escape'){menu.open=false;menu.querySelector('summary')?.focus();}});
 </script>

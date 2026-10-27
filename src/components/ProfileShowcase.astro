@@ -1,0 +1,363 @@
+---
+import Icon from './Icon.astro';
+import { profileDataByLang } from '../data/omnispec';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const icons: Record<string, string> = {
+  fintech: 'wallet',
+  healthtech: 'heart',
+  ecommerce: 'globe',
+  bpo: 'key',
+  general: 'code'
+};
+const profiles = Object.entries(profileDataByLang.es);
+---
+<section class="section-space profiles-showcase" id="perfiles">
+  <div class="page-shell">
+    <div class="section-intro two-column-intro">
+      <div>
+        <p class="eyebrow" data-i18n="profiles.eyebrow">EL CONTEXTO CAMBIA LAS PREGUNTAS</p>
+        <h2 class="section-title" data-i18n="profiles.title">Cada proyecto tiene algo que cuidar.</h2>
+      </div>
+      <p class="body-copy" data-i18n="profiles.body">
+        Un pago, una historia clínica o un permiso requieren revisiones distintas. Elige un perfil y úsalo para acordar qué controles aplican a tu proyecto.
+      </p>
+    </div>
+
+    <!-- Barra de Pestañas de Perfiles -->
+    <div role="tablist" class="profile-tabs" aria-label="Perfiles de dominio de OmniSpec">
+      {profiles.map(([key, profile], index) => (
+        <button
+          type="button"
+          role="tab"
+          id={`tab-${key}`}
+          aria-selected={index === 0 ? "true" : "false"}
+          aria-controls={`panel-${key}`}
+          tabindex={index === 0 ? 0 : -1}
+          class={`profile-tab profile-tab-${key} ${index === 0 ? 'is-active' : ''}`}
+          data-profile-tab={key}
+        >
+          <Icon name={icons[key]} size={18} />
+          <span class="profile-tab-name">
+            <span data-locale="es">{profile.name}</span>
+            <span data-locale="en" hidden>{profileDataByLang.en[key].name}</span>
+          </span>
+        </button>
+      ))}
+    </div>
+
+    <!-- Inspector de Contexto Unificado -->
+    <div class="profile-inspector-card">
+      {profiles.map(([key, profile], index) => (
+        <div
+          role="tabpanel"
+          id={`panel-${key}`}
+          aria-labelledby={`tab-${key}`}
+          class={`profile-panel profile-panel-${key}`}
+          hidden={index !== 0}
+          data-profile-panel={key}
+        >
+          <div class="panel-layout">
+            <!-- Columna Izquierda: Identidad y alcance -->
+            <div class="panel-info">
+              <div class="panel-header">
+                <span class={`profile-badge-icon profile-badge-${key}`}>
+                  <Icon name={icons[key]} size={24} />
+                </span>
+                <div>
+                  <h3 class="panel-title">
+                    <span data-locale="es">{profile.name}</span>
+                    <span data-locale="en" hidden>{profileDataByLang.en[key].name}</span>
+                  </h3>
+                  <p class="panel-tag">
+                    <span data-locale="es">{profile.tag}</span>
+                    <span data-locale="en" hidden>{profileDataByLang.en[key].tag}</span>
+                  </p>
+                </div>
+              </div>
+              
+              <p class="body-copy panel-desc">
+                <span data-locale="es">{profile.description}</span>
+                <span data-locale="en" hidden>{profileDataByLang.en[key].description}</span>
+              </p>
+
+              <div class="panel-activation">
+                <span class="activation-label">Comando de inicialización:</span>
+                <code class="activation-cmd">{`npx omni-spec init ${profile.flag}`}</code>
+              </div>
+            </div>
+
+            <!-- Columna Derecha: Invariantes y reglas de rigor -->
+            <div class="panel-invariants">
+              <h4 class="invariants-heading">
+                <Icon name="checklist" size={16} />
+                <span data-locale="es">Controles e invariantes del proyecto</span>
+                <span data-locale="en" hidden>Project invariants & controls</span>
+              </h4>
+              <ul class="invariants-list">
+                {(['es', 'en'] as const).map(lang => (
+                  <div data-locale={lang} hidden={lang === 'en'} class="invariants-lang-group">
+                    {profileDataByLang[lang][key].invariants.map(item => (
+                      <li class="invariant-item">
+                        <Icon name="check" size={16} class="check-icon" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </div>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="profile-caption">
+      <p class="small-note" data-i18n="docs.profilesNote">
+        Son controles para revisar con el agente, no certificaciones ni arquitecturas obligatorias.
+      </p>
+      <a class="quiet-link" href={base + '/docs/#perfiles-catalogo'}>
+        <span data-i18n="profiles.all">Explorar los controles</span>
+        <Icon name="arrow" size={18} />
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .profiles-showcase {
+    background: rgb(var(--bg-surface) / 0.5);
+  }
+  .profile-tabs {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .profile-tab {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    min-height: 2.5rem;
+    padding: 0.4rem 0.65rem;
+    border-radius: 9999px;
+    border: 1px solid rgb(var(--border-rgb) / var(--border-subtle-alpha));
+    background: rgb(var(--bg-base));
+    color: rgb(var(--text-secondary));
+    font-size: 0.8125rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.15s, border-color 0.15s, color 0.15s, transform 0.15s;
+  }
+  @media (max-width: 960px) {
+    .profile-tabs {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .profile-tab {
+      flex: 1 1 calc(33.333% - 0.5rem);
+    }
+  }
+  @media (max-width: 600px) {
+    .profile-tab {
+      flex: 1 1 calc(50% - 0.5rem);
+    }
+  }
+  @media (max-width: 380px) {
+    .profile-tab {
+      flex: 1 1 100%;
+    }
+  }
+  .profile-tab:hover {
+    background: rgb(var(--bg-surface-elevated));
+    color: rgb(var(--text-primary));
+    border-color: rgb(var(--text-secondary));
+  }
+  .profile-tab.is-active {
+    background: rgb(var(--bg-surface-elevated));
+    color: rgb(var(--text-primary));
+    border-color: rgb(var(--text-primary));
+    box-shadow: inset 0 0 0 1px rgb(var(--text-primary));
+  }
+  .profile-tab:focus-visible {
+    outline: 2px solid rgb(var(--focus));
+    outline-offset: 2px;
+  }
+  .profile-tab-flag {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.6875rem;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    background: rgb(var(--bg-surface));
+    color: rgb(var(--text-tertiary));
+  }
+  .profile-inspector-card {
+    border: 1px solid rgb(var(--border-rgb) / var(--border-subtle-alpha));
+    border-radius: 0.875rem;
+    background: rgb(var(--bg-base));
+    box-shadow: 0 4px 20px rgb(0 0 0 / 0.04);
+    overflow: hidden;
+  }
+  .panel-layout {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 2rem;
+    padding: 2rem;
+  }
+  .panel-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .profile-badge-icon {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.625rem;
+    background: rgb(var(--bg-surface));
+    border: 1px solid rgb(var(--border-rgb) / var(--border-subtle-alpha));
+    color: rgb(var(--accent));
+  }
+  .profile-panel-fintech { --accent: 59 130 246; }
+  .profile-panel-healthtech { --accent: 239 68 68; }
+  .profile-panel-ecommerce { --accent: 16 185 129; }
+  .profile-panel-bpo { --accent: 168 85 247; }
+  .profile-panel-general { --accent: 245 158 11; }
+
+  .panel-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: rgb(var(--text-primary));
+    line-height: 1.3;
+  }
+  .panel-tag {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgb(var(--accent));
+    margin-top: 0.2rem;
+  }
+  .panel-desc {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: rgb(var(--text-secondary));
+    margin-bottom: 1.5rem;
+  }
+  .panel-activation {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.8125rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    background: rgb(var(--bg-surface));
+    border: 1px solid rgb(var(--border-rgb) / var(--border-subtle-alpha));
+  }
+  .activation-label {
+    color: rgb(var(--text-secondary));
+    font-size: 0.75rem;
+  }
+  .activation-cmd {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.75rem;
+    color: rgb(var(--accent));
+    font-weight: 600;
+  }
+  .panel-invariants {
+    display: flex;
+    flex-direction: column;
+    padding-left: 2rem;
+    border-left: 1px solid rgb(var(--border-rgb) / var(--border-subtle-alpha));
+  }
+  .invariants-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgb(var(--text-primary));
+    margin-bottom: 1.25rem;
+  }
+  .invariants-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .invariants-lang-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  .invariant-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: rgb(var(--text-secondary));
+  }
+  .check-icon {
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+    color: rgb(var(--accent));
+  }
+  @media (max-width: 860px) {
+    .panel-layout {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      padding: 1.25rem;
+    }
+    .panel-invariants {
+      padding-left: 0;
+      border-left: 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgb(var(--border-rgb) / var(--border-subtle-alpha));
+    }
+  }
+</style>
+
+<script>
+  function initProfileTabs() {
+    const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-profile-tab]'));
+    const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-profile-panel]'));
+    if (!tabs.length) return;
+
+    const activateTab = (tab: HTMLButtonElement, setFocus = true) => {
+      tabs.forEach(t => {
+        const selected = t === tab;
+        t.setAttribute('aria-selected', String(selected));
+        t.tabIndex = selected ? 0 : -1;
+        t.classList.toggle('is-active', selected);
+      });
+      const key = tab.dataset.profileTab;
+      panels.forEach(p => {
+        p.hidden = p.dataset.profilePanel !== key;
+      });
+      if (setFocus) tab.focus();
+    };
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => activateTab(tab, false));
+      tab.addEventListener('keydown', (e) => {
+        let nextIndex = index;
+        if (e.key === 'ArrowRight') nextIndex = (index + 1) % tabs.length;
+        else if (e.key === 'ArrowLeft') nextIndex = (index - 1 + tabs.length) % tabs.length;
+        else if (e.key === 'Home') nextIndex = 0;
+        else if (e.key === 'End') nextIndex = tabs.length - 1;
+        else return;
+        e.preventDefault();
+        activateTab(tabs[nextIndex], true);
+      });
+    });
+  }
+
+  initProfileTabs();
+  document.addEventListener('astro:page-load', initProfileTabs);
+</script>

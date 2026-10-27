@@ -1,0 +1,7 @@
+---
+interface Props { agent: string; size?: number }
+const {agent,size=24}=Astro.props;
+const base=import.meta.env.BASE_URL.replace(/\/$/,'');
+const files:Record<string,string>={claude:'claude.svg',codex:'codex.svg',cursor:'cursor.svg',opencode:'opencode.png',antigravity:'antigravity.svg',copilot:'copilot.svg',kilo:'kilo.svg',gemini:'gemini.png'};
+---
+{files[agent] ? <span class={'agent-logo agent-logo-' + agent} style={'--logo-size:' + size + 'px'}><img src={base+'/assets/agents/'+files[agent]} width={size} height={size} alt="" loading="lazy" />{agent === 'cursor' && <img class="agent-logo-dark" src={base+'/assets/agents/cursor-dark.svg'} width={size} height={size} alt="" loading="lazy"/>}</span> : <svg class="agent-logo" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18"/></svg>}

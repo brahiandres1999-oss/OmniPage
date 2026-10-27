@@ -25,8 +25,11 @@
 >
   <canvas id="ascii-spec-canvas" class="w-full h-full block pointer-events-none"></canvas>
 </div>
+<button type="button" id="ascii-pause" class="canvas-toggle" aria-pressed="false" aria-label="Pausar animación" title="Pausar animación" hidden><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path class="ascii-pause-mark" d="M8 5v14M16 5v14"/><path class="ascii-play-mark" d="m8 5 11 7-11 7Z"/></svg></button>
 
 <script>
+  import { getLanguage } from '../scripts/preferences';
+  import { translations } from '../i18n/translations';
   /** Región geométrica de la figura muestreada (define el color base). */
   type RegionId = 'plinth' | 'feature' | 'bugfix' | 'techdebt' | 'rfc' | 'gate' | 'jewel';
 
@@ -321,7 +324,11 @@
     const ctx = canvas.getContext('2d');
     if (!ctx) return null;
 
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let reduceMotion = motionQuery.matches;
+    let userPaused = false;
+    const pauseButton = document.getElementById('ascii-pause') as HTMLButtonElement;
+    pauseButton.hidden = false;
     const particles = buildParticles();
     const colors = new Map<RegionId, string>();
     for (const id of Object.keys(REGION_COLOR_VAR) as RegionId[]) {
@@ -406,12 +413,12 @@
         p.vy = 0;
       }
       rain = buildRain(width, height, Math.min(width, height) * 0.42, rainPalette);
-      if (reduceMotion) drawStatic();
+      if (reduceMotion || userPaused) drawStatic();
     };
 
     /** Inicia el bucle de animación si está visible y no se encuentra activo. */
     const startLoop = (): void => {
-      if (destroyed || !visible || reduceMotion || rafId !== 0) return;
+      if (destroyed || !visible || reduceMotion || userPaused || document.hidden || rafId !== 0) return;
       rafId = requestAnimationFrame(frame);
     };
 
@@ -425,7 +432,7 @@
 
     /** Bucle de animación: física de partículas pre-calculadas y lluvia continua. */
     const frame = (): void => {
-      if (destroyed || !visible) {
+      if (destroyed || !visible || reduceMotion || userPaused || document.hidden) {
         rafId = 0;
         return;
       }
@@ -500,6 +507,37 @@
       mouseY = -9999;
     };
 
+    /** Exposes animation state as a persistent label; reduced motion takes precedence. */
+    const updatePauseLabel = (): void => {
+      const lang = getLanguage();
+      pauseButton.disabled = reduceMotion;
+      pauseButton.setAttribute('aria-pressed', String(userPaused || reduceMotion));
+      const label = reduceMotion
+        ? (lang === 'es' ? 'Movimiento reducido' : 'Reduced motion')
+        : translations[lang][userPaused ? 'motion.play' : 'motion.pause'];
+      pauseButton.setAttribute('aria-label', reduceMotion ? translations[lang]['motion.reduced'] : label);
+      pauseButton.title = label;
+      wrap.dataset.motion = reduceMotion || userPaused ? 'paused' : 'playing';
+    };
+    const onPause = (): void => {
+      userPaused = !userPaused;
+      if (userPaused) { stopLoop(); drawStatic(); } else startLoop();
+      updatePauseLabel();
+    };
+    const onMotionChange = (): void => {
+      reduceMotion = motionQuery.matches;
+      if (reduceMotion) { stopLoop(); resize(); } else startLoop();
+      updatePauseLabel();
+    };
+    const onVisibilityChange = (): void => {
+      if (document.hidden) stopLoop(); else startLoop();
+    };
+    pauseButton.addEventListener('click', onPause);
+    motionQuery.addEventListener('change', onMotionChange);
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    window.addEventListener('omni:language-change', updatePauseLabel);
+    updatePauseLabel();
+
     /** Controla apagado y reanudación real del loop rAF según visibilidad en pantalla. */
     const io = new IntersectionObserver((entries) => {
       visible = entries[0]?.isIntersecting ?? true;
@@ -523,7 +561,7 @@
       for (const drop of rain) {
         drop.color = rainPalette[Math.floor(Math.random() * rainPalette.length)];
       }
-      if (reduceMotion) drawStatic();
+      if (reduceMotion || userPaused) drawStatic();
     });
     themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
@@ -551,6 +589,10 @@
         io.disconnect();
         themeObserver.disconnect();
         ro.disconnect();
+        pauseButton.removeEventListener('click', onPause);
+        motionQuery.removeEventListener('change', onMotionChange);
+        document.removeEventListener('visibilitychange', onVisibilityChange);
+        window.removeEventListener('omni:language-change', updatePauseLabel);
         window.removeEventListener('mousemove', onMouseMove);
         window.removeEventListener('scroll', updateRect);
         window.removeEventListener('touchmove', onTouchMove);

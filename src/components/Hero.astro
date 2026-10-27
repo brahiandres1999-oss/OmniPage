@@ -1,56 +1,33 @@
 ---
-import CopySnippet from './CopySnippet.astro';
 import AsciiSpecCanvas from './AsciiSpecCanvas.astro';
-import { omniSpecRelease, installCommand } from '../data/omnispec';
+import Icon from './Icon.astro';
+import AgentLogo from './AgentLogo.astro';
+import { translations } from '../i18n/translations';
+const t = translations.es;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
-
-<section class="pt-10 pb-14 md:pt-14 md:pb-20 transition-colors">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-10 lg:gap-12">
-
-    <!-- Columna de texto (más ancha: el titular debe caber en 3 líneas exactas) -->
-    <div class="flex-1 lg:flex-[1.2] min-w-0 flex flex-col items-center lg:items-start text-center lg:text-left">
-
-      <!-- Eyebrow editorial: regla corta + término técnico (eco del anillo de calibración del logo) -->
-      <div class="flex items-center gap-3 text-xs font-mono uppercase tracking-[0.2em] text-primary-muted">
-        <span class="block h-px w-8 bg-border-active" aria-hidden="true"></span>
-        <span data-i18n="hero.eyebrow">Spec-Driven Development</span>
+<section class="hero-section">
+  <div class="page-shell hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow" data-i18n="hero.eyebrow">{t['hero.eyebrow']}</p>
+      <h1><span data-i18n="hero.titleL">{t['hero.titleL']}</span> <span class="hero-second" data-i18n="hero.titleR">{t['hero.titleR']}</span></h1>
+      <p class="hero-description" data-i18n="hero.subtitle">{t['hero.subtitle']}</p>
+      <div class="hero-actions">
+        <a class="action action-primary" href="#empezar"><Icon name="terminal" /><span data-i18n="hero.cta">{t['hero.cta']}</span><Icon name="arrow" size={18} /></a>
+        <a class="quiet-link" href="#canvas"><Icon name="play" size={18} /><span data-i18n="hero.example">{t['hero.example']}</span></a>
       </div>
-
-      <!-- Titular con jerarquía tipográfica: 3 líneas exactas (contexto / concepto clave / cierre) -->
-      <h1 class="mt-4 text-4xl sm:text-5xl font-medium tracking-tight text-primary max-w-[24ch] leading-[1.08]">
-        <span class="block" data-i18n="hero.titleL">Desarrollo guiado por</span>
-        <span class="block font-extrabold text-accent" data-i18n="hero.titleWord">especificaciones</span>
-        <span class="block" data-i18n="hero.titleR">para agentes de código.</span>
-      </h1>
-
-      <!-- Subtítulo Enfocado en Mecánica y Contratos Técnicos -->
-      <p class="mt-4 text-base sm:text-lg md:text-xl text-primary-muted max-w-[52ch] leading-relaxed mx-auto lg:mx-0" data-i18n="hero.subtitle">
-        Contratos técnicos versionados en Git: alcance delimitado por tarea y verificación con los tests de tu repositorio.
-      </p>
-
-      <!-- Caja de Comando npx con CopySnippet -->
-      <div class="mt-6 w-full flex flex-col items-center lg:items-start gap-3" id="instalar">
-        <div class="flex flex-wrap items-center gap-2 text-xs font-mono text-amber-800 dark:text-amber-400">
-          <span class="rounded border border-amber-500/30 px-2 py-1">{omniSpecRelease.version}</span>
-          <span data-i18n={omniSpecRelease.published ? "hero.previewPublished" : "hero.previewStatus"}>Preview · lanzamiento en preparación</span>
-        </div>
-        <CopySnippet command={installCommand} />
-        <p class="text-xs text-primary-muted max-w-[65ch] leading-relaxed" data-i18n={omniSpecRelease.published ? "hero.previewReady" : "hero.previewNotice"}>El comando estará disponible al publicar la Preview. latest conserva 0.6.1.</p>
-        <p class="text-sm text-primary-muted max-w-[60ch] leading-relaxed" data-i18n="hero.setupHint">Idioma → herramienta → confirmar carpeta. Después, tu agente te ayuda a definir qué construir.</p>
-        <!-- Tags mono sin separadores sueltos (wrap seguro: nada de "·" colgantes) -->
-        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-x-4 gap-y-1.5 text-xs font-mono text-primary-muted mt-2">
-          <span data-i18n="hero.tag1">Node.js ≥22.19 · sin dependencias runtime</span>
-          <span data-i18n="hero.tag2">Sin telemetría ni servidores</span>
-          <span data-i18n="hero.tag3">Licencia MIT</span>
-        </div>
-      </div>
-
+      <a class="release-link" href={base + '/changelog/'}><span class="status-dot" aria-hidden="true"></span><span data-i18n="hero.preview">{t['hero.preview']}</span></a>
+      <p class="hero-requirements" data-i18n="hero.note">{t['hero.note']}</p>
     </div>
-
-    <!-- Columna visual: lienzo interactivo de partículas ASCII (figura OmniSpec que sigue al cursor) -->
-    <div class="w-full lg:w-auto lg:flex-[0.8] flex justify-center">
+    <div class="hero-art">
       <AsciiSpecCanvas />
+      <p class="hero-art-caption" data-i18n="hero.caption">{t['hero.caption']}</p>
     </div>
-
+  </div>
+  <div class="page-shell">
+    <div class="integration-strip">
+      <p data-i18n="hero.integrations">{t['hero.integrations']}</p>
+      <div>{[['claude','Claude Code'],['codex','Codex'],['cursor','Cursor'],['opencode','OpenCode'],['antigravity','Antigravity']].map(([agent,name]) => <span class="integration-name"><AgentLogo agent={agent} size={23}/>{name}</span>)}<a href="#agentes" data-i18n="hero.more">{t['hero.more']}</a></div>
+    </div>
   </div>
 </section>

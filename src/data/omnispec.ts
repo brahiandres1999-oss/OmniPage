@@ -1,15 +1,15 @@
 import type { AgentData, DomainProfile } from '../types';
 import type { Language } from '../i18n/translations';
 
-/** Prepared release. Confirm npm/GitHub publication before marking this as published. */
+/** Publication verified against npm and the GitHub release on 2026-10-26. */
 export const omniSpecRelease = {
   "version": "0.7.0-preview.2",
   "label": "0.7.0 Preview",
   "channel": "preview",
   "stableVersion": "0.6.1",
-  "published": false,
-  "tagPublished": false,
-  "releasePublished": false
+  "published": true,
+  "tagPublished": true,
+  "releasePublished": true
 } as const;
 export const installCommand = 'npx --yes omni-spec@preview init';
 export const agentsByLang: Record<Language, Record<string, AgentData>> = {
