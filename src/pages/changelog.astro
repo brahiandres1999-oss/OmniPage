@@ -21,8 +21,8 @@ const date=(value:string,lang:string)=>new Intl.DateTimeFormat(lang,{dateStyle:'
   <div><h2>{release.version}</h2><p class="body-copy" data-i18n={release.preview?'releases.previewBody':'releases.stableBody'}>{t[release.preview?'releases.previewBody':'releases.stableBody']}</p><a href={release.url} class="quiet-link"><span data-i18n="releases.read">{t['releases.read']}</span><Icon name="arrow" size={17}/></a></div>
  </article>)}
  <section class="history-list"><h2 data-i18n="releases.history">{t['releases.history']}</h2>{history.map(release=><a href={release.url}><span>{release.version}{release.preview?' · Preview':''}</span>{(['es','en'] as const).map(lang=><time datetime={release.date} data-locale={lang} hidden={lang==='en'}>{date(release.date,lang)}</time>)}<Icon name="arrow" size={16}/></a>)}</section>
- <p class="release-source-note" data-locale="es">Fechas de publicación de GitHub. Los canales npm y la publicación de Preview se contrastaron el 26 de octubre de 2026. Las notas originales pueden conservar texto de preparación anterior al lanzamiento.</p>
- <p class="release-source-note" data-locale="en" hidden>GitHub publication dates. npm channels and the Preview release were checked on October 26, 2026. Original notes may retain preparation text written before publication.</p>
+ <p class="release-source-note" data-locale="es">Fechas de publicación de GitHub. Los canales npm y la publicación de Preview se contrastaron el 28 de octubre de 2026. Las notas originales pueden conservar texto de preparación anterior al lanzamiento.</p>
+ <p class="release-source-note" data-locale="en" hidden>GitHub publication dates. npm channels and the Preview release were checked on October 28, 2026. Original notes may retain preparation text written before publication.</p>
  <a href="https://github.com/brahiandres1999-oss/omni-spec/releases" class="quiet-link" data-i18n="releases.all">{t['releases.all']}</a>
  </div>
 </main>

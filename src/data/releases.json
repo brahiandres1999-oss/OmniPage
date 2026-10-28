@@ -1,5 +1,11 @@
 [
     {
+        "version": "v0.8.0-preview.1",
+        "date": "2026-10-28",
+        "url": "https://github.com/brahiandres1999-oss/omni-spec/releases/tag/v0.8.0-preview.1",
+        "preview": true
+    },
+    {
         "version":  "v0.7.0-preview.2",
         "date":  "2026-10-24",
         "url":  "https://github.com/brahiandres1999-oss/omni-spec/releases/tag/v0.7.0-preview.2",

@@ -106,7 +106,7 @@ const copy: Record<string, [string, string]> = {
   'start.intro': ['Necesitas Node.js ≥22.19.0 y una herramienta con agente de IA. Sirve para una carpeta nueva o un proyecto existente.', 'You need Node.js ≥22.19.0 and an AI coding tool. Use a new folder or an existing project.'],
   'start.1.title': ['Prepara la carpeta', 'Prepare the folder'],
   'start.1.body': ['Abre una terminal en la raíz del proyecto y ejecuta el comando. El asistente pregunta idioma, herramientas y confirmación de carpeta.', 'Open a terminal at the project root and run the command. The installer asks for your language, tools and folder confirmation.'],
-  'start.channel': ['Preview 0.7.0-preview.2 · latest conserva 0.6.1', 'Preview 0.7.0-preview.2 · latest remains 0.6.1'],
+  'start.channel': ['Preview 0.8.0-preview.1 · latest conserva 0.6.1', 'Preview 0.8.0-preview.1 · latest remains 0.6.1'],
   'start.2.title': ['Abre esa carpeta en tu agente', 'Open that folder in your agent'],
   'start.2.body': ['Elige aquí tu herramienta para ver cómo iniciar la conversación después de instalar.', 'Choose your tool here to see how to start the conversation after installation.'],
   'start.agent': ['Tu herramienta con IA', 'Your AI tool'],
@@ -139,7 +139,7 @@ const copy: Record<string, [string, string]> = {
   'faq.q5': ['¿Un trabajo completado garantiza que todo funciona?', 'Does completed work guarantee everything works?'],
   'faq.a5': ['El cierre exige criterios cubiertos y verificación vigente. La relevancia de las pruebas, el contenido de la evidencia y el resultado real siguen necesitando revisión. No equivale a una certificación ni a ausencia de errores.', 'Closing requires covered criteria and current verification. Test relevance, evidence and the actual result still need review. It does not certify the application or prove the absence of bugs.'],
   'faq.q6': ['¿Qué diferencia hay entre Preview y latest?', 'What is the difference between Preview and latest?'],
-  'faq.a6': ['La Preview publicada es 0.7.0-preview.2 y se instala con @preview. Es un canal para probar y dar feedback mientras continúa la validación. @latest mantiene la versión 0.6.1.', 'The published Preview is 0.7.0-preview.2, installed with @preview. It is a channel for testing and feedback while validation continues. @latest remains on 0.6.1.'],
+  'faq.a6': ['La Preview publicada es 0.8.0-preview.1 y se instala con @preview. Es un canal para probar y dar feedback mientras continúa la validación. @latest mantiene la versión 0.6.1.', 'The published Preview is 0.8.0-preview.1, installed with @preview. It is a channel for testing and feedback while validation continues. @latest remains on 0.6.1.'],
   'faq.q7': ['¿Puedo usar mis propias skills o herramientas (MCP) junto con OmniSpec?', 'Can I use my own skills or tools (MCP) alongside OmniSpec?'],
   'faq.a7': ['Sí, con total normalidad. OmniSpec no monopoliza ni bloquea el entorno de tu agente; convive en paralelo. Las skills de OmniSpec (/omni-*) se encargan de la gobernanza, especificación y trazabilidad en el repositorio (specs/), mientras que tus otras skills o servidores MCP (para diseño, testing, base de datos, accesibilidad o terminal) siguen operando en la misma sesión para enriquecer el trabajo.', 'Yes, absolutely. OmniSpec does not monopolize or lock down your agent environment; it coexists seamlessly. OmniSpec skills (/omni-*) handle governance, specification, and repository traceability (in specs/), while your other skills or MCP servers (for design, testing, databases, accessibility, or terminal operations) continue operating in the same session to enrich the work.'],
   'footer.desc': ['Contexto, acuerdos y evidencia para trabajar con agentes de IA.', 'Context, agreements and evidence for working with AI agents.'],
@@ -150,7 +150,7 @@ const copy: Record<string, [string, string]> = {
   'footer.backToTop': ['Volver arriba', 'Back to top'],
   'footer.note': ['Un proyecto abierto, en desarrollo. Revisa el código, prueba la Preview y comparte lo que encuentres.', 'An open project, in development. Read the source, try the Preview and share what you find.'],
   'docs.title': ['De la instalación al primer cambio.', 'From installation to your first change.'],
-  'docs.subtitle': ['Una guía para empezar, entender los archivos y revisar una entrega. La documentación de esta página corresponde a 0.7.0-preview.2.', 'A guide to getting started, understanding the files and reviewing a delivery. This page documents 0.7.0-preview.2.'],
+  'docs.subtitle': ['Una guía para empezar, entender los archivos y revisar una entrega. La documentación de esta página corresponde a 0.8.0-preview.1.', 'A guide to getting started, understanding the files and reviewing a delivery. This page documents 0.8.0-preview.1.'],
   'docs.nav': ['En esta guía', 'In this guide'],
   'docs.source': ['Consultar documentación de la versión en GitHub', 'Read version documentation on GitHub'],
   'docs.command': ['Comando de terminal', 'Terminal command'],
@@ -170,7 +170,7 @@ const copy: Record<string, [string, string]> = {
   'releases.read': ['Leer notas completas', 'Read full release notes'],
   'releases.history': ['Publicaciones anteriores', 'Earlier releases'],
   'releases.all': ['Ver todo el historial en GitHub', 'View the full history on GitHub'],
-  'releases.previewBody': ['Corrige las exclusiones de archivos usadas en la huella de verificación. La rama 0.7 incorpora onboarding guiado, adaptación del esfuerzo y evidencia por criterio. Continúa la validación de integraciones y modelos.', 'Fixes file exclusions used in verification fingerprints. The 0.7 line includes guided onboarding, effort adaptation and evidence per criterion. Validation of integrations and models continues.'],
+  'releases.previewBody': ['Añade economía de contexto, restauración del runtime local, diagnóstico de coexistencia y companions de interfaz better y frontend-design. Continúa la aceptación en hosts reales; presets y avisos de actualización quedan para otra entrega.', 'Adds context economy, local runtime restoration, coexistence diagnosis and the better and frontend-design UI companions. Acceptance in real hosts continues; presets and update notices remain for a later release.'],
   'releases.stableBody': ['Añade la gestión del plugin de Antigravity y el modo de proyecto que usa ese plugin global. Se mantiene como la versión del canal latest.', 'Adds Antigravity plugin management and the project mode that uses that global plugin. It remains the version on the latest channel.']
 };
 

@@ -8,7 +8,7 @@ Install dependencies with npm install. Use npm run dev for development, npm run 
 
 ## Product content
 
-src/data/omnispec.ts centralizes OmniSpec 0.7.0-preview.2, published on the npm preview channel; latest remains 0.6.1. Release metadata and source links are in src/data/releases.json. src/data/docs.ts contains the bilingual documentation. OmniSpec requires Node >=22.19.0 independently of the website build.
+src/data/omnispec.ts centralizes OmniSpec 0.8.0-preview.1, published on the npm preview channel; latest remains 0.6.1. Release metadata and source links are in src/data/releases.json. src/data/docs.ts contains the bilingual documentation. OmniSpec requires Node >=22.19.0 independently of the website build.
 
 The installation choices use each agent's own invocation and paths. The page supports Spanish/English, light/dark preferences, explicit clipboard feedback and recovery, keyboard controls and reduced-motion behavior. These are implementation features, not a blanket accessibility certification.
 
@@ -22,6 +22,6 @@ media/omni-workflow contains the editable film, storyboard, source notes, review
 
 ## Delivery
 
-GitHub Pages deployment is configured in .github/workflows/deploy.yml. This local revision has not been committed, pushed or deployed. The ASCII symbol remains in place; a new avatar identity is a separate design decision.
+GitHub Pages deployment is configured in .github/workflows/deploy.yml. Pushing main runs the build and publishes its static output. The ASCII symbol remains in place; a new avatar identity is a separate design decision.
 
 MIT. See the repository and asset license files.

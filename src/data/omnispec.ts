@@ -1,10 +1,10 @@
 import type { AgentData, DomainProfile } from '../types';
 import type { Language } from '../i18n/translations';
 
-/** Publication verified against npm and the GitHub release on 2026-10-26. */
+/** Publication verified against npm and the GitHub release on 2026-10-28. */
 export const omniSpecRelease = {
-  "version": "0.7.0-preview.2",
-  "label": "0.7.0 Preview",
+  "version": "0.8.0-preview.1",
+  "label": "0.8.0 Preview",
   "channel": "preview",
   "stableVersion": "0.6.1",
   "published": true,
