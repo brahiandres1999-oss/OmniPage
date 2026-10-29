@@ -47,6 +47,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
               <span id="agent-format-badge" class="guidance-format-badge"></span>
             </div>
             <p id="agent-description" class="body-copy guidance-desc"></p>
+            <p id="antigravity-plugin-guide" hidden><a class="quiet-link" href={base + '/docs/#antigravity-plugin'} data-i18n="start.pluginGuide">{t['start.pluginGuide']}</a></p>
             <CopySnippet id="agent-invocation" command="" prefix="›" />
             <div class="guidance-meta">
               <span class="meta-label" data-i18n="start.paths">{t['start.paths']}:</span>
@@ -212,6 +213,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     const key = choices.find(choice => choice.checked)?.value || 'claude';
     const agent = catalog[key];
     guidance.hidden = !agent;
+    document.getElementById('antigravity-plugin-guide')!.hidden = key !== 'antigravity';
     if (!agent) return;
     const invocation = document.querySelector('#agent-invocation [data-copy-text]')!;
     const changed = displayedAgent !== key || invocation.textContent !== agent.invocation;

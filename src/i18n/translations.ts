@@ -117,6 +117,7 @@ const copy: Record<string, [string, string]> = {
   'start.3.body': ['El agente reconoce el proyecto y registra su contexto. Después, usa omni-discuss para explorar una idea u omni-specify cuando el cambio ya esté claro.', 'The agent recognizes the project and records its context. Then use omni-discuss to explore an idea or omni-specify when the change is already clear.'],
   'start.prompt': ['“Quiero añadir un modo oscuro. Revisa cómo está hecha la interfaz y aclaremos el alcance antes de cambiar código.”', '“I want to add a dark mode. Review how the interface is built and let’s agree on the scope before changing code.”'],
   'start.docs': ['Seguir la guía de inicio', 'Follow the getting-started guide'],
+  'start.pluginGuide': ['Antigravity: instalar o actualizar el plugin global', 'Antigravity: install or update the global plugin'],
   'start.recovery': ['Si la skill no aparece, consulta la guía de recuperación.', 'If the skill does not appear, see the recovery guide.'],
   'start.scope': ['La instalación prepara archivos; no ejecuta los scripts de tu aplicación. El descubrimiento de skills depende de la versión de tu herramienta.', 'Installation prepares files; it does not run application scripts. Skill discovery depends on your tool’s version.'],
   'copy.copy': ['Copiar', 'Copy'],

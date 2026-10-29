@@ -68,6 +68,36 @@ export const docsSections = [
     "code": ""
   },
   {
+    "id": "antigravity-plugin",
+    "es": {
+      "title": "2.2 Antigravity: instalar y actualizar el plugin",
+      "paragraphs": [
+        "Puedes usar las skills locales del proyecto con <code>init --agent antigravity</code> o el plugin global compartido por los proyectos de esta máquina. El plugin requiere Node.js ≥22.19.0 y se instala por separado; los comandos siguientes fijan la Preview 0.8.0-preview.1.",
+        "<strong>Instalar:</strong> ejecuta el primer comando una vez. <strong>Consultar:</strong> el segundo muestra la versión del plugin instalado. <strong>Actualizar:</strong> usa el tercero si ya tienes el plugin; reemplaza el bundle global, así que conserva aparte cualquier personalización de ese directorio.",
+        "<strong>Proyecto nuevo:</strong> después de instalar el plugin, ejecuta el cuarto comando desde la raíz del proyecto. <code>--agent plugin</code> prepara el proyecto para usar el plugin global. <strong>Proyecto existente:</strong> actualizar el plugin no migra sus archivos administrados; revisa <code>update --dry-run</code> desde su raíz antes de aplicar la actualización del proyecto.",
+        "Si ya tienes skills locales de OmniSpec, revisa los avisos de coexistencia antes de cambiar al modo plugin. No borres carpetas de integraciones manualmente: <code>clean --dry-run</code> permite revisar la retirada de archivos administrados antes de ejecutar <code>clean</code>; conserva las especificaciones y trata las personalizaciones como conflictos.",
+        "Tras instalar o actualizar, recarga Antigravity si hace falta y comprueba que descubre las skills del plugin. La instalación de archivos y <code>plugin status</code> no demuestran su descubrimiento en el host."
+      ]
+    },
+    "en": {
+      "title": "2.2 Antigravity: install and update the plugin",
+      "paragraphs": [
+        "Use project-local skills with <code>init --agent antigravity</code> or the global plugin shared by projects on this machine. The plugin requires Node.js ≥22.19.0 and is installed separately; the commands below pin Preview 0.8.0-preview.1.",
+        "<strong>Install:</strong> run the first command once. <strong>Inspect:</strong> the second shows the installed plugin version. <strong>Update:</strong> use the third if you already have the plugin; it replaces the global bundle, so keep any customizations to that directory separately.",
+        "<strong>New project:</strong> after installing the plugin, run the fourth command from the project root. <code>--agent plugin</code> prepares the project to use the global plugin. <strong>Existing project:</strong> updating the plugin does not migrate its managed files; review <code>update --dry-run</code> from its root before applying the project update.",
+        "If you already have local OmniSpec skills, review coexistence warnings before switching to plugin mode. Do not delete integration folders manually: <code>clean --dry-run</code> previews managed file removal before running <code>clean</code>; it preserves specifications and treats customizations as conflicts.",
+        "After installation or an update, reload Antigravity if needed and confirm it discovers the plugin skills. File installation and <code>plugin status</code> do not establish host discovery."
+      ]
+    },
+    "commands": [
+      "npx --yes omni-spec@0.8.0-preview.1 plugin install",
+      "npx --yes omni-spec@0.8.0-preview.1 plugin status",
+      "npx --yes omni-spec@0.8.0-preview.1 plugin update",
+      "npx --yes omni-spec@0.8.0-preview.1 init --agent plugin"
+    ],
+    "code": ""
+  },
+  {
     "id": "constitucion",
     "es": {
       "title": "3. CONSTITUTION.md: acuerdos del proyecto",
