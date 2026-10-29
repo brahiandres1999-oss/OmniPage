@@ -24,7 +24,7 @@ export const docsSections = [
     "es": {
       "title": "2. Instalar la Preview",
       "paragraphs": [
-        "Requiere <strong>Node.js ≥22.19.0</strong>; no tiene dependencias runtime externas. Usa la raíz de tu proyecto o una carpeta nueva. El canal <code>preview</code> selecciona 0.8.0-preview.1, publicada el 28 de octubre de 2026; <code>latest</code> conserva 0.6.1.",
+        "Requiere <strong>Node.js ≥22.19.0</strong>; no tiene dependencias runtime externas. Usa la raíz de tu proyecto o una carpeta nueva. El canal <code>preview</code> selecciona 0.8.0-preview.2, publicada el 28 de octubre de 2026; <code>latest</code> conserva 0.6.1.",
         "El <code>--yes</code> de npm acepta obtener el paquete. OmniSpec mantiene sus preguntas: idioma, herramienta con IA y confirmación de carpeta. Puedes elegir varias herramientas o <code>generic</code>. Usa flechas, Espacio y Enter; Esc o Ctrl+C cancelan antes de instalar.",
         "init instala archivos y comprueba integridad y versión local. No ejecuta scripts de tu aplicación. Tras la inicialización, tu agente de IA asiste en el onboarding conversacional guiado."
       ]
@@ -32,7 +32,7 @@ export const docsSections = [
     "en": {
       "title": "2. Install the Preview",
       "paragraphs": [
-        "Requires <strong>Node.js ≥22.19.0</strong> with no external runtime dependencies. Use your project root or a new folder. The <code>preview</code> channel selects 0.8.0-preview.1, published on October 28, 2026; <code>latest</code> stays on 0.6.1.",
+        "Requires <strong>Node.js ≥22.19.0</strong> with no external runtime dependencies. Use your project root or a new folder. The <code>preview</code> channel selects 0.8.0-preview.2, published on October 28, 2026; <code>latest</code> stays on 0.6.1.",
         "npm’s <code>--yes</code> accepts obtaining the package. OmniSpec still asks for language, AI tool and folder confirmation. Choose multiple tools or <code>generic</code>. Use arrows, Space and Enter; Esc or Ctrl+C cancel before installation.",
         "init installs files and checks integrity and local version. It does not run application scripts. Following initialization, your AI agent guides the conversational onboarding process."
       ]
@@ -48,17 +48,17 @@ export const docsSections = [
     "es": {
       "title": "2.1 Una carpeta, dos puntos de partida",
       "paragraphs": [
-        "<strong>Proyecto nuevo:</strong> crea una carpeta, instala OmniSpec y abre esa misma carpeta en tu agente. Usa la invocación indicada: <code>/omni-init</code>, <code>$omni-init</code> en Codex o lectura explícita de la skill. Explica qué quieres construir; producto, tecnologías, documentación y checks se aclaran con el agente.",
+        "<strong>Proyecto nuevo:</strong> crea una carpeta, instala OmniSpec y abre esa misma carpeta en tu agente. Usa la invocación indicada: <code>/omni-init</code>, <code>@omni-init</code> en OpenCode, <code>$omni-init</code> en Codex o lectura explícita de la skill. Explica qué quieres construir; producto, tecnologías, documentación y checks se aclaran con el agente.",
         "<strong>Proyecto existente:</strong> instala en la raíz. El agente reconoce módulos, convenciones y comandos reales, conserva decisiones confirmadas y distingue lo declarado de lo ejecutado. Los scripts detectados quedan como candidatos <code>NOT_RUN</code>, no como gates implícitos.",
-        "Para automatización añade el <code>--yes</code> de OmniSpec después de init. Para actualizar un proyecto existente, ejecuta <code>npx --yes omni-spec@0.8.0-preview.1 update --dry-run</code> y revisa el resultado antes de repetir sin <code>--dry-run</code>. init no migra versiones. Desde 0.7.0-rc.1 o rc.2 a esta Preview 0.8 no hace falta permitir un downgrade."
+        "Para automatización añade el <code>--yes</code> de OmniSpec después de init. Para actualizar un proyecto existente, ejecuta <code>npx --yes omni-spec@0.8.0-preview.2 update --dry-run</code> y revisa el resultado antes de repetir sin <code>--dry-run</code>. init no migra versiones. Desde 0.7.0-rc.1 o rc.2 a esta Preview 0.8 no hace falta permitir un downgrade."
       ]
     },
     "en": {
       "title": "2.1 One folder, two starting points",
       "paragraphs": [
-        "<strong>New project:</strong> create a folder, install OmniSpec and open that exact folder in your agent. Use the printed invocation: <code>/omni-init</code>, <code>$omni-init</code> in Codex or explicit skill reading. Describe what you want to build; product, technologies, documentation and checks are clarified with the agent.",
+        "<strong>New project:</strong> create a folder, install OmniSpec and open that exact folder in your agent. Use the printed invocation: <code>/omni-init</code>, <code>@omni-init</code> in OpenCode, <code>$omni-init</code> in Codex or explicit skill reading. Describe what you want to build; product, technologies, documentation and checks are clarified with the agent.",
         "<strong>Existing project:</strong> install at its root. The agent recognizes modules, conventions and real commands, preserves confirmed decisions and separates declarations from execution. Detected scripts remain <code>NOT_RUN</code> candidates, not implicit gates.",
-        "For automation, add OmniSpec’s <code>--yes</code> after init. To update an existing project, run <code>npx --yes omni-spec@0.8.0-preview.1 update --dry-run</code> and review the result before repeating without <code>--dry-run</code>. init does not migrate versions. Moving from 0.7.0-rc.1 or rc.2 to this 0.8 Preview does not require allowing a downgrade."
+        "For automation, add OmniSpec’s <code>--yes</code> after init. To update an existing project, run <code>npx --yes omni-spec@0.8.0-preview.2 update --dry-run</code> and review the result before repeating without <code>--dry-run</code>. init does not migrate versions. Moving from 0.7.0-rc.1 or rc.2 to this 0.8 Preview does not require allowing a downgrade."
       ]
     },
     "commands": [
@@ -72,7 +72,7 @@ export const docsSections = [
     "es": {
       "title": "2.2 Antigravity: instalar y actualizar el plugin",
       "paragraphs": [
-        "Puedes usar las skills locales del proyecto con <code>init --agent antigravity</code> o el plugin global compartido por los proyectos de esta máquina. El plugin requiere Node.js ≥22.19.0 y se instala por separado; los comandos siguientes fijan la Preview 0.8.0-preview.1.",
+        "Puedes usar las skills locales del proyecto con <code>init --agent antigravity</code> o el plugin global compartido por los proyectos de esta máquina. El plugin requiere Node.js ≥22.19.0 y se instala por separado; los comandos siguientes fijan la Preview 0.8.0-preview.2.",
         "<strong>Instalar:</strong> ejecuta el primer comando una vez. <strong>Consultar:</strong> el segundo muestra la versión del plugin instalado. <strong>Actualizar:</strong> usa el tercero si ya tienes el plugin; reemplaza el bundle global, así que conserva aparte cualquier personalización de ese directorio.",
         "<strong>Proyecto nuevo:</strong> después de instalar el plugin, ejecuta el cuarto comando desde la raíz del proyecto. <code>--agent plugin</code> prepara el proyecto para usar el plugin global. <strong>Proyecto existente:</strong> actualizar el plugin no migra sus archivos administrados; revisa <code>update --dry-run</code> desde su raíz antes de aplicar la actualización del proyecto.",
         "Si ya tienes skills locales de OmniSpec, revisa los avisos de coexistencia antes de cambiar al modo plugin. No borres carpetas de integraciones manualmente: <code>clean --dry-run</code> permite revisar la retirada de archivos administrados antes de ejecutar <code>clean</code>; conserva las especificaciones y trata las personalizaciones como conflictos.",
@@ -82,7 +82,7 @@ export const docsSections = [
     "en": {
       "title": "2.2 Antigravity: install and update the plugin",
       "paragraphs": [
-        "Use project-local skills with <code>init --agent antigravity</code> or the global plugin shared by projects on this machine. The plugin requires Node.js ≥22.19.0 and is installed separately; the commands below pin Preview 0.8.0-preview.1.",
+        "Use project-local skills with <code>init --agent antigravity</code> or the global plugin shared by projects on this machine. The plugin requires Node.js ≥22.19.0 and is installed separately; the commands below pin Preview 0.8.0-preview.2.",
         "<strong>Install:</strong> run the first command once. <strong>Inspect:</strong> the second shows the installed plugin version. <strong>Update:</strong> use the third if you already have the plugin; it replaces the global bundle, so keep any customizations to that directory separately.",
         "<strong>New project:</strong> after installing the plugin, run the fourth command from the project root. <code>--agent plugin</code> prepares the project to use the global plugin. <strong>Existing project:</strong> updating the plugin does not migrate its managed files; review <code>update --dry-run</code> from its root before applying the project update.",
         "If you already have local OmniSpec skills, review coexistence warnings before switching to plugin mode. Do not delete integration folders manually: <code>clean --dry-run</code> previews managed file removal before running <code>clean</code>; it preserves specifications and treats customizations as conflicts.",
@@ -90,10 +90,10 @@ export const docsSections = [
       ]
     },
     "commands": [
-      "npx --yes omni-spec@0.8.0-preview.1 plugin install",
-      "npx --yes omni-spec@0.8.0-preview.1 plugin status",
-      "npx --yes omni-spec@0.8.0-preview.1 plugin update",
-      "npx --yes omni-spec@0.8.0-preview.1 init --agent plugin"
+      "npx --yes omni-spec@0.8.0-preview.2 plugin install",
+      "npx --yes omni-spec@0.8.0-preview.2 plugin status",
+      "npx --yes omni-spec@0.8.0-preview.2 plugin update",
+      "npx --yes omni-spec@0.8.0-preview.2 init --agent plugin"
     ],
     "code": ""
   },
@@ -123,8 +123,8 @@ export const docsSections = [
       "paragraphs": [
         "Para una interfaz nueva o un rediseño, acuerda referencias visuales, dirección y una superficie representativa antes de extender pantallas. Elige estados de carga, vacío, error o éxito cuando el producto los necesite; no hay una receta universal de cuatro estados.",
         "Revisa el resultado renderizado, recorrido, teclado y accesibilidad. Un build no acredita calidad visual. En backend, limita abstracciones y dependencias a necesidades verificadas y revisa contratos, errores y pruebas pertinentes.",
-        "La Preview 0.8 incluye los companions de interfaz <code>better</code> y <code>frontend-design</code>. init pregunta por kit y companion cuando detecta señal de UI; también puedes elegirlos con <code>--ui-companion</code> y <code>--ui-components</code>. La constitución y las guías de OmniSpec mantienen su precedencia.",
-        "Los archivos del companion activo son administrados. Al cambiar de companion, los anteriores sin editar se eliminan y las personalizaciones se conservan como archivos propios. update permite revisar conflictos y respaldar reemplazos. Los presets y los avisos de versiones remotas quedan para otra entrega."
+        "La arquitectura visual de OmniSpec 0.8 no requiere companions externos de terceros. Se gobierna directamente mediante kits de componentes nativos (<code>shadcn</code>, <code>radix</code>, <code>headlessui</code>, <code>preline</code>, <code>flyonui</code>) con <code>--ui-components</code> y las directrices del sistema en <code>guide design</code>.",
+        "Los requerimientos y criterios de aceptación se estandarizan con la sintaxis formal EARS (Easy Approach to Requirements Syntax). Para tareas acotadas, el triaje dinámico permite inicializar especificaciones ligeras con <code>create --light</code> o <code>create --preset light</code>, escalando a standard o full solo cuando el alcance o los contratos lo exigen."
       ]
     },
     "en": {
@@ -132,8 +132,8 @@ export const docsSections = [
       "paragraphs": [
         "For a new interface or redesign, agree on references, direction and a representative surface before expanding screens. Choose loading, empty, error or success states when the product needs them; there is no universal four-state recipe.",
         "Review the rendered result, journey, keyboard behavior and accessibility. A build does not establish visual quality. For backend work, tie abstractions and dependencies to verified needs and review contracts, errors and relevant tests.",
-        "The 0.8 Preview includes the <code>better</code> and <code>frontend-design</code> UI companions. init asks about a component kit and companion when it detects a UI signal; you can also select them with <code>--ui-companion</code> and <code>--ui-components</code>. The constitution and OmniSpec guides retain precedence.",
-        "Active companion files are managed. Switching removes unedited former files and preserves customizations as user-owned files. update lets you review conflicts and back up replacements. Presets and remote version notices remain for a later release."
+        "OmniSpec 0.8 visual architecture requires no third-party companions. It is governed directly through native component kits (<code>shadcn</code>, <code>radix</code>, <code>headlessui</code>, <code>preline</code>, <code>flyonui</code>) with <code>--ui-components</code> and system guidelines in <code>guide design</code>.",
+        "Requirements and acceptance criteria are standardized using formal EARS syntax (Easy Approach to Requirements Syntax). For scoped tasks, dynamic triage enables lightweight specifications via <code>create --light</code> or <code>create --preset light</code>, escalating to standard or full only when scope or contracts demand it."
       ]
     },
     "commands": [],

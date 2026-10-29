@@ -1,10 +1,10 @@
 import type { AgentData, DomainProfile } from '../types';
 import type { Language } from '../i18n/translations';
 
-/** Publication verified against npm and the GitHub release on 2026-10-28. */
+/** Publication verified against npm and the GitHub release on 2026-10-29. */
 export const omniSpecRelease = {
-  "version": "0.8.0-preview.1",
-  "label": "0.8.0 Preview",
+  "version": "0.8.0-preview.2",
+  "label": "0.8.0 Preview 2",
   "channel": "preview",
   "stableVersion": "0.6.1",
   "published": true,
@@ -28,10 +28,10 @@ export const agentsByLang: Record<Language, Record<string, AgentData>> = {
     },
     "opencode": {
       "title": "OpenCode",
-      "desc": "Skills con metadata de invocación. Comprueba su descubrimiento en la versión de OpenCode que utilizas.",
-      "format": "Agent Skills + metadata de slash",
+      "desc": "Menciona @omni-init en el prompt interactivo o deja que el agente active la skill según la tarea.",
+      "format": "Agent Skills (mención @)",
       "path": ".opencode/skills/omni-*/SKILL.md + AGENTS.md",
-      "invocation": "/omni-init",
+      "invocation": "@omni-init",
       "cmd": "npx --yes omni-spec@preview init --agent opencode"
     },
     "claude": {
@@ -106,10 +106,10 @@ export const agentsByLang: Record<Language, Record<string, AgentData>> = {
     },
     "opencode": {
       "title": "OpenCode",
-      "desc": "Skills with invocation metadata. Check discovery in the OpenCode version you use.",
-      "format": "Agent Skills + slash metadata",
+      "desc": "Mention @omni-init in the interactive prompt or let the agent activate the skill based on the task.",
+      "format": "Agent Skills (@ mention)",
       "path": ".opencode/skills/omni-*/SKILL.md + AGENTS.md",
-      "invocation": "/omni-init",
+      "invocation": "@omni-init",
       "cmd": "npx --yes omni-spec@preview init --agent opencode"
     },
     "claude": {
