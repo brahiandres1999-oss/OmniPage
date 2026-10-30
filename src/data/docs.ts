@@ -1,4 +1,4 @@
-/** Documentación oficial de OmniSpec 0.8.0 Estable. Los identificadores de sección preservan enlaces profundos. */
+/** Documentación oficial de OmniSpec 0.8.1 Estable. Los identificadores de sección preservan enlaces profundos. */
 export const docsSections = [
   {
     "id": "intro",
