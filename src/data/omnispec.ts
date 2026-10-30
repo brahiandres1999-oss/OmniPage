@@ -3,15 +3,15 @@ import type { Language } from '../i18n/translations';
 
 /** Publication verified against npm and the GitHub release on 2026-10-29. */
 export const omniSpecRelease = {
-  "version": "0.8.0-preview.3",
-  "label": "0.8.0 Preview 3",
-  "channel": "preview",
-  "stableVersion": "0.6.1",
+  "version": "0.8.0",
+  "label": "0.8.0 Oficial",
+  "channel": "latest",
+  "stableVersion": "0.8.0",
   "published": true,
   "tagPublished": true,
   "releasePublished": true
 } as const;
-export const installCommand = 'npx --yes omni-spec@preview init';
+export const installCommand = 'npx --yes omni-spec init';
 export const agentsByLang: Record<Language, Record<string, AgentData>> = {
   "es": {
     "antigravity": {
@@ -20,10 +20,10 @@ export const agentsByLang: Record<Language, Record<string, AgentData>> = {
       "format": "Skills + auditor de workspace",
       "path": ".agents/skills/omni-*/SKILL.md + .agents/agents/omni-auditor.md",
       "invocation": "/omni-init",
-      "cmd": "npx --yes omni-spec@preview init --agent antigravity",
+      "cmd": "npx --yes omni-spec init --agent antigravity",
       "altCmd": {
         "label": "Plugin global opcional; se instala por separado:",
-        "cmd": "npx --yes omni-spec@preview plugin install"
+        "cmd": "npx --yes omni-spec plugin install"
       }
     },
     "opencode": {
@@ -32,7 +32,7 @@ export const agentsByLang: Record<Language, Record<string, AgentData>> = {
       "format": "Agent Skills (mención @)",
       "path": ".opencode/skills/omni-*/SKILL.md + AGENTS.md",
       "invocation": "@omni-init",
-      "cmd": "npx --yes omni-spec@preview init --agent opencode"
+      "cmd": "npx --yes omni-spec init --agent opencode"
     },
     "claude": {
       "title": "Claude Code",
@@ -40,7 +40,7 @@ export const agentsByLang: Record<Language, Record<string, AgentData>> = {
       "format": "Agent Skills",
       "path": ".claude/skills/omni-*/SKILL.md + AGENTS.md",
       "invocation": "/omni-init",
-      "cmd": "npx --yes omni-spec@preview init --agent claude"
+      "cmd": "npx --yes omni-spec init --agent claude"
     },
     "cursor": {
       "title": "Cursor",
@@ -48,7 +48,7 @@ export const agentsByLang: Record<Language, Record<string, AgentData>> = {
       "format": "Skills + regla de proyecto",
       "path": ".cursor/skills/omni-*/SKILL.md + .cursor/rules/omni-spec.mdc",
       "invocation": "/omni-init",
-      "cmd": "npx --yes omni-spec@preview init --agent cursor"
+      "cmd": "npx --yes omni-spec init --agent cursor"
     },
     "copilot": {
       "title": "VS Code / GitHub Copilot",
@@ -56,7 +56,7 @@ export const agentsByLang: Record<Language, Record<string, AgentData>> = {
       "format": "Agent Skills + instrucciones",
       "path": ".agents/skills/omni-*/SKILL.md + .github/copilot-instructions.md",
       "invocation": "/omni-init (Agent Skills)",
-      "cmd": "npx --yes omni-spec@preview init --agent copilot"
+      "cmd": "npx --yes omni-spec init --agent copilot"
     },
     "codex": {
       "title": "Codex",
@@ -64,7 +64,7 @@ export const agentsByLang: Record<Language, Record<string, AgentData>> = {
       "format": "Agent Skills + AGENTS.md",
       "path": ".agents/skills/omni-*/SKILL.md + AGENTS.md",
       "invocation": "$omni-init",
-      "cmd": "npx --yes omni-spec@preview init --agent codex"
+      "cmd": "npx --yes omni-spec init --agent codex"
     },
     "kilo": {
       "title": "Kilo",
@@ -72,7 +72,7 @@ export const agentsByLang: Record<Language, Record<string, AgentData>> = {
       "format": "Skills + comandos Markdown",
       "path": ".kilo/skills/omni-*/SKILL.md + .kilo/commands/omni-*.md",
       "invocation": "/omni-init",
-      "cmd": "npx --yes omni-spec@preview init --agent kilo"
+      "cmd": "npx --yes omni-spec init --agent kilo"
     },
     "gemini": {
       "title": "Gemini CLI",
@@ -80,7 +80,7 @@ export const agentsByLang: Record<Language, Record<string, AgentData>> = {
       "format": "Skills + comandos TOML",
       "path": ".gemini/skills/omni-*/SKILL.md + .gemini/commands/omni-*.toml",
       "invocation": "/omni-init",
-      "cmd": "npx --yes omni-spec@preview init --agent gemini"
+      "cmd": "npx --yes omni-spec init --agent gemini"
     },
     "universal": {
       "title": "Otra herramienta / Generic",
@@ -88,7 +88,7 @@ export const agentsByLang: Record<Language, Record<string, AgentData>> = {
       "format": "Prompts de lectura explícita",
       "path": "specs/commands/omni-*.md",
       "invocation": "Lee specs/commands/omni-init.md",
-      "cmd": "npx --yes omni-spec@preview init --agent generic"
+      "cmd": "npx --yes omni-spec init --agent generic"
     }
   },
   "en": {
@@ -98,10 +98,10 @@ export const agentsByLang: Record<Language, Record<string, AgentData>> = {
       "format": "Skills + workspace auditor",
       "path": ".agents/skills/omni-*/SKILL.md + .agents/agents/omni-auditor.md",
       "invocation": "/omni-init",
-      "cmd": "npx --yes omni-spec@preview init --agent antigravity",
+      "cmd": "npx --yes omni-spec init --agent antigravity",
       "altCmd": {
         "label": "Optional global plugin; installed separately:",
-        "cmd": "npx --yes omni-spec@preview plugin install"
+        "cmd": "npx --yes omni-spec plugin install"
       }
     },
     "opencode": {
@@ -110,7 +110,7 @@ export const agentsByLang: Record<Language, Record<string, AgentData>> = {
       "format": "Agent Skills (@ mention)",
       "path": ".opencode/skills/omni-*/SKILL.md + AGENTS.md",
       "invocation": "@omni-init",
-      "cmd": "npx --yes omni-spec@preview init --agent opencode"
+      "cmd": "npx --yes omni-spec init --agent opencode"
     },
     "claude": {
       "title": "Claude Code",
@@ -118,7 +118,7 @@ export const agentsByLang: Record<Language, Record<string, AgentData>> = {
       "format": "Agent Skills",
       "path": ".claude/skills/omni-*/SKILL.md + AGENTS.md",
       "invocation": "/omni-init",
-      "cmd": "npx --yes omni-spec@preview init --agent claude"
+      "cmd": "npx --yes omni-spec init --agent claude"
     },
     "cursor": {
       "title": "Cursor",
@@ -126,7 +126,7 @@ export const agentsByLang: Record<Language, Record<string, AgentData>> = {
       "format": "Skills + project rule",
       "path": ".cursor/skills/omni-*/SKILL.md + .cursor/rules/omni-spec.mdc",
       "invocation": "/omni-init",
-      "cmd": "npx --yes omni-spec@preview init --agent cursor"
+      "cmd": "npx --yes omni-spec init --agent cursor"
     },
     "copilot": {
       "title": "VS Code / GitHub Copilot",
@@ -134,7 +134,7 @@ export const agentsByLang: Record<Language, Record<string, AgentData>> = {
       "format": "Agent Skills + instructions",
       "path": ".agents/skills/omni-*/SKILL.md + .github/copilot-instructions.md",
       "invocation": "/omni-init (Agent Skills)",
-      "cmd": "npx --yes omni-spec@preview init --agent copilot"
+      "cmd": "npx --yes omni-spec init --agent copilot"
     },
     "codex": {
       "title": "Codex",
@@ -142,7 +142,7 @@ export const agentsByLang: Record<Language, Record<string, AgentData>> = {
       "format": "Agent Skills + AGENTS.md",
       "path": ".agents/skills/omni-*/SKILL.md + AGENTS.md",
       "invocation": "$omni-init",
-      "cmd": "npx --yes omni-spec@preview init --agent codex"
+      "cmd": "npx --yes omni-spec init --agent codex"
     },
     "kilo": {
       "title": "Kilo",
@@ -150,7 +150,7 @@ export const agentsByLang: Record<Language, Record<string, AgentData>> = {
       "format": "Skills + Markdown commands",
       "path": ".kilo/skills/omni-*/SKILL.md + .kilo/commands/omni-*.md",
       "invocation": "/omni-init",
-      "cmd": "npx --yes omni-spec@preview init --agent kilo"
+      "cmd": "npx --yes omni-spec init --agent kilo"
     },
     "gemini": {
       "title": "Gemini CLI",
@@ -158,7 +158,7 @@ export const agentsByLang: Record<Language, Record<string, AgentData>> = {
       "format": "Skills + TOML commands",
       "path": ".gemini/skills/omni-*/SKILL.md + .gemini/commands/omni-*.toml",
       "invocation": "/omni-init",
-      "cmd": "npx --yes omni-spec@preview init --agent gemini"
+      "cmd": "npx --yes omni-spec init --agent gemini"
     },
     "universal": {
       "title": "Another tool / Generic",
@@ -166,7 +166,7 @@ export const agentsByLang: Record<Language, Record<string, AgentData>> = {
       "format": "Explicit-read prompts",
       "path": "specs/commands/omni-*.md",
       "invocation": "Read specs/commands/omni-init.md",
-      "cmd": "npx --yes omni-spec@preview init --agent generic"
+      "cmd": "npx --yes omni-spec init --agent generic"
     }
   }
 };
