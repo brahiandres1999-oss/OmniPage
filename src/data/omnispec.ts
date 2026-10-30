@@ -3,8 +3,8 @@ import type { Language } from '../i18n/translations';
 
 /** Publication verified against npm and the GitHub release on 2026-10-29. */
 export const omniSpecRelease = {
-  "version": "0.8.0-preview.2",
-  "label": "0.8.0 Preview 2",
+  "version": "0.8.0-preview.3",
+  "label": "0.8.0 Preview 3",
   "channel": "preview",
   "stableVersion": "0.6.1",
   "published": true,
