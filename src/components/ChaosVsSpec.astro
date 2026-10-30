@@ -1,23 +1,395 @@
 ---
 import { translations } from '../i18n/translations';
-import ArtifactIllustration from './ArtifactIllustration.astro';
-import Icon from './Icon.astro';
+import { skillsLoop } from '../data/skills-loop';
 const t = translations.es;
-const files = ['project-context.md', 'spec.md', 'verification.json'];
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
+
 <section id="caos-vs-spec" class="section-space">
   <div class="page-shell">
-    <div class="section-intro two-column-intro">
-      <div><p class="eyebrow" data-i18n="value.eyebrow">{t['value.eyebrow']}</p><h2 class="section-title" data-i18n="value.title">{t['value.title']}</h2></div>
+    <!-- Header de Sección -->
+    <div class="section-intro two-column-intro mb-8">
+      <div>
+        <p class="eyebrow" data-i18n="value.eyebrow">{t['value.eyebrow']}</p>
+        <h2 class="section-title" data-i18n="value.title">{t['value.title']}</h2>
+      </div>
       <p class="body-copy" data-i18n="value.intro">{t['value.intro']}</p>
     </div>
-    <div class="value-grid">
-      {[1,2,3].map((item, index) => <article class="value-item">
-        <ArtifactIllustration kind={(['context','scope','evidence'] as const)[index]} />
-        <h3 data-i18n={'value.' + item + '.title'}>{t['value.' + item + '.title']}</h3>
-        <p class="body-copy" data-i18n={'value.' + item + '.body'}>{t['value.' + item + '.body']}</p>
-        <div class="artifact-label"><Icon name={['message','file','checklist'][index]} /><div><code>{files[index]}</code><span data-i18n={'value.' + item + '.file'}>{t['value.' + item + '.file']}</span></div></div>
-      </article>)}
+
+    <!-- Master-Detail Workbench (Inspirado en Diagram Design & Better UX) -->
+    <div class="relative mx-auto my-4 w-full max-w-5xl select-none" id="skills-pipeline-diagram">
+      
+      <!-- Contenedor Principal del Workbench -->
+      <div class="overflow-hidden rounded-2xl border border-[rgb(var(--border-rgb)/0.14)] bg-[rgb(var(--bg-surface))] shadow-sm">
+        
+        <!-- Barra de Cabecera Editorial -->
+        <div class="flex flex-wrap items-center justify-between border-b border-[rgb(var(--border-rgb)/0.1)] px-5 py-3 sm:px-6">
+          <div class="flex items-center gap-2.5">
+            <span class="inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
+            <span class="font-mono text-[11px] font-semibold uppercase tracking-wider text-[rgb(var(--text-tertiary))]" data-i18n="loop.fig">
+              {t['loop.fig']}
+            </span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="rounded bg-[rgb(var(--bg-surface-elevated))] px-2 py-0.5 font-mono text-[10.5px] font-medium text-[rgb(var(--text-secondary))]" data-i18n="loop.stats">
+              {t['loop.stats']}
+            </span>
+            <span class="rounded border border-[rgb(var(--border-rgb)/0.15)] px-2 py-0.5 font-mono text-[10.5px] text-[rgb(var(--text-tertiary))]">
+              DETERMINISTIC
+            </span>
+          </div>
+        </div>
+
+        <!-- Master-Detail Grid (Lado a Lado en Desktop, 1 sola pantalla) -->
+        <div class="grid grid-cols-1 divide-y divide-[rgb(var(--border-rgb)/0.1)] md:grid-cols-12 md:divide-x md:divide-y-0">
+          
+          <!-- COLUMNA MASTER (Izquierda, 5 cols): Cadena de montaje interactiva -->
+          <div class="p-3.5 sm:p-4.5 md:col-span-5 flex flex-col justify-between space-y-3 bg-[rgb(var(--bg-surface))]" role="tablist" aria-orientation="vertical" aria-label={t['loop.tablist.aria']} data-i18n-aria="loop.tablist.aria">
+            
+            <!-- ETAPA 1 -->
+            <div>
+              <div class="flex items-center justify-between px-1.5 pb-1">
+                <span class="font-mono text-[9.5px] font-bold tracking-wider text-[rgb(var(--text-tertiary))]" data-i18n="loop.stage.1.title">
+                  {t['loop.stage.1.title']}
+                </span>
+                <span class="font-mono text-[9px] text-[rgb(var(--text-tertiary))]" data-i18n="loop.stage.1.count">
+                  {t['loop.stage.1.count']}
+                </span>
+              </div>
+              <div class="space-y-1">
+                {skillsLoop.filter(s => s.stage === 1).map((s) => (
+                  <button
+                    type="button"
+                    role="tab"
+                    id={`tab-${s.id}`}
+                    aria-selected={s.id === 'specify'}
+                    aria-controls="pipeline-inspector-panel"
+                    tabindex={s.id === 'specify' ? 0 : -1}
+                    data-skill-id={s.id}
+                    class="pipeline-skill-tab group relative flex w-full items-center justify-between rounded-lg border border-transparent px-2.5 py-1.5 text-left transition-all duration-150 hover:bg-[rgb(var(--bg-surface-elevated))] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--focus))]"
+                  >
+                    <div class="flex items-center gap-2 min-w-0">
+                      <span class="font-mono text-[10.5px] font-semibold text-[rgb(var(--text-tertiary))] group-hover:text-[rgb(var(--text-primary))]">
+                        {s.number}
+                      </span>
+                      <span class="shrink-0 font-mono text-[12px] font-medium text-[rgb(var(--text-primary))]">
+                        {s.command}
+                      </span>
+                      <span class="hidden 2xl:inline-block truncate text-[10.5px] text-[rgb(var(--text-secondary))] max-w-[120px]" data-i18n={`loop.skill.${s.id}.short`}>
+                        · {t[`loop.skill.${s.id}.short`]}
+                      </span>
+                    </div>
+                    <div class="flex items-center gap-1.5 shrink-0 ml-1.5">
+                      {s.badge && (
+                        <span class="rounded bg-[rgb(var(--bg-surface-elevated))] border border-[rgb(var(--border-rgb)/0.12)] px-1.5 py-0.5 font-mono text-[8.5px] font-medium text-[rgb(var(--text-secondary))]">
+                          {s.badge.es}
+                        </span>
+                      )}
+                      <span class="font-mono text-[9px] text-[rgb(var(--text-tertiary))]">
+                        {s.size}
+                      </span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <!-- ETAPA 2 -->
+            <div>
+              <div class="flex items-center justify-between px-1.5 pb-1 border-t border-[rgb(var(--border-rgb)/0.08)] pt-2">
+                <span class="font-mono text-[9.5px] font-bold tracking-wider text-amber-600 dark:text-amber-400" data-i18n="loop.stage.2.title">
+                  {t['loop.stage.2.title']}
+                </span>
+                <span class="font-mono text-[9px] text-amber-700/70 dark:text-amber-300/70" data-i18n="loop.stage.2.count">
+                  {t['loop.stage.2.count']}
+                </span>
+              </div>
+              <div class="space-y-1">
+                {skillsLoop.filter(s => s.stage === 2).map((s) => (
+                  <button
+                    type="button"
+                    role="tab"
+                    id={`tab-${s.id}`}
+                    aria-selected="false"
+                    aria-controls="pipeline-inspector-panel"
+                    tabindex="-1"
+                    data-skill-id={s.id}
+                    class="pipeline-skill-tab group relative flex w-full items-center justify-between rounded-lg border border-transparent px-2.5 py-1.5 text-left transition-all duration-150 hover:bg-[rgb(var(--bg-surface-elevated))] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--focus))]"
+                  >
+                    <div class="flex items-center gap-2 min-w-0">
+                      <span class="font-mono text-[10.5px] font-semibold text-[rgb(var(--text-tertiary))] group-hover:text-[rgb(var(--text-primary))]">
+                        {s.number}
+                      </span>
+                      <span class="shrink-0 font-mono text-[12px] font-medium text-[rgb(var(--text-primary))]">
+                        {s.command}
+                      </span>
+                      <span class="hidden 2xl:inline-block truncate text-[10.5px] text-[rgb(var(--text-secondary))] max-w-[120px]" data-i18n={`loop.skill.${s.id}.short`}>
+                        · {t[`loop.skill.${s.id}.short`]}
+                      </span>
+                    </div>
+                    <div class="flex items-center gap-1.5 shrink-0 ml-1.5">
+                      {s.badge && (
+                        <span class={`rounded px-1.5 py-0.5 font-mono text-[8.5px] font-medium ${s.badge.variant === 'gate' ? 'bg-amber-500/10 border border-amber-500/30 text-amber-700 dark:text-amber-300' : 'bg-[rgb(var(--bg-surface-elevated))] border border-[rgb(var(--border-rgb)/0.12)] text-[rgb(var(--text-secondary))]'}`}>
+                          {s.badge.es}
+                        </span>
+                      )}
+                      <span class="font-mono text-[9px] text-[rgb(var(--text-tertiary))]">
+                        {s.size}
+                      </span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <!-- ETAPA 3 -->
+            <div>
+              <div class="flex items-center justify-between px-1.5 pb-1 border-t border-[rgb(var(--border-rgb)/0.08)] pt-2">
+                <span class="font-mono text-[9.5px] font-bold tracking-wider text-emerald-600 dark:text-emerald-400" data-i18n="loop.stage.3.title">
+                  {t['loop.stage.3.title']}
+                </span>
+                <span class="font-mono text-[9px] text-emerald-700/70 dark:text-emerald-300/70" data-i18n="loop.stage.3.count">
+                  {t['loop.stage.3.count']}
+                </span>
+              </div>
+              <div class="space-y-1">
+                {skillsLoop.filter(s => s.stage === 3).map((s) => (
+                  <button
+                    type="button"
+                    role="tab"
+                    id={`tab-${s.id}`}
+                    aria-selected="false"
+                    aria-controls="pipeline-inspector-panel"
+                    tabindex="-1"
+                    data-skill-id={s.id}
+                    class="pipeline-skill-tab group relative flex w-full items-center justify-between rounded-lg border border-transparent px-2.5 py-1.5 text-left transition-all duration-150 hover:bg-[rgb(var(--bg-surface-elevated))] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--focus))]"
+                  >
+                    <div class="flex items-center gap-2 min-w-0">
+                      <span class="font-mono text-[10.5px] font-semibold text-[rgb(var(--text-tertiary))] group-hover:text-[rgb(var(--text-primary))]">
+                        {s.number}
+                      </span>
+                      <span class="shrink-0 font-mono text-[12px] font-medium text-[rgb(var(--text-primary))]">
+                        {s.command}
+                      </span>
+                      <span class="hidden 2xl:inline-block truncate text-[10.5px] text-[rgb(var(--text-secondary))] max-w-[120px]" data-i18n={`loop.skill.${s.id}.short`}>
+                        · {t[`loop.skill.${s.id}.short`]}
+                      </span>
+                    </div>
+                    <div class="flex items-center gap-1.5 shrink-0 ml-1.5">
+                      {s.badge && (
+                        <span class={`rounded px-1.5 py-0.5 font-mono text-[8.5px] font-medium ${s.badge.variant === 'success' ? 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300' : 'bg-[rgb(var(--bg-surface-elevated))] border border-[rgb(var(--border-rgb)/0.12)] text-[rgb(var(--text-secondary))]'}`}>
+                          {s.badge.es}
+                        </span>
+                      )}
+                      <span class="font-mono text-[9px] text-[rgb(var(--text-tertiary))]">
+                        {s.size}
+                      </span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+          </div>
+
+          <!-- COLUMNA DETAIL (Derecha, 7 cols): Inspector de Directivas en Tiempo Real -->
+          <div id="pipeline-inspector-panel" role="tabpanel" aria-labelledby="tab-specify" class="md:col-span-7 flex flex-col justify-between bg-[rgb(var(--bg-surface-elevated))] p-5 sm:p-6 min-h-[380px] md:min-h-[420px]">
+            
+            <!-- Cabecera de la Consola del Inspector -->
+            <div>
+              <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[rgb(var(--border-rgb)/0.1)] pb-3.5">
+                <div class="flex items-center gap-2">
+                  <span class="rounded bg-neutral-900 px-2.5 py-1 font-mono text-[12.5px] font-bold text-white dark:bg-white dark:text-neutral-900" id="inspector-command">
+                    /omni-specify
+                  </span>
+                  <span class="font-mono text-[11px] text-[rgb(var(--text-tertiary))]" id="inspector-size">
+                    8.2 KB
+                  </span>
+                  <span class="rounded bg-[rgb(var(--bg-base))] border border-[rgb(var(--border-rgb)/0.12)] px-2 py-0.5 font-mono text-[10px] text-[rgb(var(--text-secondary))]" id="inspector-stage-badge">
+                    ETAPA 01 · ONBOARDING & ALCANCE
+                  </span>
+                </div>
+                <span class="font-mono text-[10px] uppercase tracking-wider text-[rgb(var(--text-tertiary))]" data-i18n="loop.inspector.title">
+                  {t['loop.inspector.title']}
+                </span>
+              </div>
+
+              <!-- Misión -->
+              <div class="mt-4">
+                <span class="block font-mono text-[10px] font-bold uppercase tracking-wider text-[rgb(var(--text-tertiary))]" data-i18n="loop.inspector.mission">
+                  {t['loop.inspector.mission']}
+                </span>
+                <p class="mt-1.5 text-[13.5px] font-medium leading-relaxed text-[rgb(var(--text-primary))]" id="inspector-mission">
+                  Formalizar una solicitud en un tipo de trabajo (feature, bugfix, debt o rfc).
+                </p>
+              </div>
+
+              <!-- Directiva / Prohibición estricta -->
+              <div class="mt-4">
+                <span class="block font-mono text-[10px] font-bold uppercase tracking-wider text-[rgb(var(--text-tertiary))]" data-i18n="loop.inspector.instruction">
+                  {t['loop.inspector.instruction']}
+                </span>
+                <div class="mt-1.5 rounded-xl border border-[rgb(var(--border-rgb)/0.12)] bg-[rgb(var(--bg-base))] p-4 font-mono text-[12px] leading-relaxed text-[rgb(var(--text-primary))] shadow-inner">
+                  <span class="select-none text-[rgb(var(--accent))]">"</span><span id="inspector-instruction">Evalúa el triaje ceremonial (omni-spec fit). Redacta criterios de aceptación obligatorios bajo sintaxis formal EARS (AC-01 [functional]). Define explícitamente lo que está FUERA de alcance (Non-Goals) para evitar desviaciones.</span><span class="select-none text-[rgb(var(--accent))]">"</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Footer técnico de la Consola -->
+            <div class="mt-5 border-t border-[rgb(var(--border-rgb)/0.08)] pt-3 flex items-center justify-between font-mono text-[10.5px] text-[rgb(var(--text-tertiary))]">
+              <span class="flex items-center gap-1.5">
+                <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                <span>FAIL-FAST & ZERO CODE SLOP</span>
+              </span>
+              <span id="inspector-evidence-status" class="text-[rgb(var(--text-secondary))] font-medium">
+                DETERMINISTIC PIPELINE
+              </span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Enlace sutil y limpio a Documentación -->
+      <div class="mt-4 flex items-center justify-center">
+        <a 
+          href={base + '/docs/'} 
+          class="inline-flex items-center gap-1.5 text-[12px] font-medium text-[rgb(var(--text-secondary))] transition-colors duration-150 hover:text-[rgb(var(--text-primary))] hover:underline" 
+          data-i18n="loop.docsLink"
+        >
+          {t['loop.docsLink']}
+        </a>
+      </div>
+
     </div>
+
   </div>
 </section>
+
+<!-- Script Reactivo del Workbench Master-Detail con Navegación de Teclado WAI-ARIA -->
+<script>
+  import { skillsLoop, stages } from '../data/skills-loop';
+  import { getLanguage } from '../scripts/preferences';
+
+  const container = document.getElementById('skills-pipeline-diagram');
+  if (container) {
+    const tabs = Array.from(container.querySelectorAll<HTMLButtonElement>('.pipeline-skill-tab'));
+    const panel = document.getElementById('pipeline-inspector-panel');
+    const cmdEl = document.getElementById('inspector-command');
+    const sizeEl = document.getElementById('inspector-size');
+    const stageBadgeEl = document.getElementById('inspector-stage-badge');
+    const missionEl = document.getElementById('inspector-mission');
+    const instructionEl = document.getElementById('inspector-instruction');
+    const evidenceStatusEl = document.getElementById('inspector-evidence-status');
+
+    let currentSkillId = 'specify';
+
+    const updateInspector = (skillId: string, focusButton = false) => {
+      currentSkillId = skillId;
+      const skill = skillsLoop.find(s => s.id === skillId);
+      if (!skill) return;
+
+      const lang = getLanguage();
+      const stageInfo = stages[skill.stage];
+      const stagePrefix = lang === 'es' ? 'ETAPA' : 'STAGE';
+      const stageTitle = stageInfo.title[lang] || stageInfo.title.es;
+
+      if (cmdEl) cmdEl.textContent = skill.command;
+      if (sizeEl) sizeEl.textContent = skill.size;
+      if (stageBadgeEl) stageBadgeEl.textContent = `${stagePrefix} ${stageInfo.number} · ${stageTitle.toUpperCase()}`;
+      if (missionEl) missionEl.textContent = skill.mission[lang] || skill.mission.es;
+      if (instructionEl) instructionEl.textContent = skill.instruction[lang] || skill.instruction.es;
+      if (panel) panel.setAttribute('aria-labelledby', `tab-${skill.id}`);
+
+      if (evidenceStatusEl) {
+        if (skill.id === 'converge') {
+          evidenceStatusEl.textContent = lang === 'es' ? '✓ EXIT CODE 0 · COMPROBADO' : '✓ EXIT CODE 0 · VERIFIED';
+          evidenceStatusEl.className = 'text-emerald-600 dark:text-emerald-400 font-semibold';
+        } else if (skill.id === 'audit') {
+          evidenceStatusEl.textContent = 'QUALITY GATE · STRICT PASS';
+          evidenceStatusEl.className = 'text-amber-600 dark:text-amber-400 font-semibold';
+        } else {
+          evidenceStatusEl.textContent = lang === 'es' ? 'PIPELINE DETERMINISTA' : 'DETERMINISTIC PIPELINE';
+          evidenceStatusEl.className = 'text-[rgb(var(--text-secondary))] font-medium';
+        }
+      }
+
+      tabs.forEach(btn => {
+        const isSelected = btn.dataset.skillId === skillId;
+        btn.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+        btn.setAttribute('tabindex', isSelected ? '0' : '-1');
+
+        if (isSelected) {
+          btn.classList.add(
+            'border-[rgb(var(--border-rgb)/0.25)]',
+            'bg-[rgb(var(--bg-surface-elevated))]',
+            'shadow-sm',
+            'font-semibold'
+          );
+          btn.classList.remove('border-transparent');
+          if (focusButton) btn.focus();
+        } else {
+          btn.classList.remove(
+            'border-[rgb(var(--border-rgb)/0.25)]',
+            'bg-[rgb(var(--bg-surface-elevated))]',
+            'shadow-sm',
+            'font-semibold'
+          );
+          btn.classList.add('border-transparent');
+        }
+      });
+
+      // Si estamos en mobile y el usuario interactuó explícitamente, asegurar que el inspector esté visible sin saltos bruscos
+      if (focusButton && window.innerWidth < 768 && panel) {
+        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    };
+
+    // Click handler
+    tabs.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const skillId = btn.dataset.skillId;
+        if (skillId) updateInspector(skillId, true);
+      });
+    });
+
+    // Keyboard navigation (Arrow keys, Home, End)
+    container.addEventListener('keydown', (e) => {
+      const activeElement = document.activeElement as HTMLButtonElement | null;
+      if (!activeElement || !tabs.includes(activeElement)) return;
+
+      const currentIndex = tabs.indexOf(activeElement);
+      let targetIndex = -1;
+
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        targetIndex = (currentIndex + 1) % tabs.length;
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        targetIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        targetIndex = 0;
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        targetIndex = tabs.length - 1;
+      }
+
+      if (targetIndex >= 0) {
+        const targetBtn = tabs[targetIndex];
+        const skillId = targetBtn.dataset.skillId;
+        if (skillId) updateInspector(skillId, true);
+      }
+    });
+
+    // Escucha de cambio de idioma global (ES <-> EN)
+    window.addEventListener('omni:language-change', () => {
+      updateInspector(currentSkillId, false);
+    });
+
+    // Default selection
+    updateInspector('specify', false);
+  }
+</script>
