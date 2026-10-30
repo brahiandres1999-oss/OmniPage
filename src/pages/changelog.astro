@@ -14,16 +14,52 @@ const date=(value:string,lang:string)=>new Intl.DateTimeFormat(lang,{dateStyle:'
 <Layout title="Novedades — OmniSpec" titleEn="Releases — OmniSpec" description="Versiones publicadas de OmniSpec: canales preview y latest, fechas y notas originales." descriptionEn="Published OmniSpec versions: preview and latest channels, dates and original release notes.">
 <Navbar/>
 <main id="main-content" tabindex="-1" class="page-shell">
- <header class="page-heading"><p class="eyebrow" data-i18n="releases.eyebrow">{t['releases.eyebrow']}</p><h1 data-i18n="releases.title">{t['releases.title']}</h1><p class="body-copy" data-i18n="releases.intro">{t['releases.intro']}</p><div class="release-channels"><span><strong>preview</strong> {omniSpecRelease.version}</span><span><strong>latest</strong> {omniSpecRelease.stableVersion}</span></div></header>
+ <header class="page-heading">
+  <p class="eyebrow" data-i18n="releases.eyebrow">{t['releases.eyebrow']}</p>
+  <h1 data-i18n="releases.title">{t['releases.title']}</h1>
+  <p class="body-copy" data-i18n="releases.intro">{t['releases.intro']}</p>
+  <div class="release-channels">
+   <span><strong>Canal oficial:</strong> latest ({omniSpecRelease.stableVersion})</span>
+   <span><strong>Zero dependencies:</strong> Node.js ≥22.19 & Bun 1.1+</span>
+  </div>
+ </header>
  <div class="release-list" id="changelog-timeline">
  {main.map(release=><article class="release-entry" id={release.version}>
-  <div class="release-meta"><Icon name={release.preview?'branch':'tag'} size={22}/><span class="release-badge" data-i18n={release.preview?'releases.preview':'releases.stable'}>{t[release.preview?'releases.preview':'releases.stable']}</span>{(['es','en'] as const).map(lang=><time datetime={release.date} data-locale={lang} hidden={lang==='en'}>{date(release.date,lang)}</time>)}</div>
-  <div><h2>{release.version}</h2><p class="body-copy" data-i18n={release.preview?'releases.previewBody':'releases.stableBody'}>{t[release.preview?'releases.previewBody':'releases.stableBody']}</p><a href={release.url} class="quiet-link"><span data-i18n="releases.read">{t['releases.read']}</span><Icon name="arrow" size={17}/></a></div>
+  <div class="release-meta">
+   <Icon name={release.preview?'branch':'tag'} size={22}/>
+   <span class="release-badge" data-i18n={release.preview?'releases.preview':'releases.stable'}>{t[release.preview?'releases.preview':'releases.stable']}</span>
+   {(['es','en'] as const).map(lang=><time datetime={release.date} data-locale={lang} hidden={lang==='en'}>{date(release.date,lang)}</time>)}
+  </div>
+  <div>
+   <h2>{release.version}</h2>
+   {(['es','en'] as const).map(lang=><div data-locale={lang} hidden={lang==='en'}>
+    {release.title && <h3>{release.title[lang]}</h3>}
+    {release.description && <p class="body-copy">{release.description[lang]}</p>}
+    {release.highlights && <ul class="release-highlights">
+     {release.highlights[lang].map((h:string)=>{
+      const parts = h.split(': ');
+      return <li><strong>{parts[0]}:</strong> {parts.slice(1).join(': ')}</li>;
+     })}
+    </ul>}
+   </div>)}
+   <a href={release.url} class="quiet-link" target="_blank" rel="noopener noreferrer"><span data-i18n="releases.read">{t['releases.read']}</span><Icon name="arrow" size={17}/></a>
+  </div>
  </article>)}
- <section class="history-list"><h2 data-i18n="releases.history">{t['releases.history']}</h2>{history.map(release=><a href={release.url}><span>{release.version}{release.preview?' · Preview':''}</span>{(['es','en'] as const).map(lang=><time datetime={release.date} data-locale={lang} hidden={lang==='en'}>{date(release.date,lang)}</time>)}<Icon name="arrow" size={16}/></a>)}</section>
- <p class="release-source-note" data-locale="es">Fechas de publicación de GitHub. Los canales npm y la publicación de Preview se contrastaron el 28 de octubre de 2026. Las notas originales pueden conservar texto de preparación anterior al lanzamiento.</p>
- <p class="release-source-note" data-locale="en" hidden>GitHub publication dates. npm channels and the Preview release were checked on October 28, 2026. Original notes may retain preparation text written before publication.</p>
- <a href="https://github.com/brahiandres1999-oss/omni-spec/releases" class="quiet-link" data-i18n="releases.all">{t['releases.all']}</a>
+ <section class="history-list">
+  <h2 data-i18n="releases.history">{t['releases.history']}</h2>
+  {history.map(release=><a href={release.url} class="history-entry" target="_blank" rel="noopener noreferrer">
+   <span class="history-entry-title">
+    <Icon name={release.preview?'branch':'tag'} size={16}/>
+    {release.version}
+    {release.preview && <span class="release-badge">Preview</span>}
+   </span>
+   {(['es','en'] as const).map(lang=><time datetime={release.date} class="history-entry-time" data-locale={lang} hidden={lang==='en'}>{date(release.date,lang)}</time>)}
+   {release.description && (['es','en'] as const).map(lang=><p class="history-entry-desc" data-locale={lang} hidden={lang==='en'}>{release.description[lang]}</p>)}
+  </a>)}
+ </section>
+ <p class="release-source-note" data-locale="es">Publicado oficialmente en el canal npm <code>latest</code> y GitHub Releases. Compatible con Node.js y Bun. Las especificaciones y el historial de cambios permanecen inmutables en tu repositorio.</p>
+ <p class="release-source-note" data-locale="en" hidden>Officially published on the npm <code>latest</code> channel and GitHub Releases. Compatible with Node.js and Bun. Specifications and change history remain immutable in your repository.</p>
+ <a href="https://github.com/brahiandres1999-oss/omni-spec/releases" class="quiet-link" data-i18n="releases.all" target="_blank" rel="noopener noreferrer">{t['releases.all']}</a>
  </div>
 </main>
 <Footer/>

@@ -3,78 +3,150 @@
         "version": "v0.8.0",
         "date": "2026-10-30",
         "url": "https://github.com/brahiandres1999-oss/omni-spec/releases/tag/v0.8.0",
-        "preview": false
+        "preview": false,
+        "title": {
+            "es": "Lanzamiento Oficial Estable: Gobernanza Multimodal, MDD y Ecosistema de 10 Agentes",
+            "en": "Official Stable Release: Multimodal Governance, MDD and 10-Agent Ecosystem"
+        },
+        "description": {
+            "es": "OmniSpec 0.8.0 consolida el estándar de Desarrollo Guiado por Especificaciones (SDD) con cero dependencias en runtime (dependencies: {}). Introduce el Pilar 6 (Memory Distillation Driven) para reducir más del 70% del consumo de tokens, compatibilidad nativa con Bun (bunx, locks textuales), soporte bidireccional gestionado en CLAUDE.md y AGENTS.md, y el protocolo Zero-Slop Guard con matriz de 4 estados obligatorios de interfaz.",
+            "en": "OmniSpec 0.8.0 solidifies the Spec-Driven Development (SDD) standard with zero runtime dependencies (dependencies: {}). It introduces Pillar 6 (Memory Distillation Driven) to cut token consumption by over 70%, native Bun compatibility (bunx, textual locks), bidirectional managed sync in CLAUDE.md and AGENTS.md, and the Zero-Slop Guard protocol with the mandatory 4-state UI matrix."
+        },
+        "highlights": {
+            "es": [
+                "FinOps de Contexto (Pilar 6 - MDD): Reducción de más del 70% en tokens por turno mediante destilación evolutiva en 5 épocas y presupuestos explícitos en CLI (context-check).",
+                "Ecosistema de 10 Agentes Soportados: Adaptadores de primera clase para Antigravity, Claude Code (sincronización gestionada en CLAUDE.md), Cursor, Codex ($omni-init), Copilot, Kilo, OpenCode, Gemini CLI y Generic.",
+                "Compatibilidad con Bun y Tooling Moderno: Ejecución desatendida vía bunx omni-spec, soporte de locks textuales (bun.lock) y binarios (bun.lockb), y Python moderno (uv.lock).",
+                "Zero-Slop Guard & Matriz de 4 Estados de UI: Erradicación de clichés visuales de IA, criterios de aceptación EARS y la matriz obligatoria (Loading, Empty, Error, Protected) con kits modernos (shadcn, radix).",
+                "Triaje Dinámico de Ceremonia: Modo quirúrgico create --light para intervenciones de 1 a 3 archivos sin burocracia, escalando automáticamente a standard o full según riesgo."
+            ],
+            "en": [
+                "Context FinOps (Pillar 6 - MDD): Over 70% token savings per turn through evolutionary 5-epoch distillation and explicit CLI budgets (context-check).",
+                "10-Agent Ecosystem: First-class adapters for Antigravity, Claude Code (managed CLAUDE.md sync), Cursor, Codex ($omni-init), Copilot, Kilo, OpenCode, Gemini CLI and Generic.",
+                "Bun & Modern Tooling: Headless bunx omni-spec execution, textual and binary locks (bun.lock / bun.lockb), and modern Python tooling (uv.lock).",
+                "Zero-Slop Guard & 4-State UI Matrix: Eradication of AI visual clichés, EARS criteria, and the mandatory 4-state UI matrix (Loading, Empty, Error, Protected) with modern kits (shadcn, radix).",
+                "Dynamic Ceremony Triage: Surgical create --light workflow for 1-to-3 file changes, auto-escalating to standard or full based on risk."
+            ]
+        }
     },
     {
         "version": "v0.8.0-preview.3",
         "date": "2026-10-29",
         "url": "https://github.com/brahiandres1999-oss/omni-spec/releases/tag/v0.8.0-preview.3",
-        "preview": true
+        "preview": true,
+        "description": {
+            "es": "Validación de locks textuales de Bun (v1.2+), tooling moderno de Python (uv.lock), frameworks Astro y Svelte, y guardia de runtime sin falsos positivos.",
+            "en": "Validation of textual Bun locks (v1.2+), modern Python tooling (uv.lock), Astro and Svelte frameworks, and false-positive-free runtime guards."
+        }
     },
     {
         "version": "v0.8.0-preview.2",
         "date": "2026-10-29",
         "url": "https://github.com/brahiandres1999-oss/omni-spec/releases/tag/v0.8.0-preview.2",
-        "preview": true
+        "preview": true,
+        "description": {
+            "es": "Estandarización de criterios de aceptación con sintaxis EARS, protocolo Zero-Slop Guard y desacoplamiento total de dependencias de interfaz externas.",
+            "en": "Acceptance criteria standardization with EARS syntax, Zero-Slop Guard protocol, and complete decoupling of external UI dependencies."
+        }
     },
     {
         "version": "v0.8.0-preview.1",
         "date": "2026-10-28",
         "url": "https://github.com/brahiandres1999-oss/omni-spec/releases/tag/v0.8.0-preview.1",
-        "preview": true
+        "preview": true,
+        "description": {
+            "es": "Introducción del triaje dinámico de ceremonias (--light, --preset), soporte de perfiles regulatorios y telemetría de contexto.",
+            "en": "Introduction of dynamic ceremony triage (--light, --preset), regulatory profile support, and context telemetry."
+        }
     },
     {
         "version": "v0.7.0-preview.2",
         "date": "2026-10-24",
         "url": "https://github.com/brahiandres1999-oss/omni-spec/releases/tag/v0.7.0-preview.2",
-        "preview": true
+        "preview": true,
+        "description": {
+            "es": "Paridad de reglas de exclusión globstar con Git y refinamiento del motor de ignorados multiplataforma (Windows/Linux).",
+            "en": "Git globstar pattern parity and cross-platform ignore engine refinement (Windows/Linux)."
+        }
     },
     {
         "version": "v0.6.1",
         "date": "2026-10-21",
         "url": "https://github.com/brahiandres1999-oss/omni-spec/releases/tag/v0.6.1",
-        "preview": false
+        "preview": false,
+        "description": {
+            "es": "Empaquetado oficial del plugin de Google Antigravity (~540 KB) con subagente auditor independiente y constitución always_on.",
+            "en": "Official Google Antigravity plugin bundle (~540 KB) with standalone auditor subagent and always_on constitution."
+        }
     },
     {
         "version": "v0.6.0",
         "date": "2026-10-21",
         "url": "https://github.com/brahiandres1999-oss/omni-spec/releases/tag/v0.6.0",
-        "preview": false
+        "preview": false,
+        "description": {
+            "es": "Primer soporte de subagentes delegados con políticas de ejecución sandboxeadas y arquitectura de plugins.",
+            "en": "Initial support for delegated subagents with sandboxed execution policies and plugin architecture."
+        }
     },
     {
         "version": "v0.5.1",
         "date": "2026-10-20",
         "url": "https://github.com/brahiandres1999-oss/omni-spec/releases/tag/v0.5.1",
-        "preview": false
+        "preview": false,
+        "description": {
+            "es": "Aislamiento del runtime local en specs/.omni/runtime/ ignorado por Git, con restauración automática vía update.",
+            "en": "Local runtime isolation under Git-ignored specs/.omni/runtime/ with automated restore via update."
+        }
     },
     {
         "version": "v0.5.0",
         "date": "2026-10-18",
         "url": "https://github.com/brahiandres1999-oss/omni-spec/releases/tag/v0.5.0",
-        "preview": false
+        "preview": false,
+        "description": {
+            "es": "Implementación del algoritmo de calibración Spec Fit (v1) para dimensionar el rigor documental según alcance.",
+            "en": "Implementation of the Spec Fit (v1) calibration algorithm to size documentation ceremony to scope."
+        }
     },
     {
         "version": "v0.5.0-rc.1",
         "date": "2026-10-18",
         "url": "https://github.com/brahiandres1999-oss/omni-spec/releases/tag/v0.5.0-rc.1",
-        "preview": true
+        "preview": true,
+        "description": {
+            "es": "Primera versión candidata del motor de verificación determinista y snapshot de evidencia criptográfica.",
+            "en": "First release candidate of the deterministic verification engine and cryptographic evidence snapshot."
+        }
     },
     {
         "version": "v0.4.0",
         "date": "2026-10-20",
         "url": "https://github.com/brahiandres1999-oss/omni-spec/releases/tag/v0.4.0",
-        "preview": false
+        "preview": false,
+        "description": {
+            "es": "Introducción de los cuatro arquetipos formales de trabajo: feature, bugfix, debt y rfc con artefactos dedicados.",
+            "en": "Introduction of four formal work archetypes: feature, bugfix, debt, and rfc with dedicated artifacts."
+        }
     },
     {
         "version": "v0.3.1",
         "date": "2026-10-16",
         "url": "https://github.com/brahiandres1999-oss/omni-spec/releases/tag/v0.3.1",
-        "preview": false
+        "preview": false,
+        "description": {
+            "es": "Génesis del estándar: contratos Markdown iniciales y primeras pruebas de verificación determinista.",
+            "en": "Genesis of the standard: early Markdown contracts and deterministic verification tests."
+        }
     },
     {
         "version": "v0.3.0",
         "date": "2026-10-16",
         "url": "https://github.com/brahiandres1999-oss/omni-spec/releases/tag/v0.3.0",
-        "preview": false
+        "preview": false,
+        "description": {
+            "es": "Prototipo fundacional de especificaciones ejecutables gobernadas dentro del repositorio Git.",
+            "en": "Foundational prototype of executable specifications governed within the Git repository."
+        }
     }
 ]
