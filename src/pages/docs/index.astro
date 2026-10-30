@@ -17,6 +17,7 @@ const extra=[
 ];
 const nav=docsSections.map(s=>({id:s.id,es:title(s.es.title),en:title(s.en.title)})).concat(extra);
 const base=import.meta.env.BASE_URL.replace(/\/$/,'');
+const getCode=(code:unknown,lang:'es'|'en')=>typeof code==='object'&&code!==null?(code as Record<string,string>)[lang]:String(code);
 ---
 <Layout title="Documentación — OmniSpec" titleEn="Documentation — OmniSpec" description="Guía de OmniSpec: instalación, primer cambio, archivos, integraciones y evidencia." descriptionEn="OmniSpec guide: installation, first change, files, integrations and evidence.">
 <Navbar/>
@@ -32,7 +33,11 @@ const base=import.meta.env.BASE_URL.replace(/\/$/,'');
       {docsSections.map(section=><section id={section.id}>
         {(['es','en'] as const).map(lang=><div data-locale={lang} hidden={lang==='en'}><h2>{title(section[lang].title)}</h2>{section[lang].paragraphs.map(p=><p set:html={p}/>)}</div>)}
         {section.commands.map(command=><CopySnippet command={command}/>)}
-        {section.code && <pre tabindex="0" role="region" aria-label={t['docs.code']} data-i18n-aria="docs.code"><code>{section.code}</code></pre>}
+        {section.code && (typeof section.code === 'object' ? (
+          (['es','en'] as const).map(lang=><pre tabindex="0" role="region" aria-label={t['docs.code']} data-i18n-aria="docs.code" data-locale={lang} hidden={lang==='en'}><code>{getCode(section.code, lang)}</code></pre>)
+        ) : (
+          <pre tabindex="0" role="region" aria-label={t['docs.code']} data-i18n-aria="docs.code"><code>{section.code}</code></pre>
+        ))}
         {section.id==='perfiles-catalogo' && <DomainProfiles/>}
         {section.id==='adaptadores-agentes' && (['es','en'] as const).map(lang=><dl class="integration-list" data-locale={lang} hidden={lang==='en'}>{Object.entries(agentsByLang[lang]).map(([key,agent])=><div><dt><AgentLogo agent={key} size={23}/>{agent.title}</dt><dd>{agent.desc}</dd><dd><strong>{lang==='es'?'Inicio:':'Start:'}</strong> <code>{agent.invocation}</code></dd><dd><code>{agent.path}</code></dd></div>)}</dl>)}
       </section>)}
@@ -56,14 +61,123 @@ const base=import.meta.env.BASE_URL.replace(/\/$/,'');
 <Footer/>
 </Layout>
 <script>
- const links=Array.from(document.querySelectorAll<HTMLAnchorElement>('.docs-sidebar a'));
- const observer=new IntersectionObserver(entries=>{
-  const entry=entries.find(item=>item.isIntersecting);
-  if(!entry)return;
-  links.forEach(link=>{if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');});
- },{rootMargin:'-100px 0px -65% 0px',threshold:0});
- document.querySelectorAll('.prose > section[id]').forEach(section=>observer.observe(section));
- const menu=document.querySelector<HTMLDetailsElement>('.docs-mobile-nav');
- menu?.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{menu.open=false;}));
- menu?.addEventListener('keydown',event=>{if(event.key==='Escape'){menu.open=false;menu.querySelector('summary')?.focus();}});
+  const sidebar = document.querySelector<HTMLElement>('.docs-sidebar');
+  const sidebarLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.docs-sidebar a'));
+  const mobileLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.docs-mobile-nav a'));
+  const sections = Array.from(document.querySelectorAll<HTMLElement>('.prose > section[id]'));
+
+  let activeId = '';
+  let isClickScrolling = false;
+  let clickTimer: ReturnType<typeof setTimeout> | null = null;
+
+  function setActive(id: string, scrollSidebar = true) {
+    if (!id || activeId === id) return;
+    activeId = id;
+
+    let activeLink: HTMLAnchorElement | null = null;
+
+    sidebarLinks.forEach(link => {
+      if (link.hash === '#' + id) {
+        link.setAttribute('aria-current', 'location');
+        activeLink = link;
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
+
+    mobileLinks.forEach(link => {
+      if (link.hash === '#' + id) {
+        link.setAttribute('aria-current', 'location');
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
+
+    const currentLink = activeLink as HTMLAnchorElement | null;
+    if (scrollSidebar && currentLink && sidebar) {
+      const sidebarRect = sidebar.getBoundingClientRect();
+      const linkRect = currentLink.getBoundingClientRect();
+
+      if (linkRect.top < sidebarRect.top + 40 || linkRect.bottom > sidebarRect.bottom - 40) {
+        const linkTop = currentLink.offsetTop;
+        const targetScroll = linkTop - (sidebar.clientHeight / 2) + (currentLink.clientHeight / 2);
+        sidebar.scrollTo({
+          top: Math.max(0, targetScroll),
+          behavior: 'smooth'
+        });
+      }
+    }
+  }
+
+  function updateActive() {
+    if (isClickScrolling) return;
+
+    const scrollY = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+
+    if (scrollY + windowHeight >= documentHeight - 60) {
+      const lastSection = sections[sections.length - 1];
+      if (lastSection) {
+        setActive(lastSection.id);
+        return;
+      }
+    }
+
+    const offset = 140;
+    let currentId = sections[0]?.id || '';
+
+    for (const section of sections) {
+      const top = section.getBoundingClientRect().top;
+      if (top <= offset) {
+        currentId = section.id;
+      } else {
+        break;
+      }
+    }
+
+    if (currentId) {
+      setActive(currentId);
+    }
+  }
+
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        updateActive();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+
+  sidebarLinks.concat(mobileLinks).forEach(link => {
+    link.addEventListener('click', () => {
+      const hash = link.hash.replace(/^#/, '');
+      if (hash) {
+        isClickScrolling = true;
+        setActive(hash);
+        if (clickTimer) clearTimeout(clickTimer);
+        clickTimer = setTimeout(() => {
+          isClickScrolling = false;
+        }, 700);
+      }
+    });
+  });
+
+  const menu = document.querySelector<HTMLDetailsElement>('.docs-mobile-nav');
+  menu?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { menu.open = false; }));
+  menu?.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      menu.open = false;
+      menu.querySelector('summary')?.focus();
+    }
+  });
+
+  if (window.location.hash) {
+    setActive(window.location.hash.slice(1));
+  } else {
+    updateActive();
+  }
 </script>

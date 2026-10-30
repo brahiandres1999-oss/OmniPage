@@ -220,7 +220,8 @@ select { width: 100%; max-width: 29rem; min-height: 3rem; padding: .6rem .85rem;
 .page-heading h1 { font-size: clamp(2.25rem,4.5vw,4rem); line-height: 1.15; font-weight: 600; letter-spacing: -.03em; max-width: 23ch; }
 .page-heading .body-copy { margin-top: 1.5rem; max-width: 65ch; }
 .docs-layout { display: grid; grid-template-columns: 16rem minmax(0,1fr); gap: 4rem; align-items: start; padding-bottom: 5rem; }
-.docs-sidebar { position: sticky; top: 7rem; max-height: calc(100dvh - 9rem); overflow-y: auto; overscroll-behavior: contain; padding: .25rem .75rem .5rem .25rem; }
+.docs-sidebar { position: sticky; top: 7rem; max-height: calc(100dvh - 9rem); overflow-y: auto; overscroll-behavior: contain; padding: .25rem .75rem .5rem .25rem; scrollbar-width: none; -ms-overflow-style: none; scroll-behavior: smooth; }
+.docs-sidebar::-webkit-scrollbar { display: none; }
 .docs-sidebar h2, .docs-mobile-nav summary { font-size: .875rem; font-weight: 600; margin-bottom: 1rem; }
 .docs-sidebar nav { display: grid; gap: .2rem; }
 .docs-sidebar a { display: block; padding: .5rem .65rem; min-height: 2.5rem; font-size: .8125rem; line-height: 1.5; color: rgb(var(--text-secondary)); border-inline-start: 2px solid transparent; }
@@ -233,7 +234,7 @@ select { width: 100%; max-width: 29rem; min-height: 3rem; padding: .6rem .85rem;
 .prose p { color: rgb(var(--text-secondary)); margin-block: 1rem; font-size: 1.0625rem; max-width: 70ch; }
 .prose p strong { color: rgb(var(--text-primary)); font-weight: 600; }
 .prose p code, .prose li code { font-size: .8125rem; padding: .1rem .25rem; border: 1px solid var(--code-border); background: var(--code-bg); border-radius: .25rem; overflow-wrap: anywhere; }
-.prose pre:not(.command-row pre) { background: rgb(var(--bg-surface)); border: 1px solid rgb(var(--border-rgb) / var(--border-subtle-alpha)); padding: 1.25rem; border-radius: .5rem; white-space: pre-wrap; overflow-wrap: anywhere; font-size: .8125rem; line-height: 1.8; }
+.prose pre:not(.command-row pre) { background: rgb(var(--bg-surface)); border: 1px solid rgb(var(--border-rgb) / var(--border-subtle-alpha)); padding: 1.25rem; border-radius: .5rem; white-space: pre; overflow-x: auto; font-size: .8125rem; line-height: 1.8; font-family: 'JetBrains Mono', ui-monospace, monospace; }
 .prose .copy-status { font-size: .8125rem; margin: 0; }
 .prose .copy-snippet { margin-block: 1.25rem; }
 .profile-list details { border-bottom: 1px solid rgb(var(--border-rgb) / var(--border-subtle-alpha)); padding-block: 1rem; }
