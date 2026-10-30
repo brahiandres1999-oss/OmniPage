@@ -6,7 +6,16 @@ const { command = installCommand, id, prefix = '$' } = Astro.props;
 <div class="copy-snippet" id={id}>
   <div class="command-row">
     <pre tabindex="0" role="region" aria-label="Comando completo" data-i18n-aria="copy.region"><span class="command-prefix" aria-hidden="true">{prefix} </span><code data-copy-text>{command}</code></pre>
-    <button type="button" class="copy-button" data-copy-button aria-label="Copiar comando" data-i18n-aria="copy.aria"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V4H4v12h4"/></svg><span data-copy-label data-i18n="copy.copy">Copiar</span></button>
+    <button type="button" class="copy-button" data-copy-button aria-label="Copiar comando" data-i18n-aria="copy.aria">
+      <svg class="copy-icon" aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+        <rect x="8" y="8" width="12" height="12" rx="2"/>
+        <path d="M16 8V4H4v12h4"/>
+      </svg>
+      <svg class="check-icon" aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+      <span data-copy-label data-i18n="copy.copy">Copiar</span>
+    </button>
   </div>
   <p class="copy-status" role="status" aria-atomic="true"></p>
   <button type="button" class="text-button copy-select" hidden data-i18n="copy.select">Seleccionar comando</button>
@@ -20,6 +29,8 @@ const { command = installCommand, id, prefix = '$' } = Astro.props;
     const label = root.querySelector<HTMLElement>('[data-copy-label]')!;
     const status = root.querySelector<HTMLElement>('.copy-status')!;
     const select = root.querySelector<HTMLButtonElement>('.copy-select')!;
+    let resetTimer: ReturnType<typeof setTimeout> | undefined;
+
     const setMessage = (success: boolean) => {
       const dict = translations[getLanguage()];
       status.dataset.i18n = success ? 'copy.success' : 'copy.error';
@@ -28,6 +39,16 @@ const { command = installCommand, id, prefix = '$' } = Astro.props;
       label.dataset.i18n = success ? 'copy.copied' : 'copy.copy';
       label.textContent = dict[label.dataset.i18n];
       select.hidden = success;
+
+      if (success) {
+        button.dataset.copied = 'true';
+        clearTimeout(resetTimer);
+        resetTimer = setTimeout(() => {
+          delete button.dataset.copied;
+          label.dataset.i18n = 'copy.copy';
+          label.textContent = dict['copy.copy'];
+        }, 2200);
+      }
     };
     button.addEventListener('click', async () => {
       const copiedText = code.textContent || '';
