@@ -3,7 +3,7 @@
 .ide-shell{--focus:147 197 253;--ide-bg:#1e1e1e;--ide-side:#181818;--ide-border:#353535;--ide-text:#d4d4d4;--ide-muted:#a3a3a3;background:var(--ide-bg);color:var(--ide-text);border:1px solid #4c4c4c;border-radius:10px;overflow:hidden;box-shadow:0 4px 12px #0001,0 32px 72px -28px #0005;font-family:'Albert Sans',sans-serif;font-size:12px;line-height:1.5;text-align:left}
 .ide-shell *{box-sizing:border-box}
 .ide-shell pre code{font-family:inherit;font-size:inherit;line-height:inherit}
-@font-face{font-family:omni-seti;src:url('/OmniPage/assets/vscode/seti.woff') format('woff');font-weight:normal;font-style:normal;font-display:block}
+@font-face{font-family:omni-seti;src:url('/assets/vscode/seti.woff') format('woff');font-weight:normal;font-style:normal;font-display:block}
 .seti-icon{font-family:omni-seti!important;font-size:19px;line-height:1;display:inline-block;flex-shrink:0;width:18px;text-align:center;font-style:normal;font-weight:normal}
 .lifecycle-shell{font-family:'Segoe UI',system-ui,sans-serif}
 .lifecycle-shell .ide-activity>.codicon{font-size:23px}

@@ -2,8 +2,8 @@ import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
-  site: 'https://brahiandres1999-oss.github.io',
-  base: '/OmniPage',
+  site: 'https://omnispec.dev',
+  base: '/',
   integrations: [
     tailwind({
       applyBaseStyles: false,
