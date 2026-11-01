@@ -1,0 +1,517 @@
+---
+import { translations } from '../i18n/translations';
+import { skillsLoop } from '../data/skills-loop';
+const t = translations.es;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<section id="caos-vs-spec" class="section-space">
+  <div class="page-shell">
+    <!-- Header de Sección -->
+    <div class="section-intro two-column-intro mb-8">
+      <div>
+        <p class="eyebrow" data-i18n="value.eyebrow">{t['value.eyebrow']}</p>
+        <h2 class="section-title" data-i18n="value.title">{t['value.title']}</h2>
+      </div>
+      <p class="body-copy" data-i18n="value.intro">{t['value.intro']}</p>
+    </div>
+
+    <!-- PARTE 1: Comparativa Directa (Chat Convencional vs Estándar OmniSpec) -->
+    <div class="mx-auto mb-10 w-full max-w-5xl">
+      <div class="mb-3 flex flex-wrap items-center justify-between gap-2 px-1">
+        <span class="font-mono text-xs uppercase tracking-wider text-[rgb(var(--text-tertiary))]" data-i18n="value.prompt.label">{t['value.prompt.label']}</span>
+        <code class="rounded border border-[rgb(var(--border-rgb)/0.14)] bg-[rgb(var(--bg-surface))] px-3 py-1 font-mono text-xs font-medium text-[rgb(var(--text-primary))]" data-i18n="value.prompt.text">{t['value.prompt.text']}</code>
+      </div>
+
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <!-- Columna 1: El chat convencional -->
+        <article class="rounded-xl border border-[rgb(var(--border-rgb)/0.14)] bg-[rgb(var(--bg-surface))] p-5">
+          <header class="mb-4 flex items-center justify-between border-b border-[rgb(var(--border-rgb)/0.1)] pb-3">
+            <div>
+              <span class="inline-flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-wider text-[rgb(var(--accent-rose))]">
+                <span class="h-2 w-2 rounded-full bg-[rgb(var(--accent-rose))]"></span>
+                <span data-i18n="value.chaos.badge">{t['value.chaos.badge']}</span>
+              </span>
+              <p class="mt-0.5 text-xs text-[rgb(var(--text-tertiary))]" data-i18n="value.chaos.subtitle">{t['value.chaos.subtitle']}</p>
+            </div>
+            <span class="rounded border border-[rgb(var(--border-rgb)/0.15)] px-2 py-0.5 font-mono text-[10px] text-[rgb(var(--text-tertiary))]">UNBOUNDED</span>
+          </header>
+          <ul class="space-y-3.5 list-none p-0 m-0">
+            {[1, 2, 3].map((i) => (
+              <li class="rounded-lg border border-[rgb(var(--border-rgb)/0.08)] bg-[rgb(var(--bg-base))] p-3">
+                <p class="font-mono text-xs font-semibold text-[rgb(var(--text-primary))]" data-i18n={`value.chaos.${i}.tag`}>{t[`value.chaos.${i}.tag`]}</p>
+                <p class="mt-1 text-xs leading-relaxed text-[rgb(var(--text-secondary))]" data-i18n={`value.chaos.${i}.detail`}>{t[`value.chaos.${i}.detail`]}</p>
+              </li>
+            ))}
+          </ul>
+        </article>
+
+        <!-- Columna 2: Estándar OmniSpec -->
+        <article class="rounded-xl border border-[rgb(var(--border-rgb)/0.22)] bg-[rgb(var(--bg-surface-elevated))] p-5">
+          <header class="mb-4 flex items-center justify-between border-b border-[rgb(var(--border-rgb)/0.12)] pb-3">
+            <div>
+              <span class="inline-flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-wider text-[rgb(var(--accent-emerald))]">
+                <span class="h-2 w-2 rounded-full bg-[rgb(var(--accent-emerald))]"></span>
+                <span data-i18n="value.spec.badge">{t['value.spec.badge']}</span>
+              </span>
+              <p class="mt-0.5 text-xs text-[rgb(var(--text-secondary))]" data-i18n="value.spec.subtitle">{t['value.spec.subtitle']}</p>
+            </div>
+            <span class="rounded border border-[rgb(var(--accent-emerald)/0.35)] bg-[rgb(var(--accent-emerald)/0.1)] px-2 py-0.5 font-mono text-[10px] font-semibold text-[rgb(var(--accent-emerald))]">GOVERNED</span>
+          </header>
+          <ul class="space-y-3.5 list-none p-0 m-0">
+            {[1, 2, 3].map((i) => (
+              <li class="rounded-lg border border-[rgb(var(--border-rgb)/0.12)] bg-[rgb(var(--bg-base))] p-3">
+                <p class="font-mono text-xs font-semibold text-[rgb(var(--text-primary))]" data-i18n={`value.spec.${i}.tag`}>{t[`value.spec.${i}.tag`]}</p>
+                <p class="mt-1 text-xs leading-relaxed text-[rgb(var(--text-secondary))]" data-i18n={`value.spec.${i}.detail`}>{t[`value.spec.${i}.detail`]}</p>
+              </li>
+            ))}
+          </ul>
+        </article>
+      </div>
+    </div>
+
+    <!-- PARTE 2: Master-Detail Workbench de las 9 Skills -->
+    <div class="relative mx-auto my-4 w-full max-w-5xl" id="skills-pipeline-diagram">
+      
+      <!-- Contenedor Principal del Workbench -->
+      <div class="overflow-hidden rounded-2xl border border-[rgb(var(--border-rgb)/0.14)] bg-[rgb(var(--bg-surface))] shadow-sm">
+        
+        <!-- Barra de Cabecera Editorial -->
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[rgb(var(--border-rgb)/0.1)] px-5 py-3 sm:px-6">
+          <div class="flex items-center gap-2.5">
+            <span class="inline-flex h-2 w-2 shrink-0 rounded-full bg-emerald-500"></span>
+            <span class="font-mono text-[11px] font-semibold uppercase tracking-wider text-[rgb(var(--text-tertiary))]" data-i18n="loop.fig">
+              {t['loop.fig']}
+            </span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="rounded bg-[rgb(var(--bg-surface-elevated))] px-2 py-0.5 font-mono text-[10.5px] font-medium text-[rgb(var(--text-secondary))]" data-i18n="loop.stats">
+              {t['loop.stats']}
+            </span>
+            <span class="rounded border border-[rgb(var(--border-rgb)/0.15)] px-2 py-0.5 font-mono text-[10.5px] text-[rgb(var(--text-tertiary))]">
+              DETERMINISTIC
+            </span>
+          </div>
+        </div>
+
+        <!-- Master-Detail Grid (Lado a Lado en Desktop, 1 sola pantalla) -->
+        <div class="grid grid-cols-1 divide-y divide-[rgb(var(--border-rgb)/0.1)] md:grid-cols-12 md:divide-x md:divide-y-0">
+          
+          <!-- COLUMNA MASTER (Izquierda, 5 cols): Cadena de montaje interactiva -->
+          <div class="p-3.5 sm:p-4.5 md:col-span-5 flex flex-col justify-between space-y-3 bg-[rgb(var(--bg-surface))]" role="tablist" aria-orientation="vertical" aria-label={t['loop.tablist.aria']} data-i18n-aria="loop.tablist.aria">
+            
+            <!-- ETAPA 1 -->
+            <div>
+              <div class="flex items-center justify-between px-1.5 pb-1">
+                <span class="font-mono text-[9.5px] font-bold tracking-wider text-[rgb(var(--text-tertiary))]" data-i18n="loop.stage.1.title">
+                  {t['loop.stage.1.title']}
+                </span>
+                <span class="font-mono text-[9px] text-[rgb(var(--text-tertiary))]" data-i18n="loop.stage.1.count">
+                  {t['loop.stage.1.count']}
+                </span>
+              </div>
+              <div class="space-y-1">
+                {skillsLoop.filter(s => s.stage === 1).map((s) => (
+                  <button
+                    type="button"
+                    role="tab"
+                    id={`tab-${s.id}`}
+                    aria-selected={s.id === 'specify'}
+                    aria-controls="pipeline-inspector-panel"
+                    tabindex={s.id === 'specify' ? 0 : -1}
+                    data-skill-id={s.id}
+                    class="pipeline-skill-tab group relative flex w-full items-center justify-between rounded-lg border border-transparent px-2.5 py-1.5 text-left transition-colors duration-150 hover:bg-[rgb(var(--bg-surface-elevated))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--focus))]"
+                  >
+                    <div class="flex items-center gap-2 min-w-0">
+                      <span class="font-mono text-[10.5px] font-semibold text-[rgb(var(--text-tertiary))] group-hover:text-[rgb(var(--text-primary))]">
+                        {s.number}
+                      </span>
+                      <span class="shrink-0 font-mono text-[12px] font-medium text-[rgb(var(--text-primary))]">
+                        {s.command}
+                      </span>
+                      <span class="hidden 2xl:inline-block truncate text-[10.5px] text-[rgb(var(--text-secondary))] max-w-[120px]" data-i18n={`loop.skill.${s.id}.short`}>
+                        · {t[`loop.skill.${s.id}.short`]}
+                      </span>
+                    </div>
+                    <div class="flex items-center gap-1.5 shrink-0 ml-1.5">
+                      {s.badge && (
+                        <span class="rounded bg-[rgb(var(--bg-surface-elevated))] border border-[rgb(var(--border-rgb)/0.12)] px-1.5 py-0.5 font-mono text-[8.5px] font-medium text-[rgb(var(--text-secondary))]">
+                          {s.badge.es}
+                        </span>
+                      )}
+                      <span class="font-mono text-[9px] tabular-nums text-[rgb(var(--text-tertiary))]">
+                        {s.size}
+                      </span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <!-- ETAPA 2 -->
+            <div>
+              <div class="flex items-center justify-between px-1.5 pb-1 border-t border-[rgb(var(--border-rgb)/0.08)] pt-2">
+                <span class="font-mono text-[9.5px] font-bold tracking-wider text-[rgb(var(--accent-amber))]" data-i18n="loop.stage.2.title">
+                  {t['loop.stage.2.title']}
+                </span>
+                <span class="font-mono text-[9px] text-[rgb(var(--accent-amber))]" data-i18n="loop.stage.2.count">
+                  {t['loop.stage.2.count']}
+                </span>
+              </div>
+              <div class="space-y-1">
+                {skillsLoop.filter(s => s.stage === 2).map((s) => (
+                  <button
+                    type="button"
+                    role="tab"
+                    id={`tab-${s.id}`}
+                    aria-selected="false"
+                    aria-controls="pipeline-inspector-panel"
+                    tabindex="-1"
+                    data-skill-id={s.id}
+                    class="pipeline-skill-tab group relative flex w-full items-center justify-between rounded-lg border border-transparent px-2.5 py-1.5 text-left transition-colors duration-150 hover:bg-[rgb(var(--bg-surface-elevated))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--focus))]"
+                  >
+                    <div class="flex items-center gap-2 min-w-0">
+                      <span class="font-mono text-[10.5px] font-semibold text-[rgb(var(--text-tertiary))] group-hover:text-[rgb(var(--text-primary))]">
+                        {s.number}
+                      </span>
+                      <span class="shrink-0 font-mono text-[12px] font-medium text-[rgb(var(--text-primary))]">
+                        {s.command}
+                      </span>
+                      <span class="hidden 2xl:inline-block truncate text-[10.5px] text-[rgb(var(--text-secondary))] max-w-[120px]" data-i18n={`loop.skill.${s.id}.short`}>
+                        · {t[`loop.skill.${s.id}.short`]}
+                      </span>
+                    </div>
+                    <div class="flex items-center gap-1.5 shrink-0 ml-1.5">
+                      {s.badge && (
+                        <span class={`rounded px-1.5 py-0.5 font-mono text-[8.5px] font-medium ${s.badge.variant === 'gate' ? 'bg-[rgb(var(--accent-amber)/0.12)] border border-[rgb(var(--accent-amber)/0.35)] text-[rgb(var(--accent-amber))]' : 'bg-[rgb(var(--bg-surface-elevated))] border border-[rgb(var(--border-rgb)/0.12)] text-[rgb(var(--text-secondary))]'}`}>
+                          {s.badge.es}
+                        </span>
+                      )}
+                      <span class="font-mono text-[9px] tabular-nums text-[rgb(var(--text-tertiary))]">
+                        {s.size}
+                      </span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <!-- ETAPA 3 -->
+            <div>
+              <div class="flex items-center justify-between px-1.5 pb-1 border-t border-[rgb(var(--border-rgb)/0.08)] pt-2">
+                <span class="font-mono text-[9.5px] font-bold tracking-wider text-[rgb(var(--accent-emerald))]" data-i18n="loop.stage.3.title">
+                  {t['loop.stage.3.title']}
+                </span>
+                <span class="font-mono text-[9px] text-[rgb(var(--accent-emerald))]" data-i18n="loop.stage.3.count">
+                  {t['loop.stage.3.count']}
+                </span>
+              </div>
+              <div class="space-y-1">
+                {skillsLoop.filter(s => s.stage === 3).map((s) => (
+                  <button
+                    type="button"
+                    role="tab"
+                    id={`tab-${s.id}`}
+                    aria-selected="false"
+                    aria-controls="pipeline-inspector-panel"
+                    tabindex="-1"
+                    data-skill-id={s.id}
+                    class="pipeline-skill-tab group relative flex w-full items-center justify-between rounded-lg border border-transparent px-2.5 py-1.5 text-left transition-colors duration-150 hover:bg-[rgb(var(--bg-surface-elevated))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--focus))]"
+                  >
+                    <div class="flex items-center gap-2 min-w-0">
+                      <span class="font-mono text-[10.5px] font-semibold text-[rgb(var(--text-tertiary))] group-hover:text-[rgb(var(--text-primary))]">
+                        {s.number}
+                      </span>
+                      <span class="shrink-0 font-mono text-[12px] font-medium text-[rgb(var(--text-primary))]">
+                        {s.command}
+                      </span>
+                      <span class="hidden 2xl:inline-block truncate text-[10.5px] text-[rgb(var(--text-secondary))] max-w-[120px]" data-i18n={`loop.skill.${s.id}.short`}>
+                        · {t[`loop.skill.${s.id}.short`]}
+                      </span>
+                    </div>
+                    <div class="flex items-center gap-1.5 shrink-0 ml-1.5">
+                      {s.badge && (
+                        <span class={`rounded px-1.5 py-0.5 font-mono text-[8.5px] font-medium ${s.badge.variant === 'success' ? 'bg-[rgb(var(--accent-emerald)/0.12)] border border-[rgb(var(--accent-emerald)/0.35)] text-[rgb(var(--accent-emerald))]' : 'bg-[rgb(var(--bg-surface-elevated))] border border-[rgb(var(--border-rgb)/0.12)] text-[rgb(var(--text-secondary))]'}`}>
+                          {s.badge.es}
+                        </span>
+                      )}
+                      <span class="font-mono text-[9px] tabular-nums text-[rgb(var(--text-tertiary))]">
+                        {s.size}
+                      </span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+          </div>
+
+          <!-- COLUMNA DETAIL (Derecha, 7 cols): Inspector de Directivas en Tiempo Real -->
+          <div id="pipeline-inspector-panel" role="tabpanel" aria-labelledby="tab-specify" class="md:col-span-7 flex flex-col justify-between bg-[rgb(var(--bg-surface-elevated))] p-5 sm:p-6 min-h-[380px] md:min-h-[420px]">
+            
+            <!-- Cabecera de la Consola del Inspector -->
+            <div>
+              <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[rgb(var(--border-rgb)/0.1)] pb-3.5">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="shrink-0 whitespace-nowrap rounded bg-neutral-900 px-2.5 py-1 font-mono text-[12.5px] font-bold text-white dark:bg-white dark:text-neutral-900" id="inspector-command">
+                    /omni-specify
+                  </span>
+                  <span class="shrink-0 whitespace-nowrap font-mono text-[11px] tabular-nums text-[rgb(var(--text-tertiary))]" id="inspector-size">
+                    8.2 KB
+                  </span>
+                  <span class="rounded bg-[rgb(var(--bg-base))] border border-[rgb(var(--border-rgb)/0.12)] px-2 py-0.5 font-mono text-[10px] text-[rgb(var(--text-secondary))]" id="inspector-stage-badge">
+                    ETAPA 01 · ONBOARDING & ALCANCE
+                  </span>
+                </div>
+                <span class="font-mono text-[10px] uppercase tracking-wider text-[rgb(var(--text-tertiary))]" data-i18n="loop.inspector.title">
+                  {t['loop.inspector.title']}
+                </span>
+              </div>
+
+              <!-- Misión -->
+              <div class="mt-4">
+                <span class="block font-mono text-[10px] font-bold uppercase tracking-wider text-[rgb(var(--text-tertiary))]" data-i18n="loop.inspector.mission">
+                  {t['loop.inspector.mission']}
+                </span>
+                <p class="mt-1.5 text-[13.5px] font-medium leading-relaxed text-[rgb(var(--text-primary))]" id="inspector-mission">
+                  Formalizar una solicitud en un tipo de trabajo (feature, bugfix, debt o rfc).
+                </p>
+              </div>
+
+              <!-- Directiva / Prohibición estricta -->
+              <div class="mt-4">
+                <span class="block font-mono text-[10px] font-bold uppercase tracking-wider text-[rgb(var(--text-tertiary))]" data-i18n="loop.inspector.instruction">
+                  {t['loop.inspector.instruction']}
+                </span>
+                <div class="mt-1.5 rounded-xl border border-[rgb(var(--border-rgb)/0.12)] bg-[rgb(var(--bg-base))] p-4 font-mono text-[12px] leading-relaxed text-[rgb(var(--text-primary))] shadow-inner">
+                  <span class="select-none text-[rgb(var(--accent))]">"</span><span id="inspector-instruction">Evalúa el triaje ceremonial (omni-spec fit). Redacta criterios de aceptación obligatorios bajo sintaxis formal EARS (AC-01 [functional]). Define explícitamente lo que está FUERA de alcance (Non-Goals) para evitar desviaciones.</span><span class="select-none text-[rgb(var(--accent))]">"</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Footer técnico de la Consola -->
+            <div class="mt-5 border-t border-[rgb(var(--border-rgb)/0.08)] pt-3 flex flex-wrap items-center justify-between gap-2 font-mono text-[10.5px] text-[rgb(var(--text-tertiary))]">
+              <span class="flex items-center gap-1.5">
+                <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                <span>FAIL-FAST & ZERO CODE SLOP</span>
+              </span>
+              <span id="inspector-evidence-status" class="text-[rgb(var(--text-secondary))] font-medium">
+                DETERMINISTIC PIPELINE
+              </span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Enlace sutil y limpio a Documentación -->
+      <div class="mt-4 flex items-center justify-center">
+        <a 
+          href={base + '/docs/'} 
+          class="inline-flex min-h-[28px] items-center gap-1.5 py-1 text-[12px] font-medium text-[rgb(var(--text-secondary))] transition-colors duration-150 hover:text-[rgb(var(--text-primary))] hover:underline" 
+          data-i18n="loop.docsLink"
+        >
+          {t['loop.docsLink']}
+        </a>
+      </div>
+
+    </div>
+
+    <!-- PARTE 3: Proporcionalidad (3 Rutas Spec Fit + 4 Arquetipos) -->
+    <div class="mx-auto mt-12 w-full max-w-5xl rounded-2xl border border-[rgb(var(--border-rgb)/0.14)] bg-[rgb(var(--bg-surface))] p-6">
+      <div class="mb-6 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="font-mono text-xs font-semibold uppercase tracking-wider text-[rgb(var(--accent))]" data-i18n="fit.eyebrow">{t['fit.eyebrow']}</p>
+          <h3 class="mt-1 text-xl font-semibold text-[rgb(var(--text-primary))]" data-i18n="fit.title">{t['fit.title']}</h3>
+        </div>
+        <p class="max-w-xl text-sm text-[rgb(var(--text-secondary))]" data-i18n="fit.intro">{t['fit.intro']}</p>
+      </div>
+
+      <!-- 3 Rutas Spec Fit -->
+      <div class="grid grid-cols-1 gap-3.5 md:grid-cols-3">
+        <div class="rounded-xl border border-[rgb(var(--border-rgb)/0.12)] bg-[rgb(var(--bg-base))] p-4">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span class="font-mono text-[11px] font-bold text-[rgb(var(--accent-emerald))]" data-i18n="fit.route.light.badge">{t['fit.route.light.badge']}</span>
+            <code class="shrink-0 whitespace-nowrap rounded bg-[rgb(var(--bg-surface))] px-1.5 py-0.5 font-mono text-[10px] text-[rgb(var(--text-secondary))]">--light</code>
+          </div>
+          <p class="mt-2 text-xs leading-relaxed text-[rgb(var(--text-secondary))]" data-i18n="fit.route.light.desc">{t['fit.route.light.desc']}</p>
+        </div>
+
+        <div class="rounded-xl border border-[rgb(var(--border-rgb)/0.12)] bg-[rgb(var(--bg-base))] p-4">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span class="font-mono text-[11px] font-bold text-[rgb(var(--accent))]" data-i18n="fit.route.standard.badge">{t['fit.route.standard.badge']}</span>
+            <code class="shrink-0 whitespace-nowrap rounded bg-[rgb(var(--bg-surface))] px-1.5 py-0.5 font-mono text-[10px] text-[rgb(var(--text-secondary))]">--preset standard</code>
+          </div>
+          <p class="mt-2 text-xs leading-relaxed text-[rgb(var(--text-secondary))]" data-i18n="fit.route.standard.desc">{t['fit.route.standard.desc']}</p>
+        </div>
+
+        <div class="rounded-xl border border-[rgb(var(--border-rgb)/0.12)] bg-[rgb(var(--bg-base))] p-4">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span class="font-mono text-[11px] font-bold text-[rgb(var(--accent-amber))]" data-i18n="fit.route.full.badge">{t['fit.route.full.badge']}</span>
+            <code class="shrink-0 whitespace-nowrap rounded bg-[rgb(var(--bg-surface))] px-1.5 py-0.5 font-mono text-[10px] text-[rgb(var(--text-secondary))]">--preset full</code>
+          </div>
+          <p class="mt-2 text-xs leading-relaxed text-[rgb(var(--text-secondary))]" data-i18n="fit.route.full.desc">{t['fit.route.full.desc']}</p>
+        </div>
+      </div>
+
+      <!-- 4 Arquetipos -->
+      <div class="mt-4 grid grid-cols-1 gap-2.5 border-t border-[rgb(var(--border-rgb)/0.1)] pt-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="rounded-lg bg-[rgb(var(--bg-surface-elevated))] p-3">
+          <div class="flex items-center justify-between font-mono text-xs">
+            <strong class="text-[rgb(var(--text-primary))]">feature</strong>
+            <span class="text-[10px] text-[rgb(var(--text-tertiary))]">spec · plan · tasks</span>
+          </div>
+          <p class="mt-1 text-[11.5px] leading-snug text-[rgb(var(--text-secondary))]" data-i18n="fit.arch.feature">{t['fit.arch.feature']}</p>
+        </div>
+
+        <div class="rounded-lg bg-[rgb(var(--bg-surface-elevated))] p-3">
+          <div class="flex items-center justify-between font-mono text-xs">
+            <strong class="text-[rgb(var(--text-primary))]">bugfix</strong>
+            <span class="text-[10px] text-[rgb(var(--text-tertiary))]">bug · rca · fix</span>
+          </div>
+          <p class="mt-1 text-[11.5px] leading-snug text-[rgb(var(--text-secondary))]" data-i18n="fit.arch.bugfix">{t['fit.arch.bugfix']}</p>
+        </div>
+
+        <div class="rounded-lg bg-[rgb(var(--bg-surface-elevated))] p-3">
+          <div class="flex items-center justify-between font-mono text-xs">
+            <strong class="text-[rgb(var(--text-primary))]">debt</strong>
+            <span class="text-[10px] text-[rgb(var(--text-tertiary))]">audit · migration-plan</span>
+          </div>
+          <p class="mt-1 text-[11.5px] leading-snug text-[rgb(var(--text-secondary))]" data-i18n="fit.arch.debt">{t['fit.arch.debt']}</p>
+        </div>
+
+        <div class="rounded-lg bg-[rgb(var(--bg-surface-elevated))] p-3">
+          <div class="flex items-center justify-between font-mono text-xs">
+            <strong class="text-[rgb(var(--text-primary))]">rfc</strong>
+            <span class="text-[10px] text-[rgb(var(--text-tertiary))]">rfc.md (ADR)</span>
+          </div>
+          <p class="mt-1 text-[11.5px] leading-snug text-[rgb(var(--text-secondary))]" data-i18n="fit.arch.rfc">{t['fit.arch.rfc']}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Script Reactivo del Workbench Master-Detail con Navegación de Teclado WAI-ARIA -->
+<script>
+  import { skillsLoop, stages } from '../data/skills-loop';
+  import { getLanguage } from '../scripts/preferences';
+
+  const container = document.getElementById('skills-pipeline-diagram');
+  if (container) {
+    const tabs = Array.from(container.querySelectorAll<HTMLButtonElement>('.pipeline-skill-tab'));
+    const panel = document.getElementById('pipeline-inspector-panel');
+    const cmdEl = document.getElementById('inspector-command');
+    const sizeEl = document.getElementById('inspector-size');
+    const stageBadgeEl = document.getElementById('inspector-stage-badge');
+    const missionEl = document.getElementById('inspector-mission');
+    const instructionEl = document.getElementById('inspector-instruction');
+    const evidenceStatusEl = document.getElementById('inspector-evidence-status');
+
+    let currentSkillId = 'specify';
+
+    const updateInspector = (skillId: string, focusButton = false) => {
+      currentSkillId = skillId;
+      const skill = skillsLoop.find(s => s.id === skillId);
+      if (!skill) return;
+
+      const lang = getLanguage();
+      const stageInfo = stages[skill.stage];
+      const stagePrefix = lang === 'es' ? 'ETAPA' : 'STAGE';
+      const stageTitle = stageInfo.title[lang] || stageInfo.title.es;
+
+      if (cmdEl) cmdEl.textContent = skill.command;
+      if (sizeEl) sizeEl.textContent = skill.size;
+      if (stageBadgeEl) stageBadgeEl.textContent = `${stagePrefix} ${stageInfo.number} · ${stageTitle.toUpperCase()}`;
+      if (missionEl) missionEl.textContent = skill.mission[lang] || skill.mission.es;
+      if (instructionEl) instructionEl.textContent = skill.instruction[lang] || skill.instruction.es;
+      if (panel) panel.setAttribute('aria-labelledby', `tab-${skill.id}`);
+
+      if (evidenceStatusEl) {
+        if (skill.id === 'converge') {
+          evidenceStatusEl.textContent = lang === 'es' ? '✓ EXIT CODE 0 · COMPROBADO' : '✓ EXIT CODE 0 · VERIFIED';
+          evidenceStatusEl.className = 'text-[rgb(var(--accent-emerald))] font-semibold';
+        } else if (skill.id === 'audit') {
+          evidenceStatusEl.textContent = 'QUALITY GATE · STRICT PASS';
+          evidenceStatusEl.className = 'text-[rgb(var(--accent-amber))] font-semibold';
+        } else {
+          evidenceStatusEl.textContent = lang === 'es' ? 'PIPELINE DETERMINISTA' : 'DETERMINISTIC PIPELINE';
+          evidenceStatusEl.className = 'text-[rgb(var(--text-secondary))] font-medium';
+        }
+      }
+
+      tabs.forEach(btn => {
+        const isSelected = btn.dataset.skillId === skillId;
+        btn.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+        btn.setAttribute('tabindex', isSelected ? '0' : '-1');
+
+        if (isSelected) {
+          btn.classList.add(
+            'border-[rgb(var(--border-rgb)/0.25)]',
+            'bg-[rgb(var(--bg-surface-elevated))]',
+            'shadow-sm',
+            'font-semibold'
+          );
+          btn.classList.remove('border-transparent');
+          if (focusButton) btn.focus();
+        } else {
+          btn.classList.remove(
+            'border-[rgb(var(--border-rgb)/0.25)]',
+            'bg-[rgb(var(--bg-surface-elevated))]',
+            'shadow-sm',
+            'font-semibold'
+          );
+          btn.classList.add('border-transparent');
+        }
+      });
+
+      if (focusButton && window.innerWidth < 768 && panel) {
+        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    };
+
+    tabs.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const skillId = btn.dataset.skillId;
+        if (skillId) updateInspector(skillId, true);
+      });
+    });
+
+    container.addEventListener('keydown', (e) => {
+      const activeElement = document.activeElement as HTMLButtonElement | null;
+      if (!activeElement || !tabs.includes(activeElement)) return;
+
+      const currentIndex = tabs.indexOf(activeElement);
+      let targetIndex = -1;
+
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        targetIndex = (currentIndex + 1) % tabs.length;
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        targetIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        targetIndex = 0;
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        targetIndex = tabs.length - 1;
+      }
+
+      if (targetIndex >= 0) {
+        const targetBtn = tabs[targetIndex];
+        const skillId = targetBtn.dataset.skillId;
+        if (skillId) updateInspector(skillId, true);
+      }
+    });
+
+    window.addEventListener('omni:language-change', () => {
+      updateInspector(currentSkillId, false);
+    });
+
+    updateInspector('specify', false);
+  }
+</script>

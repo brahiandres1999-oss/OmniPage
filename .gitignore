@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+test-results/
+
+# Production & Build outputs
+dist/
+.astro/
+
+# Environment files & Secrets
+.env
+.env.*
+*.local
+
+# Video Authoring Workbench & Offline Scripts (not part of the website)
+/media/
+/scripts/
+/PROTOCOL.md
+/skills-lock.json
+
+# OmniSpec Internal & Agent Artifacts (not part of the website)
+specs/
+/specs
+.agents/
+/.agents
+.codex/
+/.codex
+CONSTITUTION.md
+/CONSTITUTION.md
+mcp_config.json
+/mcp_config.json
+/.audit
+/.audit/
+
+# Dev server logs
+dev-server.log
+preview-out.log
+preview-err.log
+
+# Native binaries & heavy caches
+*.exe
+*.dll
+*.so
+*.dylib
+
+# System & Editor files
+.DS_Store
+Thumbs.db
+npm-debug.log*
+yarn-debug.log*

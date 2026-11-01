@@ -1,0 +1,12 @@
+---
+import { translations } from '../i18n/translations';
+const t = translations.es;
+---
+<section id="faq" class="section-space">
+  <div class="page-shell faq-grid">
+    <div><p class="eyebrow" data-i18n="faq.eyebrow">{t['faq.eyebrow']}</p><h2 class="section-title" data-i18n="faq.title">{t['faq.title']}</h2></div>
+    <div class="faq-list">
+      {[1,2,3,4,5,6,7].map(index => <details><summary><span data-i18n={'faq.q' + index}>{t['faq.q' + index]}</span><span class="disclosure-icon" aria-hidden="true">+</span></summary><p class="body-copy" data-i18n={'faq.a' + index}>{t['faq.a' + index]}</p></details>)}
+    </div>
+  </div>
+</section>

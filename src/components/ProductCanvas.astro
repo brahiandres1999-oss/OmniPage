@@ -1,0 +1,557 @@
+---
+import { translations } from '../i18n/translations';
+import Icon from './Icon.astro';
+const t = translations.es;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<section id="canvas" class="section-space demo-section">
+  <div class="page-shell">
+    <div class="section-intro">
+      <p class="eyebrow" data-i18n="demo.eyebrow">{t['demo.eyebrow']}</p>
+      <h2 class="section-title" data-i18n="demo.title">{t['demo.title']}</h2>
+      <p class="body-copy" data-i18n="demo.intro">{t['demo.intro']}</p>
+    </div>
+
+    <div class="diptych-grid">
+      <!-- PANEL 1: Terminal Interactiva Paso a Paso -->
+      <article class="diptych-card terminal-surface" id="term-interactive-card" role="region" aria-label="Terminal interactiva de OmniSpec" tabindex="0">
+        <header class="diptych-header term-header-wrap">
+          <div class="terminal-dots" aria-hidden="true">
+            <span class="dot-red"></span>
+            <span class="dot-yellow"></span>
+            <span class="dot-green"></span>
+          </div>
+          <span class="diptych-title font-mono">terminal — PowerShell</span>
+          <div class="term-step-pills" role="tablist" aria-label="Pasos del instalador en terminal">
+            <button type="button" role="tab" aria-selected="true" class="term-pill is-active" data-term-goto="0">
+              <span data-locale="es">1. Comando</span>
+              <span data-locale="en" hidden>1. Command</span>
+            </button>
+            <button type="button" role="tab" aria-selected="false" class="term-pill" data-term-goto="1">
+              <span data-locale="es">2. Agentes</span>
+              <span data-locale="en" hidden>2. Agents</span>
+            </button>
+            <button type="button" role="tab" aria-selected="false" class="term-pill" data-term-goto="2">
+              <span data-locale="es">3. Modo</span>
+              <span data-locale="en" hidden>3. Mode</span>
+            </button>
+            <button type="button" role="tab" aria-selected="false" class="term-pill" data-term-goto="3">
+              <span data-locale="es">4. Confirmar</span>
+              <span data-locale="en" hidden>4. Confirm</span>
+            </button>
+            <button type="button" role="tab" aria-selected="false" class="term-pill" data-term-goto="4">
+              <span data-locale="es">5. Listo v0.8.1</span>
+              <span data-locale="en" hidden>5. Ready v0.8.1</span>
+            </button>
+          </div>
+        </header>
+
+        <div class="diptych-body font-mono terminal-interactive-wrapper">
+          <div class="term-scroll-container">
+            <!-- STEP 0: Prompt inicial -->
+            <div class="term-step" data-term-step="0">
+              <pre class="terminal-code"><code><span class="text-secondary">PS C:\dev\LaboratorioSpringBootBancov2&gt;</span> <span class="term-cursor-input">npx --yes omni-spec init</span><span class="term-blink-cursor">_</span></code></pre>
+            </div>
+
+            <!-- STEP 1: Selección de Herramientas -->
+            <div class="term-step" data-term-step="1" hidden>
+              <pre class="terminal-code"><code><span class="text-secondary">PS C:\dev\LaboratorioSpringBootBancov2&gt;</span> npx --yes omni-spec init
+
+<span class="ascii-logo"><span class="ascii-blue">  ___                  _  </span> <span class="ascii-amber"> ____             </span>
+<span class="ascii-blue"> / _ \ _ __ ___  _ __ (_) </span><span class="ascii-amber">| ___| _ __   ___  ___ </span>
+<span class="ascii-blue">| | | | '_ ` _ \| '_ \| | </span><span class="ascii-amber">| \___ \| '_ \ / _ \/ __|</span>
+<span class="ascii-blue">| |_| | | | | | | | | | | </span><span class="ascii-amber">|___) | |_) |  __/ (__ </span>
+<span class="ascii-blue"> \___/|_| |_| |_|_| |_|_| </span><span class="ascii-amber">|____/| .__/ \___|\___|</span>
+<span class="ascii-blue">                          </span><span class="ascii-amber">      |_|   v0.8.1</span></span>
+<div class="terminal-motto"><span data-locale="es">Construye con claridad. Comprueba con evidencia.</span><span data-locale="en" hidden>Build with clarity. Verify with evidence.</span></div>
+<div data-locale="es">  <span class="text-accent">PREPARAR PROYECTO   1 / 3</span>
+  <span class="text-secondary term-divider">─────────────────────────────────────────────────────────────────</span>
+  <span class="text-highlight">¿Dónde usarás OmniSpec?</span>
+
+  Destino: <span class="text-secondary">C:\dev\LaboratorioSpringBootBancov2</span>
+  No se detectaron archivos de aplicación. Definirás el producto y las tecnologías con tu agente.
+
+  <span class="text-success">&gt; [x] Antigravity</span>
+    [ ] Claude Code
+    [ ] Codex
+    [ ] Cursor
+    [ ] VS Code / GitHub Copilot
+    [ ] Kilo
+    [ ] OpenCode
+    [ ] Gemini CLI
+    [ ] Otra herramienta / aún sin elegir
+
+  <span class="text-secondary">Arriba/Abajo: mover | Espacio: marcar | Enter: seguir</span></div><div data-locale="en" hidden>  <span class="text-accent">PREPARE PROJECT   1 / 3</span>
+  <span class="text-secondary term-divider">─────────────────────────────────────────────────────────────────</span>
+  <span class="text-highlight">Where will you use OmniSpec?</span>
+
+  Target: <span class="text-secondary">C:\dev\LaboratorioSpringBootBancov2</span>
+  No application files detected. You will define product and technologies with your agent.
+
+  <span class="text-success">&gt; [x] Antigravity</span>
+    [ ] Claude Code
+    [ ] Codex
+    [ ] Cursor
+    [ ] VS Code / GitHub Copilot
+    [ ] Kilo
+    [ ] OpenCode
+    [ ] Gemini CLI
+    [ ] Another tool / not chosen yet
+
+  <span class="text-secondary">Up/Down: move | Space: toggle | Enter: continue</span></div></code></pre>
+            </div>
+
+            <!-- STEP 2: Configuración del Plugin Global -->
+            <div class="term-step" data-term-step="2" hidden>
+              <pre class="terminal-code"><code><span class="ascii-logo"><span class="ascii-blue">  ___                  _  </span> <span class="ascii-amber"> ____             </span>
+<span class="ascii-blue"> / _ \ _ __ ___  _ __ (_) </span><span class="ascii-amber">| ___| _ __   ___  ___ </span>
+<span class="ascii-blue">| | | | '_ ` _ \| '_ \| | </span><span class="ascii-amber">| \___ \| '_ \ / _ \/ __|</span>
+<span class="ascii-blue">| |_| | | | | | | | | | | </span><span class="ascii-amber">|___) | |_) |  __/ (__ </span>
+<span class="ascii-blue"> \___/|_| |_| |_|_| |_|_| </span><span class="ascii-amber">|____/| .__/ \___|\___|</span>
+<span class="ascii-blue">                          </span><span class="ascii-amber">      |_|   v0.8.1</span></span>
+<div class="terminal-motto"><span data-locale="es">Construye con claridad. Comprueba con evidencia.</span><span data-locale="en" hidden>Build with clarity. Verify with evidence.</span></div>
+<div data-locale="es">  <span class="text-accent">PREPARAR PROYECTO   2 / 3</span>
+  <span class="text-secondary term-divider">─────────────────────────────────────────────────────────────────</span>
+  <span class="text-highlight">Detectado plugin global de Antigravity. ¿Cómo deseas configurarlo?</span>
+
+  El plugin global ya está instalado en tu máquina.
+
+  <span class="text-success">&gt; Modo Proyecto: Instalar skills locales en .agents/skills (Recomendado para equipos)</span>
+    Modo Plugin: Usar plugin instalado (sin generar nuevas skills locales)
+
+  <span class="text-secondary">Arriba/Abajo: mover | Enter: elegir | Esc: cancelar</span></div><div data-locale="en" hidden>  <span class="text-accent">PREPARE PROJECT   2 / 3</span>
+  <span class="text-secondary term-divider">─────────────────────────────────────────────────────────────────</span>
+  <span class="text-highlight">Global Antigravity plugin detected. How do you wish to configure it?</span>
+
+  Global plugin is already installed on your machine.
+
+  <span class="text-success">&gt; Project Mode: Install local skills in .agents/skills (Recommended for teams)</span>
+    Plugin Mode: Use installed plugin (without generating new local skills)
+
+  <span class="text-secondary">Up/Down: move | Enter: select | Esc: cancel</span></div></code></pre>
+            </div>
+
+            <!-- STEP 3: Confirmación de Preparación -->
+            <div class="term-step" data-term-step="3" hidden>
+              <pre class="terminal-code"><code><span class="ascii-logo"><span class="ascii-blue">  ___                  _  </span> <span class="ascii-amber"> ____             </span>
+<span class="ascii-blue"> / _ \ _ __ ___  _ __ (_) </span><span class="ascii-amber">| ___| _ __   ___  ___ </span>
+<span class="ascii-blue">| | | | '_ ` _ \| '_ \| | </span><span class="ascii-amber">| \___ \| '_ \ / _ \/ __|</span>
+<span class="ascii-blue">| |_| | | | | | | | | | | </span><span class="ascii-amber">|___) | |_) |  __/ (__ </span>
+<span class="ascii-blue"> \___/|_| |_| |_|_| |_|_| </span><span class="ascii-amber">|____/| .__/ \___|\___|</span>
+<span class="ascii-blue">                          </span><span class="ascii-amber">      |_|   v0.8.1</span></span>
+<div class="terminal-motto"><span data-locale="es">Construye con claridad. Comprueba con evidencia.</span><span data-locale="en" hidden>Build with clarity. Verify with evidence.</span></div>
+<div data-locale="es">  <span class="text-accent">PREPARAR PROYECTO   3 / 3</span>
+  <span class="text-secondary term-divider">─────────────────────────────────────────────────────────────────</span>
+  <span class="text-highlight">¿Preparar OmniSpec en esta carpeta?</span>
+
+  Destino: <span class="text-secondary">C:\dev\LaboratorioSpringBootBancov2</span>
+  No se detectaron archivos de aplicación. Definirás el producto y las tecnologías con tu agente.
+  Integraciones seleccionadas: <span class="text-highlight">antigravity</span>
+
+  <span class="text-success">&gt; Preparar proyecto</span>
+    Cancelar
+
+  <span class="text-secondary">Arriba/Abajo: mover | Enter: elegir | Esc: cancelar</span></div><div data-locale="en" hidden>  <span class="text-accent">PREPARE PROJECT   3 / 3</span>
+  <span class="text-secondary term-divider">─────────────────────────────────────────────────────────────────</span>
+  <span class="text-highlight">Prepare OmniSpec in this directory?</span>
+
+  Target: <span class="text-secondary">C:\dev\LaboratorioSpringBootBancov2</span>
+  No application files detected. You will define product and technologies with your agent.
+  Selected integrations: <span class="text-highlight">antigravity</span>
+
+  <span class="text-success">&gt; Prepare project</span>
+    Cancel
+
+  <span class="text-secondary">Up/Down: move | Enter: select | Esc: cancel</span></div></code></pre>
+            </div>
+
+            <!-- STEP 4: Resultado Final de Instalación -->
+            <div class="term-step" data-term-step="4" hidden>
+              <pre class="terminal-code"><code><span class="ascii-logo"><span class="ascii-blue">  ___                  _  </span> <span class="ascii-amber"> ____             </span>
+<span class="ascii-blue"> / _ \ _ __ ___  _ __ (_) </span><span class="ascii-amber">| ___| _ __   ___  ___ </span>
+<span class="ascii-blue">| | | | '_ ` _ \| '_ \| | </span><span class="ascii-amber">| \___ \| '_ \ / _ \/ __|</span>
+<span class="ascii-blue">| |_| | | | | | | | | | | </span><span class="ascii-amber">|___) | |_) |  __/ (__ </span>
+<span class="ascii-blue"> \___/|_| |_| |_|_| |_|_| </span><span class="ascii-amber">|____/| .__/ \___|\___|</span>
+<span class="ascii-blue">                          </span><span class="ascii-amber">      |_|   v0.8.1</span></span>
+<div class="terminal-motto"><span data-locale="es">Construye con claridad. Comprueba con evidencia.</span><span data-locale="en" hidden>Build with clarity. Verify with evidence.</span></div>
+<div data-locale="es">  <span class="text-secondary">Instalando archivos...</span>
+  <span class="text-success">[OK]</span> Archivos preparados. Comprobando integridad...
+  <span class="text-success">[OK]</span> Integridad comprobada.
+
+  <span class="text-success">[OK]</span> Los archivos de OmniSpec están preparados - 0.8.1
+
+  <span class="text-accent">INSTALACIÓN</span>
+  <span class="text-secondary term-divider">─────────────────────────────────────────────────────────────────</span>
+  Destino: <span class="text-secondary">C:\dev\LaboratorioSpringBootBancov2</span>
+  <span class="text-success">[OK]</span> Integridad de archivos administrados y versión del runtime local comprobadas.
+  <span class="text-success">[OK]</span> omni-auditor: <span class="text-highlight">.agents/agents/omni-auditor.md</span>
+
+  <span class="text-accent">SIGUIENTE PASO</span>
+  <span class="text-secondary term-divider">─────────────────────────────────────────────────────────────────</span>
+  Siguiente paso: abre esta misma carpeta en tu herramienta de IA e inicia su chat.
+  <span class="text-highlight">antigravity: /omni-init</span>
+  Después explica qué quieres construir. El agente aclarará el objetivo, las decisiones pendientes
+  y un primer resultado verificable.
+
+  <span class="text-secondary">Local CLI: node specs/.omni/runtime/bin/omni-spec.mjs status</span></div><div data-locale="en" hidden>  <span class="text-secondary">Installing files...</span>
+  <span class="text-success">[OK]</span> Files prepared. Checking integrity...
+  <span class="text-success">[OK]</span> Integrity verified.
+
+  <span class="text-success">[OK]</span> OmniSpec files are ready - 0.8.1
+
+  <span class="text-accent">INSTALLATION</span>
+  <span class="text-secondary term-divider">─────────────────────────────────────────────────────────────────</span>
+  Target: <span class="text-secondary">C:\dev\LaboratorioSpringBootBancov2</span>
+  <span class="text-success">[OK]</span> Managed files and local runtime version verified.
+  <span class="text-success">[OK]</span> omni-auditor: <span class="text-highlight">.agents/agents/omni-auditor.md</span>
+
+  <span class="text-accent">NEXT STEP</span>
+  <span class="text-secondary term-divider">─────────────────────────────────────────────────────────────────</span>
+  Next step: open this folder in your AI coding tool and start its chat.
+  <span class="text-highlight">antigravity: /omni-init</span>
+  Then describe what you want to build. The agent will clarify the goal, pending decisions
+  and a first verifiable outcome.
+
+  <span class="text-secondary">Local CLI: node specs/.omni/runtime/bin/omni-spec.mjs status</span></div></code></pre>
+            </div>
+          </div>
+
+          <!-- Barra de estado interactiva con botón de avance directo -->
+          <footer class="term-status-footer" id="term-status-bar">
+            <button type="button" class="term-next-btn" id="term-next-btn">
+              <span class="term-prompt-key">↵</span>
+              <span id="term-hint-text">
+                <span data-locale="es">Ejecutar paso siguiente →</span>
+                <span data-locale="en" hidden>Run next step →</span>
+              </span>
+            </button>
+            <span class="term-status-step font-mono" id="term-step-indicator">1 / 5</span>
+          </footer>
+        </div>
+      </article>
+
+      <!-- PANEL 2: Estructura Base Resultante (VS Code Explorer) -->
+      <article class="diptych-card spec-surface">
+        <header class="diptych-header explorer-header">
+          <div class="tab-indicator font-mono">
+            <Icon name="folder" size={16}/>
+            <span class="explorer-brand">EXPLORER: LABORATORIOSPRINGBOOTBANCOV2</span>
+          </div>
+          <div class="explorer-tabs" role="tablist">
+            <button type="button" role="tab" id="tab-tree" aria-selected="true" class="exp-tab is-active" data-exp-target="view-tree">
+              <span data-locale="es">Árbol (9 skills)</span>
+              <span data-locale="en" hidden>Tree (9 skills)</span>
+            </button>
+            <button type="button" role="tab" id="tab-const" aria-selected="false" class="exp-tab" data-exp-target="view-const">CONSTITUTION</button>
+            <button type="button" role="tab" id="tab-context" aria-selected="false" class="exp-tab" data-exp-target="view-context">project-context</button>
+          </div>
+        </header>
+
+        <div class="diptych-body font-mono explorer-body">
+          <!-- VISTA 1: ÁRBOL DE ARCHIVOS -->
+          <div id="view-tree" class="exp-view exp-scrollable is-active">
+            <div class="tree-root-label">
+              <span class="tree-caret">▾</span>
+              <Icon name="folder" size={15}/>
+              <strong>LaboratorioSpringBootBancov2</strong>
+              <span class="tree-status-badge" id="tree-sync-badge">
+                <span data-locale="es">v0.8.1</span>
+                <span data-locale="en" hidden>v0.8.1</span>
+              </span>
+            </div>
+
+            <div class="tree-indent-level-1">
+              <!-- .agents -->
+              <details open class="tree-folder">
+                <summary>
+                  <span class="tree-caret">▾</span>
+                  <span class="tree-icon-folder-agent">📁</span>
+                  <span class="tree-name">.agents</span>
+                </summary>
+                <div class="tree-indent-level-2">
+                  <details open class="tree-subfolder">
+                    <summary>
+                      <span class="tree-caret">▾</span>
+                      <span class="tree-icon-folder">📁</span>
+                      <span class="tree-name">agents</span>
+                    </summary>
+                    <div class="tree-file">
+                      <span class="tree-file-icon">📄</span>
+                      <span class="tree-name">omni-auditor.md</span>
+                      <span class="tree-tag">
+                        <span data-locale="es">subagente auditor</span>
+                        <span data-locale="en" hidden>auditor subagent</span>
+                      </span>
+                    </div>
+                  </details>
+                  <details open class="tree-subfolder">
+                    <summary>
+                      <span class="tree-caret">▾</span>
+                      <span class="tree-icon-folder">📁</span>
+                      <span class="tree-name">skills</span>
+                    </summary>
+                    <div class="tree-file-list">
+                      <div class="tree-file"><span class="tree-file-icon">📁</span><span>omni-init/</span></div>
+                      <div class="tree-file"><span class="tree-file-icon">📁</span><span>omni-discuss/</span></div>
+                      <div class="tree-file"><span class="tree-file-icon">📁</span><span>omni-specify/</span></div>
+                      <div class="tree-file"><span class="tree-file-icon">📁</span><span>omni-clarify/</span></div>
+                      <div class="tree-file"><span class="tree-file-icon">📁</span><span>omni-plan/</span></div>
+                      <div class="tree-file"><span class="tree-file-icon">📁</span><span>omni-tasks/</span></div>
+                      <div class="tree-file"><span class="tree-file-icon">📁</span><span>omni-audit/</span></div>
+                      <div class="tree-file"><span class="tree-file-icon">📁</span><span>omni-implement/</span></div>
+                      <div class="tree-file"><span class="tree-file-icon">📁</span><span>omni-converge/</span></div>
+                    </div>
+                  </details>
+                </div>
+              </details>
+
+              <!-- specs -->
+              <details open class="tree-folder">
+                <summary>
+                  <span class="tree-caret">▾</span>
+                  <span class="tree-icon-folder-specs">📁</span>
+                  <span class="tree-name">specs</span>
+                </summary>
+                <div class="tree-indent-level-2">
+                  <div class="tree-file"><span class="tree-file-icon">📁</span><span>_templates/</span></div>
+                  <div class="tree-file"><span class="tree-file-icon">📁</span><span>.omni/</span><span class="tree-tag">runtime</span></div>
+                  <div class="tree-file"><span class="tree-file-icon">📁</span><span>commands/</span></div>
+                  <div class="tree-file"><span class="tree-file-icon">📄</span><span>manifest.lock</span></div>
+                  <div class="tree-file"><span class="tree-file-icon">📄</span><span>.gitignore</span></div>
+                  <div class="tree-file"><span class="tree-file-icon">📄</span><span>manifest.json</span><span class="tree-tag">0.8.1</span></div>
+                  <button type="button" class="tree-file tree-file-btn highlight-file" data-open-exp="view-context">
+                    <span class="tree-file-icon">📄</span>
+                    <span>project-context.md</span>
+                    <span class="tree-tag">
+                      <span data-locale="es">ver memoria ↗</span>
+                      <span data-locale="en" hidden>view memory ↗</span>
+                    </span>
+                  </button>
+                  <div class="tree-file"><span class="tree-file-icon">📄</span><span>README.md</span></div>
+                </div>
+              </details>
+
+              <!-- Archivos raíz -->
+              <div class="tree-file"><span class="tree-file-icon">📄</span><span>AGENTS.md</span><span class="tree-tag">
+                <span data-locale="es">directivas</span>
+                <span data-locale="en" hidden>directives</span>
+              </span></div>
+              <button type="button" class="tree-file tree-file-btn highlight-file" data-open-exp="view-const">
+                <span class="tree-file-icon">📄</span>
+                <span>CONSTITUTION.md</span>
+                <span class="tree-tag">
+                  <span data-locale="es">ver leyes ↗</span>
+                  <span data-locale="en" hidden>view laws ↗</span>
+                </span>
+              </button>
+            </div>
+          </div>
+
+          <!-- VISTA 2: CONSTITUTION.md (BILINGÜE ES / EN) -->
+          <div id="view-const" class="exp-view exp-scrollable" hidden>
+            <div data-locale="es">
+              <pre class="spec-code"><code><span class="text-secondary"># CONSTITUTION — LaboratorioSpringBootBancov2</span>
+<span class="text-accent">&gt; Directivas de ingeniería inviolables para agentes de IA.</span>
+
+<span class="text-highlight">1. Cirugía de Código (Minimal Touch):</span>
+   Modificar exclusivamente los archivos asignados a la tarea.
+   Prohibido reescribir o reformatear módulos adyacentes.
+
+<span class="text-highlight">2. Fail-Fast Estricto:</span>
+   Prohibido envolver lógica en bloques defensivos try/catch
+   que traguen excepciones o retornen null silenciosamente.
+
+<span class="text-highlight">3. Cero Comentarios Loro:</span>
+   Prohibido agregar comentarios que solo parafraseen sintaxis.
+   El código debe ser autoexplicativo y limpio.
+
+<span class="text-highlight">4. Matriz de 4 Estados de Interfaz:</span>
+   Toda vista interactiva exige Loading, Empty, Error y Protected.</code></pre>
+            </div>
+            <div data-locale="en" hidden>
+              <pre class="spec-code"><code><span class="text-secondary"># CONSTITUTION — LaboratorioSpringBootBancov2</span>
+<span class="text-accent">&gt; Non-negotiable engineering directives for AI coding agents.</span>
+
+<span class="text-highlight">1. Minimal Touch Surgery:</span>
+   Modify exclusively the files assigned to the task.
+   Never rewrite or reformat adjacent working modules.
+
+<span class="text-highlight">2. Strict Fail-Fast:</span>
+   Never wrap logic in defensive try/catch blocks
+   that swallow exceptions or silently return dummy nulls.
+
+<span class="text-highlight">3. Zero Parrot Comments:</span>
+   Never add comments that merely narrate code syntax.
+   Code must be self-explanatory with clean naming.
+
+<span class="text-highlight">4. Mandatory 4-State UI Matrix:</span>
+   Every interactive view requires Loading, Empty, Error &amp; Protected.</code></pre>
+            </div>
+          </div>
+
+          <!-- VISTA 3: project-context.md (BILINGÜE ES / EN) -->
+          <div id="view-context" class="exp-view exp-scrollable" hidden>
+            <div data-locale="es">
+              <pre class="spec-code"><code><span class="text-secondary"># Project Context — LaboratorioSpringBootBancov2</span>
+<span class="text-accent">&gt; Memoria arquitectónica destilada del repositorio (MDD).</span>
+
+<span class="text-highlight">## Stack Detectado</span>
+- Lenguaje / Framework: Spring Boot 3.x (Java 21)
+- Arquitectura: Hexagonal / Domain-Driven Design (DDD)
+- Base de Datos: PostgreSQL + JPA / Flyway
+- Quality Gates: ./mvnw clean test (JUnit 5 + AssertJ)
+
+<span class="text-highlight">## Directivas del Repositorio</span>
+- Convención de Commits: Conventional Commits 1.0.0
+- Documentación: Javadoc obligatorio en contratos de dominio.</code></pre>
+            </div>
+            <div data-locale="en" hidden>
+              <pre class="spec-code"><code><span class="text-secondary"># Project Context — LaboratorioSpringBootBancov2</span>
+<span class="text-accent">&gt; Distilled architectural memory of the repository (MDD).</span>
+
+<span class="text-highlight">## Detected Stack</span>
+- Language / Framework: Spring Boot 3.x (Java 21)
+- Architecture: Hexagonal / Domain-Driven Design (DDD)
+- Database: PostgreSQL + JPA / Flyway
+- Quality Gates: ./mvnw clean test (JUnit 5 + AssertJ)
+
+<span class="text-highlight">## Repository Invariants</span>
+- Commit Convention: Conventional Commits 1.0.0 (in English)
+- Documentation Standard: Javadoc mandatory on domain interfaces.</code></pre>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="diptych-footer">
+      <p class="small-note" data-i18n="demo.label">{t['demo.label']}</p>
+      <a class="quiet-link" href={base + '/docs/#flujo-descubrimiento'}>
+        <span data-locale="es">Conocer las 9 skills y el flujo completo en la documentación</span>
+        <span data-locale="en" hidden>Explore the 9 skills and the complete workflow in Documentation</span>
+        <Icon name="arrow" size={16}/>
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  const steps = Array.from(document.querySelectorAll<HTMLElement>('.term-step'));
+  const pills = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-term-goto]'));
+  const treeBadge = document.getElementById('tree-sync-badge');
+  const stepIndicator = document.getElementById('term-step-indicator');
+  const hintText = document.getElementById('term-hint-text');
+  const nextBtn = document.getElementById('term-next-btn');
+  const termCard = document.getElementById('term-interactive-card');
+
+  let currentStep = 0;
+
+  const hintLabels = [
+    { es: 'Ejecutar comando (1/4) →', en: 'Run command (1/4) →' },
+    { es: 'Confirmar agente (2/4) →', en: 'Confirm agent (2/4) →' },
+    { es: 'Elegir Modo Proyecto (3/4) →', en: 'Select Project Mode (3/4) →' },
+    { es: 'Preparar archivos (4/4) →', en: 'Prepare files (4/4) →' },
+    { es: 'Reiniciar demostración ↺', en: 'Restart walkthrough ↺' }
+  ];
+
+  function getActiveLang(): 'es' | 'en' {
+    return document.documentElement.lang === 'en' ? 'en' : 'es';
+  }
+
+  function updateTexts() {
+    const lang = getActiveLang();
+    if (stepIndicator) {
+      stepIndicator.textContent = `${currentStep + 1} / 5`;
+    }
+    if (hintText) {
+      hintText.textContent = hintLabels[currentStep][lang];
+    }
+    if (treeBadge) {
+      if (currentStep < 4) {
+        treeBadge.textContent = lang === 'en' ? `Step ${currentStep + 1}/5` : `Paso ${currentStep + 1}/5`;
+        treeBadge.classList.remove('is-synced');
+      } else {
+        treeBadge.textContent = lang === 'en' ? 'v0.8.1 Ready [OK]' : 'v0.8.1 Listo [OK]';
+        treeBadge.classList.add('is-synced');
+      }
+    }
+  }
+
+  function showStep(index: number) {
+    currentStep = index;
+    steps.forEach((step, idx) => {
+      step.hidden = idx !== currentStep;
+    });
+    pills.forEach((pill, idx) => {
+      const active = idx === currentStep;
+      pill.setAttribute('aria-selected', active ? 'true' : 'false');
+      pill.classList.toggle('is-active', active);
+    });
+    updateTexts();
+
+    const termContainer = document.querySelector<HTMLElement>('.term-scroll-container');
+    if (termContainer) {
+      termContainer.scrollTop = 0;
+    }
+  }
+
+  function nextStep() {
+    if (currentStep < 4) showStep(currentStep + 1);
+    else showStep(0);
+  }
+
+  pills.forEach((pill) => {
+    pill.addEventListener('click', () => {
+      const target = Number(pill.getAttribute('data-term-goto') || '0');
+      showStep(target);
+    });
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    nextStep();
+  });
+
+  // Local keyboard shortcut: Enter advances step ONLY when focus is on the terminal card itself
+  termCard?.addEventListener('keydown', (e) => {
+    if (e.target === termCard && e.key === 'Enter') {
+      e.preventDefault();
+      nextStep();
+    }
+  });
+
+  window.addEventListener('omni:language-change', () => {
+    updateTexts();
+  });
+
+  // Explorer Tabs & Tree File Triggers
+  const expTabs = Array.from(document.querySelectorAll<HTMLButtonElement>('.exp-tab'));
+  const expViews = Array.from(document.querySelectorAll<HTMLElement>('.exp-view'));
+  const fileTriggers = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-open-exp]'));
+
+  function activateExplorerView(targetId: string) {
+    expTabs.forEach(t => {
+      const isCurrent = t.getAttribute('data-exp-target') === targetId;
+      t.setAttribute('aria-selected', isCurrent ? 'true' : 'false');
+      t.classList.toggle('is-active', isCurrent);
+    });
+    expViews.forEach(view => {
+      view.hidden = view.id !== targetId;
+    });
+  }
+
+  expTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const targetId = tab.getAttribute('data-exp-target');
+      if (targetId) activateExplorerView(targetId);
+    });
+  });
+
+  fileTriggers.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-open-exp');
+      if (targetId) activateExplorerView(targetId);
+    });
+  });
+
+  updateTexts();
+</script>

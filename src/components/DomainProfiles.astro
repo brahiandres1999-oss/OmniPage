@@ -1,0 +1,12 @@
+---
+import { profileDataByLang } from '../data/omnispec';
+---
+<div class="profile-list">
+  {(['es', 'en'] as const).map(lang => <div data-locale={lang} hidden={lang === 'en'}>
+    {Object.values(profileDataByLang[lang]).map(profile => <details>
+      <summary><span>{profile.name}</span><code>{profile.flag}</code></summary>
+      <p>{profile.description}</p>
+      <ul>{profile.invariants.map(item => <li>{item}</li>)}</ul>
+    </details>)}
+  </div>)}
+</div>

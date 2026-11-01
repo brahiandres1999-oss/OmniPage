@@ -1,0 +1,33 @@
+---
+import AsciiSpecCanvas from './AsciiSpecCanvas.astro';
+import Icon from './Icon.astro';
+import AgentLogo from './AgentLogo.astro';
+import { translations } from '../i18n/translations';
+const t = translations.es;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<section class="hero-section">
+  <div class="page-shell hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow" data-i18n="hero.eyebrow">{t['hero.eyebrow']}</p>
+      <h1><span data-i18n="hero.titleL">{t['hero.titleL']}</span> <span class="hero-second" data-i18n="hero.titleR">{t['hero.titleR']}</span></h1>
+      <p class="hero-description" data-i18n="hero.subtitle">{t['hero.subtitle']}</p>
+      <div class="hero-actions">
+        <a class="action action-primary" href="#empezar"><Icon name="terminal" /><span data-i18n="hero.cta">{t['hero.cta']}</span><Icon name="arrow" size={18} /></a>
+        <a class="quiet-link" href="#canvas"><span data-i18n="hero.example">{t['hero.example']}</span><span aria-hidden="true">↓</span></a>
+      </div>
+      <a class="release-link" href={base + '/changelog/'}><span class="status-dot" aria-hidden="true"></span><span data-i18n="hero.preview">{t['hero.preview']}</span></a>
+      <p class="hero-requirements" data-i18n="hero.note">{t['hero.note']}</p>
+    </div>
+    <div class="hero-art">
+      <AsciiSpecCanvas />
+      <p class="hero-art-caption" data-i18n="hero.caption">{t['hero.caption']}</p>
+    </div>
+  </div>
+  <div class="page-shell">
+    <div class="integration-strip">
+      <p data-i18n="hero.integrations">{t['hero.integrations']}</p>
+      <div>{[['claude','Claude Code'],['codex','Codex'],['cursor','Cursor'],['opencode','OpenCode'],['antigravity','Antigravity']].map(([agent,name]) => <span class="integration-name"><AgentLogo agent={agent} size={23}/>{name}</span>)}<a href="#agentes" data-i18n="hero.more">{t['hero.more']}</a></div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,183 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import CopySnippet from '../../components/CopySnippet.astro';
+import DomainProfiles from '../../components/DomainProfiles.astro';
+import AgentLogo from '../../components/AgentLogo.astro';
+import Icon from '../../components/Icon.astro';
+import { docsSections } from '../../data/docs';
+import { agentsByLang, omniSpecRelease } from '../../data/omnispec';
+import { translations } from '../../i18n/translations';
+const t=translations.es;
+const title=(text:string)=>text.replace(/^\d+(?:\.\d+)?\.?\s+/,'');
+const extra=[
+ {id:'mantenimiento',es:'Actualizar una instalación',en:'Update an installation'},
+ {id:'recuperacion',es:'Si algo no funciona',en:'If something goes wrong'}
+];
+const nav=docsSections.map(s=>({id:s.id,es:title(s.es.title),en:title(s.en.title)})).concat(extra);
+const base=import.meta.env.BASE_URL.replace(/\/$/,'');
+const getCode=(code:unknown,lang:'es'|'en')=>typeof code==='object'&&code!==null?(code as Record<string,string>)[lang]:String(code);
+---
+<Layout title="Documentación — OmniSpec" titleEn="Documentation — OmniSpec" description="Guía de OmniSpec: instalación, primer cambio, archivos, integraciones y evidencia." descriptionEn="OmniSpec guide: installation, first change, files, integrations and evidence.">
+<Navbar/>
+<div class="page-shell">
+  <header class="page-heading docs-heading"><p class="eyebrow">OMNISPEC / {omniSpecRelease.version}</p><h1 data-i18n="docs.title">{t['docs.title']}</h1><p class="body-copy" data-i18n="docs.subtitle">{t['docs.subtitle']}</p></header>
+  <div class="docs-layout">
+    <aside class="docs-sidebar"><h2 data-i18n="docs.nav">{t['docs.nav']}</h2><nav aria-label={t['docs.nav']} data-i18n-aria="docs.nav">{nav.map(item=><a href={'#'+item.id}>{(['es','en'] as const).map(lang=><span data-locale={lang} hidden={lang==='en'}>{item[lang]}</span>)}</a>)}</nav></aside>
+    <details class="docs-mobile-nav"><summary data-i18n="docs.nav">{t['docs.nav']}</summary><nav aria-label={t['docs.nav']} data-i18n-aria="docs.nav">{nav.map(item=><a href={'#'+item.id}>{(['es','en'] as const).map(lang=><span data-locale={lang} hidden={lang==='en'}>{item[lang]}</span>)}</a>)}</nav></details>
+    <main id="main-content" class="prose" tabindex="-1">
+      <div class="docs-shortcuts">
+        {[['terminal','instalacion','Instalar','Install'],['file','estructura','Conocer los archivos','Understand the files'],['checklist','quality-gates','Revisar una entrega','Review a delivery']].map(([icon,id,es,en])=><a href={'#'+id}><Icon name={icon} size={25}/><span data-locale="es">{es}</span><span data-locale="en" hidden>{en}</span><Icon name="arrow" size={16}/></a>)}
+      </div>
+      {docsSections.map(section=><section id={section.id}>
+        {(['es','en'] as const).map(lang=><div data-locale={lang} hidden={lang==='en'}><h2>{title(section[lang].title)}</h2>{section[lang].paragraphs.map(p=><p set:html={p}/>)}</div>)}
+        {section.commands.map(command=><CopySnippet command={command}/>)}
+        {section.code && (typeof section.code === 'object' ? (
+          (['es','en'] as const).map(lang=><pre tabindex="0" role="region" aria-label={t['docs.code']} data-i18n-aria="docs.code" data-locale={lang} hidden={lang==='en'}><code>{getCode(section.code, lang)}</code></pre>)
+        ) : (
+          <pre tabindex="0" role="region" aria-label={t['docs.code']} data-i18n-aria="docs.code"><code>{section.code}</code></pre>
+        ))}
+        {section.id==='perfiles-catalogo' && <DomainProfiles/>}
+        {section.id==='adaptadores-agentes' && (['es','en'] as const).map(lang=><dl class="integration-list" data-locale={lang} hidden={lang==='en'}>{Object.entries(agentsByLang[lang]).map(([key,agent])=><div><dt><AgentLogo agent={key} size={23}/>{agent.title}</dt><dd>{agent.desc}</dd><dd><strong>{lang==='es'?'Inicio:':'Start:'}</strong> <code>{agent.invocation}</code></dd><dd><code>{agent.path}</code></dd></div>)}</dl>)}
+      </section>)}
+      <section id="mantenimiento">
+        <div data-locale="es"><h2>Actualizar una instalación</h2><p>Ejecuta primero el diagnóstico desde la raíz del proyecto. Revisa la propuesta de actualización antes de aplicarla. <code>init</code> prepara una instalación; no migra otra versión.</p></div>
+        <div data-locale="en" hidden><h2>Update an installation</h2><p>Run diagnostics from the project root first. Review the proposed update before applying it. <code>init</code> prepares an installation; it does not migrate another version.</p></div>
+        <CopySnippet command="npx --yes omni-spec doctor"/>
+        <CopySnippet command="npx --yes omni-spec update --dry-run"/>
+        <div data-locale="es"><p>Si la propuesta corresponde a lo que buscas, ejecuta <code>npx --yes omni-spec update</code>. Conserva una copia de tus cambios y revisa los conflictos que indique el CLI; no uses <code>--force</code> como solución automática.</p></div>
+        <div data-locale="en" hidden><p>If the proposal matches your intent, run <code>npx --yes omni-spec update</code>. Keep a copy of your changes and review conflicts reported by the CLI; do not use <code>--force</code> as an automatic fix.</p></div>
+      </section>
+      <section id="recuperacion">
+        <div data-locale="es"><h2>Si algo no funciona</h2><ul class="recovery-list"><li><strong>La skill no aparece.</strong> Abre la raíz del proyecto, reinicia la herramienta y pide al agente que lea la ruta que imprimió el instalador. Consulta las <a href="#adaptadores-agentes">rutas de cada integración</a>.</li><li><strong>La instalación se interrumpió.</strong> Ejecuta <code>doctor</code> y revisa <code>update --dry-run</code>. Una salida con error puede dejar escritura parcial.</li><li><strong>Hay otra versión o instalación global.</strong> Comprueba qué CLI y qué instrucciones está leyendo el agente. El plugin global de Antigravity se gestiona por separado.</li><li><strong>Un check falla o expira.</strong> Lee el comando, la carpeta de trabajo y su salida. Corrige la causa y repite la verificación; un fallo no cuenta como evidencia de aprobación.</li><li><strong>No se puede copiar.</strong> Usa la acción «Seleccionar comando» y copia con el teclado. El contenido permanece visible para poder recuperarlo.</li></ul></div>
+        <div data-locale="en" hidden><h2>If something goes wrong</h2><ul class="recovery-list"><li><strong>A skill is missing.</strong> Open the project root, restart your tool and ask the agent to read the path printed by the installer. See the <a href="#adaptadores-agentes">integration paths</a>.</li><li><strong>Installation was interrupted.</strong> Run <code>doctor</code> and review <code>update --dry-run</code>. An error exit may leave partially written files.</li><li><strong>Another version or global install exists.</strong> Check which CLI and instructions the agent reads. The global Antigravity plugin is managed separately.</li><li><strong>A check fails or times out.</strong> Read its command, working directory and output. Fix the cause and verify again; a failure is not approval evidence.</li><li><strong>Copy is unavailable.</strong> Use “Select command” and copy with your keyboard. The content remains visible for recovery.</li></ul></div>
+      </section>
+      <p class="docs-source"><a class="quiet-link" href="https://github.com/brahiandres1999-oss/omni-spec/tree/v0.8.1/docs"><Icon name="book"/><span data-i18n="docs.source">{t['docs.source']}</span></a></p>
+      <a class="quiet-link" href={base+'/changelog/'} data-i18n="nav.changelog">{t['nav.changelog']}</a>
+    </main>
+  </div>
+</div>
+<Footer/>
+</Layout>
+<script>
+  const sidebar = document.querySelector<HTMLElement>('.docs-sidebar');
+  const sidebarLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.docs-sidebar a'));
+  const mobileLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.docs-mobile-nav a'));
+  const sections = Array.from(document.querySelectorAll<HTMLElement>('.prose > section[id]'));
+
+  let activeId = '';
+  let isClickScrolling = false;
+  let clickTimer: ReturnType<typeof setTimeout> | null = null;
+
+  function setActive(id: string, scrollSidebar = true) {
+    if (!id || activeId === id) return;
+    activeId = id;
+
+    let activeLink: HTMLAnchorElement | null = null;
+
+    sidebarLinks.forEach(link => {
+      if (link.hash === '#' + id) {
+        link.setAttribute('aria-current', 'location');
+        activeLink = link;
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
+
+    mobileLinks.forEach(link => {
+      if (link.hash === '#' + id) {
+        link.setAttribute('aria-current', 'location');
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
+
+    const currentLink = activeLink as HTMLAnchorElement | null;
+    if (scrollSidebar && currentLink && sidebar) {
+      const sidebarRect = sidebar.getBoundingClientRect();
+      const linkRect = currentLink.getBoundingClientRect();
+
+      if (linkRect.top < sidebarRect.top + 40 || linkRect.bottom > sidebarRect.bottom - 40) {
+        const linkTop = currentLink.offsetTop;
+        const targetScroll = linkTop - (sidebar.clientHeight / 2) + (currentLink.clientHeight / 2);
+        sidebar.scrollTo({
+          top: Math.max(0, targetScroll),
+          behavior: 'smooth'
+        });
+      }
+    }
+  }
+
+  function updateActive() {
+    if (isClickScrolling) return;
+
+    const scrollY = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+
+    if (scrollY + windowHeight >= documentHeight - 60) {
+      const lastSection = sections[sections.length - 1];
+      if (lastSection) {
+        setActive(lastSection.id);
+        return;
+      }
+    }
+
+    const offset = 140;
+    let currentId = sections[0]?.id || '';
+
+    for (const section of sections) {
+      const top = section.getBoundingClientRect().top;
+      if (top <= offset) {
+        currentId = section.id;
+      } else {
+        break;
+      }
+    }
+
+    if (currentId) {
+      setActive(currentId);
+    }
+  }
+
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        updateActive();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+
+  sidebarLinks.concat(mobileLinks).forEach(link => {
+    link.addEventListener('click', () => {
+      const hash = link.hash.replace(/^#/, '');
+      if (hash) {
+        isClickScrolling = true;
+        setActive(hash);
+        if (clickTimer) clearTimeout(clickTimer);
+        clickTimer = setTimeout(() => {
+          isClickScrolling = false;
+        }, 700);
+      }
+    });
+  });
+
+  const menu = document.querySelector<HTMLDetailsElement>('.docs-mobile-nav');
+  menu?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { menu.open = false; }));
+  menu?.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      menu.open = false;
+      menu.querySelector('summary')?.focus();
+    }
+  });
+
+  if (window.location.hash) {
+    setActive(window.location.hash.slice(1));
+  } else {
+    updateActive();
+  }
+</script>

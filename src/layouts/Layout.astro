@@ -1,0 +1,122 @@
+---
+import '../styles/global.css';
+import BackToTop from '../components/BackToTop.astro';
+import { omniSpecRelease } from '../data/omnispec';
+import { translations } from '../i18n/translations';
+interface Props {
+  title?: string;
+  titleEn?: string;
+  description?: string;
+  descriptionEn?: string;
+}
+const {
+  title = 'OmniSpec — Tu agente, con contexto. Cada cambio, con evidencia.',
+  titleEn = 'OmniSpec — Your agent, with context. Every change, with evidence.',
+  description = 'Acuerda qué construir, conserva el contexto y revisa los resultados con tu agente de IA. Conoce OmniSpec y empieza en tu repositorio.',
+  descriptionEn = 'Agree on what to build, keep the context and review results with your AI agent. Explore OmniSpec and get started in your repository.'
+} = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const siteUrl = Astro.site!.toString().replace(/\/$/, '');
+const currentUrl = new URL(Astro.url.pathname, Astro.site).href;
+const bannerUrl = siteUrl + base + '/assets/og-banner.png';
+const isHome = Astro.url.pathname === (base || '/') || Astro.url.pathname === base + '/';
+const t = translations.es;
+
+const graph: Record<string, unknown>[] = [
+  {
+    '@type': 'WebSite',
+    '@id': `${siteUrl}${base}/#website`,
+    url: `${siteUrl}${base}/`,
+    name: 'OmniSpec',
+    description,
+    inLanguage: ['es', 'en']
+  },
+  {
+    '@type': 'SoftwareApplication',
+    '@id': `${siteUrl}${base}/#software`,
+    name: 'OmniSpec',
+    applicationCategory: 'DeveloperApplication',
+    operatingSystem: 'Windows, macOS, Linux',
+    softwareVersion: omniSpecRelease.version,
+    url: `${siteUrl}${base}/`,
+    downloadUrl: 'https://www.npmjs.com/package/omni-spec',
+    codeRepository: 'https://github.com/brahiandres1999-oss/omni-spec',
+    license: 'https://opensource.org/licenses/MIT',
+    description,
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD'
+    }
+  }
+];
+
+if (isHome) {
+  graph.push({
+    '@type': 'FAQPage',
+    '@id': `${siteUrl}${base}/#faq`,
+    mainEntity: [1, 2, 3, 4, 5, 6, 7].map((i) => ({
+      '@type': 'Question',
+      name: t[`faq.q${i}`],
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: t[`faq.a${i}`]
+      }
+    }))
+  });
+}
+
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@graph': graph
+});
+---
+<!doctype html>
+<html lang="es" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href={base + '/favicon.svg'} />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#09090b" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={currentUrl} />
+    <link rel="sitemap" type="application/xml" href={base + '/sitemap.xml'} />
+    <script is:inline>
+      try {
+        document.documentElement.classList.toggle('dark', localStorage.getItem('omni-theme') !== 'light');
+        document.documentElement.lang = localStorage.getItem('omni-lang') === 'en' ? 'en' : 'es';
+      } catch {
+        document.documentElement.dataset.preferences = 'session-only';
+      }
+    </script>
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="OmniSpec" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:url" content={currentUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={bannerUrl} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={bannerUrl} />
+    <meta name="twitter:image:alt" content={title} />
+    <script type="application/ld+json" set:html={jsonLd} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  </head>
+  <body id="top" data-title-es={title} data-title-en={titleEn} data-description-es={description} data-description-en={descriptionEn}>
+    <a class="skip-link" href="#main-content" data-i18n="skip">Saltar al contenido</a>
+    <slot />
+    <BackToTop />
+    <script>import '../scripts/preferences';</script>
+  </body>
+</html>

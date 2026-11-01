@@ -1,0 +1,307 @@
+---
+import CopySnippet from './CopySnippet.astro';
+import AgentLogo from './AgentLogo.astro';
+import { agentsByLang } from '../data/omnispec';
+import { translations } from '../i18n/translations';
+const t = translations.es;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<section id="empezar" class="section-space start-section">
+  <span id="instalar" class="anchor-alias" aria-hidden="true"></span>
+  <div class="page-shell">
+    <div class="section-intro"><p class="eyebrow" data-i18n="start.eyebrow">{t['start.eyebrow']}</p><h2 class="section-title" data-i18n="start.title">{t['start.title']}</h2><p class="body-copy" data-i18n="start.intro">{t['start.intro']}</p></div>
+    <div class="start-steps">
+      <article class="start-step">
+        <span class="step-number" aria-hidden="true">01</span>
+        <div><h3 data-i18n="start.1.title">{t['start.1.title']}</h3><p class="body-copy" data-i18n="start.1.body">{t['start.1.body']}</p>
+          <CopySnippet />
+          <p class="small-note" data-i18n="start.channel">{t['start.channel']}</p>
+        </div>
+      </article>
+      <article class="start-step" id="agentes">
+        <span class="step-number" aria-hidden="true">02</span>
+        <div>
+          <h3 data-i18n="start.2.title">{t['start.2.title']}</h3>
+          <p class="body-copy" data-i18n="start.2.body">{t['start.2.body']}</p>
+          
+          <fieldset class="agent-picker" aria-describedby="agent-hint">
+            <legend class="field-label sr-only" data-i18n="start.agent">{t['start.agent']}</legend>
+            <div class="agent-options">
+              {Object.entries(agentsByLang.es).map(([key, agent]) => (
+                <label class="agent-option">
+                  <input type="radio" name="agent-choice" value={key} checked={key === 'claude'} />
+                  <span class="agent-option-content">
+                    <AgentLogo agent={key} size={18} />
+                    <span data-agent-label={key}>{agent.title}</span>
+                  </span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+          
+          <p id="agent-hint" class="small-note" data-i18n="start.selectHint">{t['start.selectHint']}</p>
+
+          <div id="agent-guidance" class="agent-guidance-card">
+            <div class="guidance-header">
+              <span id="agent-card-title" class="guidance-agent-title">{agentsByLang.es.claude.title}</span>
+              <span id="agent-format-badge" class="guidance-format-badge">{agentsByLang.es.claude.format}</span>
+            </div>
+            <p id="agent-description" class="body-copy guidance-desc">{agentsByLang.es.claude.desc}</p>
+
+            <div class="guidance-cmd-group">
+              <span class="guidance-cmd-label" data-i18n="start.installAgentCmd">{t['start.installAgentCmd']}</span>
+              <CopySnippet id="agent-install-cmd" command={agentsByLang.es.claude.cmd} prefix="$" />
+            </div>
+
+            <div id="agent-alt-cmd-wrap" class="guidance-cmd-group" hidden>
+              <span id="agent-alt-cmd-label" class="guidance-cmd-label"></span>
+              <CopySnippet id="agent-alt-cmd" command="npx --yes omni-spec plugin install" prefix="$" />
+              <p id="antigravity-plugin-guide" class="plugin-guide-row"><a class="quiet-link" href={base + '/docs/#antigravity-plugin'} data-i18n="start.pluginGuide">{t['start.pluginGuide']}</a></p>
+            </div>
+
+            <div class="guidance-cmd-group">
+              <span class="guidance-cmd-label" data-i18n="start.invokeAgentCmd">{t['start.invokeAgentCmd']}</span>
+              <CopySnippet id="agent-invocation" command={agentsByLang.es.claude.invocation} prefix="›" />
+            </div>
+
+            <div class="guidance-meta">
+              <span class="meta-label"><span data-i18n="start.paths">{t['start.paths']}</span>:</span>
+              <code id="agent-path" class="meta-path">{agentsByLang.es.claude.path}</code>
+              <a href={base + '/docs/#recuperacion'} class="quiet-link recovery-link" data-i18n="start.recovery">{t['start.recovery']}</a>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="start-step">
+        <span class="step-number" aria-hidden="true">03</span>
+        <div><h3 data-i18n="start.3.title">{t['start.3.title']}</h3><p class="body-copy" data-i18n="start.3.body">{t['start.3.body']}</p><blockquote class="example-request" data-i18n="start.prompt">{t['start.prompt']}</blockquote><a class="quiet-link" href={base + '/docs/#quickstart'}><span data-i18n="start.docs">{t['start.docs']}</span><span aria-hidden="true">↗</span></a></div>
+      </article>
+    </div>
+    <p class="start-scope small-note" data-i18n="start.scope">{t['start.scope']}</p>
+  </div>
+</section>
+
+<style>
+  .agent-picker {
+    padding: 0;
+    margin: 1rem 0 0 0;
+    border: 0;
+    min-width: 0;
+  }
+  .agent-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .agent-option {
+    position: relative;
+    cursor: pointer;
+  }
+  .agent-option input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+  .agent-option-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.25rem;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid rgb(var(--border-rgb) / var(--border-subtle-alpha));
+    border-radius: 9999px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: rgb(var(--text-secondary));
+    background: rgb(var(--bg-surface) / 0.6);
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+  .agent-option:hover .agent-option-content {
+    background: rgb(var(--bg-surface));
+    color: rgb(var(--text-primary));
+    border-color: rgb(var(--text-secondary));
+  }
+  .agent-option input:checked + .agent-option-content {
+    border-color: rgb(var(--text-primary));
+    background: rgb(var(--bg-surface-elevated));
+    color: rgb(var(--text-primary));
+    box-shadow: inset 0 0 0 1px rgb(var(--text-primary));
+  }
+  .agent-option input:focus-visible + .agent-option-content {
+    outline: 2px solid rgb(var(--focus));
+    outline-offset: 2px;
+  }
+  #agent-hint {
+    margin-block: 0.75rem 1rem;
+    font-size: 0.8125rem;
+    color: rgb(var(--text-tertiary));
+  }
+  .agent-guidance-card {
+    border: 1px solid rgb(var(--border-rgb) / var(--border-subtle-alpha));
+    border-radius: 0.75rem;
+    background: rgb(var(--bg-surface));
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  .guidance-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+  .guidance-agent-title {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: rgb(var(--text-primary));
+  }
+  .guidance-format-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    background: rgb(var(--bg-base));
+    border: 1px solid rgb(var(--border-rgb) / var(--border-subtle-alpha));
+    color: rgb(var(--text-secondary));
+  }
+  .guidance-desc {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: rgb(var(--text-secondary));
+    margin: 0;
+  }
+  .guidance-cmd-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .guidance-cmd-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: rgb(var(--text-secondary));
+  }
+  .plugin-guide-row {
+    margin: 0.15rem 0 0;
+  }
+  .plugin-guide-row .quiet-link {
+    min-height: 2rem;
+    font-size: 0.8125rem;
+  }
+  .guidance-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.8125rem;
+    padding-top: 0.65rem;
+    border-top: 1px solid rgb(var(--border-rgb) / var(--border-subtle-alpha));
+  }
+  .meta-label {
+    color: rgb(var(--text-tertiary));
+  }
+  .meta-path {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.75rem;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    background: rgb(var(--bg-base));
+    color: rgb(var(--text-secondary));
+    overflow-wrap: anywhere;
+  }
+  .recovery-link {
+    margin-left: auto;
+    font-size: 0.75rem;
+  }
+  @media (max-width: 640px) {
+    .guidance-meta {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.35rem;
+    }
+    .recovery-link {
+      margin-left: 0;
+    }
+  }
+</style>
+
+<script>
+  import { agentsByLang } from '../data/omnispec';
+  import { getLanguage } from '../scripts/preferences';
+  const choices = Array.from(document.querySelectorAll<HTMLInputElement>('input[name="agent-choice"]'));
+  const guidance = document.getElementById('agent-guidance')!;
+  let displayedAgent = '';
+
+  const resetSnippetState = (snippetId: string) => {
+    const root = document.getElementById(snippetId);
+    if (!root) return;
+    const status = root.querySelector<HTMLElement>('.copy-status');
+    const select = root.querySelector<HTMLButtonElement>('.copy-select');
+    const copyLabel = root.querySelector<HTMLElement>('[data-copy-label]');
+    const copyBtn = root.querySelector<HTMLButtonElement>('[data-copy-button]');
+    if (status) {
+      status.textContent = '';
+      delete status.dataset.i18n;
+    }
+    if (select) select.hidden = true;
+    if (copyBtn) delete copyBtn.dataset.copied;
+    if (copyLabel) {
+      copyLabel.dataset.i18n = 'copy.copy';
+      copyLabel.textContent = getLanguage() === 'es' ? 'Copiar' : 'Copy';
+    }
+  };
+
+  const render = () => {
+    const catalog = agentsByLang[getLanguage()];
+    document.querySelectorAll<HTMLElement>('[data-agent-label]').forEach(label => {
+      if (catalog[label.dataset.agentLabel!]) label.textContent = catalog[label.dataset.agentLabel!].title;
+    });
+    const key = choices.find(choice => choice.checked)?.value || 'claude';
+    const agent = catalog[key];
+    guidance.hidden = !agent;
+    if (!agent) return;
+
+    const installCmdEl = document.querySelector('#agent-install-cmd [data-copy-text]')!;
+    const invocationEl = document.querySelector('#agent-invocation [data-copy-text]')!;
+    const altWrap = document.getElementById('agent-alt-cmd-wrap')!;
+    const altLabel = document.getElementById('agent-alt-cmd-label')!;
+    const altCmdEl = document.querySelector('#agent-alt-cmd [data-copy-text]')!;
+
+    const changed = displayedAgent !== key || invocationEl.textContent !== agent.invocation || installCmdEl.textContent !== agent.cmd;
+    displayedAgent = key;
+
+    const cardTitle = document.getElementById('agent-card-title');
+    if (cardTitle) cardTitle.textContent = agent.title;
+    const formatBadge = document.getElementById('agent-format-badge');
+    if (formatBadge) formatBadge.textContent = agent.format;
+
+    document.getElementById('agent-description')!.textContent = agent.desc;
+    installCmdEl.textContent = agent.cmd;
+    invocationEl.textContent = agent.invocation;
+    document.getElementById('agent-path')!.textContent = agent.path;
+
+    if (agent.altCmd) {
+      altWrap.hidden = false;
+      altLabel.textContent = agent.altCmd.label;
+      altCmdEl.textContent = agent.altCmd.cmd;
+    } else {
+      altWrap.hidden = true;
+    }
+
+    if (!changed) return;
+    resetSnippetState('agent-install-cmd');
+    resetSnippetState('agent-alt-cmd');
+    resetSnippetState('agent-invocation');
+  };
+
+  choices.forEach(choice => choice.addEventListener('change', render));
+  window.addEventListener('omni:language-change', render);
+  render();
+</script>
+<noscript><p class="page-shell body-copy">Consulta las invocaciones de cada herramienta en la <a href={base + '/docs/#adaptadores-agentes'}>documentación de integraciones</a>.</p></noscript>

@@ -1,0 +1,22 @@
+{
+  "markdown": {
+    "fontCharacter": "\\E060",
+    "fontColor": "#519aba"
+  },
+  "json": {
+    "fontCharacter": "\\E055",
+    "fontColor": "#cbcb41"
+  },
+  "javascript": {
+    "fontCharacter": "\\E051",
+    "fontColor": "#cbcb41"
+  },
+  "typescript": {
+    "fontCharacter": "\\E099",
+    "fontColor": "#519aba"
+  },
+  "default": {
+    "fontCharacter": "\\E023",
+    "fontColor": "#d4d7d6"
+  }
+}
