@@ -85,8 +85,10 @@ Cada push a `main` ejecuta [`.github/workflows/deploy.yml`](.github/workflows/de
 
 `astro.config.mjs` compila para `https://omnispec.dev` en la raíz (`/`). Para otro destino se pueden usar las variables `SITE_URL` y `BASE_PATH`.
 
-## Créditos
+## Licencia y créditos
 
-Los logos de agentes pertenecen a sus respectivos dueños y solo identifican herramientas compatibles; sus fuentes y licencias están en [`public/assets/agents/`](public/assets/agents/).
+El código del sitio se distribuye bajo licencia [MIT](LICENSE).
+
+Los logos de agentes pertenecen a sus respectivos dueños, solo identifican herramientas compatibles y no están cubiertos por la licencia MIT; sus fuentes y licencias están en [`public/assets/agents/`](public/assets/agents/).
 
 Hecho por [Brahian Ospina](https://github.com/brahiandres1999-oss).
