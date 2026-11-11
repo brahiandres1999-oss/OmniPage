@@ -24,7 +24,7 @@ const profiles = Object.entries(profileDataByLang.es);
     </div>
 
     <!-- Barra de Pestañas de Perfiles -->
-    <div role="tablist" class="profile-tabs" aria-label="Perfiles de dominio de OmniSpec" data-i18n-aria="profiles.tablist.aria">
+    <div role="tablist" class="profile-tabs" aria-label="Perfiles de dominio de OmniSpec">
       {profiles.map(([key, profile], index) => (
         <button
           type="button"
@@ -81,8 +81,8 @@ const profiles = Object.entries(profileDataByLang.es);
               </p>
 
               <div class="panel-activation">
-                <span class="activation-label" data-i18n="profiles.initCmd">Comando de inicialización:</span>
-                <code class="activation-cmd">{`npx --yes omni-spec init ${profile.flag}`}</code>
+                <span class="activation-label">Comando de inicialización:</span>
+                <code class="activation-cmd">{`npx omni-spec init ${profile.flag}`}</code>
               </div>
             </div>
 
@@ -94,12 +94,15 @@ const profiles = Object.entries(profileDataByLang.es);
                 <span data-locale="en" hidden>Project invariants & controls</span>
               </h4>
               <ul class="invariants-list">
-                {profile.invariants.map((item, idx) => (
-                  <li class="invariant-item">
-                    <Icon name="check" size={16} class="check-icon" />
-                    <span data-locale="es">{item}</span>
-                    <span data-locale="en" hidden>{profileDataByLang.en[key].invariants[idx]}</span>
-                  </li>
+                {(['es', 'en'] as const).map(lang => (
+                  <div data-locale={lang} hidden={lang === 'en'} class="invariants-lang-group">
+                    {profileDataByLang[lang][key].invariants.map(item => (
+                      <li class="invariant-item">
+                        <Icon name="check" size={16} class="check-icon" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </div>
                 ))}
               </ul>
             </div>
@@ -218,16 +221,11 @@ const profiles = Object.entries(profileDataByLang.es);
     border: 1px solid rgb(var(--border-rgb) / var(--border-subtle-alpha));
     color: rgb(var(--accent));
   }
-  .profile-panel-fintech { --accent: 29 78 216; }
-  .profile-panel-healthtech { --accent: 185 28 28; }
-  .profile-panel-ecommerce { --accent: 6 95 70; }
-  .profile-panel-bpo { --accent: 109 40 217; }
-  .profile-panel-general { --accent: 146 64 14; }
-  :global(.dark) .profile-panel-fintech { --accent: 96 165 250; }
-  :global(.dark) .profile-panel-healthtech { --accent: 248 113 113; }
-  :global(.dark) .profile-panel-ecommerce { --accent: 52 211 153; }
-  :global(.dark) .profile-panel-bpo { --accent: 192 132 252; }
-  :global(.dark) .profile-panel-general { --accent: 251 191 36; }
+  .profile-panel-fintech { --accent: 59 130 246; }
+  .profile-panel-healthtech { --accent: 239 68 68; }
+  .profile-panel-ecommerce { --accent: 16 185 129; }
+  .profile-panel-bpo { --accent: 168 85 247; }
+  .profile-panel-general { --accent: 245 158 11; }
 
   .panel-title {
     font-size: 1.125rem;
@@ -291,6 +289,8 @@ const profiles = Object.entries(profileDataByLang.es);
     list-style: none;
     padding: 0;
     margin: 0;
+  }
+  .invariants-lang-group {
     display: flex;
     flex-direction: column;
     gap: 0.85rem;

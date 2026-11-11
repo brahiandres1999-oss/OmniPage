@@ -1,21 +1,21 @@
-/** Documentación oficial de OmniSpec 0.8.1 Estable. Los identificadores de sección preservan enlaces profundos. */
+/** Documentación oficial de OmniSpec 0.9.0 Estable. Los identificadores de sección preservan enlaces profundos. */
 export const docsSections = [
   {
     "id": "intro",
     "es": {
-      "title": "1. El Manifiesto SDD: De la Alucinación a la Certeza",
+      "title": "1. Motor Universal de Ingeniería Agéntica: De la Alucinación a la Certeza",
       "paragraphs": [
         "Los agentes de Inteligencia Artificial son extraordinarios implementando funciones puntuales, pero sufren de tres problemas crónicos: <strong>amnesia de contexto</strong> entre sesiones, <strong>sobreingeniería prematura</strong> (*overengineering*) y <strong>modificación no controlada de código adyacente</strong> (*code slop*).",
-        "<strong>OmniSpec</strong> introduce el estándar de <em>Desarrollo Guiado por Especificaciones</em> (Spec-Driven Development / SDD): el repositorio es la fuente de la verdad duradera. Ningún agente escribe una sola línea de código sin antes acordar un contrato formal, un plan proporcional y criterios de aceptación verificables con evidencia ejecutable.",
-        "Un motor determinista con arquitectura <strong>Zero Runtime Dependencies</strong> (<code>dependencies: {}</code>) que garantiza soberanía sobre tu código, reduce más del 70% del consumo de tokens y blinda tu proyecto contra regresiones silenciosas."
+        "<strong>OmniSpec</strong> es el <em>Motor Universal de Ingeniería Agéntica</em>: el repositorio es la fuente de la verdad duradera. Calibra el rigor según el impacto mediante Rutas Proporcionales (Light, Standard, Full con FIT v2), memoria persistente SQLite FTS5 (cero amnesia sin ensuciar Git) y cartografía estática de código antes de cualquier edición.",
+        "Un motor determinista con arquitectura <strong>Zero Runtime Dependencies</strong> (<code>dependencies: {}</code>) que garantiza soberanía sobre tu código, integra Omni Studio (cockpit visual en Tauri v2 + React 19) y gobierna a múltiples agentes (Antigravity, Cursor, Claude Code, Copilot, Codex y Gemini)."
       ]
     },
     "en": {
-      "title": "1. The SDD Manifesto: From Hallucination to Certainty",
+      "title": "1. Universal Agentic Engineering Engine: From Hallucination to Certainty",
       "paragraphs": [
         "AI agents are remarkably capable at writing single functions, yet they suffer from three chronic pitfalls: <strong>context amnesia</strong> across sessions, <strong>premature overengineering</strong>, and <strong>uncontrolled adjacent edits</strong> (*code slop*).",
-        "<strong>OmniSpec</strong> introduces the <em>Spec-Driven Development</em> (SDD) engineering standard: the repository is the single source of durable truth. No agent writes a single line of code without first establishing a formal contract, a proportional plan, and acceptance criteria validated by executable evidence.",
-        "A deterministic engine built with <strong>Zero Runtime Dependencies</strong> (<code>dependencies: {}</code>) that guarantees absolute codebase sovereignty, cuts token consumption by over 70%, and protects your application against silent regressions."
+        "<strong>OmniSpec</strong> is the <em>Universal Agentic Engineering Engine</em>: the repository is the single source of durable truth. It matches ceremony to impact using Proportional Routes (Light, Standard, Full with FIT v2), persistent SQLite FTS5 memory (zero amnesia without polluting Git), and static code cartography before modifying any file.",
+        "A deterministic engine built with <strong>Zero Runtime Dependencies</strong> (<code>dependencies: {}</code>) that guarantees absolute codebase sovereignty, provides Omni Studio (visual desktop/web cockpit on Tauri v2 + React 19), and governs multiple AI agents (Antigravity, Cursor, Claude Code, Copilot, Codex, and Gemini)."
       ]
     },
     "commands": [],
@@ -88,8 +88,8 @@ export const docsSections = [
     },
     "commands": [],
     "code": {
-      "es": "├── CONSTITUTION.md              # Leyes de ingeniería inviolables\n├── AGENTS.md                    # Directivas universales para agentes IA\n├── CLAUDE.md                    # Sincronización gestionada para Claude Code\n└── specs/\n    ├── manifest.json            # Estado del proyecto y especificaciones activas\n    ├── project-context.md       # Memoria destilada (MDD) y finops de contexto\n    ├── checks.json              # Catálogo de quality gates automatizados\n    ├── 001-feature-login/\n    │   ├── spec.md              # Contrato EARS: propósito, alcance y criterios AC\n    │   ├── plan.md              # Estrategia técnica y análisis de impacto\n    │   ├── tasks.md             # Checklist atómico de implementación\n    │   ├── acceptance.json      # Cobertura formal de criterios y evidencia\n    │   └── verification.json    # Huella criptográfica y resultados de checks\n    └── .omni/runtime/           # Motor determinista local (ignorado por Git)",
-      "en": "├── CONSTITUTION.md              # Binding, non-negotiable engineering laws\n├── AGENTS.md                    # Universal AI agent directives\n├── CLAUDE.md                    # Managed synchronization for Claude Code\n└── specs/\n    ├── manifest.json            # Machine-readable project state and active specs\n    ├── project-context.md       # Distilled architectural memory (MDD)\n    ├── checks.json              # Automated quality gates catalog\n    ├── 001-feature-login/\n    │   ├── spec.md              # EARS contract: purpose, scope & acceptance criteria\n    │   ├── plan.md              # Technical design and impact analysis\n    │   ├── tasks.md             # Atomic implementation checklist\n    │   ├── acceptance.json      # Formal criteria coverage and evidence\n    │   └── verification.json    # Cryptographic SHA-256 fingerprint & test results\n    └── .omni/runtime/           # Deterministic local engine (Git-ignored)"
+      "es": "├── CONSTITUTION.md              # Leyes de ingeniería inviolables (Write-Before-Speak)\n├── AGENTS.md                    # Directivas universales para agentes IA\n├── CLAUDE.md                    # Sincronización gestionada para Claude Code\n└── specs/\n    ├── manifest.json            # Estado del proyecto y especificaciones activas\n    ├── project-context.md       # Memoria destilada (MDD) y finops de contexto\n    ├── checks.json              # Catálogo de quality gates automatizados\n    ├── 001-feature-login/\n    │   ├── spec.md              # Contrato EARS: propósito, alcance y criterios AC\n    │   ├── plan.md              # Estrategia técnica y análisis de impacto\n    │   ├── tasks.md             # Checklist atómico de implementación\n    │   ├── acceptance.json      # Cobertura formal de criterios y evidencia\n    │   └── verification.json    # Huella criptográfica y resultados de checks\n    └── .omni/\n        ├── memory.db            # Memoria relacional persistente (SQLite FTS5, ignorada en Git)\n        └── runtime/             # Motor determinista local (ignorado por Git)",
+      "en": "├── CONSTITUTION.md              # Binding, non-negotiable engineering laws (Write-Before-Speak)\n├── AGENTS.md                    # Universal AI agent directives\n├── CLAUDE.md                    # Managed synchronization for Claude Code\n└── specs/\n    ├── manifest.json            # Machine-readable project state and active specs\n    ├── project-context.md       # Distilled architectural memory (MDD)\n    ├── checks.json              # Automated quality gates catalog\n    ├── 001-feature-login/\n    │   ├── spec.md              # EARS contract: purpose, scope & acceptance criteria\n    │   ├── plan.md              # Technical design and impact analysis\n    │   ├── tasks.md             # Atomic implementation checklist\n    │   ├── acceptance.json      # Formal criteria coverage and evidence\n    │   └── verification.json    # Cryptographic SHA-256 fingerprint & test results\n    └── .omni/\n        ├── memory.db            # Persistent relational memory (SQLite FTS5, Git-ignored)\n        └── runtime/             # Deterministic local engine (Git-ignored)"
     }
   },
   {
@@ -98,7 +98,7 @@ export const docsSections = [
       "title": "3.1 CONSTITUTION.md: Las Leyes de Ingeniería",
       "paragraphs": [
         "<code>CONSTITUTION.md</code> es el contrato ético y técnico que el agente de IA está obligado a acatar antes de proponer cualquier cambio. Aplica directivas innegociables:",
-        "<strong>Cirugía de Código (Minimal Touch):</strong> Prohibido reformatear o alterar código adyacente ajeno a la tarea. <strong>Fail-Fast Estricto:</strong> Prohibido envolver código en bloques <code>try/catch</code> defensivos que silencien excepciones devolviendo <code>null</code>. <strong>Cero Comentarios Tipo Loro:</strong> El código debe ser limpio y autoexplicativo.",
+        "<strong>Cirugía de Código (Minimal Touch):</strong> Prohibido reformatear o alterar código adyacente ajeno a la tarea. <strong>Fail-Fast Estricto:</strong> Prohibido envolver código en bloques <code>try/catch</code> defensivos que silencien excepciones devolviendo <code>null</code>. <strong>Write-Before-Speak:</strong> Prohibido afirmar que existen modificaciones sin llamar a herramientas de escritura o diferir requisitos al código posterior. <strong>Cero Comentarios Tipo Loro:</strong> El código debe ser limpio y autoexplicativo.",
         "Al actualizar OmniSpec con <code>omni-spec update</code>, tu constitución personalizada se preserva intacta y los cambios upstream se presentan como referencia comparativa."
       ]
     },
@@ -106,7 +106,7 @@ export const docsSections = [
       "title": "3.1 CONSTITUTION.md: The Engineering Laws",
       "paragraphs": [
         "<code>CONSTITUTION.md</code> is the binding technical agreement that the AI agent must honor before suggesting any change. It enforces non-negotiable principles:",
-        "<strong>Minimal Touch Surgery:</strong> Never reformat or mutate adjacent code unrelated to the task. <strong>Strict Fail-Fast:</strong> Never wrap logic in defensive <code>try/catch</code> blocks that swallow errors and silently return <code>null</code>. <strong>Zero Parrot Comments:</strong> Code must be self-explanatory with clean naming.",
+        "<strong>Minimal Touch Surgery:</strong> Never reformat or mutate adjacent code unrelated to the task. <strong>Strict Fail-Fast:</strong> Never wrap logic in defensive <code>try/catch</code> blocks that swallow errors and silently return <code>null</code>. <strong>Write-Before-Speak:</strong> Strictly forbid claiming changes exist before executing tools or deferring agreed requirements to code. <strong>Zero Parrot Comments:</strong> Code must be self-explanatory with clean naming.",
         "When upgrading OmniSpec via <code>omni-spec update</code>, your custom constitution is preserved and upstream changes are provided as comparative reference."
       ]
     },
@@ -118,19 +118,19 @@ export const docsSections = [
     "es": {
       "title": "4. Acto I: Explorar, Alinear y Aclarar",
       "paragraphs": [
-        "El ciclo de vida SDD comienza con alineación conversacional antes de redactar especificaciones formales:",
+        "El ciclo de ingeniería agéntica comienza con alineación conversacional y triaje proporcional:",
         "<code>omni-init</code>: Reconoce el estado del proyecto, detecta herramientas, registra las capacidades reales de la sesión (renderizado visual, investigación web, herramientas de preguntas) y sella la línea base de contexto.",
         "<code>omni-discuss</code>: Espacio dialéctico para explorar la necesidad, comparar enfoques técnicos y evaluar viabilidad sin escribir código prematuro.",
-        "<code>omni-clarify</code>: Detecta brechas de ambigüedad material mediante preguntas precisas. Si falta una decisión clave de producto o arquitectura, se resuelve y documenta aquí."
+        "<code>omni-clarify</code>: Protocolo consciente de fase. Resuelve brechas de ambigüedad mediante confirmación interactiva, inspeccionando los archivos que existen antes de editar y ejecutando auditoría obligatoria a 0 errores."
       ]
     },
     "en": {
       "title": "4. Act I: Explore, Align and Clarify",
       "paragraphs": [
-        "The SDD lifecycle begins with conversational alignment before drafting formal specifications:",
+        "The agentic engineering lifecycle begins with conversational alignment and proportional triage:",
         "<code>omni-init</code>: Inspects repository state, detects tooling, records actual session capabilities (visual rendering, web research, question tooling) and seals the context baseline.",
         "<code>omni-discuss</code>: An open exploratory space to debate requirements, evaluate technical tradeoffs, and assess viability without premature coding.",
-        "<code>omni-clarify</code>: Resolves material ambiguity through targeted questioning. Any unresolved design or architectural decision is clarified and recorded here."
+        "<code>omni-clarify</code>: Phase-aware protocol. Resolves material ambiguity through interactive confirmation, inspecting physically existing files before editing and running mandatory zero-error audits."
       ]
     },
     "commands": [],
@@ -208,7 +208,7 @@ export const docsSections = [
     "es": {
       "title": "5.1 Artesanía de Software y Matriz de 4 Estados de UI",
       "paragraphs": [
-        "OmniSpec 0.8 erradica los clichés visuales y malos hábitos de los modelos de IA mediante el protocolo <strong>Zero-Slop Guard</strong>:",
+        "OmniSpec 0.9.0 erradica los clichés visuales y malos hábitos de los modelos de IA mediante el protocolo <strong>Zero-Slop Guard</strong> (Type-Slop, Mock-Slop, Visual-Slop, Scope-Slop, Dependency-Slop):",
         "<strong>Cero Clichés de IA:</strong> Prohibidos los degradados azul/púrpura genéricos, resplandores difusos artificiales y el anidamiento excesivo de tarjetas con sombras (*card-itis*). Se prioriza la jerarquía visual limpia mediante tipografía y whitespace deliberado.",
         "<strong>Matriz Obligatoria de 4 Estados:</strong> Toda vista interactiva debe contemplar explícitamente: 1. <em>Loading</em> (skeletons contextuales con CLS = 0), 2. <em>Empty</em> (explicación clara con llamada a la acción), 3. <em>Error</em> (mensaje comprensible con reintento), y 4. <em>Protected</em> (estado sin permisos o restringido).",
         "Soporte nativo para kits modernos de componentes (<code>shadcn</code>, <code>radix</code>, <code>headlessui</code>, <code>preline</code>, <code>flyonui</code>) vía <code>--ui-components</code> y la guía de diseño del sistema en <code>omni-spec guide design</code>."
@@ -217,7 +217,7 @@ export const docsSections = [
     "en": {
       "title": "5.1 Software Craftsmanship and 4-State UI Matrix",
       "paragraphs": [
-        "OmniSpec 0.8 eliminates AI visual clichés and bad habits through the <strong>Zero-Slop Guard</strong> protocol:",
+        "OmniSpec 0.9.0 eliminates AI visual clichés and bad habits through the <strong>Zero-Slop Guard</strong> protocol (Type-Slop, Mock-Slop, Visual-Slop, Scope-Slop, Dependency-Slop):",
         "<strong>Anti-Cliché Design:</strong> Generic blue/purple gradients, fuzzy artificial glow, and nested shadow-boxed cards (*card-itis*) are strictly prohibited. Visual hierarchy is established through intentional typography and whitespace.",
         "<strong>Mandatory 4-State Matrix:</strong> Every interactive view must deliberately support: 1. <em>Loading</em> (contextual skeletons with CLS = 0), 2. <em>Empty</em> (clear explanation with immediate CTA), 3. <em>Error</em> (actionable message with retry mechanism), and 4. <em>Protected</em> (unauthorized or permission-restricted state).",
         "Native governance for modern component kits (<code>shadcn</code>, <code>radix</code>, <code>headlessui</code>, <code>preline</code>, <code>flyonui</code>) via <code>--ui-components</code> and system guidelines in <code>omni-spec guide design</code>."
@@ -344,6 +344,31 @@ export const docsSections = [
       ]
     },
     "commands": [],
+    "code": ""
+  },
+  {
+    "id": "memoria-cartografia",
+    "es": {
+      "title": "8.2 Memoria SQLite FTS5, Servidor MCP y Cartografía",
+      "paragraphs": [
+        "OmniSpec 0.9.0 incorpora <strong>Memoria Heurística Persistente (SQLite FTS5)</strong>: los agentes consultan y persisten patrones, lecciones aprendidas y restricciones en <code>specs/.omni/memory.db</code> con búsqueda rápida de texto completo mediante <code>omni-spec memory</code>, eliminando la amnesia entre sesiones sin ensuciar el árbol de Git.",
+        "<strong>Servidor MCP Integrado:</strong> Ejecuta <code>omni-spec mcp</code> para exponer las herramientas de memoria directamente a clientes MCP por stdio en cualquier entorno de desarrollo compatible.",
+        "<strong>Cartografía de Código & Blast Radius:</strong> Mediante <code>omni-spec cartography</code> y <code>omni-spec blast-radius</code>, el motor indexa las dependencias estáticas del proyecto y calcula el radio de impacto de cualquier cambio antes de permitir la edición de código."
+      ]
+    },
+    "en": {
+      "title": "8.2 SQLite FTS5 Memory, MCP Server and Cartography",
+      "paragraphs": [
+        "OmniSpec 0.9.0 introduces <strong>Persistent Heuristic Memory (SQLite FTS5)</strong>: agents query and record patterns, lessons learned, and constraints in <code>specs/.omni/memory.db</code> with instant full-text search via <code>omni-spec memory</code>, eliminating session amnesia without polluting Git history.",
+        "<strong>Integrated MCP Server:</strong> Run <code>omni-spec mcp</code> to expose memory tools directly over stdio JSON-RPC to any MCP-compliant AI coding assistant.",
+        "<strong>Code Cartography & Blast Radius:</strong> Via <code>omni-spec cartography</code> and <code>omni-spec blast-radius</code>, the engine indexes project dependencies and computes the impact radius before allowing any code edits."
+      ]
+    },
+    "commands": [
+      "npx --yes omni-spec mcp",
+      "npx --yes omni-spec cartography --json",
+      "npx --yes omni-spec blast-radius <files...> --json"
+    ],
     "code": ""
   }
 ];

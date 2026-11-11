@@ -37,7 +37,7 @@ export function applyLanguage(lang: Language): void {
   const langButton = document.getElementById('lang-toggle-btn');
   if (langButton) {
     langButton.textContent = lang === 'es' ? 'EN' : 'ES';
-    langButton.setAttribute('aria-label', lang === 'es' ? 'EN — Cambiar a inglés' : 'ES — Switch to Spanish');
+    langButton.setAttribute('aria-label', lang === 'es' ? 'Cambiar a inglés' : 'Switch to Spanish');
   }
   const page = document.body;
   const title = page.getAttribute('data-title-' + lang);

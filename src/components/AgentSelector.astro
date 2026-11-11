@@ -41,32 +41,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           
           <p id="agent-hint" class="small-note" data-i18n="start.selectHint">{t['start.selectHint']}</p>
 
-          <div id="agent-guidance" class="agent-guidance-card">
+          <div id="agent-guidance" class="agent-guidance-card" hidden>
             <div class="guidance-header">
-              <span id="agent-card-title" class="guidance-agent-title">{agentsByLang.es.claude.title}</span>
-              <span id="agent-format-badge" class="guidance-format-badge">{agentsByLang.es.claude.format}</span>
+              <span id="agent-card-title" class="guidance-agent-title"></span>
+              <span id="agent-format-badge" class="guidance-format-badge"></span>
             </div>
-            <p id="agent-description" class="body-copy guidance-desc">{agentsByLang.es.claude.desc}</p>
-
-            <div class="guidance-cmd-group">
-              <span class="guidance-cmd-label" data-i18n="start.installAgentCmd">{t['start.installAgentCmd']}</span>
-              <CopySnippet id="agent-install-cmd" command={agentsByLang.es.claude.cmd} prefix="$" />
-            </div>
-
-            <div id="agent-alt-cmd-wrap" class="guidance-cmd-group" hidden>
-              <span id="agent-alt-cmd-label" class="guidance-cmd-label"></span>
-              <CopySnippet id="agent-alt-cmd" command="npx --yes omni-spec plugin install" prefix="$" />
-              <p id="antigravity-plugin-guide" class="plugin-guide-row"><a class="quiet-link" href={base + '/docs/#antigravity-plugin'} data-i18n="start.pluginGuide">{t['start.pluginGuide']}</a></p>
-            </div>
-
-            <div class="guidance-cmd-group">
-              <span class="guidance-cmd-label" data-i18n="start.invokeAgentCmd">{t['start.invokeAgentCmd']}</span>
-              <CopySnippet id="agent-invocation" command={agentsByLang.es.claude.invocation} prefix="›" />
-            </div>
-
+            <p id="agent-description" class="body-copy guidance-desc"></p>
+            <p id="antigravity-plugin-guide" hidden><a class="quiet-link" href={base + '/docs/#antigravity-plugin'} data-i18n="start.pluginGuide">{t['start.pluginGuide']}</a></p>
+            <CopySnippet id="agent-invocation" command="" prefix="›" />
             <div class="guidance-meta">
-              <span class="meta-label"><span data-i18n="start.paths">{t['start.paths']}</span>:</span>
-              <code id="agent-path" class="meta-path">{agentsByLang.es.claude.path}</code>
+              <span class="meta-label" data-i18n="start.paths">{t['start.paths']}:</span>
+              <code id="agent-path" class="meta-path"></code>
               <a href={base + '/docs/#recuperacion'} class="quiet-link recovery-link" data-i18n="start.recovery">{t['start.recovery']}</a>
             </div>
           </div>
@@ -145,7 +130,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     margin-bottom: 1rem;
     display: flex;
     flex-direction: column;
-    gap: 0.85rem;
+    gap: 0.75rem;
   }
   .guidance-header {
     display: flex;
@@ -177,30 +162,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     color: rgb(var(--text-secondary));
     margin: 0;
   }
-  .guidance-cmd-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-  }
-  .guidance-cmd-label {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: rgb(var(--text-secondary));
-  }
-  .plugin-guide-row {
-    margin: 0.15rem 0 0;
-  }
-  .plugin-guide-row .quiet-link {
-    min-height: 2rem;
-    font-size: 0.8125rem;
-  }
   .guidance-meta {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 0.75rem;
     font-size: 0.8125rem;
-    padding-top: 0.65rem;
+    padding-top: 0.5rem;
     border-top: 1px solid rgb(var(--border-rgb) / var(--border-subtle-alpha));
   }
   .meta-label {
@@ -237,26 +205,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   const choices = Array.from(document.querySelectorAll<HTMLInputElement>('input[name="agent-choice"]'));
   const guidance = document.getElementById('agent-guidance')!;
   let displayedAgent = '';
-
-  const resetSnippetState = (snippetId: string) => {
-    const root = document.getElementById(snippetId);
-    if (!root) return;
-    const status = root.querySelector<HTMLElement>('.copy-status');
-    const select = root.querySelector<HTMLButtonElement>('.copy-select');
-    const copyLabel = root.querySelector<HTMLElement>('[data-copy-label]');
-    const copyBtn = root.querySelector<HTMLButtonElement>('[data-copy-button]');
-    if (status) {
-      status.textContent = '';
-      delete status.dataset.i18n;
-    }
-    if (select) select.hidden = true;
-    if (copyBtn) delete copyBtn.dataset.copied;
-    if (copyLabel) {
-      copyLabel.dataset.i18n = 'copy.copy';
-      copyLabel.textContent = getLanguage() === 'es' ? 'Copiar' : 'Copy';
-    }
-  };
-
   const render = () => {
     const catalog = agentsByLang[getLanguage()];
     document.querySelectorAll<HTMLElement>('[data-agent-label]').forEach(label => {
@@ -265,41 +213,29 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     const key = choices.find(choice => choice.checked)?.value || 'claude';
     const agent = catalog[key];
     guidance.hidden = !agent;
+    document.getElementById('antigravity-plugin-guide')!.hidden = key !== 'antigravity';
     if (!agent) return;
-
-    const installCmdEl = document.querySelector('#agent-install-cmd [data-copy-text]')!;
-    const invocationEl = document.querySelector('#agent-invocation [data-copy-text]')!;
-    const altWrap = document.getElementById('agent-alt-cmd-wrap')!;
-    const altLabel = document.getElementById('agent-alt-cmd-label')!;
-    const altCmdEl = document.querySelector('#agent-alt-cmd [data-copy-text]')!;
-
-    const changed = displayedAgent !== key || invocationEl.textContent !== agent.invocation || installCmdEl.textContent !== agent.cmd;
+    const invocation = document.querySelector('#agent-invocation [data-copy-text]')!;
+    const changed = displayedAgent !== key || invocation.textContent !== agent.invocation;
     displayedAgent = key;
-
+    
     const cardTitle = document.getElementById('agent-card-title');
     if (cardTitle) cardTitle.textContent = agent.title;
     const formatBadge = document.getElementById('agent-format-badge');
     if (formatBadge) formatBadge.textContent = agent.format;
 
     document.getElementById('agent-description')!.textContent = agent.desc;
-    installCmdEl.textContent = agent.cmd;
-    invocationEl.textContent = agent.invocation;
+    invocation.textContent = agent.invocation;
     document.getElementById('agent-path')!.textContent = agent.path;
-
-    if (agent.altCmd) {
-      altWrap.hidden = false;
-      altLabel.textContent = agent.altCmd.label;
-      altCmdEl.textContent = agent.altCmd.cmd;
-    } else {
-      altWrap.hidden = true;
-    }
-
     if (!changed) return;
-    resetSnippetState('agent-install-cmd');
-    resetSnippetState('agent-alt-cmd');
-    resetSnippetState('agent-invocation');
+    const status = guidance.querySelector<HTMLElement>('.copy-status')!;
+    status.textContent = '';
+    delete status.dataset.i18n;
+    guidance.querySelector<HTMLButtonElement>('.copy-select')!.hidden = true;
+    const copyLabel = guidance.querySelector<HTMLElement>('[data-copy-label]')!;
+    copyLabel.dataset.i18n = 'copy.copy';
+    copyLabel.textContent = getLanguage() === 'es' ? 'Copiar' : 'Copy';
   };
-
   choices.forEach(choice => choice.addEventListener('change', render));
   window.addEventListener('omni:language-change', render);
   render();

@@ -1,0 +1,20 @@
+---
+import { translations } from '../i18n/translations';
+import Icon from './Icon.astro';
+const t = translations.es;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<section id="leyes" class="section-space">
+  <div class="page-shell context-grid">
+    <div><p class="eyebrow" data-i18n="context.eyebrow">{t['context.eyebrow']}</p><h2 class="section-title" data-i18n="context.title">{t['context.title']}</h2><p class="body-copy" data-i18n="context.body">{t['context.body']}</p><a class="quiet-link" href={base + '/docs/#estructura'}><span data-i18n="context.link">{t['context.link']}</span><span aria-hidden="true">↗</span></a></div>
+    <div class="repository-map">
+      <div class="repository-crown" aria-hidden="true"><Icon name="layers" size={46}/><span>OmniSpec</span></div>
+      <p class="file-label"><Icon name="folder"/>mi-proyecto/</p>
+      <dl>
+        <div><dt><Icon name="shield"/><code>CONSTITUTION.md</code></dt><dd data-i18n="context.rules">{t['context.rules']}</dd></div>
+        <div><dt><Icon name="message"/><code>specs/project-context.md</code></dt><dd data-i18n="context.saved">{t['context.saved']}</dd></div>
+        <div><dt><Icon name="folder"/><code>specs/001-feature/</code></dt><dd data-i18n="context.work">{t['context.work']}</dd><div class="repository-files" aria-hidden="true"><span>spec.md</span><span>plan.md</span><span>acceptance.json</span></div></div>
+      </dl>
+    </div>
+  </div>
+</section>

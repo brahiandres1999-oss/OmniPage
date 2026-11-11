@@ -130,8 +130,8 @@ export const skillsLoop: SkillStep[] = [
       en: 'Formalize a request into work archetypes (feature, bugfix, debt, rfc).'
     },
     instruction: {
-      es: 'Evalúa el triaje ceremonial (omni-spec fit). Redacta criterios de aceptación obligatorios bajo sintaxis formal EARS (AC-01 [functional]). Define explícitamente lo que está FUERA de alcance (Non-Goals) para evitar desviaciones.',
-      en: 'Evaluate ceremonial triage (omni-spec fit). Write mandatory acceptance criteria using formal EARS syntax (AC-01 [functional]). Explicitly declare Non-Goals to avoid scope drift.'
+      es: 'Evalúa el triaje ceremonial (omni-spec fit: full, light, bypass) y la cartografía con blast radius. Redacta criterios de aceptación obligatorios bajo sintaxis formal EARS (AC-01 [functional]). Define explícitamente lo que está FUERA de alcance (Non-Goals) para evitar desviaciones.',
+      en: 'Evaluate ceremonial triage (omni-spec fit: full, light, bypass) and cartography blast radius. Write mandatory acceptance criteria using formal EARS syntax (AC-01 [functional]). Explicitly declare Non-Goals to avoid scope drift.'
     },
     badge: {
       es: 'EARS SYNTAX',
@@ -154,8 +154,8 @@ export const skillsLoop: SkillStep[] = [
       en: 'Resolve ambiguities before technical design.'
     },
     instruction: {
-      es: 'No pases a programar a ciegas. Si faltan reglas de negocio o límites de API, haz preguntas concretas al usuario y registra las respuestas en la spec.',
-      en: 'Do not code blindly. If business rules or API boundaries are missing, ask targeted questions and record answers in the spec.'
+      es: 'No pases a programar a ciegas. Si faltan reglas de negocio o límites de API, haz preguntas concretas al usuario. Según la fase activa, registra las decisiones en la spec o sincroniza plan y tareas existentes sin inventar cambios.',
+      en: 'Do not code blindly. If business rules or API boundaries are missing, ask targeted questions. Depending on the active phase, record decisions in the spec or synchronize existing plan and tasks without inventing changes.'
     }
   },
   {
@@ -173,8 +173,8 @@ export const skillsLoop: SkillStep[] = [
       en: 'Proportional technical design.'
     },
     instruction: {
-      es: 'Define contratos de datos, observabilidad de errores y la matriz de 4 estados de UI si toca pantallas. Aplica YAGNI estricto: prohibido inventar capas de servicios, repositorios o fábricas innecesarias si una función directa basta.',
-      en: 'Define data contracts, error observability, and 4-state UI matrix. Enforce strict YAGNI: forbidden from inventing speculative service layers, repositories or factories if a direct function suffices.'
+      es: 'Define contratos de datos, observabilidad de errores, blast radius y la matriz de 4 estados de UI si toca pantallas. Aplica YAGNI estricto: prohibido inventar capas de servicios, repositorios o fábricas innecesarias si una función directa basta.',
+      en: 'Define data contracts, error observability, blast radius, and 4-state UI matrix. Enforce strict YAGNI: forbidden from inventing speculative service layers, repositories or factories if a direct function suffices.'
     },
     badge: {
       es: 'YAGNI STRICT',

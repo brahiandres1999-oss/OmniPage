@@ -1,33 +1,45 @@
 [
     {
-        "version": "v0.8.1",
-        "date": "2026-10-30",
-        "url": "https://github.com/brahiandres1999-oss/omni-spec/releases/tag/v0.8.1",
+        "version": "v0.9.0",
+        "date": "2026-11-11",
+        "url": "https://github.com/brahiandres1999-oss/omni-spec/releases/tag/v0.9.0",
         "preview": false,
         "title": {
-            "es": "Modernización Visual TUI, Wordmark Dual-Tone y Ergonomía de Terminal",
-            "en": "TUI Visual Modernization, Dual-Tone Wordmark and Terminal Ergonomics"
+            "es": "Lanzamiento Oficial: Motor Universal de Ingeniería Agéntica, Cartografía y Memoria SQLite",
+            "en": "Official Release: Universal Agentic Engineering Engine, Cartography and SQLite Memory"
         },
         "description": {
-            "es": "OmniSpec 0.8.1 moderniza la experiencia interactiva del instalador (npx omni-spec init), sustituyendo la rasterización poligonal por un wordmark tipográfico ASCII estándar de 6 líneas en paleta Dual-Tone (Omni en azul, Spec en ámbar). Reduce el encabezado vertical de 27 a 6 filas para preservar más del 75% de la terminal libre en Windows PowerShell, CMD y entornos Unix.",
-            "en": "OmniSpec 0.8.1 refines the interactive installer experience (npx omni-spec init), replacing polygonal ray-casting with a crisp 6-line standard FIGlet ASCII wordmark in corporate Dual-Tone (Omni in blue, Spec in amber). It reduces the vertical header footprint from 27 rows to 6 rows, keeping over 75% of the terminal viewport open across Windows PowerShell, CMD and Unix terminals."
+            "es": "OmniSpec 0.9.0 trasciende el paradigma documental hacia el Motor Universal de Ingeniería Agéntica. Introduce Cartografía estática de código con análisis de Blast Radius antes de editar, memoria relacional persistente SQLite FTS5 (memory.db) sin ensuciar Git con servidor MCP nativo, gobernanza preventiva Omni-Guardian con atestación HMAC y circuit breaker, Rutas Proporcionales (Light, Standard, Full con FIT v2), la regla constitucional Write-Before-Speak y clarificación consciente de fase.",
+            "en": "OmniSpec 0.9.0 transcends document-centric paradigms into the Universal Agentic Engineering Engine. Introduces static code Cartography with Blast Radius impact analysis before editing, persistent relational SQLite FTS5 memory (memory.db) without polluting Git and native MCP server, Omni-Guardian pre-commit governance with HMAC attestation and circuit breaker, Proportional Routes (Light, Standard, Full via FIT v2), the Write-Before-Speak constitutional rule, and phase-aware clarification."
         },
         "highlights": {
             "es": [
-                "Wordmark Tipográfico Dual-Tone (Spec 024): Claridad de marca instantánea con cero artefactos visuales en Cascadia Code, Consolas y JetBrains Mono.",
-                "Ergonomía de Terminal Protegida: Reducción de 27 a 6 líneas de banner, dejando más del 75% del alto de pantalla disponible para selectores interactivos y rutas largas.",
-                "Umbral Responsivo Inteligente: Activación automática en terminales con columns >= 52 y logoRoom >= 6, conservando fallback limpio de una línea en pantallas estrechas.",
-                "Cirugía Zero Code Slop: Eliminación neta de 123 líneas de trigonometría pesada en src/terminal-ui.mjs manteniendo 0 dependencias en runtime (dependencies: {}).",
-                "Calidad Verificada al 100%: 403 pruebas automatizadas en 22 suites aprobadas y 0 errores o advertencias en los 91 archivos auditados con Biome 2.6.2."
+                "Servidor MCP & Memoria Persistente (SQLite FTS5): Motor relacional embebido en specs/.omni/memory.db y servidor MCP stdio (omni-spec mcp) que erradica la amnesia entre sesiones y entre distintos agentes sin saturar contexto ni contaminar Git.",
+                "Cartografía de Código & Blast Radius: Lexer determinista y grafo de dependencias que calculan el radio de impacto de cualquier cambio antes de tocar una sola línea de código.",
+                "Memoria Heurística Persistente (SQLite FTS5): Motor relacional embebido en specs/.omni/memory.db que erradica la amnesia entre sesiones y entre distintos agentes sin saturar la ventana de contexto ni contaminar Git.",
+                "Gobernanza Omni-Guardian & Confinamiento: Hook pre-commit con atestación criptográfica HMAC, circuit breaker contra bucles infinitos y broker de autenticación DPAPI seguro.",
+                "Rutas Proporcionales (FIT v2): Triaje determinista en rutas Light (quirúrgica, 0 overhead burocrático), Standard y Full para adaptar el rigor documental al impacto real del cambio.",
+                "Regla Constitucional Write-Before-Speak: Prohibición estricta de afirmar modificaciones sin llamar a herramientas o diferir cambios acordados al código posterior.",
+                "Protocolo Consciente de Fase en /omni-clarify: Confirmación interactiva de cambios con lista explícita de archivos existentes y auditoría obligatoria a 0 errores.",
+                "Optimización de Presupuestos de Contexto: Calibración estricta de límites de caracteres en prompts para prevenir context bloat y letargo en modelos LLM ligeros."
             ],
             "en": [
-                "Dual-Tone Typographic Wordmark (Spec 024): Instant brand clarity with zero glyph artifacts across Cascadia Code, Consolas and JetBrains Mono.",
-                "Protected Terminal Ergonomics: Header footprint reduced from 27 to 6 banner lines, keeping 75%+ of viewport height free for interactive prompts and long paths.",
-                "Smart Responsive Threshold: Automatic activation at columns >= 52 and logoRoom >= 6, preserving a clean single-line fallback on narrow viewports.",
-                "Zero Code Slop Surgery: Net removal of 123 lines of heavy trigonometry in src/terminal-ui.mjs while maintaining 0 runtime dependencies (dependencies: {}).",
-                "100% Verified Quality: 403 automated tests passing across 22 suites and 0 errors or warnings across all 91 files audited with Biome 2.6.2."
+                "MCP Server & Persistent Memory (SQLite FTS5): Embedded relational database in specs/.omni/memory.db and stdio MCP server (omni-spec mcp) eliminating session amnesia without inflating context windows or polluting Git.",
+                "Code Cartography & Blast Radius: Deterministic AST lexer and dependency graph that computes impact radius before modifying a single line of code.",
+                "Persistent Heuristic Memory (SQLite FTS5): Embedded relational database in specs/.omni/memory.db eliminating session amnesia without inflating context windows or polluting Git.",
+                "Omni-Guardian Governance & Confinement: Pre-commit hook with cryptographic HMAC attestation, infinite-loop circuit breaker, and secure DPAPI auth broker.",
+                "Proportional Routes (FIT v2): Deterministic ceremony triage into Light (surgical, zero bureaucratic overhead), Standard, and Full routes matching actual change risk.",
+                "Write-Before-Speak Constitutional Rule: Strict prohibition against claiming edits exist before tool execution or deferring agreed requirements to code.",
+                "Phase-Aware /omni-clarify Protocol: Interactive confirmation listing exact existing target files and mandatory zero-error audit gate.",
+                "Prompt Budget Economy: Strict character limits across agent prompts preventing context bloat and cognitive fatigue in lightweight LLM models."
             ]
         }
+    },
+    {
+        "version": "v0.8.1",
+        "date": "2026-10-30",
+        "url": "https://github.com/brahiandres1999-oss/omni-spec/releases/tag/v0.8.1",
+        "preview": false
     },
     {
         "version": "v0.8.0",

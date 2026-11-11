@@ -15,35 +15,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <div class="diptych-grid">
       <!-- PANEL 1: Terminal Interactiva Paso a Paso -->
       <article class="diptych-card terminal-surface" id="term-interactive-card" role="region" aria-label="Terminal interactiva de OmniSpec" tabindex="0">
-        <header class="diptych-header term-header-wrap">
+        <header class="diptych-header">
           <div class="terminal-dots" aria-hidden="true">
             <span class="dot-red"></span>
             <span class="dot-yellow"></span>
             <span class="dot-green"></span>
           </div>
           <span class="diptych-title font-mono">terminal — PowerShell</span>
-          <div class="term-step-pills" role="tablist" aria-label="Pasos del instalador en terminal">
-            <button type="button" role="tab" aria-selected="true" class="term-pill is-active" data-term-goto="0">
-              <span data-locale="es">1. Comando</span>
-              <span data-locale="en" hidden>1. Command</span>
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="term-pill" data-term-goto="1">
-              <span data-locale="es">2. Agentes</span>
-              <span data-locale="en" hidden>2. Agents</span>
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="term-pill" data-term-goto="2">
-              <span data-locale="es">3. Modo</span>
-              <span data-locale="en" hidden>3. Mode</span>
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="term-pill" data-term-goto="3">
-              <span data-locale="es">4. Confirmar</span>
-              <span data-locale="en" hidden>4. Confirm</span>
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="term-pill" data-term-goto="4">
-              <span data-locale="es">5. Listo v0.8.1</span>
-              <span data-locale="en" hidden>5. Ready v0.8.1</span>
-            </button>
-          </div>
+          <span class="diptych-badge font-mono" id="term-step-badge">
+            <span data-locale="es">Entrada</span>
+            <span data-locale="en" hidden>Input</span>
+          </span>
         </header>
 
         <div class="diptych-body font-mono terminal-interactive-wrapper">
@@ -62,10 +44,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 <span class="ascii-blue">| | | | '_ ` _ \| '_ \| | </span><span class="ascii-amber">| \___ \| '_ \ / _ \/ __|</span>
 <span class="ascii-blue">| |_| | | | | | | | | | | </span><span class="ascii-amber">|___) | |_) |  __/ (__ </span>
 <span class="ascii-blue"> \___/|_| |_| |_|_| |_|_| </span><span class="ascii-amber">|____/| .__/ \___|\___|</span>
-<span class="ascii-blue">                          </span><span class="ascii-amber">      |_|   v0.8.1</span></span>
+<span class="ascii-blue">                          </span><span class="ascii-amber">      |_|   v0.9.0</span></span>
 <div class="terminal-motto"><span data-locale="es">Construye con claridad. Comprueba con evidencia.</span><span data-locale="en" hidden>Build with clarity. Verify with evidence.</span></div>
 <div data-locale="es">  <span class="text-accent">PREPARAR PROYECTO   1 / 3</span>
-  <span class="text-secondary term-divider">─────────────────────────────────────────────────────────────────</span>
+  <span class="text-secondary">─────────────────────────────────────────────────────────────────</span>
   <span class="text-highlight">¿Dónde usarás OmniSpec?</span>
 
   Destino: <span class="text-secondary">C:\dev\LaboratorioSpringBootBancov2</span>
@@ -82,7 +64,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     [ ] Otra herramienta / aún sin elegir
 
   <span class="text-secondary">Arriba/Abajo: mover | Espacio: marcar | Enter: seguir</span></div><div data-locale="en" hidden>  <span class="text-accent">PREPARE PROJECT   1 / 3</span>
-  <span class="text-secondary term-divider">─────────────────────────────────────────────────────────────────</span>
+  <span class="text-secondary">─────────────────────────────────────────────────────────────────</span>
   <span class="text-highlight">Where will you use OmniSpec?</span>
 
   Target: <span class="text-secondary">C:\dev\LaboratorioSpringBootBancov2</span>
@@ -108,10 +90,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 <span class="ascii-blue">| | | | '_ ` _ \| '_ \| | </span><span class="ascii-amber">| \___ \| '_ \ / _ \/ __|</span>
 <span class="ascii-blue">| |_| | | | | | | | | | | </span><span class="ascii-amber">|___) | |_) |  __/ (__ </span>
 <span class="ascii-blue"> \___/|_| |_| |_|_| |_|_| </span><span class="ascii-amber">|____/| .__/ \___|\___|</span>
-<span class="ascii-blue">                          </span><span class="ascii-amber">      |_|   v0.8.1</span></span>
+<span class="ascii-blue">                          </span><span class="ascii-amber">      |_|   v0.9.0</span></span>
 <div class="terminal-motto"><span data-locale="es">Construye con claridad. Comprueba con evidencia.</span><span data-locale="en" hidden>Build with clarity. Verify with evidence.</span></div>
 <div data-locale="es">  <span class="text-accent">PREPARAR PROYECTO   2 / 3</span>
-  <span class="text-secondary term-divider">─────────────────────────────────────────────────────────────────</span>
+  <span class="text-secondary">─────────────────────────────────────────────────────────────────</span>
   <span class="text-highlight">Detectado plugin global de Antigravity. ¿Cómo deseas configurarlo?</span>
 
   El plugin global ya está instalado en tu máquina.
@@ -120,7 +102,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     Modo Plugin: Usar plugin instalado (sin generar nuevas skills locales)
 
   <span class="text-secondary">Arriba/Abajo: mover | Enter: elegir | Esc: cancelar</span></div><div data-locale="en" hidden>  <span class="text-accent">PREPARE PROJECT   2 / 3</span>
-  <span class="text-secondary term-divider">─────────────────────────────────────────────────────────────────</span>
+  <span class="text-secondary">─────────────────────────────────────────────────────────────────</span>
   <span class="text-highlight">Global Antigravity plugin detected. How do you wish to configure it?</span>
 
   Global plugin is already installed on your machine.
@@ -138,10 +120,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 <span class="ascii-blue">| | | | '_ ` _ \| '_ \| | </span><span class="ascii-amber">| \___ \| '_ \ / _ \/ __|</span>
 <span class="ascii-blue">| |_| | | | | | | | | | | </span><span class="ascii-amber">|___) | |_) |  __/ (__ </span>
 <span class="ascii-blue"> \___/|_| |_| |_|_| |_|_| </span><span class="ascii-amber">|____/| .__/ \___|\___|</span>
-<span class="ascii-blue">                          </span><span class="ascii-amber">      |_|   v0.8.1</span></span>
+<span class="ascii-blue">                          </span><span class="ascii-amber">      |_|   v0.9.0</span></span>
 <div class="terminal-motto"><span data-locale="es">Construye con claridad. Comprueba con evidencia.</span><span data-locale="en" hidden>Build with clarity. Verify with evidence.</span></div>
 <div data-locale="es">  <span class="text-accent">PREPARAR PROYECTO   3 / 3</span>
-  <span class="text-secondary term-divider">─────────────────────────────────────────────────────────────────</span>
+  <span class="text-secondary">─────────────────────────────────────────────────────────────────</span>
   <span class="text-highlight">¿Preparar OmniSpec en esta carpeta?</span>
 
   Destino: <span class="text-secondary">C:\dev\LaboratorioSpringBootBancov2</span>
@@ -152,7 +134,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     Cancelar
 
   <span class="text-secondary">Arriba/Abajo: mover | Enter: elegir | Esc: cancelar</span></div><div data-locale="en" hidden>  <span class="text-accent">PREPARE PROJECT   3 / 3</span>
-  <span class="text-secondary term-divider">─────────────────────────────────────────────────────────────────</span>
+  <span class="text-secondary">─────────────────────────────────────────────────────────────────</span>
   <span class="text-highlight">Prepare OmniSpec in this directory?</span>
 
   Target: <span class="text-secondary">C:\dev\LaboratorioSpringBootBancov2</span>
@@ -172,22 +154,22 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 <span class="ascii-blue">| | | | '_ ` _ \| '_ \| | </span><span class="ascii-amber">| \___ \| '_ \ / _ \/ __|</span>
 <span class="ascii-blue">| |_| | | | | | | | | | | </span><span class="ascii-amber">|___) | |_) |  __/ (__ </span>
 <span class="ascii-blue"> \___/|_| |_| |_|_| |_|_| </span><span class="ascii-amber">|____/| .__/ \___|\___|</span>
-<span class="ascii-blue">                          </span><span class="ascii-amber">      |_|   v0.8.1</span></span>
+<span class="ascii-blue">                          </span><span class="ascii-amber">      |_|   v0.9.0</span></span>
 <div class="terminal-motto"><span data-locale="es">Construye con claridad. Comprueba con evidencia.</span><span data-locale="en" hidden>Build with clarity. Verify with evidence.</span></div>
 <div data-locale="es">  <span class="text-secondary">Instalando archivos...</span>
   <span class="text-success">[OK]</span> Archivos preparados. Comprobando integridad...
   <span class="text-success">[OK]</span> Integridad comprobada.
 
-  <span class="text-success">[OK]</span> Los archivos de OmniSpec están preparados - 0.8.1
+  <span class="text-success">[OK]</span> Los archivos de OmniSpec están preparados - 0.9.0
 
   <span class="text-accent">INSTALACIÓN</span>
-  <span class="text-secondary term-divider">─────────────────────────────────────────────────────────────────</span>
+  <span class="text-secondary">─────────────────────────────────────────────────────────────────</span>
   Destino: <span class="text-secondary">C:\dev\LaboratorioSpringBootBancov2</span>
   <span class="text-success">[OK]</span> Integridad de archivos administrados y versión del runtime local comprobadas.
   <span class="text-success">[OK]</span> omni-auditor: <span class="text-highlight">.agents/agents/omni-auditor.md</span>
 
   <span class="text-accent">SIGUIENTE PASO</span>
-  <span class="text-secondary term-divider">─────────────────────────────────────────────────────────────────</span>
+  <span class="text-secondary">─────────────────────────────────────────────────────────────────</span>
   Siguiente paso: abre esta misma carpeta en tu herramienta de IA e inicia su chat.
   <span class="text-highlight">antigravity: /omni-init</span>
   Después explica qué quieres construir. El agente aclarará el objetivo, las decisiones pendientes
@@ -197,16 +179,16 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <span class="text-success">[OK]</span> Files prepared. Checking integrity...
   <span class="text-success">[OK]</span> Integrity verified.
 
-  <span class="text-success">[OK]</span> OmniSpec files are ready - 0.8.1
+  <span class="text-success">[OK]</span> OmniSpec files are ready - 0.9.0
 
   <span class="text-accent">INSTALLATION</span>
-  <span class="text-secondary term-divider">─────────────────────────────────────────────────────────────────</span>
+  <span class="text-secondary">─────────────────────────────────────────────────────────────────</span>
   Target: <span class="text-secondary">C:\dev\LaboratorioSpringBootBancov2</span>
   <span class="text-success">[OK]</span> Managed files and local runtime version verified.
   <span class="text-success">[OK]</span> omni-auditor: <span class="text-highlight">.agents/agents/omni-auditor.md</span>
 
   <span class="text-accent">NEXT STEP</span>
-  <span class="text-secondary term-divider">─────────────────────────────────────────────────────────────────</span>
+  <span class="text-secondary">─────────────────────────────────────────────────────────────────</span>
   Next step: open this folder in your AI coding tool and start its chat.
   <span class="text-highlight">antigravity: /omni-init</span>
   Then describe what you want to build. The agent will clarify the goal, pending decisions
@@ -216,16 +198,16 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             </div>
           </div>
 
-          <!-- Barra de estado interactiva con botón de avance directo -->
+          <!-- Barra de estado interactiva estilo terminal -->
           <footer class="term-status-footer" id="term-status-bar">
-            <button type="button" class="term-next-btn" id="term-next-btn">
-              <span class="term-prompt-key">↵</span>
+            <span class="term-status-hint">
+              <span class="term-prompt-key">↵ Enter</span>
               <span id="term-hint-text">
-                <span data-locale="es">Ejecutar paso siguiente →</span>
-                <span data-locale="en" hidden>Run next step →</span>
+                <span data-locale="es">Presiona Enter para ejecutar</span>
+                <span data-locale="en" hidden>Press Enter to run</span>
               </span>
-            </button>
-            <span class="term-status-step font-mono" id="term-step-indicator">1 / 5</span>
+            </span>
+            <span class="term-status-step font-mono" id="term-step-indicator">0 / 4</span>
           </footer>
         </div>
       </article>
@@ -239,8 +221,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           </div>
           <div class="explorer-tabs" role="tablist">
             <button type="button" role="tab" id="tab-tree" aria-selected="true" class="exp-tab is-active" data-exp-target="view-tree">
-              <span data-locale="es">Árbol (9 skills)</span>
-              <span data-locale="en" hidden>Tree (9 skills)</span>
+              <span data-locale="es">Árbol</span>
+              <span data-locale="en" hidden>Tree</span>
             </button>
             <button type="button" role="tab" id="tab-const" aria-selected="false" class="exp-tab" data-exp-target="view-const">CONSTITUTION</button>
             <button type="button" role="tab" id="tab-context" aria-selected="false" class="exp-tab" data-exp-target="view-context">project-context</button>
@@ -248,15 +230,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </header>
 
         <div class="diptych-body font-mono explorer-body">
-          <!-- VISTA 1: ÁRBOL DE ARCHIVOS -->
+          <!-- VISTA 1: ÁRBOL DE ARCHIVOS (SCROLL INTERNO SIN SCROLLBAR) -->
           <div id="view-tree" class="exp-view exp-scrollable is-active">
             <div class="tree-root-label">
               <span class="tree-caret">▾</span>
               <Icon name="folder" size={15}/>
               <strong>LaboratorioSpringBootBancov2</strong>
               <span class="tree-status-badge" id="tree-sync-badge">
-                <span data-locale="es">v0.8.1</span>
-                <span data-locale="en" hidden>v0.8.1</span>
+                <span data-locale="es">Listo</span>
+                <span data-locale="en" hidden>Ready</span>
               </span>
             </div>
 
@@ -297,7 +279,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
                       <div class="tree-file"><span class="tree-file-icon">📁</span><span>omni-clarify/</span></div>
                       <div class="tree-file"><span class="tree-file-icon">📁</span><span>omni-plan/</span></div>
                       <div class="tree-file"><span class="tree-file-icon">📁</span><span>omni-tasks/</span></div>
-                      <div class="tree-file"><span class="tree-file-icon">📁</span><span>omni-audit/</span></div>
                       <div class="tree-file"><span class="tree-file-icon">📁</span><span>omni-implement/</span></div>
                       <div class="tree-file"><span class="tree-file-icon">📁</span><span>omni-converge/</span></div>
                     </div>
@@ -315,18 +296,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
                 <div class="tree-indent-level-2">
                   <div class="tree-file"><span class="tree-file-icon">📁</span><span>_templates/</span></div>
                   <div class="tree-file"><span class="tree-file-icon">📁</span><span>.omni/</span><span class="tree-tag">runtime</span></div>
+                  <div class="tree-file highlight-file"><span class="tree-file-icon">📄</span><span>.omni/memory.db</span><span class="tree-tag">SQLite FTS5</span></div>
                   <div class="tree-file"><span class="tree-file-icon">📁</span><span>commands/</span></div>
                   <div class="tree-file"><span class="tree-file-icon">📄</span><span>manifest.lock</span></div>
                   <div class="tree-file"><span class="tree-file-icon">📄</span><span>.gitignore</span></div>
-                  <div class="tree-file"><span class="tree-file-icon">📄</span><span>manifest.json</span><span class="tree-tag">0.8.1</span></div>
-                  <button type="button" class="tree-file tree-file-btn highlight-file" data-open-exp="view-context">
-                    <span class="tree-file-icon">📄</span>
-                    <span>project-context.md</span>
-                    <span class="tree-tag">
-                      <span data-locale="es">ver memoria ↗</span>
-                      <span data-locale="en" hidden>view memory ↗</span>
-                    </span>
-                  </button>
+                  <div class="tree-file"><span class="tree-file-icon">📄</span><span>manifest.json</span><span class="tree-tag">
+                    <span data-locale="es">versión</span>
+                    <span data-locale="en" hidden>version</span>
+                  </span></div>
+                  <div class="tree-file highlight-file"><span class="tree-file-icon">📄</span><span>project-context.md</span><span class="tree-tag">
+                    <span data-locale="es">memoria</span>
+                    <span data-locale="en" hidden>memory</span>
+                  </span></div>
                   <div class="tree-file"><span class="tree-file-icon">📄</span><span>README.md</span></div>
                 </div>
               </details>
@@ -336,14 +317,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
                 <span data-locale="es">directivas</span>
                 <span data-locale="en" hidden>directives</span>
               </span></div>
-              <button type="button" class="tree-file tree-file-btn highlight-file" data-open-exp="view-const">
-                <span class="tree-file-icon">📄</span>
-                <span>CONSTITUTION.md</span>
-                <span class="tree-tag">
-                  <span data-locale="es">ver leyes ↗</span>
-                  <span data-locale="en" hidden>view laws ↗</span>
-                </span>
-              </button>
+              <div class="tree-file highlight-file"><span class="tree-file-icon">📄</span><span>CONSTITUTION.md</span><span class="tree-tag">
+                <span data-locale="es">leyes de ingeniería</span>
+                <span data-locale="en" hidden>engineering laws</span>
+              </span></div>
             </div>
           </div>
 
@@ -363,10 +340,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 <span class="text-highlight">3. Cero Comentarios Loro:</span>
    Prohibido agregar comentarios que solo parafraseen sintaxis.
-   El código debe ser autoexplicativo y limpio.
-
-<span class="text-highlight">4. Matriz de 4 Estados de Interfaz:</span>
-   Toda vista interactiva exige Loading, Empty, Error y Protected.</code></pre>
+   El código debe ser autoexplicativo y limpio.</code></pre>
             </div>
             <div data-locale="en" hidden>
               <pre class="spec-code"><code><span class="text-secondary"># CONSTITUTION — LaboratorioSpringBootBancov2</span>
@@ -382,10 +356,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 <span class="text-highlight">3. Zero Parrot Comments:</span>
    Never add comments that merely narrate code syntax.
-   Code must be self-explanatory with clean naming.
-
-<span class="text-highlight">4. Mandatory 4-State UI Matrix:</span>
-   Every interactive view requires Loading, Empty, Error &amp; Protected.</code></pre>
+   Code must be self-explanatory with clean naming.</code></pre>
             </div>
           </div>
 
@@ -436,22 +407,30 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 </section>
 
 <script>
+  // Terminal Interactive Wizard Steps
   const steps = Array.from(document.querySelectorAll<HTMLElement>('.term-step'));
-  const pills = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-term-goto]'));
+  const badge = document.getElementById('term-step-badge');
   const treeBadge = document.getElementById('tree-sync-badge');
   const stepIndicator = document.getElementById('term-step-indicator');
   const hintText = document.getElementById('term-hint-text');
-  const nextBtn = document.getElementById('term-next-btn');
-  const termCard = document.getElementById('term-interactive-card');
+  const statusBar = document.getElementById('term-status-bar');
 
   let currentStep = 0;
 
+  const stepBadgeLabels = [
+    { es: 'Entrada', en: 'Input' },
+    { es: 'Herramientas (1/3)', en: 'Tools (1/3)' },
+    { es: 'Modo (2/3)', en: 'Mode (2/3)' },
+    { es: 'Confirmación (3/3)', en: 'Confirmation (3/3)' },
+    { es: 'Instalado v0.9.0', en: 'Installed v0.9.0' }
+  ];
+
   const hintLabels = [
-    { es: 'Ejecutar comando (1/4) →', en: 'Run command (1/4) →' },
-    { es: 'Confirmar agente (2/4) →', en: 'Confirm agent (2/4) →' },
-    { es: 'Elegir Modo Proyecto (3/4) →', en: 'Select Project Mode (3/4) →' },
-    { es: 'Preparar archivos (4/4) →', en: 'Prepare files (4/4) →' },
-    { es: 'Reiniciar demostración ↺', en: 'Restart walkthrough ↺' }
+    { es: 'Presiona Enter para ejecutar', en: 'Press Enter to run' },
+    { es: 'Presiona Enter para continuar', en: 'Press Enter to continue' },
+    { es: 'Presiona Enter para continuar', en: 'Press Enter to continue' },
+    { es: 'Presiona Enter para preparar', en: 'Press Enter to prepare' },
+    { es: 'Presiona Enter para reiniciar', en: 'Press Enter to restart' }
   ];
 
   function getActiveLang(): 'es' | 'en' {
@@ -460,18 +439,21 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   function updateTexts() {
     const lang = getActiveLang();
+    if (badge) {
+      badge.textContent = stepBadgeLabels[currentStep][lang];
+    }
     if (stepIndicator) {
-      stepIndicator.textContent = `${currentStep + 1} / 5`;
+      stepIndicator.textContent = `${currentStep} / 4`;
     }
     if (hintText) {
       hintText.textContent = hintLabels[currentStep][lang];
     }
     if (treeBadge) {
       if (currentStep < 4) {
-        treeBadge.textContent = lang === 'en' ? `Step ${currentStep + 1}/5` : `Paso ${currentStep + 1}/5`;
+        treeBadge.textContent = lang === 'en' ? 'Pre-installation' : 'Pre-instalación';
         treeBadge.classList.remove('is-synced');
       } else {
-        treeBadge.textContent = lang === 'en' ? 'v0.8.1 Ready [OK]' : 'v0.8.1 Listo [OK]';
+        treeBadge.textContent = lang === 'en' ? 'Installed [OK]' : 'Instalado [OK]';
         treeBadge.classList.add('is-synced');
       }
     }
@@ -482,13 +464,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     steps.forEach((step, idx) => {
       step.hidden = idx !== currentStep;
     });
-    pills.forEach((pill, idx) => {
-      const active = idx === currentStep;
-      pill.setAttribute('aria-selected', active ? 'true' : 'false');
-      pill.classList.toggle('is-active', active);
-    });
     updateTexts();
 
+    // Keep terminal scrolled to top so the logo and header are always visible
     const termContainer = document.querySelector<HTMLElement>('.term-scroll-container');
     if (termContainer) {
       termContainer.scrollTop = 0;
@@ -500,58 +478,45 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     else showStep(0);
   }
 
-  pills.forEach((pill) => {
-    pill.addEventListener('click', () => {
-      const target = Number(pill.getAttribute('data-term-goto') || '0');
-      showStep(target);
-    });
-  });
-
-  nextBtn?.addEventListener('click', () => {
+  // Touch & click fallback on status bar for mobile / tablet devices without hardware keyboard
+  statusBar?.addEventListener('click', () => {
     nextStep();
   });
 
-  // Local keyboard shortcut: Enter advances step ONLY when focus is on the terminal card itself
-  termCard?.addEventListener('keydown', (e) => {
-    if (e.target === termCard && e.key === 'Enter') {
+  // Key navigation: Enter advances step
+  window.addEventListener('keydown', (e) => {
+    const canvas = document.getElementById('canvas');
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+    if (isVisible && e.key === 'Enter') {
+      const activeEl = document.activeElement;
+      if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA')) return;
       e.preventDefault();
       nextStep();
     }
   });
 
+  // Listen to language switch events
   window.addEventListener('omni:language-change', () => {
     updateTexts();
   });
 
-  // Explorer Tabs & Tree File Triggers
+  // Explorer Tabs
   const expTabs = Array.from(document.querySelectorAll<HTMLButtonElement>('.exp-tab'));
   const expViews = Array.from(document.querySelectorAll<HTMLElement>('.exp-view'));
-  const fileTriggers = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-open-exp]'));
-
-  function activateExplorerView(targetId: string) {
-    expTabs.forEach(t => {
-      const isCurrent = t.getAttribute('data-exp-target') === targetId;
-      t.setAttribute('aria-selected', isCurrent ? 'true' : 'false');
-      t.classList.toggle('is-active', isCurrent);
-    });
-    expViews.forEach(view => {
-      view.hidden = view.id !== targetId;
-    });
-  }
 
   expTabs.forEach(tab => {
     tab.addEventListener('click', () => {
       const targetId = tab.getAttribute('data-exp-target');
-      if (targetId) activateExplorerView(targetId);
+      expTabs.forEach(t => {
+        const isCurrent = t === tab;
+        t.setAttribute('aria-selected', isCurrent ? 'true' : 'false');
+        t.classList.toggle('is-active', isCurrent);
+      });
+      expViews.forEach(view => {
+        view.hidden = view.id !== targetId;
+      });
     });
   });
-
-  fileTriggers.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const targetId = btn.getAttribute('data-open-exp');
-      if (targetId) activateExplorerView(targetId);
-    });
-  });
-
-  updateTexts();
 </script>

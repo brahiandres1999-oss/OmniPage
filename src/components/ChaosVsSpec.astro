@@ -16,70 +16,16 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <p class="body-copy" data-i18n="value.intro">{t['value.intro']}</p>
     </div>
 
-    <!-- PARTE 1: Comparativa Directa (Chat Convencional vs Estándar OmniSpec) -->
-    <div class="mx-auto mb-10 w-full max-w-5xl">
-      <div class="mb-3 flex flex-wrap items-center justify-between gap-2 px-1">
-        <span class="font-mono text-xs uppercase tracking-wider text-[rgb(var(--text-tertiary))]" data-i18n="value.prompt.label">{t['value.prompt.label']}</span>
-        <code class="rounded border border-[rgb(var(--border-rgb)/0.14)] bg-[rgb(var(--bg-surface))] px-3 py-1 font-mono text-xs font-medium text-[rgb(var(--text-primary))]" data-i18n="value.prompt.text">{t['value.prompt.text']}</code>
-      </div>
-
-      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <!-- Columna 1: El chat convencional -->
-        <article class="rounded-xl border border-[rgb(var(--border-rgb)/0.14)] bg-[rgb(var(--bg-surface))] p-5">
-          <header class="mb-4 flex items-center justify-between border-b border-[rgb(var(--border-rgb)/0.1)] pb-3">
-            <div>
-              <span class="inline-flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-wider text-[rgb(var(--accent-rose))]">
-                <span class="h-2 w-2 rounded-full bg-[rgb(var(--accent-rose))]"></span>
-                <span data-i18n="value.chaos.badge">{t['value.chaos.badge']}</span>
-              </span>
-              <p class="mt-0.5 text-xs text-[rgb(var(--text-tertiary))]" data-i18n="value.chaos.subtitle">{t['value.chaos.subtitle']}</p>
-            </div>
-            <span class="rounded border border-[rgb(var(--border-rgb)/0.15)] px-2 py-0.5 font-mono text-[10px] text-[rgb(var(--text-tertiary))]">UNBOUNDED</span>
-          </header>
-          <ul class="space-y-3.5 list-none p-0 m-0">
-            {[1, 2, 3].map((i) => (
-              <li class="rounded-lg border border-[rgb(var(--border-rgb)/0.08)] bg-[rgb(var(--bg-base))] p-3">
-                <p class="font-mono text-xs font-semibold text-[rgb(var(--text-primary))]" data-i18n={`value.chaos.${i}.tag`}>{t[`value.chaos.${i}.tag`]}</p>
-                <p class="mt-1 text-xs leading-relaxed text-[rgb(var(--text-secondary))]" data-i18n={`value.chaos.${i}.detail`}>{t[`value.chaos.${i}.detail`]}</p>
-              </li>
-            ))}
-          </ul>
-        </article>
-
-        <!-- Columna 2: Estándar OmniSpec -->
-        <article class="rounded-xl border border-[rgb(var(--border-rgb)/0.22)] bg-[rgb(var(--bg-surface-elevated))] p-5">
-          <header class="mb-4 flex items-center justify-between border-b border-[rgb(var(--border-rgb)/0.12)] pb-3">
-            <div>
-              <span class="inline-flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-wider text-[rgb(var(--accent-emerald))]">
-                <span class="h-2 w-2 rounded-full bg-[rgb(var(--accent-emerald))]"></span>
-                <span data-i18n="value.spec.badge">{t['value.spec.badge']}</span>
-              </span>
-              <p class="mt-0.5 text-xs text-[rgb(var(--text-secondary))]" data-i18n="value.spec.subtitle">{t['value.spec.subtitle']}</p>
-            </div>
-            <span class="rounded border border-[rgb(var(--accent-emerald)/0.35)] bg-[rgb(var(--accent-emerald)/0.1)] px-2 py-0.5 font-mono text-[10px] font-semibold text-[rgb(var(--accent-emerald))]">GOVERNED</span>
-          </header>
-          <ul class="space-y-3.5 list-none p-0 m-0">
-            {[1, 2, 3].map((i) => (
-              <li class="rounded-lg border border-[rgb(var(--border-rgb)/0.12)] bg-[rgb(var(--bg-base))] p-3">
-                <p class="font-mono text-xs font-semibold text-[rgb(var(--text-primary))]" data-i18n={`value.spec.${i}.tag`}>{t[`value.spec.${i}.tag`]}</p>
-                <p class="mt-1 text-xs leading-relaxed text-[rgb(var(--text-secondary))]" data-i18n={`value.spec.${i}.detail`}>{t[`value.spec.${i}.detail`]}</p>
-              </li>
-            ))}
-          </ul>
-        </article>
-      </div>
-    </div>
-
-    <!-- PARTE 2: Master-Detail Workbench de las 9 Skills -->
-    <div class="relative mx-auto my-4 w-full max-w-5xl" id="skills-pipeline-diagram">
+    <!-- Master-Detail Workbench (Inspirado en Diagram Design & Better UX) -->
+    <div class="relative mx-auto my-4 w-full max-w-5xl select-none" id="skills-pipeline-diagram">
       
       <!-- Contenedor Principal del Workbench -->
       <div class="overflow-hidden rounded-2xl border border-[rgb(var(--border-rgb)/0.14)] bg-[rgb(var(--bg-surface))] shadow-sm">
         
         <!-- Barra de Cabecera Editorial -->
-        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[rgb(var(--border-rgb)/0.1)] px-5 py-3 sm:px-6">
+        <div class="flex flex-wrap items-center justify-between border-b border-[rgb(var(--border-rgb)/0.1)] px-5 py-3 sm:px-6">
           <div class="flex items-center gap-2.5">
-            <span class="inline-flex h-2 w-2 shrink-0 rounded-full bg-emerald-500"></span>
+            <span class="inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
             <span class="font-mono text-[11px] font-semibold uppercase tracking-wider text-[rgb(var(--text-tertiary))]" data-i18n="loop.fig">
               {t['loop.fig']}
             </span>
@@ -120,7 +66,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
                     aria-controls="pipeline-inspector-panel"
                     tabindex={s.id === 'specify' ? 0 : -1}
                     data-skill-id={s.id}
-                    class="pipeline-skill-tab group relative flex w-full items-center justify-between rounded-lg border border-transparent px-2.5 py-1.5 text-left transition-colors duration-150 hover:bg-[rgb(var(--bg-surface-elevated))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--focus))]"
+                    class="pipeline-skill-tab group relative flex w-full items-center justify-between rounded-lg border border-transparent px-2.5 py-1.5 text-left transition-all duration-150 hover:bg-[rgb(var(--bg-surface-elevated))] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--focus))]"
                   >
                     <div class="flex items-center gap-2 min-w-0">
                       <span class="font-mono text-[10.5px] font-semibold text-[rgb(var(--text-tertiary))] group-hover:text-[rgb(var(--text-primary))]">
@@ -139,7 +85,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
                           {s.badge.es}
                         </span>
                       )}
-                      <span class="font-mono text-[9px] tabular-nums text-[rgb(var(--text-tertiary))]">
+                      <span class="font-mono text-[9px] text-[rgb(var(--text-tertiary))]">
                         {s.size}
                       </span>
                     </div>
@@ -151,10 +97,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             <!-- ETAPA 2 -->
             <div>
               <div class="flex items-center justify-between px-1.5 pb-1 border-t border-[rgb(var(--border-rgb)/0.08)] pt-2">
-                <span class="font-mono text-[9.5px] font-bold tracking-wider text-[rgb(var(--accent-amber))]" data-i18n="loop.stage.2.title">
+                <span class="font-mono text-[9.5px] font-bold tracking-wider text-amber-600 dark:text-amber-400" data-i18n="loop.stage.2.title">
                   {t['loop.stage.2.title']}
                 </span>
-                <span class="font-mono text-[9px] text-[rgb(var(--accent-amber))]" data-i18n="loop.stage.2.count">
+                <span class="font-mono text-[9px] text-amber-700/70 dark:text-amber-300/70" data-i18n="loop.stage.2.count">
                   {t['loop.stage.2.count']}
                 </span>
               </div>
@@ -168,7 +114,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
                     aria-controls="pipeline-inspector-panel"
                     tabindex="-1"
                     data-skill-id={s.id}
-                    class="pipeline-skill-tab group relative flex w-full items-center justify-between rounded-lg border border-transparent px-2.5 py-1.5 text-left transition-colors duration-150 hover:bg-[rgb(var(--bg-surface-elevated))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--focus))]"
+                    class="pipeline-skill-tab group relative flex w-full items-center justify-between rounded-lg border border-transparent px-2.5 py-1.5 text-left transition-all duration-150 hover:bg-[rgb(var(--bg-surface-elevated))] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--focus))]"
                   >
                     <div class="flex items-center gap-2 min-w-0">
                       <span class="font-mono text-[10.5px] font-semibold text-[rgb(var(--text-tertiary))] group-hover:text-[rgb(var(--text-primary))]">
@@ -183,11 +129,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
                     </div>
                     <div class="flex items-center gap-1.5 shrink-0 ml-1.5">
                       {s.badge && (
-                        <span class={`rounded px-1.5 py-0.5 font-mono text-[8.5px] font-medium ${s.badge.variant === 'gate' ? 'bg-[rgb(var(--accent-amber)/0.12)] border border-[rgb(var(--accent-amber)/0.35)] text-[rgb(var(--accent-amber))]' : 'bg-[rgb(var(--bg-surface-elevated))] border border-[rgb(var(--border-rgb)/0.12)] text-[rgb(var(--text-secondary))]'}`}>
+                        <span class={`rounded px-1.5 py-0.5 font-mono text-[8.5px] font-medium ${s.badge.variant === 'gate' ? 'bg-amber-500/10 border border-amber-500/30 text-amber-700 dark:text-amber-300' : 'bg-[rgb(var(--bg-surface-elevated))] border border-[rgb(var(--border-rgb)/0.12)] text-[rgb(var(--text-secondary))]'}`}>
                           {s.badge.es}
                         </span>
                       )}
-                      <span class="font-mono text-[9px] tabular-nums text-[rgb(var(--text-tertiary))]">
+                      <span class="font-mono text-[9px] text-[rgb(var(--text-tertiary))]">
                         {s.size}
                       </span>
                     </div>
@@ -199,10 +145,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             <!-- ETAPA 3 -->
             <div>
               <div class="flex items-center justify-between px-1.5 pb-1 border-t border-[rgb(var(--border-rgb)/0.08)] pt-2">
-                <span class="font-mono text-[9.5px] font-bold tracking-wider text-[rgb(var(--accent-emerald))]" data-i18n="loop.stage.3.title">
+                <span class="font-mono text-[9.5px] font-bold tracking-wider text-emerald-600 dark:text-emerald-400" data-i18n="loop.stage.3.title">
                   {t['loop.stage.3.title']}
                 </span>
-                <span class="font-mono text-[9px] text-[rgb(var(--accent-emerald))]" data-i18n="loop.stage.3.count">
+                <span class="font-mono text-[9px] text-emerald-700/70 dark:text-emerald-300/70" data-i18n="loop.stage.3.count">
                   {t['loop.stage.3.count']}
                 </span>
               </div>
@@ -216,7 +162,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
                     aria-controls="pipeline-inspector-panel"
                     tabindex="-1"
                     data-skill-id={s.id}
-                    class="pipeline-skill-tab group relative flex w-full items-center justify-between rounded-lg border border-transparent px-2.5 py-1.5 text-left transition-colors duration-150 hover:bg-[rgb(var(--bg-surface-elevated))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--focus))]"
+                    class="pipeline-skill-tab group relative flex w-full items-center justify-between rounded-lg border border-transparent px-2.5 py-1.5 text-left transition-all duration-150 hover:bg-[rgb(var(--bg-surface-elevated))] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--focus))]"
                   >
                     <div class="flex items-center gap-2 min-w-0">
                       <span class="font-mono text-[10.5px] font-semibold text-[rgb(var(--text-tertiary))] group-hover:text-[rgb(var(--text-primary))]">
@@ -231,11 +177,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
                     </div>
                     <div class="flex items-center gap-1.5 shrink-0 ml-1.5">
                       {s.badge && (
-                        <span class={`rounded px-1.5 py-0.5 font-mono text-[8.5px] font-medium ${s.badge.variant === 'success' ? 'bg-[rgb(var(--accent-emerald)/0.12)] border border-[rgb(var(--accent-emerald)/0.35)] text-[rgb(var(--accent-emerald))]' : 'bg-[rgb(var(--bg-surface-elevated))] border border-[rgb(var(--border-rgb)/0.12)] text-[rgb(var(--text-secondary))]'}`}>
+                        <span class={`rounded px-1.5 py-0.5 font-mono text-[8.5px] font-medium ${s.badge.variant === 'success' ? 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300' : 'bg-[rgb(var(--bg-surface-elevated))] border border-[rgb(var(--border-rgb)/0.12)] text-[rgb(var(--text-secondary))]'}`}>
                           {s.badge.es}
                         </span>
                       )}
-                      <span class="font-mono text-[9px] tabular-nums text-[rgb(var(--text-tertiary))]">
+                      <span class="font-mono text-[9px] text-[rgb(var(--text-tertiary))]">
                         {s.size}
                       </span>
                     </div>
@@ -252,11 +198,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             <!-- Cabecera de la Consola del Inspector -->
             <div>
               <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[rgb(var(--border-rgb)/0.1)] pb-3.5">
-                <div class="flex flex-wrap items-center gap-2">
-                  <span class="shrink-0 whitespace-nowrap rounded bg-neutral-900 px-2.5 py-1 font-mono text-[12.5px] font-bold text-white dark:bg-white dark:text-neutral-900" id="inspector-command">
+                <div class="flex items-center gap-2">
+                  <span class="rounded bg-neutral-900 px-2.5 py-1 font-mono text-[12.5px] font-bold text-white dark:bg-white dark:text-neutral-900" id="inspector-command">
                     /omni-specify
                   </span>
-                  <span class="shrink-0 whitespace-nowrap font-mono text-[11px] tabular-nums text-[rgb(var(--text-tertiary))]" id="inspector-size">
+                  <span class="font-mono text-[11px] text-[rgb(var(--text-tertiary))]" id="inspector-size">
                     8.2 KB
                   </span>
                   <span class="rounded bg-[rgb(var(--bg-base))] border border-[rgb(var(--border-rgb)/0.12)] px-2 py-0.5 font-mono text-[10px] text-[rgb(var(--text-secondary))]" id="inspector-stage-badge">
@@ -290,7 +236,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             </div>
 
             <!-- Footer técnico de la Consola -->
-            <div class="mt-5 border-t border-[rgb(var(--border-rgb)/0.08)] pt-3 flex flex-wrap items-center justify-between gap-2 font-mono text-[10.5px] text-[rgb(var(--text-tertiary))]">
+            <div class="mt-5 border-t border-[rgb(var(--border-rgb)/0.08)] pt-3 flex items-center justify-between font-mono text-[10.5px] text-[rgb(var(--text-tertiary))]">
               <span class="flex items-center gap-1.5">
                 <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
                 <span>FAIL-FAST & ZERO CODE SLOP</span>
@@ -310,86 +256,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <div class="mt-4 flex items-center justify-center">
         <a 
           href={base + '/docs/'} 
-          class="inline-flex min-h-[28px] items-center gap-1.5 py-1 text-[12px] font-medium text-[rgb(var(--text-secondary))] transition-colors duration-150 hover:text-[rgb(var(--text-primary))] hover:underline" 
+          class="inline-flex items-center gap-1.5 text-[12px] font-medium text-[rgb(var(--text-secondary))] transition-colors duration-150 hover:text-[rgb(var(--text-primary))] hover:underline" 
           data-i18n="loop.docsLink"
         >
           {t['loop.docsLink']}
         </a>
       </div>
 
-    </div>
-
-    <!-- PARTE 3: Proporcionalidad (3 Rutas Spec Fit + 4 Arquetipos) -->
-    <div class="mx-auto mt-12 w-full max-w-5xl rounded-2xl border border-[rgb(var(--border-rgb)/0.14)] bg-[rgb(var(--bg-surface))] p-6">
-      <div class="mb-6 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p class="font-mono text-xs font-semibold uppercase tracking-wider text-[rgb(var(--accent))]" data-i18n="fit.eyebrow">{t['fit.eyebrow']}</p>
-          <h3 class="mt-1 text-xl font-semibold text-[rgb(var(--text-primary))]" data-i18n="fit.title">{t['fit.title']}</h3>
-        </div>
-        <p class="max-w-xl text-sm text-[rgb(var(--text-secondary))]" data-i18n="fit.intro">{t['fit.intro']}</p>
-      </div>
-
-      <!-- 3 Rutas Spec Fit -->
-      <div class="grid grid-cols-1 gap-3.5 md:grid-cols-3">
-        <div class="rounded-xl border border-[rgb(var(--border-rgb)/0.12)] bg-[rgb(var(--bg-base))] p-4">
-          <div class="flex flex-wrap items-center justify-between gap-2">
-            <span class="font-mono text-[11px] font-bold text-[rgb(var(--accent-emerald))]" data-i18n="fit.route.light.badge">{t['fit.route.light.badge']}</span>
-            <code class="shrink-0 whitespace-nowrap rounded bg-[rgb(var(--bg-surface))] px-1.5 py-0.5 font-mono text-[10px] text-[rgb(var(--text-secondary))]">--light</code>
-          </div>
-          <p class="mt-2 text-xs leading-relaxed text-[rgb(var(--text-secondary))]" data-i18n="fit.route.light.desc">{t['fit.route.light.desc']}</p>
-        </div>
-
-        <div class="rounded-xl border border-[rgb(var(--border-rgb)/0.12)] bg-[rgb(var(--bg-base))] p-4">
-          <div class="flex flex-wrap items-center justify-between gap-2">
-            <span class="font-mono text-[11px] font-bold text-[rgb(var(--accent))]" data-i18n="fit.route.standard.badge">{t['fit.route.standard.badge']}</span>
-            <code class="shrink-0 whitespace-nowrap rounded bg-[rgb(var(--bg-surface))] px-1.5 py-0.5 font-mono text-[10px] text-[rgb(var(--text-secondary))]">--preset standard</code>
-          </div>
-          <p class="mt-2 text-xs leading-relaxed text-[rgb(var(--text-secondary))]" data-i18n="fit.route.standard.desc">{t['fit.route.standard.desc']}</p>
-        </div>
-
-        <div class="rounded-xl border border-[rgb(var(--border-rgb)/0.12)] bg-[rgb(var(--bg-base))] p-4">
-          <div class="flex flex-wrap items-center justify-between gap-2">
-            <span class="font-mono text-[11px] font-bold text-[rgb(var(--accent-amber))]" data-i18n="fit.route.full.badge">{t['fit.route.full.badge']}</span>
-            <code class="shrink-0 whitespace-nowrap rounded bg-[rgb(var(--bg-surface))] px-1.5 py-0.5 font-mono text-[10px] text-[rgb(var(--text-secondary))]">--preset full</code>
-          </div>
-          <p class="mt-2 text-xs leading-relaxed text-[rgb(var(--text-secondary))]" data-i18n="fit.route.full.desc">{t['fit.route.full.desc']}</p>
-        </div>
-      </div>
-
-      <!-- 4 Arquetipos -->
-      <div class="mt-4 grid grid-cols-1 gap-2.5 border-t border-[rgb(var(--border-rgb)/0.1)] pt-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div class="rounded-lg bg-[rgb(var(--bg-surface-elevated))] p-3">
-          <div class="flex items-center justify-between font-mono text-xs">
-            <strong class="text-[rgb(var(--text-primary))]">feature</strong>
-            <span class="text-[10px] text-[rgb(var(--text-tertiary))]">spec · plan · tasks</span>
-          </div>
-          <p class="mt-1 text-[11.5px] leading-snug text-[rgb(var(--text-secondary))]" data-i18n="fit.arch.feature">{t['fit.arch.feature']}</p>
-        </div>
-
-        <div class="rounded-lg bg-[rgb(var(--bg-surface-elevated))] p-3">
-          <div class="flex items-center justify-between font-mono text-xs">
-            <strong class="text-[rgb(var(--text-primary))]">bugfix</strong>
-            <span class="text-[10px] text-[rgb(var(--text-tertiary))]">bug · rca · fix</span>
-          </div>
-          <p class="mt-1 text-[11.5px] leading-snug text-[rgb(var(--text-secondary))]" data-i18n="fit.arch.bugfix">{t['fit.arch.bugfix']}</p>
-        </div>
-
-        <div class="rounded-lg bg-[rgb(var(--bg-surface-elevated))] p-3">
-          <div class="flex items-center justify-between font-mono text-xs">
-            <strong class="text-[rgb(var(--text-primary))]">debt</strong>
-            <span class="text-[10px] text-[rgb(var(--text-tertiary))]">audit · migration-plan</span>
-          </div>
-          <p class="mt-1 text-[11.5px] leading-snug text-[rgb(var(--text-secondary))]" data-i18n="fit.arch.debt">{t['fit.arch.debt']}</p>
-        </div>
-
-        <div class="rounded-lg bg-[rgb(var(--bg-surface-elevated))] p-3">
-          <div class="flex items-center justify-between font-mono text-xs">
-            <strong class="text-[rgb(var(--text-primary))]">rfc</strong>
-            <span class="text-[10px] text-[rgb(var(--text-tertiary))]">rfc.md (ADR)</span>
-          </div>
-          <p class="mt-1 text-[11.5px] leading-snug text-[rgb(var(--text-secondary))]" data-i18n="fit.arch.rfc">{t['fit.arch.rfc']}</p>
-        </div>
-      </div>
     </div>
 
   </div>
@@ -433,10 +306,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       if (evidenceStatusEl) {
         if (skill.id === 'converge') {
           evidenceStatusEl.textContent = lang === 'es' ? '✓ EXIT CODE 0 · COMPROBADO' : '✓ EXIT CODE 0 · VERIFIED';
-          evidenceStatusEl.className = 'text-[rgb(var(--accent-emerald))] font-semibold';
+          evidenceStatusEl.className = 'text-emerald-600 dark:text-emerald-400 font-semibold';
         } else if (skill.id === 'audit') {
           evidenceStatusEl.textContent = 'QUALITY GATE · STRICT PASS';
-          evidenceStatusEl.className = 'text-[rgb(var(--accent-amber))] font-semibold';
+          evidenceStatusEl.className = 'text-amber-600 dark:text-amber-400 font-semibold';
         } else {
           evidenceStatusEl.textContent = lang === 'es' ? 'PIPELINE DETERMINISTA' : 'DETERMINISTIC PIPELINE';
           evidenceStatusEl.className = 'text-[rgb(var(--text-secondary))] font-medium';
@@ -468,11 +341,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         }
       });
 
+      // Si estamos en mobile y el usuario interactuó explícitamente, asegurar que el inspector esté visible sin saltos bruscos
       if (focusButton && window.innerWidth < 768 && panel) {
         panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
     };
 
+    // Click handler
     tabs.forEach(btn => {
       btn.addEventListener('click', () => {
         const skillId = btn.dataset.skillId;
@@ -480,6 +355,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       });
     });
 
+    // Keyboard navigation (Arrow keys, Home, End)
     container.addEventListener('keydown', (e) => {
       const activeElement = document.activeElement as HTMLButtonElement | null;
       if (!activeElement || !tabs.includes(activeElement)) return;
@@ -508,10 +384,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       }
     });
 
+    // Escucha de cambio de idioma global (ES <-> EN)
     window.addEventListener('omni:language-change', () => {
       updateInspector(currentSkillId, false);
     });
 
+    // Default selection
     updateInspector('specify', false);
   }
 </script>
