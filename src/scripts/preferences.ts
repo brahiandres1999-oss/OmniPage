@@ -37,7 +37,7 @@ export function applyLanguage(lang: Language): void {
   const langButton = document.getElementById('lang-toggle-btn');
   if (langButton) {
     langButton.textContent = lang === 'es' ? 'EN' : 'ES';
-    langButton.setAttribute('aria-label', lang === 'es' ? 'Cambiar a inglés' : 'Switch to Spanish');
+    langButton.setAttribute('aria-label', lang === 'es' ? 'EN - Cambiar idioma a inglés' : 'ES - Switch to Spanish');
   }
   const page = document.body;
   const title = page.getAttribute('data-title-' + lang);
@@ -64,11 +64,12 @@ export function updateThemeLabel(): void {
     lang === 'es' ? (dark ? 'Usar tema claro' : 'Usar tema oscuro') : (dark ? 'Use light theme' : 'Use dark theme'));
 }
 
-applyLanguage(readPreference('omni-lang') === 'en' ? 'en' : 'es');
+applyLanguage(document.documentElement.lang === 'en' ? 'en' : 'es');
 document.getElementById('lang-toggle-btn')?.addEventListener('click', () => {
   const lang: Language = getLanguage() === 'es' ? 'en' : 'es';
   savePreference('omni-lang', lang);
-  applyLanguage(lang);
+  const route = location.pathname.replace(/^\/en(?=\/)/, '');
+  location.assign((lang === 'en' ? '/en' + route : route) + location.search + location.hash);
 });
 document.getElementById('theme-toggle-btn')?.addEventListener('click', () => {
   const style = document.createElement('style');

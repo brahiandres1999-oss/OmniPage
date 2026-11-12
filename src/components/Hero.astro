@@ -2,6 +2,7 @@
 import AsciiSpecCanvas from './AsciiSpecCanvas.astro';
 import Icon from './Icon.astro';
 import AgentLogo from './AgentLogo.astro';
+import { LAYER_COPY } from '../data/hero-anatomy';
 import { translations } from '../i18n/translations';
 const t = translations.es;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -19,15 +20,202 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <a class="release-link" href={base + '/changelog/'}><span class="status-dot" aria-hidden="true"></span><span data-i18n="hero.preview">{t['hero.preview']}</span></a>
       <p class="hero-requirements" data-i18n="hero.note">{t['hero.note']}</p>
     </div>
-    <div class="hero-art">
-      <AsciiSpecCanvas />
-      <p class="hero-art-caption" data-i18n="hero.caption">{t['hero.caption']}</p>
+    <div class="hero-art hero-specimen">
+      <div class="hero-blueprint-backdrop blueprint-grid" aria-hidden="true"></div>
+
+      <div class="hero-specimen-stage">
+        <AsciiSpecCanvas />
+      </div>
+
+      <div class="hero-specimen-ledger">
+        <div id="hero-anatomy-readout" class="hero-anatomy-readout" aria-live="polite">
+          <div data-anatomy-default class="anatomy-readout-state anatomy-readout-copy" data-active="true">
+            <span data-i18n="hero.caption">{t['hero.caption']}</span>
+            <span class="text-[11px] opacity-80 shrink-0">
+              <span data-locale="es">Pasa o fija una capa ↓</span>
+              <span data-locale="en" hidden>Inspect or pin a layer ↓</span>
+            </span>
+          </div>
+          {Object.keys(LAYER_COPY.es).map(layer => (
+            <div data-anatomy-detail={layer} class="anatomy-readout-state" aria-hidden="true" inert>
+              {(['es', 'en'] as const).map(lang => {
+                const info = LAYER_COPY[lang][layer as keyof typeof LAYER_COPY.es];
+                return <div data-locale={lang} hidden={lang === 'en'} class="anatomy-readout-copy">
+                  <strong data-anatomy-title>{info.title}</strong>
+                  <span data-anatomy-desc>{info.role}</span>
+                  <a class="quiet-link" data-anatomy-link href={info.href}>{info.cta}</a>
+                </div>;
+              })}
+            </div>
+          ))}
+        </div>
+
+        <div id="hero-anatomy-rail" class="hero-anatomy-rail" role="group" aria-label="Anatomía interactiva de OmniSpec">
+          <button type="button" class="anatomy-layer-btn" data-layer="plinth" aria-pressed="false" style="--layer-accent: var(--text-secondary)">
+            <span class="anatomy-swatch" aria-hidden="true"></span>
+            <span data-locale="es">Constitución</span>
+            <span data-locale="en" hidden>Constitution</span>
+          </button>
+          <button type="button" class="anatomy-layer-btn" data-layer="feature" aria-pressed="false" style="--layer-accent: var(--accent)">
+            <span class="anatomy-swatch" aria-hidden="true"></span>
+            <span>feature</span>
+          </button>
+          <button type="button" class="anatomy-layer-btn" data-layer="bugfix" aria-pressed="false" style="--layer-accent: var(--accent-amber)">
+            <span class="anatomy-swatch" aria-hidden="true"></span>
+            <span>bugfix</span>
+          </button>
+          <button type="button" class="anatomy-layer-btn" data-layer="techdebt" aria-pressed="false" style="--layer-accent: var(--accent-emerald)">
+            <span class="anatomy-swatch" aria-hidden="true"></span>
+            <span>debt</span>
+          </button>
+          <button type="button" class="anatomy-layer-btn" data-layer="rfc" aria-pressed="false" style="--layer-accent: var(--text-secondary)">
+            <span class="anatomy-swatch" aria-hidden="true"></span>
+            <span>rfc</span>
+          </button>
+          <button type="button" class="anatomy-layer-btn" data-layer="verify" aria-pressed="false" style="--layer-accent: var(--accent-amber)">
+            <span class="anatomy-swatch" aria-hidden="true"></span>
+            <span>verify · gate</span>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
   <div class="page-shell">
     <div class="integration-strip">
-      <p data-i18n="hero.integrations">{t['hero.integrations']}</p>
-      <div>{[['claude','Claude Code'],['codex','Codex'],['cursor','Cursor'],['opencode','OpenCode'],['antigravity','Antigravity']].map(([agent,name]) => <span class="integration-name"><AgentLogo agent={agent} size={23}/>{name}</span>)}<a href="#agentes" data-i18n="hero.more">{t['hero.more']}</a></div>
+      <div class="integration-marquee" tabindex="0" role="button" aria-pressed="false" aria-label="Integraciones: pulsa para pausar o reanudar" data-i18n-aria="integrations.toggle">
+        <div class="integration-track">
+          {[0, 1].map(copy => <div class="integration-group" aria-hidden={copy === 1 ? 'true' : undefined}>
+            {[['claude','Claude Code'],['codex','Codex'],['cursor','Cursor'],['opencode','OpenCode'],['antigravity','Antigravity']].map(([agent,name]) => <span class="integration-name"><AgentLogo agent={agent} size={23}/>{name}</span>)}
+          </div>)}
+        </div>
+      </div>
     </div>
   </div>
 </section>
+
+<script>
+  import '../scripts/integrations';
+  import { getLanguage } from '../scripts/preferences';
+  import type { AnatomyLayer } from '../data/hero-anatomy';
+
+  let cleanupHeroAnatomy: (() => void) | null = null;
+
+  function setupHeroAnatomy(): (() => void) | null {
+    const rail = document.getElementById('hero-anatomy-rail');
+    const readout = document.getElementById('hero-anatomy-readout');
+    if (!rail || !readout || rail.dataset.bound === 'true') return null;
+
+    const defaultEl = readout.querySelector<HTMLElement>('[data-anatomy-default]');
+    const details = Array.from(readout.querySelectorAll<HTMLElement>('[data-anatomy-detail]'));
+    const buttons = Array.from(rail.querySelectorAll<HTMLButtonElement>('.anatomy-layer-btn'));
+
+    if (!defaultEl || details.length === 0 || buttons.length === 0) return null;
+    rail.dataset.bound = 'true';
+
+    let canvasHover: AnatomyLayer | null = null;
+    let railHover: AnatomyLayer | null = null;
+    let pinnedLayer: AnatomyLayer | null = null;
+
+    const syncUI = (): void => {
+      const lang = getLanguage();
+      rail.setAttribute('aria-label', lang === 'es' ? 'Anatomía interactiva de OmniSpec' : 'OmniSpec interactive anatomy');
+      const active = railHover ?? pinnedLayer ?? canvasHover;
+
+      for (const btn of buttons) {
+        const layer = btn.dataset.layer as AnatomyLayer;
+        const isActive = layer === active;
+        const isPinned = layer === pinnedLayer;
+        btn.classList.toggle('is-active', isActive);
+        btn.setAttribute('aria-pressed', String(isPinned));
+      }
+
+      // All states share a grid cell: the longest copy reserves space at any width.
+      // Inactive states retain geometry but cannot be focused or announced.
+      for (const state of [defaultEl, ...details]) {
+        const visible = state === defaultEl ? active === null : state.dataset.anatomyDetail === active;
+        state.dataset.active = String(visible);
+        state.inert = !visible;
+        state.setAttribute('aria-hidden', String(!visible));
+      }
+    };
+
+    const emitRailFocus = (): void => {
+      window.dispatchEvent(
+        new CustomEvent('omni:hero-focus-region', {
+          detail: { hoverLayer: railHover, pinnedLayer },
+        })
+      );
+    };
+
+    const onCanvasHover = (e: Event): void => {
+      const detail = (e as CustomEvent<{ layer?: AnatomyLayer | null }>).detail;
+      canvasHover = detail?.layer ?? null;
+      syncUI();
+    };
+
+    const onCanvasPin = (e: Event): void => {
+      const detail = (e as CustomEvent<{ layer?: AnatomyLayer | null }>).detail;
+      pinnedLayer = detail?.layer ?? null;
+      syncUI();
+    };
+
+    const controller = new AbortController();
+    const { signal } = controller;
+
+    for (const btn of buttons) {
+      const layer = btn.dataset.layer as AnatomyLayer;
+      btn.addEventListener('mouseenter', () => {
+        railHover = layer;
+        emitRailFocus();
+        syncUI();
+      }, { signal });
+      btn.addEventListener('mouseleave', () => {
+        if (railHover === layer) {
+          railHover = null;
+          emitRailFocus();
+          syncUI();
+        }
+      }, { signal });
+      btn.addEventListener('focus', () => {
+        railHover = layer;
+        emitRailFocus();
+        syncUI();
+      }, { signal });
+      btn.addEventListener('blur', () => {
+        if (railHover === layer) {
+          railHover = null;
+          emitRailFocus();
+          syncUI();
+        }
+      }, { signal });
+      btn.addEventListener('click', () => {
+        pinnedLayer = pinnedLayer === layer ? null : layer;
+        emitRailFocus();
+        syncUI();
+      }, { signal });
+    }
+
+    window.addEventListener('omni:hero-region-hover', onCanvasHover, { signal });
+    window.addEventListener('omni:hero-region-pin', onCanvasPin, { signal });
+    window.addEventListener('omni:language-change', syncUI, { signal });
+    syncUI();
+
+    return () => {
+      controller.abort();
+      delete rail.dataset.bound;
+    };
+  }
+
+  function bootHeroAnatomy(): void {
+    cleanupHeroAnatomy?.();
+    cleanupHeroAnatomy = setupHeroAnatomy();
+  }
+
+  document.addEventListener('astro:before-swap', () => {
+    cleanupHeroAnatomy?.();
+    cleanupHeroAnatomy = null;
+  });
+
+  bootHeroAnatomy();
+  document.addEventListener('astro:page-load', bootHeroAnatomy);
+</script>

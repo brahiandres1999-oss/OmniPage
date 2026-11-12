@@ -19,7 +19,7 @@ const date=(value:string,lang:string)=>new Intl.DateTimeFormat(lang,{dateStyle:'
   <h1 data-i18n="releases.title">{t['releases.title']}</h1>
   <p class="body-copy" data-i18n="releases.intro">{t['releases.intro']}</p>
   <div class="release-channels">
-   <span><strong>Canal oficial:</strong> latest ({omniSpecRelease.stableVersion})</span>
+   <span><strong><span data-locale="es">Canal oficial:</span><span data-locale="en" hidden>Official channel:</span></strong> latest ({omniSpecRelease.stableVersion})</span>
    <span><strong>Zero dependencies:</strong> Node.js ≥22.19 & Bun 1.1+</span>
   </div>
  </header>

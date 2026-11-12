@@ -1,15 +1,16 @@
 import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
+import react from '@astrojs/react';
 
 export default defineConfig({
   site: 'https://omnispec.dev',
   base: '/',
   integrations: [
-    tailwind({
-      applyBaseStyles: false,
-    }),
+    react(),
+
   ],
   output: 'static',
   // Video authoring and Omni evidence are independent of the site's module graph.
-  vite: { server: { watch: { ignored: ['**/media/**', '**/specs/**', '**/test-results/**'] } } },
+  vite: { css: { postcss: { plugins: [tailwindcss(), autoprefixer()] } }, server: { watch: { ignored: ['**/media/**', '**/specs/**', '**/test-results/**'] } } },
 });

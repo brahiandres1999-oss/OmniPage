@@ -18,41 +18,185 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           <p class="small-note" data-i18n="start.channel">{t['start.channel']}</p>
         </div>
       </article>
-      <article class="start-step" id="agentes">
+      <article class="start-step start-step-wide" id="agentes">
         <span class="step-number" aria-hidden="true">02</span>
         <div>
-          <h3 data-i18n="start.2.title">{t['start.2.title']}</h3>
-          <p class="body-copy" data-i18n="start.2.body">{t['start.2.body']}</p>
-          
-          <fieldset class="agent-picker" aria-describedby="agent-hint">
-            <legend class="field-label sr-only" data-i18n="start.agent">{t['start.agent']}</legend>
-            <div class="agent-options">
-              {Object.entries(agentsByLang.es).map(([key, agent]) => (
-                <label class="agent-option">
-                  <input type="radio" name="agent-choice" value={key} checked={key === 'claude'} />
-                  <span class="agent-option-content">
-                    <AgentLogo agent={key} size={18} />
-                    <span data-agent-label={key}>{agent.title}</span>
-                  </span>
-                </label>
-              ))}
-            </div>
-          </fieldset>
-          
-          <p id="agent-hint" class="small-note" data-i18n="start.selectHint">{t['start.selectHint']}</p>
+          <h3 class="max-w-[56rem]" data-i18n="start.2.title">{t['start.2.title']}</h3>
+          <p class="body-copy max-w-[56rem]" data-i18n="start.2.body">{t['start.2.body']}</p>
 
-          <div id="agent-guidance" class="agent-guidance-card" hidden>
-            <div class="guidance-header">
-              <span id="agent-card-title" class="guidance-agent-title"></span>
-              <span id="agent-format-badge" class="guidance-format-badge"></span>
+          <div class="agent-master-detail-grid grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start my-6">
+            <!-- COLUMNA IZQUIERDA: Selector de Agentes por Tiers & Tabla -->
+            <div class="lg:col-span-7 min-w-0">
+              <fieldset class="agent-picker" aria-describedby="agent-hint">
+                <legend class="field-label sr-only" data-i18n="start.agent">{t['start.agent']}</legend>
+
+                <!-- Tiering de Integración de Agentes -->
+                <div class="agent-tiers-container space-y-4 mb-4">
+                  <!-- TIER 1 -->
+                  <div>
+                    <div class="flex items-center gap-2 mb-2">
+                      <span class="inline-flex h-2 w-2 rounded-full bg-emerald-500" aria-hidden="true"></span>
+                      <span class="font-mono text-xs font-bold text-emerald-800 dark:text-emerald-300 uppercase tracking-wider">
+                        <span data-locale="es">Tier 1: Integración Profunda de Tareas &amp; Subagentes</span>
+                        <span data-locale="en" hidden>Tier 1: Deep Task &amp; Subagent Integration</span>
+                      </span>
+                    </div>
+                    <div class="agent-options">
+                      {['antigravity', 'claude', 'codex', 'cursor', 'opencode'].map(key => {
+                        const agent = agentsByLang.es[key];
+                        return (
+                          <label class="agent-option" for={`agent-radio-${key}`}>
+                            <input type="radio" id={`agent-radio-${key}`} name="agent-choice" value={key} checked={key === 'claude'} />
+                            <span class="agent-option-content">
+                              <AgentLogo agent={key} size={18} />
+                              <span data-agent-label={key}>{agent.title}</span>
+                            </span>
+                          </label>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <!-- TIER 2 & 3 -->
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <div class="flex items-center gap-2 mb-2">
+                        <span class="inline-flex h-2 w-2 rounded-full bg-amber-500" aria-hidden="true"></span>
+                        <span class="font-mono text-xs font-bold text-amber-800 dark:text-amber-300 uppercase tracking-wider">
+                          <span data-locale="es">Tier 2: Detección de Terminal</span>
+                          <span data-locale="en" hidden>Tier 2: Terminal Detection</span>
+                        </span>
+                      </div>
+                      <div class="agent-options">
+                        {['kilo', 'gemini'].map(key => {
+                          const agent = agentsByLang.es[key];
+                          return (
+                            <label class="agent-option" for={`agent-radio-${key}`}>
+                              <input type="radio" id={`agent-radio-${key}`} name="agent-choice" value={key} />
+                              <span class="agent-option-content">
+                                <AgentLogo agent={key} size={18} />
+                                <span data-agent-label={key}>{agent.title}</span>
+                              </span>
+                            </label>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    <div>
+                      <div class="flex items-center gap-2 mb-2">
+                        <span class="inline-flex h-2 w-2 rounded-full bg-blue-500" aria-hidden="true"></span>
+                        <span class="font-mono text-xs font-bold text-blue-800 dark:text-blue-300 uppercase tracking-wider">
+                          <span data-locale="es">Tier 3: TTY Shell Universal</span>
+                          <span data-locale="en" hidden>Tier 3: Universal TTY Shell</span>
+                        </span>
+                      </div>
+                      <div class="agent-options">
+                        {['copilot', 'universal'].map(key => {
+                          const agent = agentsByLang.es[key];
+                          return (
+                            <label class="agent-option" for={`agent-radio-${key}`}>
+                              <input type="radio" id={`agent-radio-${key}`} name="agent-choice" value={key} />
+                              <span class="agent-option-content">
+                                <AgentLogo agent={key} size={18} />
+                                <span data-agent-label={key}>{agent.title}</span>
+                              </span>
+                            </label>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Tabla Técnica de Capacidades por Nivel -->
+                <p class="small-note" data-i18n="agents.tableHint">Compara las integraciones. Desplaza la tabla para ver todas las columnas.</p>
+                <div tabindex="0" role="region" aria-label="Comparación de integraciones" data-i18n-aria="agents.tableLabel" class="overflow-x-auto rounded-lg border border-[rgb(var(--border-rgb)/0.14)] bg-[rgb(var(--bg-surface))] my-4 p-3 font-mono text-[11px] tabular-nums">
+                  <table class="w-full text-left border-collapse">
+                    <thead>
+                      <tr class="border-b border-[rgb(var(--border-rgb)/0.12)] text-[rgb(var(--text-secondary))] text-[10px] uppercase tracking-wider">
+                        <th scope="col" class="py-1.5 px-2">
+                          <span data-locale="es">Nivel</span>
+                          <span data-locale="en" hidden>Tier</span>
+                        </th>
+                        <th scope="col" class="py-1.5 px-2">
+                          <span data-locale="es">Subagentes</span>
+                          <span data-locale="en" hidden>Subagents</span>
+                        </th>
+                        <th scope="col" class="py-1.5 px-2">
+                          <span data-locale="es">Memoria FTS5</span>
+                          <span data-locale="en" hidden>FTS5 Memory</span>
+                        </th>
+                        <th scope="col" class="py-1.5 px-2">Guardian Hook</th>
+                        <th scope="col" class="py-1.5 px-2">
+                          <span data-locale="es">Firma HMAC</span>
+                          <span data-locale="en" hidden>HMAC Signature</span>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-[rgb(var(--border-rgb)/0.08)] text-[rgb(var(--text-secondary))]">
+                      <tr>
+                        <td class="py-1.5 px-2 font-bold text-emerald-800 dark:text-emerald-400">Tier 1 (Deep)</td>
+                        <td class="py-1.5 px-2 text-emerald-800 dark:text-emerald-400">
+                          <span data-locale="es">✔ Nativo</span>
+                          <span data-locale="en" hidden>✔ Native</span>
+                        </td>
+                        <td class="py-1.5 px-2 text-emerald-800 dark:text-emerald-400">
+                          <span data-locale="es">✔ Sincronizado</span>
+                          <span data-locale="en" hidden>✔ Synchronized</span>
+                        </td>
+                        <td class="py-1.5 px-2 text-emerald-800 dark:text-emerald-400">✔ Pre-commit</td>
+                        <td class="py-1.5 px-2 text-emerald-800 dark:text-emerald-400">
+                          <span data-locale="es">✔ Criptográfico</span>
+                          <span data-locale="en" hidden>✔ Cryptographic</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="py-1.5 px-2 font-bold text-amber-800 dark:text-amber-400">Tier 2 (Terminal)</td>
+                        <td class="py-1.5 px-2 text-[rgb(var(--text-secondary))]">—</td>
+                        <td class="py-1.5 px-2 text-emerald-800 dark:text-emerald-400">✔ CLI JSON</td>
+                        <td class="py-1.5 px-2 text-emerald-800 dark:text-emerald-400">✔ Pre-commit</td>
+                        <td class="py-1.5 px-2 text-emerald-800 dark:text-emerald-400">
+                          <span data-locale="es">✔ Criptográfico</span>
+                          <span data-locale="en" hidden>✔ Cryptographic</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="py-1.5 px-2 font-bold text-blue-800 dark:text-blue-400">Tier 3 (TTY)</td>
+                        <td class="py-1.5 px-2 text-[rgb(var(--text-secondary))]">—</td>
+                        <td class="py-1.5 px-2 text-[rgb(var(--text-secondary))]">—</td>
+                        <td class="py-1.5 px-2 text-emerald-800 dark:text-emerald-400">✔ Git Hook</td>
+                        <td class="py-1.5 px-2 text-emerald-800 dark:text-emerald-400">
+                          <span data-locale="es">✔ Criptográfico</span>
+                          <span data-locale="en" hidden>✔ Cryptographic</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </fieldset>
+
+              <p id="agent-hint" class="small-note" data-i18n="start.selectHint">{t['start.selectHint']}</p>
             </div>
-            <p id="agent-description" class="body-copy guidance-desc"></p>
-            <p id="antigravity-plugin-guide" hidden><a class="quiet-link" href={base + '/docs/#antigravity-plugin'} data-i18n="start.pluginGuide">{t['start.pluginGuide']}</a></p>
-            <CopySnippet id="agent-invocation" command="" prefix="›" />
-            <div class="guidance-meta">
-              <span class="meta-label" data-i18n="start.paths">{t['start.paths']}:</span>
-              <code id="agent-path" class="meta-path"></code>
-              <a href={base + '/docs/#recuperacion'} class="quiet-link recovery-link" data-i18n="start.recovery">{t['start.recovery']}</a>
+
+            <!-- COLUMNA DERECHA: Panel de Invocación Sticky (Sincronizado sin scroll) -->
+            <div class="lg:col-span-5 lg:sticky lg:top-24 min-w-0">
+              <div id="agent-guidance" class="agent-guidance-card" hidden aria-live="polite" aria-atomic="true">
+                <div class="guidance-header">
+                  <span id="agent-card-title" class="guidance-agent-title"></span>
+                  <span id="agent-format-badge" class="guidance-format-badge"></span>
+                </div>
+                <p id="agent-description" class="guidance-desc"></p>
+                <p id="antigravity-plugin-guide" hidden><a class="quiet-link text-xs" href={base + '/docs/#antigravity-plugin'} data-i18n="start.pluginGuide">{t['start.pluginGuide']}</a></p>
+                <CopySnippet id="agent-invocation" command="" prefix="›" />
+                <div class="guidance-meta font-mono">
+                  <div class="flex flex-wrap items-baseline gap-1.5 min-w-0">
+                    <span class="meta-label" data-i18n="start.paths">{t['start.paths']}:</span>
+                    <code id="agent-path" class="meta-path break-all"></code>
+                  </div>
+                  <a href={base + '/docs/#recuperacion'} class="quiet-link recovery-link text-[rgb(var(--accent))]" data-i18n="start.recovery">{t['start.recovery']}</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -60,6 +204,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <article class="start-step">
         <span class="step-number" aria-hidden="true">03</span>
         <div><h3 data-i18n="start.3.title">{t['start.3.title']}</h3><p class="body-copy" data-i18n="start.3.body">{t['start.3.body']}</p><blockquote class="example-request" data-i18n="start.prompt">{t['start.prompt']}</blockquote><a class="quiet-link" href={base + '/docs/#quickstart'}><span data-i18n="start.docs">{t['start.docs']}</span><span aria-hidden="true">↗</span></a></div>
+      </article>
+      <article class="start-step" id="mantenimiento">
+        <span class="step-number" aria-hidden="true">04</span>
+        <div>
+          <h3 data-i18n="start.maintenance.title">{t['start.maintenance.title']}</h3>
+          <p class="body-copy" data-i18n="start.maintenance.body">{t['start.maintenance.body']}</p>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.75rem;">
+            <CopySnippet command="npx --yes omni-spec doctor" prefix="$" />
+            <CopySnippet command="npx --yes omni-spec update --dry-run" prefix="$" />
+          </div>
+          <p class="small-note" style="margin-top: 0.5rem;" data-i18n="start.maintenance.note">{t['start.maintenance.note']}</p>
+        </div>
       </article>
     </div>
     <p class="start-scope small-note" data-i18n="start.scope">{t['start.scope']}</p>
@@ -92,14 +248,14 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    min-height: 2.25rem;
-    padding: 0.35rem 0.85rem;
+    min-height: 2.35rem;
+    padding: 0.4rem 0.8rem;
     border: 1px solid rgb(var(--border-rgb) / var(--border-subtle-alpha));
-    border-radius: 9999px;
+    border-radius: 0.5rem;
     font-size: 0.8125rem;
     font-weight: 500;
     color: rgb(var(--text-secondary));
-    background: rgb(var(--bg-surface) / 0.6);
+    background: rgb(var(--bg-surface) / 0.7);
     transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
   }
   .agent-option:hover .agent-option-content {
@@ -118,34 +274,37 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     outline-offset: 2px;
   }
   #agent-hint {
-    margin-block: 0.75rem 1rem;
+    margin-block: 0.75rem 0.5rem;
     font-size: 0.8125rem;
-    color: rgb(var(--text-tertiary));
+    color: rgb(var(--text-secondary));
   }
   .agent-guidance-card {
-    border: 1px solid rgb(var(--border-rgb) / var(--border-subtle-alpha));
+    border: 1px solid rgb(var(--border-rgb) / var(--border-active-alpha));
     border-radius: 0.75rem;
     background: rgb(var(--bg-surface));
+    box-shadow: 0 4px 20px rgb(0 0 0 / 0.04);
     padding: 1.25rem;
-    margin-bottom: 1rem;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.85rem;
   }
   .guidance-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 0.75rem;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid rgb(var(--border-rgb) / var(--border-subtle-alpha));
   }
   .guidance-agent-title {
-    font-size: 0.9375rem;
+    font-size: 1rem;
     font-weight: 600;
     color: rgb(var(--text-primary));
   }
   .guidance-format-badge {
     display: inline-flex;
     align-items: center;
+    font-family: var(--font-mono, monospace);
     font-size: 0.6875rem;
     font-weight: 600;
     text-transform: uppercase;
@@ -158,7 +317,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   }
   .guidance-desc {
     font-size: 0.875rem;
-    line-height: 1.5;
+    line-height: 1.55;
     color: rgb(var(--text-secondary));
     margin: 0;
   }
@@ -168,11 +327,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     align-items: center;
     gap: 0.75rem;
     font-size: 0.8125rem;
-    padding-top: 0.5rem;
+    padding-top: 0.65rem;
     border-top: 1px solid rgb(var(--border-rgb) / var(--border-subtle-alpha));
   }
   .meta-label {
-    color: rgb(var(--text-tertiary));
+    color: rgb(var(--text-secondary));
   }
   .meta-path {
     font-family: var(--font-mono, monospace);
@@ -218,7 +377,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     const invocation = document.querySelector('#agent-invocation [data-copy-text]')!;
     const changed = displayedAgent !== key || invocation.textContent !== agent.invocation;
     displayedAgent = key;
-    
+
     const cardTitle = document.getElementById('agent-card-title');
     if (cardTitle) cardTitle.textContent = agent.title;
     const formatBadge = document.getElementById('agent-format-badge');

@@ -12,32 +12,65 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <p class="body-copy" data-i18n="demo.intro">{t['demo.intro']}</p>
     </div>
 
-    <div class="diptych-grid">
+    <p class="demo-disclaimer small-note" data-i18n="demo.disclaimer">Simulación interactiva con datos de ejemplo. No ejecuta comandos ni modifica tu proyecto.</p>
+    <!-- DOCK FLOTANTE DE 4 MODOS OPERATIVOS DEL WORKBENCH -->
+    <div class="flex justify-center mb-8 overflow-x-auto py-1">
+      <nav class="workbench-dock" role="tablist" aria-label="Modos de la demostración" data-i18n-aria="demo.modesLabel">
+        <button type="button" role="tab" class="dock-tab is-active" id="dock-sdd" aria-controls="workbench-panel" aria-selected="true" data-mode="sdd">
+          <span class="dock-led bg-blue-500"></span>
+          <span class="tabular-nums" data-locale="es">1. Lienzo SDD</span>
+          <span class="tabular-nums" data-locale="en" hidden>1. SDD Canvas</span>
+        </button>
+        <button type="button" role="tab" class="dock-tab" id="dock-multiagent" aria-controls="workbench-panel" tabindex="-1" aria-selected="false" data-mode="multiagent">
+          <span class="dock-led bg-purple-500"></span>
+          <span class="tabular-nums" data-locale="es">2. Multi-Agente & FTS5</span>
+          <span class="tabular-nums" data-locale="en" hidden>2. Multi-Agent & FTS5</span>
+        </button>
+        <button type="button" role="tab" class="dock-tab" id="dock-guardian" aria-controls="workbench-panel" tabindex="-1" aria-selected="false" data-mode="guardian">
+          <span class="dock-led bg-amber-500"></span>
+          <span class="tabular-nums" data-locale="es">3. Guardian Anti-Slop</span>
+          <span class="tabular-nums" data-locale="en" hidden>3. Guardian Anti-Slop</span>
+        </button>
+        <button type="button" role="tab" class="dock-tab" id="dock-verify" aria-controls="workbench-panel" tabindex="-1" aria-selected="false" data-mode="verify">
+          <span class="dock-led bg-emerald-500"></span>
+          <span class="tabular-nums" data-locale="es">4. Verificación Criptográfica</span>
+          <span class="tabular-nums" data-locale="en" hidden>4. Cryptographic Verify</span>
+        </button>
+      </nav>
+    </div>
+
+    <div class="diptych-grid" id="workbench-panel" role="tabpanel" aria-labelledby="dock-sdd" tabindex="0">
       <!-- PANEL 1: Terminal Interactiva Paso a Paso -->
-      <article class="diptych-card terminal-surface" id="term-interactive-card" role="region" aria-label="Terminal interactiva de OmniSpec" tabindex="0">
+      <article class="diptych-card terminal-surface" id="term-interactive-card" role="region" aria-label="Terminal interactiva de OmniSpec" data-i18n-aria="demo.terminalLabel" tabindex="0">
         <header class="diptych-header">
           <div class="terminal-dots" aria-hidden="true">
             <span class="dot-red"></span>
             <span class="dot-yellow"></span>
             <span class="dot-green"></span>
           </div>
-          <span class="diptych-title font-mono">terminal — PowerShell</span>
-          <span class="diptych-badge font-mono" id="term-step-badge">
-            <span data-locale="es">Entrada</span>
-            <span data-locale="en" hidden>Input</span>
-          </span>
+          <span class="diptych-title font-mono">terminal — PowerShell (my-pay-service)</span>
+          <span class="diptych-badge font-mono tabular-nums" id="term-step-badge">Herramientas (1/3)</span>
         </header>
 
         <div class="diptych-body font-mono terminal-interactive-wrapper">
-          <div class="term-scroll-container">
+          <div class="term-scroll-container" tabindex="0" role="region" aria-label="Salida de la demostración" data-i18n-aria="demo.outputLabel">
             <!-- STEP 0: Prompt inicial -->
-            <div class="term-step" data-term-step="0">
-              <pre class="terminal-code"><code><span class="text-secondary">PS C:\dev\LaboratorioSpringBootBancov2&gt;</span> <span class="term-cursor-input">npx --yes omni-spec init</span><span class="term-blink-cursor">_</span></code></pre>
+            <div class="term-step" data-term-step="0" hidden>
+              <pre class="terminal-code" data-locale="es"><code><span class="text-secondary">PS C:\dev\my-pay-service&gt;</span> <span class="term-cursor-input">npx --yes omni-spec init</span><span class="term-blink-cursor">_</span>
+
+<span class="text-secondary">[preflight] Analizando repositorio: C:\dev\my-pay-service</span>
+<span class="text-secondary">[preflight] Stack detectado: Node.js 22 · TypeScript 5 · PostgreSQL (Prisma)</span>
+<span class="text-accent">[listo] Pulsa Enter para iniciar el asistente interactivo.</span></code></pre>
+              <pre class="terminal-code" data-locale="en" hidden><code><span class="text-secondary">PS C:\dev\my-pay-service&gt;</span> <span class="term-cursor-input">npx --yes omni-spec init</span><span class="term-blink-cursor">_</span>
+
+<span class="text-secondary">[preflight] Scanning repository: C:\dev\my-pay-service</span>
+<span class="text-secondary">[preflight] Detected stack: Node.js 22 · TypeScript 5 · PostgreSQL (Prisma)</span>
+<span class="text-accent">[ready] Press Enter to launch the setup wizard.</span></code></pre>
             </div>
 
             <!-- STEP 1: Selección de Herramientas -->
-            <div class="term-step" data-term-step="1" hidden>
-              <pre class="terminal-code"><code><span class="text-secondary">PS C:\dev\LaboratorioSpringBootBancov2&gt;</span> npx --yes omni-spec init
+            <div class="term-step" data-term-step="1">
+              <pre class="terminal-code" data-locale="es"><code><span class="text-secondary">PS C:\dev\my-pay-service&gt;</span> npx --yes omni-spec init
 
 <span class="ascii-logo"><span class="ascii-blue">  ___                  _  </span> <span class="ascii-amber"> ____             </span>
 <span class="ascii-blue"> / _ \ _ __ ___  _ __ (_) </span><span class="ascii-amber">| ___| _ __   ___  ___ </span>
@@ -45,13 +78,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 <span class="ascii-blue">| |_| | | | | | | | | | | </span><span class="ascii-amber">|___) | |_) |  __/ (__ </span>
 <span class="ascii-blue"> \___/|_| |_| |_|_| |_|_| </span><span class="ascii-amber">|____/| .__/ \___|\___|</span>
 <span class="ascii-blue">                          </span><span class="ascii-amber">      |_|   v0.9.0</span></span>
-<div class="terminal-motto"><span data-locale="es">Construye con claridad. Comprueba con evidencia.</span><span data-locale="en" hidden>Build with clarity. Verify with evidence.</span></div>
-<div data-locale="es">  <span class="text-accent">PREPARAR PROYECTO   1 / 3</span>
+<span class="terminal-motto">Construye con claridad. Comprueba con evidencia.</span>
+  <span class="text-accent">PREPARAR PROYECTO   1 / 3</span>
   <span class="text-secondary">─────────────────────────────────────────────────────────────────</span>
   <span class="text-highlight">¿Dónde usarás OmniSpec?</span>
 
-  Destino: <span class="text-secondary">C:\dev\LaboratorioSpringBootBancov2</span>
-  No se detectaron archivos de aplicación. Definirás el producto y las tecnologías con tu agente.
+  Destino: <span class="text-secondary">C:\dev\my-pay-service</span>
+  Proyecto detectado: <span class="text-highlight">TypeScript 5 · Node.js 22 · Prisma ORM</span>
 
   <span class="text-success">&gt; [x] Antigravity</span>
     [ ] Claude Code
@@ -63,12 +96,22 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     [ ] Gemini CLI
     [ ] Otra herramienta / aún sin elegir
 
-  <span class="text-secondary">Arriba/Abajo: mover | Espacio: marcar | Enter: seguir</span></div><div data-locale="en" hidden>  <span class="text-accent">PREPARE PROJECT   1 / 3</span>
+  <span class="text-secondary">Arriba/Abajo: mover | Espacio: marcar | Enter: seguir</span></code></pre>
+              <pre class="terminal-code" data-locale="en" hidden><code><span class="text-secondary">PS C:\dev\my-pay-service&gt;</span> npx --yes omni-spec init
+
+<span class="ascii-logo"><span class="ascii-blue">  ___                  _  </span> <span class="ascii-amber"> ____             </span>
+<span class="ascii-blue"> / _ \ _ __ ___  _ __ (_) </span><span class="ascii-amber">| ___| _ __   ___  ___ </span>
+<span class="ascii-blue">| | | | '_ ` _ \| '_ \| | </span><span class="ascii-amber">| \___ \| '_ \ / _ \/ __|</span>
+<span class="ascii-blue">| |_| | | | | | | | | | | </span><span class="ascii-amber">|___) | |_) |  __/ (__ </span>
+<span class="ascii-blue"> \___/|_| |_| |_|_| |_|_| </span><span class="ascii-amber">|____/| .__/ \___|\___|</span>
+<span class="ascii-blue">                          </span><span class="ascii-amber">      |_|   v0.9.0</span></span>
+<span class="terminal-motto">Build with clarity. Verify with evidence.</span>
+  <span class="text-accent">PREPARE PROJECT   1 / 3</span>
   <span class="text-secondary">─────────────────────────────────────────────────────────────────</span>
   <span class="text-highlight">Where will you use OmniSpec?</span>
 
-  Target: <span class="text-secondary">C:\dev\LaboratorioSpringBootBancov2</span>
-  No application files detected. You will define product and technologies with your agent.
+  Target: <span class="text-secondary">C:\dev\my-pay-service</span>
+  Detected stack: <span class="text-highlight">TypeScript 5 · Node.js 22 · Prisma ORM</span>
 
   <span class="text-success">&gt; [x] Antigravity</span>
     [ ] Claude Code
@@ -80,19 +123,19 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     [ ] Gemini CLI
     [ ] Another tool / not chosen yet
 
-  <span class="text-secondary">Up/Down: move | Space: toggle | Enter: continue</span></div></code></pre>
+  <span class="text-secondary">Up/Down: move | Space: toggle | Enter: continue</span></code></pre>
             </div>
 
             <!-- STEP 2: Configuración del Plugin Global -->
             <div class="term-step" data-term-step="2" hidden>
-              <pre class="terminal-code"><code><span class="ascii-logo"><span class="ascii-blue">  ___                  _  </span> <span class="ascii-amber"> ____             </span>
+              <pre class="terminal-code" data-locale="es"><code><span class="ascii-logo"><span class="ascii-blue">  ___                  _  </span> <span class="ascii-amber"> ____             </span>
 <span class="ascii-blue"> / _ \ _ __ ___  _ __ (_) </span><span class="ascii-amber">| ___| _ __   ___  ___ </span>
 <span class="ascii-blue">| | | | '_ ` _ \| '_ \| | </span><span class="ascii-amber">| \___ \| '_ \ / _ \/ __|</span>
 <span class="ascii-blue">| |_| | | | | | | | | | | </span><span class="ascii-amber">|___) | |_) |  __/ (__ </span>
 <span class="ascii-blue"> \___/|_| |_| |_|_| |_|_| </span><span class="ascii-amber">|____/| .__/ \___|\___|</span>
 <span class="ascii-blue">                          </span><span class="ascii-amber">      |_|   v0.9.0</span></span>
-<div class="terminal-motto"><span data-locale="es">Construye con claridad. Comprueba con evidencia.</span><span data-locale="en" hidden>Build with clarity. Verify with evidence.</span></div>
-<div data-locale="es">  <span class="text-accent">PREPARAR PROYECTO   2 / 3</span>
+<span class="terminal-motto">Construye con claridad. Comprueba con evidencia.</span>
+  <span class="text-accent">PREPARAR PROYECTO   2 / 3</span>
   <span class="text-secondary">─────────────────────────────────────────────────────────────────</span>
   <span class="text-highlight">Detectado plugin global de Antigravity. ¿Cómo deseas configurarlo?</span>
 
@@ -101,7 +144,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <span class="text-success">&gt; Modo Proyecto: Instalar skills locales en .agents/skills (Recomendado para equipos)</span>
     Modo Plugin: Usar plugin instalado (sin generar nuevas skills locales)
 
-  <span class="text-secondary">Arriba/Abajo: mover | Enter: elegir | Esc: cancelar</span></div><div data-locale="en" hidden>  <span class="text-accent">PREPARE PROJECT   2 / 3</span>
+  <span class="text-secondary">Arriba/Abajo: mover | Enter: elegir | Esc: cancelar</span></code></pre>
+              <pre class="terminal-code" data-locale="en" hidden><code><span class="ascii-logo"><span class="ascii-blue">  ___                  _  </span> <span class="ascii-amber"> ____             </span>
+<span class="ascii-blue"> / _ \ _ __ ___  _ __ (_) </span><span class="ascii-amber">| ___| _ __   ___  ___ </span>
+<span class="ascii-blue">| | | | '_ ` _ \| '_ \| | </span><span class="ascii-amber">| \___ \| '_ \ / _ \/ __|</span>
+<span class="ascii-blue">| |_| | | | | | | | | | | </span><span class="ascii-amber">|___) | |_) |  __/ (__ </span>
+<span class="ascii-blue"> \___/|_| |_| |_|_| |_|_| </span><span class="ascii-amber">|____/| .__/ \___|\___|</span>
+<span class="ascii-blue">                          </span><span class="ascii-amber">      |_|   v0.9.0</span></span>
+<span class="terminal-motto">Build with clarity. Verify with evidence.</span>
+  <span class="text-accent">PREPARE PROJECT   2 / 3</span>
   <span class="text-secondary">─────────────────────────────────────────────────────────────────</span>
   <span class="text-highlight">Global Antigravity plugin detected. How do you wish to configure it?</span>
 
@@ -110,53 +161,61 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <span class="text-success">&gt; Project Mode: Install local skills in .agents/skills (Recommended for teams)</span>
     Plugin Mode: Use installed plugin (without generating new local skills)
 
-  <span class="text-secondary">Up/Down: move | Enter: select | Esc: cancel</span></div></code></pre>
+  <span class="text-secondary">Up/Down: move | Enter: select | Esc: cancel</span></code></pre>
             </div>
 
             <!-- STEP 3: Confirmación de Preparación -->
             <div class="term-step" data-term-step="3" hidden>
-              <pre class="terminal-code"><code><span class="ascii-logo"><span class="ascii-blue">  ___                  _  </span> <span class="ascii-amber"> ____             </span>
+              <pre class="terminal-code" data-locale="es"><code><span class="ascii-logo"><span class="ascii-blue">  ___                  _  </span> <span class="ascii-amber"> ____             </span>
 <span class="ascii-blue"> / _ \ _ __ ___  _ __ (_) </span><span class="ascii-amber">| ___| _ __   ___  ___ </span>
 <span class="ascii-blue">| | | | '_ ` _ \| '_ \| | </span><span class="ascii-amber">| \___ \| '_ \ / _ \/ __|</span>
 <span class="ascii-blue">| |_| | | | | | | | | | | </span><span class="ascii-amber">|___) | |_) |  __/ (__ </span>
 <span class="ascii-blue"> \___/|_| |_| |_|_| |_|_| </span><span class="ascii-amber">|____/| .__/ \___|\___|</span>
 <span class="ascii-blue">                          </span><span class="ascii-amber">      |_|   v0.9.0</span></span>
-<div class="terminal-motto"><span data-locale="es">Construye con claridad. Comprueba con evidencia.</span><span data-locale="en" hidden>Build with clarity. Verify with evidence.</span></div>
-<div data-locale="es">  <span class="text-accent">PREPARAR PROYECTO   3 / 3</span>
+<span class="terminal-motto">Construye con claridad. Comprueba con evidencia.</span>
+  <span class="text-accent">PREPARAR PROYECTO   3 / 3</span>
   <span class="text-secondary">─────────────────────────────────────────────────────────────────</span>
   <span class="text-highlight">¿Preparar OmniSpec en esta carpeta?</span>
 
-  Destino: <span class="text-secondary">C:\dev\LaboratorioSpringBootBancov2</span>
-  No se detectaron archivos de aplicación. Definirás el producto y las tecnologías con tu agente.
+  Destino: <span class="text-secondary">C:\dev\my-pay-service</span>
+  Proyecto detectado: <span class="text-highlight">TypeScript 5 · Node.js 22 · Prisma ORM</span>
   Integraciones seleccionadas: <span class="text-highlight">antigravity</span>
 
   <span class="text-success">&gt; Preparar proyecto</span>
     Cancelar
 
-  <span class="text-secondary">Arriba/Abajo: mover | Enter: elegir | Esc: cancelar</span></div><div data-locale="en" hidden>  <span class="text-accent">PREPARE PROJECT   3 / 3</span>
-  <span class="text-secondary">─────────────────────────────────────────────────────────────────</span>
-  <span class="text-highlight">Prepare OmniSpec in this directory?</span>
-
-  Target: <span class="text-secondary">C:\dev\LaboratorioSpringBootBancov2</span>
-  No application files detected. You will define product and technologies with your agent.
-  Selected integrations: <span class="text-highlight">antigravity</span>
-
-  <span class="text-success">&gt; Prepare project</span>
-    Cancel
-
-  <span class="text-secondary">Up/Down: move | Enter: select | Esc: cancel</span></div></code></pre>
-            </div>
-
-            <!-- STEP 4: Resultado Final de Instalación -->
-            <div class="term-step" data-term-step="4" hidden>
-              <pre class="terminal-code"><code><span class="ascii-logo"><span class="ascii-blue">  ___                  _  </span> <span class="ascii-amber"> ____             </span>
+  <span class="text-secondary">Arriba/Abajo: mover | Enter: elegir | Esc: cancelar</span></code></pre>
+              <pre class="terminal-code" data-locale="en" hidden><code><span class="ascii-logo"><span class="ascii-blue">  ___                  _  </span> <span class="ascii-amber"> ____             </span>
 <span class="ascii-blue"> / _ \ _ __ ___  _ __ (_) </span><span class="ascii-amber">| ___| _ __   ___  ___ </span>
 <span class="ascii-blue">| | | | '_ ` _ \| '_ \| | </span><span class="ascii-amber">| \___ \| '_ \ / _ \/ __|</span>
 <span class="ascii-blue">| |_| | | | | | | | | | | </span><span class="ascii-amber">|___) | |_) |  __/ (__ </span>
 <span class="ascii-blue"> \___/|_| |_| |_|_| |_|_| </span><span class="ascii-amber">|____/| .__/ \___|\___|</span>
 <span class="ascii-blue">                          </span><span class="ascii-amber">      |_|   v0.9.0</span></span>
-<div class="terminal-motto"><span data-locale="es">Construye con claridad. Comprueba con evidencia.</span><span data-locale="en" hidden>Build with clarity. Verify with evidence.</span></div>
-<div data-locale="es">  <span class="text-secondary">Instalando archivos...</span>
+<span class="terminal-motto">Build with clarity. Verify with evidence.</span>
+  <span class="text-accent">PREPARE PROJECT   3 / 3</span>
+  <span class="text-secondary">─────────────────────────────────────────────────────────────────</span>
+  <span class="text-highlight">Prepare OmniSpec in this directory?</span>
+
+  Target: <span class="text-secondary">C:\dev\my-pay-service</span>
+  Detected stack: <span class="text-highlight">TypeScript 5 · Node.js 22 · Prisma ORM</span>
+  Selected integrations: <span class="text-highlight">antigravity</span>
+
+  <span class="text-success">&gt; Prepare project</span>
+    Cancel
+
+  <span class="text-secondary">Up/Down: move | Enter: select | Esc: cancel</span></code></pre>
+            </div>
+
+            <!-- STEP 4: Resultado Final de Instalación -->
+            <div class="term-step" data-term-step="4" hidden>
+              <pre class="terminal-code" data-locale="es"><code><span class="ascii-logo"><span class="ascii-blue">  ___                  _  </span> <span class="ascii-amber"> ____             </span>
+<span class="ascii-blue"> / _ \ _ __ ___  _ __ (_) </span><span class="ascii-amber">| ___| _ __   ___  ___ </span>
+<span class="ascii-blue">| | | | '_ ` _ \| '_ \| | </span><span class="ascii-amber">| \___ \| '_ \ / _ \/ __|</span>
+<span class="ascii-blue">| |_| | | | | | | | | | | </span><span class="ascii-amber">|___) | |_) |  __/ (__ </span>
+<span class="ascii-blue"> \___/|_| |_| |_|_| |_|_| </span><span class="ascii-amber">|____/| .__/ \___|\___|</span>
+<span class="ascii-blue">                          </span><span class="ascii-amber">      |_|   v0.9.0</span></span>
+<span class="terminal-motto">Construye con claridad. Comprueba con evidencia.</span>
+  <span class="text-secondary">Instalando archivos...</span>
   <span class="text-success">[OK]</span> Archivos preparados. Comprobando integridad...
   <span class="text-success">[OK]</span> Integridad comprobada.
 
@@ -164,7 +223,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   <span class="text-accent">INSTALACIÓN</span>
   <span class="text-secondary">─────────────────────────────────────────────────────────────────</span>
-  Destino: <span class="text-secondary">C:\dev\LaboratorioSpringBootBancov2</span>
+  Destino: <span class="text-secondary">C:\dev\my-pay-service</span>
   <span class="text-success">[OK]</span> Integridad de archivos administrados y versión del runtime local comprobadas.
   <span class="text-success">[OK]</span> omni-auditor: <span class="text-highlight">.agents/agents/omni-auditor.md</span>
 
@@ -175,15 +234,23 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   Después explica qué quieres construir. El agente aclarará el objetivo, las decisiones pendientes
   y un primer resultado verificable.
 
-  <span class="text-secondary">Local CLI: node specs/.omni/runtime/bin/omni-spec.mjs status</span></div><div data-locale="en" hidden>  <span class="text-secondary">Installing files...</span>
-  <span class="text-success">[OK]</span> Files prepared. Checking integrity...
+  <span class="text-secondary">Local CLI: node specs/.omni/runtime/bin/omni-spec.mjs status</span></code></pre>
+              <pre class="terminal-code" data-locale="en" hidden><code><span class="ascii-logo"><span class="ascii-blue">  ___                  _  </span> <span class="ascii-amber"> ____             </span>
+<span class="ascii-blue"> / _ \ _ __ ___  _ __ (_) </span><span class="ascii-amber">| ___| _ __   ___  ___ </span>
+<span class="ascii-blue">| | | | '_ ` _ \| '_ \| | </span><span class="ascii-amber">| \___ \| '_ \ / _ \/ __|</span>
+<span class="ascii-blue">| |_| | | | | | | | | | | </span><span class="ascii-amber">|___) | |_) |  __/ (__ </span>
+<span class="ascii-blue"> \___/|_| |_| |_|_| |_|_| </span><span class="ascii-amber">|____/| .__/ \___|\___|</span>
+<span class="ascii-blue">                          </span><span class="ascii-amber">      |_|   v0.9.0</span></span>
+<span class="terminal-motto">Build with clarity. Verify with evidence.</span>
+  <span class="text-secondary">Installing files...</span>
+  <span class="text-success">[OK]</span> Files prepared. Verifying integrity...
   <span class="text-success">[OK]</span> Integrity verified.
 
   <span class="text-success">[OK]</span> OmniSpec files are ready - 0.9.0
 
   <span class="text-accent">INSTALLATION</span>
   <span class="text-secondary">─────────────────────────────────────────────────────────────────</span>
-  Target: <span class="text-secondary">C:\dev\LaboratorioSpringBootBancov2</span>
+  Target: <span class="text-secondary">C:\dev\my-pay-service</span>
   <span class="text-success">[OK]</span> Managed files and local runtime version verified.
   <span class="text-success">[OK]</span> omni-auditor: <span class="text-highlight">.agents/agents/omni-auditor.md</span>
 
@@ -194,21 +261,118 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   Then describe what you want to build. The agent will clarify the goal, pending decisions
   and a first verifiable outcome.
 
-  <span class="text-secondary">Local CLI: node specs/.omni/runtime/bin/omni-spec.mjs status</span></div></code></pre>
+  <span class="text-secondary">Local CLI: node specs/.omni/runtime/bin/omni-spec.mjs status</span></code></pre>
+            </div>
+
+            <!-- MODO WORKBENCH 2: Multi-Agente & Memoria FTS5 -->
+            <div class="workbench-mode-pane" id="mode-pane-multiagent" hidden>
+              <pre class="terminal-code" data-locale="es"><code><span class="text-secondary">PS C:\dev\my-pay-service&gt;</span> <span class="text-accent">omni-spec memory search "payment-contract" --json</span>
+
+<span class="text-highlight">Memoria Persistente SQLite FTS5 (%LOCALAPPDATA%\OmniSpec\workspaces\&lt;id&gt;\memory.db)</span>
+[Índice: 24 specs activas | 18 decisiones | 5 contratos]
+
+<span class="text-success">[FTS5 MATCH 1]</span> score: 0.94 | scope: specs/001-payment-engine/contracts.json
+  &gt; decisión: "Webhooks idempotentes con firma de 256 bits"
+  &gt; autor: Claude Code (subagent: payment-architect)
+  &gt; recordedAt: 2026-11-12T04:12:00Z | status: EFFECTIVE
+
+<span class="text-success">[FTS5 MATCH 2]</span> score: 0.88 | scope: specs/002-checkout-flow/spec.md
+  &gt; invariante: "Cero doble cobro ante timeouts de red"
+  &gt; autor: Codex (subagent: core-fintech)
+  &gt; activeConsumers: ["Antigravity", "Cursor", "Claude Code"]
+
+<span class="text-secondary">Memoria compartida sincronizada. Todos los agentes leen el mismo contrato.</span></code></pre>
+              <pre class="terminal-code" data-locale="en" hidden><code><span class="text-secondary">PS C:\dev\my-pay-service&gt;</span> <span class="text-accent">omni-spec memory search "payment-contract" --json</span>
+
+<span class="text-highlight">SQLite FTS5 Persistent Memory (%LOCALAPPDATA%\OmniSpec\workspaces\&lt;id&gt;\memory.db)</span>
+[Index: 24 active specs | 18 decisions | 5 capability contracts]
+
+<span class="text-success">[FTS5 MATCH 1]</span> score: 0.94 | scope: specs/001-payment-engine/contracts.json
+  &gt; decision: "Idempotent payment webhook processing with 256-bit signature"
+  &gt; author: Claude Code (subagent: payment-architect)
+  &gt; recordedAt: 2026-11-12T04:12:00Z | status: EFFECTIVE
+
+<span class="text-success">[FTS5 MATCH 2]</span> score: 0.88 | scope: specs/002-checkout-flow/spec.md
+  &gt; invariant: "Zero double-charge guarantee on network timeouts"
+  &gt; author: Codex (subagent: core-fintech)
+  &gt; activeConsumers: ["Antigravity", "Cursor", "Claude Code"]
+
+<span class="text-secondary">Shared memory synchronized. All connected agents read the same contract.</span></code></pre>
+            </div>
+
+            <!-- MODO WORKBENCH 3: Guardian Anti-Slop & Blast Radius -->
+            <div class="workbench-mode-pane" id="mode-pane-guardian" hidden>
+              <pre class="terminal-code" data-locale="es"><code><span class="text-secondary">PS C:\dev\my-pay-service&gt;</span> <span class="text-accent">omni-spec guardian check</span>
+<span class="text-secondary">PS C:\dev\my-pay-service&gt;</span> <span class="text-accent">omni-spec blast-radius src/PaymentGateway.ts</span>
+
+<span class="text-amber">Omni-Guardian Pre-Commit y Reglas Anti-Slop:</span>
+  [✓] Cero Type-Slop: 0 'any' explícitos, 0 DTOs redundantes.
+  [✓] Cero Mock-Slop: los tests ejercitan lógica real, 0 stubs vacíos.
+  [✓] Cirugía Minimal-Touch: 2 archivos tocados, sin reformateo colateral.
+  [✓] Shell Operator Guard: '&amp;&amp;' y '|' prohibidos en checks. PASSED.
+
+<span class="text-highlight">REPORTE BLAST-RADIUS:</span>
+  Objetivo: src/PaymentGateway.ts
+  &gt; Puntuación: 14.20 (NIVEL: LOW)
+  &gt; Centralidad: 0.08 | Cobertura de tests: 100%
+  &gt; Decisión: <span class="text-success">PROCEED (0 bloqueos de riesgo)</span></code></pre>
+              <pre class="terminal-code" data-locale="en" hidden><code><span class="text-secondary">PS C:\dev\my-pay-service&gt;</span> <span class="text-accent">omni-spec guardian check</span>
+<span class="text-secondary">PS C:\dev\my-pay-service&gt;</span> <span class="text-accent">omni-spec blast-radius src/PaymentGateway.ts</span>
+
+<span class="text-amber">Omni-Guardian Pre-Commit &amp; Anti-Slop Enforcement:</span>
+  [✓] Zero Type-Slop: 0 explicit 'any', 0 redundant DTO wrappers.
+  [✓] Zero Mock-Slop: unit tests exercise real logic, 0 empty stubs.
+  [✓] Minimal-Touch Surgery: 2 files changed, no collateral reformatting.
+  [✓] Shell Operator Guard: prohibited '&amp;&amp;', '|' in checks. PASSED.
+
+<span class="text-highlight">BLAST-RADIUS IMPACT REPORT:</span>
+  Target: src/PaymentGateway.ts
+  &gt; Overall score: 14.20 (LEVEL: LOW)
+  &gt; Centrality: 0.08 | Test coverage: 100%
+  &gt; Gate decision: <span class="text-success">PROCEED (0 risk blockers)</span></code></pre>
+            </div>
+
+            <!-- MODO WORKBENCH 4: Verificación Criptográfica Determinista -->
+            <div class="workbench-mode-pane" id="mode-pane-verify" hidden>
+              <pre class="terminal-code" data-locale="es"><code><span class="text-secondary">PS C:\dev\my-pay-service&gt;</span> <span class="text-accent">omni-spec verify 001</span>
+
+<span class="text-success">[VERIFICACIÓN REGISTRADA] Modo gate: automated</span>
+npm test: exit 0
+  ✔ AC-01: deduplicación idempotente de webhooks con TTL 24h (14.2ms)
+  ✔ AC-02: firma Stripe rechaza payloads manipulados con 401 (0.5ms)
+  ✔ AC-03: montos en libro mayor guardados en centavos enteros (0.3ms)
+  ✔ AC-04: circuit breaker responde en fallback ante timeout &gt; 3000ms (0.8ms)
+  ℹ tests 15 | pass 15 | fail 0 | duration_ms 246.2
+
+<span class="text-emerald font-bold">Firma Criptográfica HMAC-SHA256:</span>
+  hash: a9176f7c3764c6ecfcd5e6aa0afe3f7891312950ba3529bce4d14479efe8b0c9
+  sourceSpec: specs/001-payment-engine/verification.json
+  <span class="text-success">[OK] 001-payment-engine COMPLETADO</span></code></pre>
+              <pre class="terminal-code" data-locale="en" hidden><code><span class="text-secondary">PS C:\dev\my-pay-service&gt;</span> <span class="text-accent">omni-spec verify 001</span>
+
+<span class="text-success">[VERIFICATION RECORDED] Gate mode: automated</span>
+npm test: exit 0
+  ✔ AC-01: idempotent webhook deduplication with 24h TTL (14.2ms)
+  ✔ AC-02: Stripe signature rejects tampered payloads with 401 (0.5ms)
+  ✔ AC-03: ledger amounts stored as integer cents cleanly (0.3ms)
+  ✔ AC-04: circuit breaker triggers fallback on timeout &gt; 3000ms (0.8ms)
+  ℹ tests 15 | pass 15 | fail 0 | duration_ms 246.2
+
+<span class="text-emerald font-bold">HMAC-SHA256 Cryptographic Signature:</span>
+  hash: a9176f7c3764c6ecfcd5e6aa0afe3f7891312950ba3529bce4d14479efe8b0c9
+  sourceSpec: specs/001-payment-engine/verification.json
+  <span class="text-success">[OK] 001-payment-engine COMPLETED</span></code></pre>
             </div>
           </div>
 
           <!-- Barra de estado interactiva estilo terminal -->
-          <footer class="term-status-footer" id="term-status-bar">
+          <button type="button" class="term-status-footer" id="term-status-bar">
             <span class="term-status-hint">
               <span class="term-prompt-key">↵ Enter</span>
-              <span id="term-hint-text">
-                <span data-locale="es">Presiona Enter para ejecutar</span>
-                <span data-locale="en" hidden>Press Enter to run</span>
-              </span>
+              <span id="term-hint-text">Presiona Enter para continuar</span>
             </span>
-            <span class="term-status-step font-mono" id="term-step-indicator">0 / 4</span>
-          </footer>
+            <span class="term-status-step font-mono tabular-nums" id="term-step-indicator">1 / 4</span>
+          </button>
         </div>
       </article>
 
@@ -217,29 +381,26 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <header class="diptych-header explorer-header">
           <div class="tab-indicator font-mono">
             <Icon name="folder" size={16}/>
-            <span class="explorer-brand">EXPLORER: LABORATORIOSPRINGBOOTBANCOV2</span>
+            <span class="explorer-brand">EXPLORER: MY-PAY-SERVICE</span>
           </div>
-          <div class="explorer-tabs" role="tablist">
-            <button type="button" role="tab" id="tab-tree" aria-selected="true" class="exp-tab is-active" data-exp-target="view-tree">
+          <div class="explorer-tabs" role="tablist" aria-label="Archivos del ejemplo" data-i18n-aria="demo.filesLabel">
+            <button type="button" role="tab" id="tab-tree" aria-controls="view-tree" aria-selected="true" class="exp-tab is-active" data-exp-target="view-tree">
               <span data-locale="es">Árbol</span>
               <span data-locale="en" hidden>Tree</span>
             </button>
-            <button type="button" role="tab" id="tab-const" aria-selected="false" class="exp-tab" data-exp-target="view-const">CONSTITUTION</button>
-            <button type="button" role="tab" id="tab-context" aria-selected="false" class="exp-tab" data-exp-target="view-context">project-context</button>
+            <button type="button" role="tab" id="tab-const" aria-controls="view-const" tabindex="-1" aria-selected="false" class="exp-tab" data-exp-target="view-const">CONSTITUTION</button>
+            <button type="button" role="tab" id="tab-context" aria-controls="view-context" tabindex="-1" aria-selected="false" class="exp-tab" data-exp-target="view-context">project-context</button>
           </div>
         </header>
 
         <div class="diptych-body font-mono explorer-body">
           <!-- VISTA 1: ÁRBOL DE ARCHIVOS (SCROLL INTERNO SIN SCROLLBAR) -->
-          <div id="view-tree" class="exp-view exp-scrollable is-active">
+          <div id="view-tree" role="tabpanel" aria-labelledby="tab-tree" tabindex="0" class="exp-view exp-scrollable is-active">
             <div class="tree-root-label">
               <span class="tree-caret">▾</span>
               <Icon name="folder" size={15}/>
-              <strong>LaboratorioSpringBootBancov2</strong>
-              <span class="tree-status-badge" id="tree-sync-badge">
-                <span data-locale="es">Listo</span>
-                <span data-locale="en" hidden>Ready</span>
-              </span>
+              <strong>my-pay-service</strong>
+              <span class="tree-status-badge" id="tree-sync-badge">Pre-instalación</span>
             </div>
 
             <div class="tree-indent-level-1">
@@ -279,6 +440,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
                       <div class="tree-file"><span class="tree-file-icon">📁</span><span>omni-clarify/</span></div>
                       <div class="tree-file"><span class="tree-file-icon">📁</span><span>omni-plan/</span></div>
                       <div class="tree-file"><span class="tree-file-icon">📁</span><span>omni-tasks/</span></div>
+                      <div class="tree-file"><span class="tree-file-icon">📁</span><span>omni-audit/</span></div>
                       <div class="tree-file"><span class="tree-file-icon">📁</span><span>omni-implement/</span></div>
                       <div class="tree-file"><span class="tree-file-icon">📁</span><span>omni-converge/</span></div>
                     </div>
@@ -295,10 +457,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
                 </summary>
                 <div class="tree-indent-level-2">
                   <div class="tree-file"><span class="tree-file-icon">📁</span><span>_templates/</span></div>
-                  <div class="tree-file"><span class="tree-file-icon">📁</span><span>.omni/</span><span class="tree-tag">runtime</span></div>
-                  <div class="tree-file highlight-file"><span class="tree-file-icon">📄</span><span>.omni/memory.db</span><span class="tree-tag">SQLite FTS5</span></div>
+                  <div class="tree-file"><span class="tree-file-icon">📁</span><span>.omni/</span><span class="tree-tag">runtime (local)</span></div>
                   <div class="tree-file"><span class="tree-file-icon">📁</span><span>commands/</span></div>
-                  <div class="tree-file"><span class="tree-file-icon">📄</span><span>manifest.lock</span></div>
+                  <div class="tree-file"><span class="tree-file-icon">📄</span><span>manifest.lock</span><span class="tree-tag">Lamport mutex</span></div>
+                  <div class="tree-file"><span class="tree-file-icon">📄</span><span>contracts.json</span><span class="tree-tag">
+                    <span data-locale="es">contratos</span>
+                    <span data-locale="en" hidden>contracts</span>
+                  </span></div>
                   <div class="tree-file"><span class="tree-file-icon">📄</span><span>.gitignore</span></div>
                   <div class="tree-file"><span class="tree-file-icon">📄</span><span>manifest.json</span><span class="tree-tag">
                     <span data-locale="es">versión</span>
@@ -325,9 +490,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           </div>
 
           <!-- VISTA 2: CONSTITUTION.md (BILINGÜE ES / EN) -->
-          <div id="view-const" class="exp-view exp-scrollable" hidden>
+          <div id="view-const" role="tabpanel" aria-labelledby="tab-const" tabindex="0" class="exp-view exp-scrollable" hidden>
             <div data-locale="es">
-              <pre class="spec-code"><code><span class="text-secondary"># CONSTITUTION — LaboratorioSpringBootBancov2</span>
+              <pre class="spec-code"><code><span class="text-secondary"># CONSTITUTION — my-pay-service</span>
 <span class="text-accent">&gt; Directivas de ingeniería inviolables para agentes de IA.</span>
 
 <span class="text-highlight">1. Cirugía de Código (Minimal Touch):</span>
@@ -343,7 +508,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
    El código debe ser autoexplicativo y limpio.</code></pre>
             </div>
             <div data-locale="en" hidden>
-              <pre class="spec-code"><code><span class="text-secondary"># CONSTITUTION — LaboratorioSpringBootBancov2</span>
+              <pre class="spec-code"><code><span class="text-secondary"># CONSTITUTION — my-pay-service</span>
 <span class="text-accent">&gt; Non-negotiable engineering directives for AI coding agents.</span>
 
 <span class="text-highlight">1. Minimal Touch Surgery:</span>
@@ -361,34 +526,36 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           </div>
 
           <!-- VISTA 3: project-context.md (BILINGÜE ES / EN) -->
-          <div id="view-context" class="exp-view exp-scrollable" hidden>
+          <div id="view-context" role="tabpanel" aria-labelledby="tab-context" tabindex="0" class="exp-view exp-scrollable" hidden>
             <div data-locale="es">
-              <pre class="spec-code"><code><span class="text-secondary"># Project Context — LaboratorioSpringBootBancov2</span>
+              <pre class="spec-code"><code><span class="text-secondary"># Project Context — my-pay-service</span>
 <span class="text-accent">&gt; Memoria arquitectónica destilada del repositorio (MDD).</span>
 
 <span class="text-highlight">## Stack Detectado</span>
-- Lenguaje / Framework: Spring Boot 3.x (Java 21)
+- Lenguaje / Runtime: TypeScript 5.x / Node.js 22 (LTS)
 - Arquitectura: Hexagonal / Domain-Driven Design (DDD)
-- Base de Datos: PostgreSQL + JPA / Flyway
-- Quality Gates: ./mvnw clean test (JUnit 5 + AssertJ)
+- Base de Datos: PostgreSQL + Prisma ORM
+- Quality Gates: npm test
+- Quality Gates: npm run build
 
 <span class="text-highlight">## Directivas del Repositorio</span>
 - Convención de Commits: Conventional Commits 1.0.0
-- Documentación: Javadoc obligatorio en contratos de dominio.</code></pre>
+- Documentación: TSDoc obligatorio en contratos de dominio.</code></pre>
             </div>
             <div data-locale="en" hidden>
-              <pre class="spec-code"><code><span class="text-secondary"># Project Context — LaboratorioSpringBootBancov2</span>
+              <pre class="spec-code"><code><span class="text-secondary"># Project Context — my-pay-service</span>
 <span class="text-accent">&gt; Distilled architectural memory of the repository (MDD).</span>
 
 <span class="text-highlight">## Detected Stack</span>
-- Language / Framework: Spring Boot 3.x (Java 21)
+- Language / Runtime: TypeScript 5.x / Node.js 22 (LTS)
 - Architecture: Hexagonal / Domain-Driven Design (DDD)
-- Database: PostgreSQL + JPA / Flyway
-- Quality Gates: ./mvnw clean test (JUnit 5 + AssertJ)
+- Database: PostgreSQL + Prisma ORM
+- Quality Gates: npm test
+- Quality Gates: npm run build
 
 <span class="text-highlight">## Repository Invariants</span>
 - Commit Convention: Conventional Commits 1.0.0 (in English)
-- Documentation Standard: Javadoc mandatory on domain interfaces.</code></pre>
+- Documentation Standard: TSDoc mandatory on domain interfaces.</code></pre>
             </div>
           </div>
         </div>
@@ -407,6 +574,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 </section>
 
 <script>
+  import { enableTabKeyboard } from '../scripts/tabs';
   // Terminal Interactive Wizard Steps
   const steps = Array.from(document.querySelectorAll<HTMLElement>('.term-step'));
   const badge = document.getElementById('term-step-badge');
@@ -415,7 +583,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   const hintText = document.getElementById('term-hint-text');
   const statusBar = document.getElementById('term-status-bar');
 
-  let currentStep = 0;
+  let currentStep = 1;
+  let currentMode: 'sdd' | 'multiagent' | 'guardian' | 'verify' = 'sdd';
 
   const stepBadgeLabels = [
     { es: 'Entrada', en: 'Input' },
@@ -424,6 +593,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     { es: 'Confirmación (3/3)', en: 'Confirmation (3/3)' },
     { es: 'Instalado v0.9.0', en: 'Installed v0.9.0' }
   ];
+
+  const modeBadgeLabels: Record<'multiagent' | 'guardian' | 'verify', { es: string; en: string }> = {
+    multiagent: { es: 'Memoria FTS5', en: 'FTS5 Memory' },
+    guardian: { es: 'Guardian Anti-Slop', en: 'Guardian Anti-Slop' },
+    verify: { es: 'HMAC Verificado', en: 'HMAC Verified' }
+  };
 
   const hintLabels = [
     { es: 'Presiona Enter para ejecutar', en: 'Press Enter to run' },
@@ -440,7 +615,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   function updateTexts() {
     const lang = getActiveLang();
     if (badge) {
-      badge.textContent = stepBadgeLabels[currentStep][lang];
+      badge.textContent = currentMode === 'sdd'
+        ? stepBadgeLabels[currentStep][lang]
+        : modeBadgeLabels[currentMode][lang];
     }
     if (stepIndicator) {
       stepIndicator.textContent = `${currentStep} / 4`;
@@ -449,7 +626,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       hintText.textContent = hintLabels[currentStep][lang];
     }
     if (treeBadge) {
-      if (currentStep < 4) {
+      const synced = currentMode === 'verify' || currentStep === 4;
+      if (!synced) {
         treeBadge.textContent = lang === 'en' ? 'Pre-installation' : 'Pre-instalación';
         treeBadge.classList.remove('is-synced');
       } else {
@@ -478,20 +656,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     else showStep(0);
   }
 
-  // Touch & click fallback on status bar for mobile / tablet devices without hardware keyboard
+  updateTexts();
+
+  // Click on status bar advances step
   statusBar?.addEventListener('click', () => {
     nextStep();
   });
 
-  // Key navigation: Enter advances step
-  window.addEventListener('keydown', (e) => {
-    const canvas = document.getElementById('canvas');
-    if (!canvas) return;
-    const rect = canvas.getBoundingClientRect();
-    const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-    if (isVisible && e.key === 'Enter') {
-      const activeEl = document.activeElement;
-      if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA')) return;
+  // Focused key navigation on the interactive card only (no global window hijacking)
+  const termCard = document.getElementById('term-interactive-card');
+  termCard?.addEventListener('keydown', (e) => {
+    if (e.target === termCard && currentMode === 'sdd' && (e.key === 'Enter' || e.key === ' ')) {
       e.preventDefault();
       nextStep();
     }
@@ -519,4 +694,45 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       });
     });
   });
+
+  // Workbench Dock Mode Switching
+  const dockTabs = Array.from(document.querySelectorAll<HTMLButtonElement>('.dock-tab'));
+  const modePanes = Array.from(document.querySelectorAll<HTMLElement>('.workbench-mode-pane'));
+
+  dockTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const mode = (tab.getAttribute('data-mode') || 'sdd') as 'sdd' | 'multiagent' | 'guardian' | 'verify';
+      currentMode = mode;
+      document.getElementById('workbench-panel')?.setAttribute('aria-labelledby', tab.id);
+      dockTabs.forEach(t => {
+        const isCurrent = t === tab;
+        t.setAttribute('aria-selected', isCurrent ? 'true' : 'false');
+        t.classList.toggle('is-active', isCurrent);
+      });
+
+      if (mode === 'sdd') {
+        modePanes.forEach(p => p.hidden = true);
+        steps.forEach((step, idx) => step.hidden = idx !== currentStep);
+        if (statusBar) statusBar.style.display = 'flex';
+        updateTexts();
+        (document.getElementById('tab-tree') as HTMLButtonElement | null)?.click();
+      } else {
+        steps.forEach(step => step.hidden = true);
+        if (statusBar) statusBar.style.display = 'none';
+        modePanes.forEach(pane => {
+          pane.hidden = pane.id !== `mode-pane-${mode}`;
+        });
+        updateTexts();
+        if (mode === 'multiagent') {
+          (document.getElementById('tab-context') as HTMLButtonElement | null)?.click();
+        } else if (mode === 'guardian') {
+          (document.getElementById('tab-const') as HTMLButtonElement | null)?.click();
+        } else if (mode === 'verify') {
+          (document.getElementById('tab-tree') as HTMLButtonElement | null)?.click();
+        }
+      }
+    });
+  });
+  enableTabKeyboard(expTabs);
+  enableTabKeyboard(dockTabs);
 </script>

@@ -154,8 +154,8 @@ export const skillsLoop: SkillStep[] = [
       en: 'Resolve ambiguities before technical design.'
     },
     instruction: {
-      es: 'No pases a programar a ciegas. Si faltan reglas de negocio o límites de API, haz preguntas concretas al usuario. Según la fase activa, registra las decisiones en la spec o sincroniza plan y tareas existentes sin inventar cambios.',
-      en: 'Do not code blindly. If business rules or API boundaries are missing, ask targeted questions. Depending on the active phase, record decisions in the spec or synchronize existing plan and tasks without inventing changes.'
+      es: 'Protocolo consciente de fase. Inspecciona físicamente los archivos que existen antes de editar y solicita confirmación interactiva. En fase tardía sincroniza plan y tareas existentes, ejecutando auditoría obligatoria a 0 errores.',
+      en: 'Phase-aware protocol. Physically inspect existing files before editing and request interactive confirmation. In late phase, synchronize existing plan and tasks, running a mandatory zero-error audit gate.'
     }
   },
   {
@@ -240,8 +240,8 @@ export const skillsLoop: SkillStep[] = [
       en: 'Code implementation and Minimal Touch Surgery.'
     },
     instruction: {
-      es: 'Modifica únicamente los archivos aprobados en el plan. Cumple estrictamente las 5 reglas Anti-Slop: cero any, cero tests con mocks falsos, 4 estados en UI, cero abstracciones especulativas y cero dependencias nuevas sin autorización.',
-      en: 'Modify only files approved in the plan. Strictly enforce 5 Anti-Slop rules: zero any, zero tests with fake mocks, 4 UI states, zero speculative wrappers, and zero unauthorized new dependencies.'
+      es: 'Aplica la regla constitucional Write-Before-Speak: prohibido afirmar cambios no persistidos o diferir requisitos a código futuro. Cumple las 5 reglas Anti-Slop: cero any, cero tests con mocks falsos, 4 estados en UI, cero abstracciones prematuras y cero dependencias no autorizadas.',
+      en: 'Enforces constitutional Write-Before-Speak law: strictly forbid claiming unpersisted edits or deferring requirements to future code. Honors 5 Anti-Slop rules: zero any, zero fake mocks, 4 UI states, zero premature abstractions, and zero unauthorized dependencies.'
     },
     badge: {
       es: 'MINIMAL TOUCH',
@@ -264,8 +264,8 @@ export const skillsLoop: SkillStep[] = [
       en: 'Evidence verification and cycle closure.'
     },
     instruction: {
-      es: 'Ejecuta omni-spec verify. Verifica que todas las pruebas pasen con exit code 0. Si el contexto está inflado, destílalo. Solo si todo está demostrado con evidencia real, ejecuta omni-spec complete.',
-      en: 'Run omni-spec verify. Verify all tests pass with exit code 0. If context is bloated, distill it. Only when everything is proven with executable evidence, execute omni-spec complete.'
+      es: 'Ejecuta omni-spec verify. Hollow-Guard bloquea pruebas vacías o tautológicas. Firma el registro de verificación con atestación criptográfica HMAC-SHA256 v4. Solo con todos los criterios cubiertos y evidencia demostrada, ejecuta omni-spec complete.',
+      en: 'Run omni-spec verify. Hollow-Guard blocks empty or tautological tests. Signs the verification record with HMAC-SHA256 v4 attestation. Only when all criteria are covered with demonstrated evidence, execute omni-spec complete.'
     },
     badge: {
       es: 'EXIT 0',

@@ -1,0 +1,22 @@
+---
+import { docsNavigation } from '../data/docs-navigation';
+import { translations } from '../i18n/translations';
+---
+<nav aria-label={translations.es['docs.nav']} data-i18n-aria="docs.nav" class="docs-nav-groups">
+  {docsNavigation.map(group => (
+    <div class="nav-category-group">
+      <p class="nav-category-title">
+        <span data-locale="es">{group.es}</span>
+        <span data-locale="en" hidden>{group.en}</span>
+      </p>
+      <div class="nav-category-links">
+        {group.items.map(item => (
+          <a href={'#' + item.id} class="nav-link">
+            <span data-locale="es">{item.es}</span>
+            <span data-locale="en" hidden>{item.en}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  ))}
+</nav>

@@ -16,7 +16,98 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <p class="body-copy" data-i18n="value.intro">{t['value.intro']}</p>
     </div>
 
-    <!-- Master-Detail Workbench (Inspirado en Diagram Design & Better UX) -->
+    <!-- Matriz Dialéctica Comparativa: Split Ledger unificado (sin tarjetas anidadas) -->
+    <div class="comparative-matrix rounded-xl border border-[rgb(var(--border-rgb)/0.14)] overflow-hidden grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-[rgb(var(--border-rgb)/0.12)] mb-16 bg-[rgb(var(--bg-surface))]">
+      <!-- Columna 1: Sin especificación / Vibe Coding -->
+      <div class="chaos-card p-6 sm:p-7 flex flex-col justify-between bg-red-500/[0.03] dark:bg-red-950/15">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-3 pb-3 border-b border-red-500/15">
+            <span class="font-mono text-[11px] font-semibold tracking-wide text-red-800 dark:text-red-300" data-i18n="value.chaos.badge">
+              {t['value.chaos.badge']}
+            </span>
+            <span class="font-mono text-[10px] font-semibold tracking-wider text-red-800 dark:text-red-400 tabular-nums">
+              <span data-locale="es">RIESGOS HABITUALES</span>
+              <span data-locale="en" hidden>COMMON RISKS</span>
+            </span>
+          </div>
+          <p class="text-xs text-[rgb(var(--text-secondary))] mb-5 font-mono" data-i18n="value.chaos.subtitle">{t['value.chaos.subtitle']}</p>
+          
+          <ul class="space-y-4">
+            <li class="border-l-2 border-red-500/45 pl-3.5">
+              <span class="block font-mono text-xs font-bold text-red-900 dark:text-red-300" data-i18n="value.chaos.1.tag">{t['value.chaos.1.tag']}</span>
+              <p class="text-xs text-[rgb(var(--text-secondary))] mt-0.5" data-i18n="value.chaos.1.detail">{t['value.chaos.1.detail']}</p>
+            </li>
+            <li class="border-l-2 border-red-500/45 pl-3.5">
+              <span class="block font-mono text-xs font-bold text-red-900 dark:text-red-300" data-i18n="value.chaos.2.tag">{t['value.chaos.2.tag']}</span>
+              <p class="text-xs text-[rgb(var(--text-secondary))] mt-0.5" data-i18n="value.chaos.2.detail">{t['value.chaos.2.detail']}</p>
+            </li>
+            <li class="border-l-2 border-red-500/45 pl-3.5">
+              <span class="block font-mono text-xs font-bold text-red-900 dark:text-red-300" data-i18n="value.chaos.3.tag">{t['value.chaos.3.tag']}</span>
+              <p class="text-xs text-[rgb(var(--text-secondary))] mt-0.5" data-i18n="value.chaos.3.detail">{t['value.chaos.3.detail']}</p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-red-500/15 font-mono text-[11px] text-red-800 dark:text-red-300 tabular-nums">
+          <div data-locale="es">
+            <div class="text-[10px] text-[rgb(var(--text-secondary))] uppercase tracking-wider mb-1">Riesgos que conviene revisar:</div>
+            <div>✖ Código fuera del alcance acordado</div>
+            <div>✖ Falso éxito en prompts sin test ejecutable</div>
+          </div>
+          <div data-locale="en" hidden>
+            <div class="text-[10px] text-[rgb(var(--text-secondary))] uppercase tracking-wider mb-1">Risks to check:</div>
+            <div>✖ Code outside the agreed scope</div>
+            <div>✖ False passes on prompts with zero runnable tests</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna 2: Motor Agéntico OmniSpec -->
+      <div class="spec-card p-6 sm:p-7 flex flex-col justify-between bg-emerald-500/[0.03] dark:bg-emerald-950/15">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-3 pb-3 border-b border-emerald-500/15">
+            <span class="font-mono text-[11px] font-semibold tracking-wide text-emerald-900 dark:text-emerald-300" data-i18n="value.spec.badge">
+              {t['value.spec.badge']}
+            </span>
+            <span class="font-mono text-[10px] font-semibold tracking-wider text-emerald-900 dark:text-emerald-400 tabular-nums">
+              <span data-locale="es">SDD DETERMINISTA</span>
+              <span data-locale="en" hidden>DETERMINISTIC SDD</span>
+            </span>
+          </div>
+          <p class="text-xs text-[rgb(var(--text-secondary))] mb-5 font-mono" data-i18n="value.spec.subtitle">{t['value.spec.subtitle']}</p>
+          
+          <ul class="space-y-4">
+            <li class="border-l-2 border-emerald-500/55 pl-3.5">
+              <span class="block font-mono text-xs font-bold text-emerald-900 dark:text-emerald-300" data-i18n="value.spec.1.tag">{t['value.spec.1.tag']}</span>
+              <p class="text-xs text-[rgb(var(--text-secondary))] mt-0.5" data-i18n="value.spec.1.detail">{t['value.spec.1.detail']}</p>
+            </li>
+            <li class="border-l-2 border-emerald-500/55 pl-3.5">
+              <span class="block font-mono text-xs font-bold text-emerald-900 dark:text-emerald-300" data-i18n="value.spec.2.tag">{t['value.spec.2.tag']}</span>
+              <p class="text-xs text-[rgb(var(--text-secondary))] mt-0.5" data-i18n="value.spec.2.detail">{t['value.spec.2.detail']}</p>
+            </li>
+            <li class="border-l-2 border-emerald-500/55 pl-3.5">
+              <span class="block font-mono text-xs font-bold text-emerald-900 dark:text-emerald-300" data-i18n="value.spec.3.tag">{t['value.spec.3.tag']}</span>
+              <p class="text-xs text-[rgb(var(--text-secondary))] mt-0.5" data-i18n="value.spec.3.detail">{t['value.spec.3.detail']}</p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-emerald-500/15 font-mono text-[11px] text-emerald-900 dark:text-emerald-300 tabular-nums">
+          <div data-locale="es">
+            <div class="text-[10px] text-[rgb(var(--text-secondary))] uppercase tracking-wider mb-1">Evidencia para revisar:</div>
+            <div>✔ Alcance y cambios registrados</div>
+            <div>✔ Firma HMAC-SHA256 en verification.json</div>
+          </div>
+          <div data-locale="en" hidden>
+            <div class="text-[10px] text-[rgb(var(--text-secondary))] uppercase tracking-wider mb-1">Evidence to review:</div>
+            <div>✔ Recorded scope and changes</div>
+            <div>✔ HMAC-SHA256 signature in verification.json</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Workbench Maestro-Detalle -->
     <div class="relative mx-auto my-4 w-full max-w-5xl select-none" id="skills-pipeline-diagram">
       
       <!-- Contenedor Principal del Workbench -->
@@ -75,17 +166,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
                       <span class="shrink-0 font-mono text-[12px] font-medium text-[rgb(var(--text-primary))]">
                         {s.command}
                       </span>
-                      <span class="hidden 2xl:inline-block truncate text-[10.5px] text-[rgb(var(--text-secondary))] max-w-[120px]" data-i18n={`loop.skill.${s.id}.short`}>
-                        · {t[`loop.skill.${s.id}.short`]}
+                      <span class="hidden 2xl:inline-block truncate text-[10.5px] text-[rgb(var(--text-secondary))] max-w-[120px]">
+                        · <span data-i18n={`loop.skill.${s.id}.short`}>{t[`loop.skill.${s.id}.short`]}</span>
                       </span>
                     </div>
                     <div class="flex items-center gap-1.5 shrink-0 ml-1.5">
                       {s.badge && (
                         <span class="rounded bg-[rgb(var(--bg-surface-elevated))] border border-[rgb(var(--border-rgb)/0.12)] px-1.5 py-0.5 font-mono text-[8.5px] font-medium text-[rgb(var(--text-secondary))]">
-                          {s.badge.es}
+                          <span data-locale="es">{s.badge.es}</span>
+                          <span data-locale="en" hidden>{s.badge.en}</span>
                         </span>
                       )}
-                      <span class="font-mono text-[9px] text-[rgb(var(--text-tertiary))]">
+                      <span class="font-mono text-[9px] text-[rgb(var(--text-secondary))]">
                         {s.size}
                       </span>
                     </div>
@@ -97,10 +189,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             <!-- ETAPA 2 -->
             <div>
               <div class="flex items-center justify-between px-1.5 pb-1 border-t border-[rgb(var(--border-rgb)/0.08)] pt-2">
-                <span class="font-mono text-[9.5px] font-bold tracking-wider text-amber-600 dark:text-amber-400" data-i18n="loop.stage.2.title">
+                <span class="font-mono text-[9.5px] font-bold tracking-wider text-amber-800 dark:text-amber-300" data-i18n="loop.stage.2.title">
                   {t['loop.stage.2.title']}
                 </span>
-                <span class="font-mono text-[9px] text-amber-700/70 dark:text-amber-300/70" data-i18n="loop.stage.2.count">
+                <span class="font-mono text-[9px] font-semibold text-amber-900 dark:text-amber-300" data-i18n="loop.stage.2.count">
                   {t['loop.stage.2.count']}
                 </span>
               </div>
@@ -123,17 +215,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
                       <span class="shrink-0 font-mono text-[12px] font-medium text-[rgb(var(--text-primary))]">
                         {s.command}
                       </span>
-                      <span class="hidden 2xl:inline-block truncate text-[10.5px] text-[rgb(var(--text-secondary))] max-w-[120px]" data-i18n={`loop.skill.${s.id}.short`}>
-                        · {t[`loop.skill.${s.id}.short`]}
+                      <span class="hidden 2xl:inline-block truncate text-[10.5px] text-[rgb(var(--text-secondary))] max-w-[120px]">
+                        · <span data-i18n={`loop.skill.${s.id}.short`}>{t[`loop.skill.${s.id}.short`]}</span>
                       </span>
                     </div>
                     <div class="flex items-center gap-1.5 shrink-0 ml-1.5">
                       {s.badge && (
-                        <span class={`rounded px-1.5 py-0.5 font-mono text-[8.5px] font-medium ${s.badge.variant === 'gate' ? 'bg-amber-500/10 border border-amber-500/30 text-amber-700 dark:text-amber-300' : 'bg-[rgb(var(--bg-surface-elevated))] border border-[rgb(var(--border-rgb)/0.12)] text-[rgb(var(--text-secondary))]'}`}>
-                          {s.badge.es}
+                        <span class={`rounded px-1.5 py-0.5 font-mono text-[8.5px] font-semibold ${s.badge.variant === 'gate' ? 'bg-amber-500/15 border border-amber-600/40 text-amber-900 dark:text-amber-300' : 'bg-[rgb(var(--bg-surface-elevated))] border border-[rgb(var(--border-rgb)/0.12)] text-[rgb(var(--text-secondary))]'}`}>
+                          <span data-locale="es">{s.badge.es}</span>
+                          <span data-locale="en" hidden>{s.badge.en}</span>
                         </span>
                       )}
-                      <span class="font-mono text-[9px] text-[rgb(var(--text-tertiary))]">
+                      <span class="font-mono text-[9px] text-[rgb(var(--text-secondary))]">
                         {s.size}
                       </span>
                     </div>
@@ -145,10 +238,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             <!-- ETAPA 3 -->
             <div>
               <div class="flex items-center justify-between px-1.5 pb-1 border-t border-[rgb(var(--border-rgb)/0.08)] pt-2">
-                <span class="font-mono text-[9.5px] font-bold tracking-wider text-emerald-600 dark:text-emerald-400" data-i18n="loop.stage.3.title">
+                <span class="font-mono text-[9.5px] font-bold tracking-wider text-emerald-800 dark:text-emerald-300" data-i18n="loop.stage.3.title">
                   {t['loop.stage.3.title']}
                 </span>
-                <span class="font-mono text-[9px] text-emerald-700/70 dark:text-emerald-300/70" data-i18n="loop.stage.3.count">
+                <span class="font-mono text-[9px] font-semibold text-emerald-900 dark:text-emerald-300" data-i18n="loop.stage.3.count">
                   {t['loop.stage.3.count']}
                 </span>
               </div>
@@ -171,17 +264,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
                       <span class="shrink-0 font-mono text-[12px] font-medium text-[rgb(var(--text-primary))]">
                         {s.command}
                       </span>
-                      <span class="hidden 2xl:inline-block truncate text-[10.5px] text-[rgb(var(--text-secondary))] max-w-[120px]" data-i18n={`loop.skill.${s.id}.short`}>
-                        · {t[`loop.skill.${s.id}.short`]}
+                      <span class="hidden 2xl:inline-block truncate text-[10.5px] text-[rgb(var(--text-secondary))] max-w-[120px]">
+                        · <span data-i18n={`loop.skill.${s.id}.short`}>{t[`loop.skill.${s.id}.short`]}</span>
                       </span>
                     </div>
                     <div class="flex items-center gap-1.5 shrink-0 ml-1.5">
                       {s.badge && (
-                        <span class={`rounded px-1.5 py-0.5 font-mono text-[8.5px] font-medium ${s.badge.variant === 'success' ? 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300' : 'bg-[rgb(var(--bg-surface-elevated))] border border-[rgb(var(--border-rgb)/0.12)] text-[rgb(var(--text-secondary))]'}`}>
-                          {s.badge.es}
+                        <span class={`rounded px-1.5 py-0.5 font-mono text-[8.5px] font-semibold ${s.badge.variant === 'success' ? 'bg-emerald-500/15 border border-emerald-600/40 text-emerald-900 dark:text-emerald-300' : 'bg-[rgb(var(--bg-surface-elevated))] border border-[rgb(var(--border-rgb)/0.12)] text-[rgb(var(--text-secondary))]'}`}>
+                          <span data-locale="es">{s.badge.es}</span>
+                          <span data-locale="en" hidden>{s.badge.en}</span>
                         </span>
                       )}
-                      <span class="font-mono text-[9px] text-[rgb(var(--text-tertiary))]">
+                      <span class="font-mono text-[9px] text-[rgb(var(--text-secondary))]">
                         {s.size}
                       </span>
                     </div>
@@ -236,13 +330,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             </div>
 
             <!-- Footer técnico de la Consola -->
-            <div class="mt-5 border-t border-[rgb(var(--border-rgb)/0.08)] pt-3 flex items-center justify-between font-mono text-[10.5px] text-[rgb(var(--text-tertiary))]">
+            <div class="mt-5 border-t border-[rgb(var(--border-rgb)/0.12)] pt-3 flex items-center justify-between font-mono text-[10.5px] text-[rgb(var(--text-secondary))]">
               <span class="flex items-center gap-1.5">
-                <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                <span>FAIL-FAST & ZERO CODE SLOP</span>
+                <span class="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden="true"></span>
+                <span data-locale="es">FAIL-FAST Y CERO CODE SLOP</span>
+                <span data-locale="en" hidden>FAIL-FAST &amp; ZERO CODE SLOP</span>
               </span>
-              <span id="inspector-evidence-status" class="text-[rgb(var(--text-secondary))] font-medium">
-                DETERMINISTIC PIPELINE
+              <span id="inspector-evidence-status" class="text-[rgb(var(--text-primary))] font-medium">
+                <span data-locale="es">PIPELINE DETERMINISTA</span>
+                <span data-locale="en" hidden>DETERMINISTIC PIPELINE</span>
               </span>
             </div>
 
