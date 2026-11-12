@@ -1,27 +1,36 @@
 # OmniPage
 
-Static website and documentation for OmniSpec, built with Astro 4, Tailwind CSS and TypeScript. Three routes: the landing page, /docs/ and /changelog/, under the /OmniPage base path.
+Static website and documentation for OmniSpec at https://omnispec.dev. Routes: `/`, `/docs/`, `/changelog/`.
 
 ## Development
 
-Install dependencies with npm install. Use npm run dev for development, npm run build for Astro diagnostics and the production build, npm test for navigation/assets/content contracts and replay regression checks, and npm run preview to inspect dist. The tests currently run on Node 24; the website build has its own CI runtime.
+Use Node.js 24 and `npm ci`. Start localhost with `npm run dev`. Run `npm run build` **before** `npm test`: the route, asset, accessibility-contract and content tests inspect the generated `dist` output. `npm run check` runs Astro/TypeScript diagnostics separately.
+
+## Components and styling
+
+Astro 7, strict TypeScript and Tailwind 3 remain the website stack. `src/components/ui/button.tsx` is a local shadcn/ui Button adaptation, using Radix Slot, CVA and the existing RGB color tokens. Navigation actions and copy controls render it to static HTML through Astro's React integration. They do not hydrate React in the browser. The MIT notice is beside the component.
+
+`components.json` and the `@/*` alias configure the local component directory. New shadcn components must be adapted to Tailwind 3 and the project's RGB tokens; the latest registry may assume a newer Tailwind version. Prefer native links and disclosures for document navigation and FAQ content. Specialized components such as the ASCII artwork remain owned Astro components.
+
+`src/data/docs-navigation.ts` defines the documentation reading order. `DocsNavigation.astro` uses it for desktop and mobile; the page renders content in the same order. Preserve the section IDs because external links target them. `src/scripts/docs-navigation.ts` tracks the reading position and handles mobile focus recovery. `src/scripts/tabs.ts` supplies keyboard navigation to the workbench's tab groups.
 
 ## Product content
 
-src/data/omnispec.ts centralizes OmniSpec 0.9.0, published on the npm latest channel. Release metadata and source links are in src/data/releases.json. src/data/docs.ts contains the bilingual documentation. OmniSpec requires Node >=22.19.0 independently of the website build.
-
-The installation choices use each agent's own invocation and paths. The page supports Spanish/English, light/dark preferences, explicit clipboard feedback and recovery, keyboard controls and reduced-motion behavior. These are implementation features, not a blanket accessibility certification.
-
-## IDE walkthrough
-
-The default presentation is an 80-second silent HyperFrames video, played when visible, with close-ups and small pause/restart controls. Explore files opens an accessible reconstruction of ten lifecycle stages. File contents and terminal output come from an executed local example of clipboard logic; conversation is illustrative. It does not run OmniSpec or an AI agent in the visitor's browser.
-
-src/data/lifecycle-recording.json preserves 30 files and their revisions plus 11 CLI/test invocations. The example's completed spec is distinct from the website's own SPEC-009. Highlighted source uses VS Code Dark+ at authoring time. VS Code Seti/Codicons and agent marks have source/license notes in public/assets.
-
-media/omni-workflow contains the editable film, storyboard, source notes, review and pinned HyperFrames CLI. record-example.mjs recreates the real example in a temporary directory. scripts/highlight-replay.mjs updates its syntax colors. scripts/prepare-workflow-film.mjs refreshes the captured workbench template with the latest exact file and terminal data. Run its full HyperFrames check and inspect snapshots before exporting to public/media/omni-workflow.mp4. FFmpeg and FFprobe are required for export; neither is a website runtime dependency.
+`src/data/omnispec.ts` holds release and integration data; `src/data/docs.ts` holds bilingual documentation. `src/i18n/translations.ts` owns shared interface copy. The main page's terminal is an interactive simulation with sample output, not a live CLI or agent session. The ASCII artwork supports pause, layer inspection and reduced motion.
 
 ## Delivery
 
-GitHub Pages deployment is configured in .github/workflows/deploy.yml. Pushing main runs the build and publishes its static output. The ASCII symbol remains in place; a new avatar identity is a separate design decision.
+`.github/workflows/deploy.yml` builds and tests pull requests on Node 24. PRs do not deploy. Pushing `main` or running the workflow manually from `main` builds, tests and publishes to GitHub Pages. Release content was outside the interface revision scope.
 
-MIT. See the repository and asset license files.
+The final correction pass upgrades Astro to 7.4.11 and React integration to 7.1.8; the verified npm audit has zero vulnerabilities. Tailwind 3 runs through PostCSS.
+
+MIT. See repository and asset license files.
+
+
+## Localized pages and assets
+
+Spanish routes stay at `/`, `/docs/`, `/changelog/`; English routes live under `/en/`. English page wrappers reuse the Astro pages, and `src/middleware.ts` translates their bundled content during prerendering (also in dev). Both languages ship readable HTML, canonical URLs and reciprocal hreflang links. Language switching navigates to the equivalent route and preserves the fragment. The sitemap lists all six URLs without invented modification dates.
+
+Albert Sans and JetBrains Mono variable fonts are self-hosted through Fontsource (OFL licenses in their packages). The social PNG is a 1200×630 rasterization of the current SVG banner. The integration strip toggles a persistent pause by click, tap, Enter or Space; reduced motion disables autoplay.
+
+Production deployments are restricted to `main` and share one concurrency group. Build and test precede upload. Run `npm audit` before release; smoke-test all six routes, language switching, social metadata and HTTP→HTTPS after publishing. GitHub Pages HTTPS enforcement is enabled separately in repository settings.

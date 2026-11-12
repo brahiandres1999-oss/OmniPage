@@ -32,6 +32,16 @@
   import { translations } from '../i18n/translations';
   /** Región geométrica de la figura muestreada (define el color base). */
   type RegionId = 'plinth' | 'feature' | 'bugfix' | 'techdebt' | 'rfc' | 'gate' | 'jewel';
+  /** Capas arquitectónicas expuestas a la inspección interactiva del usuario. */
+  type AnatomyLayer = 'plinth' | 'feature' | 'bugfix' | 'techdebt' | 'rfc' | 'verify';
+
+  /** Capas ordenadas de la base hacia el centro verificable. */
+  const ALL_LAYERS: AnatomyLayer[] = ['plinth', 'feature', 'bugfix', 'techdebt', 'rfc', 'verify'];
+
+  /** Unifica el portal y la gema central bajo la capa de verificación. */
+  function normalizeLayer(region: RegionId): AnatomyLayer {
+    return region === 'gate' || region === 'jewel' ? 'verify' : region;
+  }
 
   /** Partícula ASCII de la figura, con objetivo normalizado y sombreado de cara. */
   interface AsciiParticle {
@@ -41,6 +51,8 @@
     ny: number;
     /** Región de origen (color base). */
     region: RegionId;
+    /** Capa normalizada de arquitectura para aislamiento X-ray. */
+    layer: AnatomyLayer;
     /** Multiplicador de sombreado (1 = cara superior, menor = cara lateral). */
     shade: number;
     /** Carácter ASCII actual. */
@@ -59,6 +71,13 @@
     vy: number;
     /** Opacidad de render (0..1). */
     alpha: number;
+  }
+
+  /** Partículas pre-calculadas junto con la grilla de hit-testing en reposo. */
+  interface ParticleLattice {
+    particles: AsciiParticle[];
+    hitGrid: Uint8Array;
+    gridCols: number;
   }
 
   /** Gota de la lluvia ASCII: una columna en caída con estela. */
@@ -91,10 +110,10 @@
   const SPRING = 0.06;
   /** Amortiguación de velocidad por frame. */
   const DAMPING = 0.82;
-  /** Radio de dispersión del cursor como fracción de la escala de la figura. */
-  const REPEL_RADIUS_FRAC = 0.18;
-  /** Fuerza de dispersión máxima del cursor (px/frame²). */
-  const REPEL_STRENGTH = 2.6;
+  /** Radio sutil de perturbación bajo el puntero (mantiene legible la capa inspeccionada). */
+  const REPEL_RADIUS_FRAC = 0.13;
+  /** Fuerza moderada de perturbación del puntero (px/frame²). */
+  const REPEL_STRENGTH = 1.4;
   /** Escala de la figura como fracción del lado menor del lienzo (presencia visual). */
   const FIGURE_SCALE_FRAC = 1.35;
 
@@ -193,14 +212,16 @@
   }
 
   /**
-   * Perfila la figura del logo y genera las partículas ASCII normalizadas.
+   * Perfila la figura del logo y genera las partículas ASCII normalizadas junto a la grilla de hit-testing.
    */
-  function buildParticles(): AsciiParticle[] {
+  function buildParticles(): ParticleLattice {
+    const gridCols = Math.ceil(SAMPLE_SIZE / SAMPLE_STEP);
+    const hitGrid = new Uint8Array(gridCols * gridCols);
     const off = document.createElement('canvas');
     off.width = SAMPLE_SIZE;
     off.height = SAMPLE_SIZE;
     const ctx = off.getContext('2d');
-    if (!ctx) return [];
+    if (!ctx) return { particles: [], hitGrid, gridCols };
 
     drawLogoGeometry(ctx, SAMPLE_SIZE);
     const { data } = ctx.getImageData(0, 0, SAMPLE_SIZE, SAMPLE_SIZE);
@@ -211,6 +232,11 @@
         const i = (y * SAMPLE_SIZE + x) * 4;
         if (data[i + 3] < 100) continue;
         const region = REGION_BY_CODE.get(Math.round(data[i] / 26)) ?? 'plinth';
+        const layer = normalizeLayer(region);
+        const gx = Math.floor(x / SAMPLE_STEP);
+        const gy = Math.floor(y / SAMPLE_STEP);
+        hitGrid[gy * gridCols + gx] = ALL_LAYERS.indexOf(layer) + 1;
+
         const isSideFace = data[i + 1] > 128;
         const shade = isSideFace ? 0.55 : 1;
         const ramp = isSideFace ? SPARSE_RAMP : DENSE_RAMP;
@@ -218,6 +244,7 @@
           nx: x / SAMPLE_SIZE,
           ny: y / SAMPLE_SIZE,
           region,
+          layer,
           shade,
           char: ramp[Math.floor(Math.random() * ramp.length)],
           x: 0,
@@ -230,7 +257,7 @@
         });
       }
     }
-    return particles;
+    return { particles, hitGrid, gridCols };
   }
 
   /**
@@ -329,7 +356,7 @@
     let userPaused = false;
     const pauseButton = document.getElementById('ascii-pause') as HTMLButtonElement;
     pauseButton.hidden = false;
-    const particles = buildParticles();
+    const { particles, hitGrid, gridCols } = buildParticles();
     const colors = new Map<RegionId, string>();
     for (const id of Object.keys(REGION_COLOR_VAR) as RegionId[]) {
       colors.set(id, readCssColor(REGION_COLOR_VAR[id]));
@@ -340,17 +367,77 @@
       readCssColor('--accent'),
     ];
 
+    const layerOpacity: Record<AnatomyLayer, number> = {
+      plinth: 1,
+      feature: 1,
+      bugfix: 1,
+      techdebt: 1,
+      rfc: 1,
+      verify: 1,
+    };
+
     let isDark = document.documentElement.classList.contains('dark');
     let width = 0;
     let height = 0;
     let mouseX = -9999;
     let mouseY = -9999;
     let mouseActive = false;
+    let canvasHoverLayer: AnatomyLayer | null = null;
+    let canvasPinnedLayer: AnatomyLayer | null = null;
+    let railHoverLayer: AnatomyLayer | null = null;
     let cachedRect: DOMRect | null = null;
     let rain: RainDrop[] = [];
     let rafId = 0;
     let visible = true;
     let destroyed = false;
+
+    /** Opacidad objetivo de una capa según el estado actual de inspección X-ray. */
+    const getTargetOpacity = (layer: AnatomyLayer): number => {
+      const activeLayer = railHoverLayer ?? canvasPinnedLayer ?? canvasHoverLayer;
+      if (activeLayer === null) return 1;
+      return layer === activeLayer ? 1.45 : 0.2;
+    };
+
+    /** Aplica de inmediato las opacidades objetivo (modo estático o pausado). */
+    const snapLayerOpacity = (): void => {
+      for (const layer of ALL_LAYERS) {
+        layerOpacity[layer] = getTargetOpacity(layer);
+      }
+    };
+
+    /** Localiza la capa en reposo bajo unas coordenadas del lienzo (cero parpadeo por dispersión). */
+    const hitTestLayer = (localX: number, localY: number): AnatomyLayer | null => {
+      if (width === 0 || height === 0) return null;
+      if (localX < 0 || localX > width || localY < 0 || localY > height) return null;
+      const scale = Math.min(width, height) * FIGURE_SCALE_FRAC;
+      const nx = (localX - width / 2) / scale + 0.5;
+      const ny = (localY - height / 2) / scale + 0.5;
+      if (nx < 0 || nx > 1 || ny < 0 || ny > 1) return null;
+
+      const gx = (nx * SAMPLE_SIZE) / SAMPLE_STEP;
+      const gy = (ny * SAMPLE_SIZE) / SAMPLE_STEP;
+      const cx = Math.round(gx);
+      const cy = Math.round(gy);
+
+      let bestCode = 0;
+      let bestDistSq = 4.5;
+      for (let dy = -2; dy <= 2; dy++) {
+        const iy = cy + dy;
+        if (iy < 0 || iy >= gridCols) continue;
+        for (let dx = -2; dx <= 2; dx++) {
+          const ix = cx + dx;
+          if (ix < 0 || ix >= gridCols) continue;
+          const code = hitGrid[iy * gridCols + ix];
+          if (code === 0) continue;
+          const distSq = (ix - gx) * (ix - gx) + (iy - gy) * (iy - gy);
+          if (distSq < bestDistSq) {
+            bestDistSq = distSq;
+            bestCode = code;
+          }
+        }
+      }
+      return bestCode > 0 ? ALL_LAYERS[bestCode - 1] : null;
+    };
 
     /** Actualiza la geometría en caché del canvas (evita layout thrashing en mousemove). */
     const updateRect = (): void => {
@@ -371,11 +458,11 @@
     const drawFigure = (): void => {
       const fontSize = Math.max(3, (Math.min(width, height) * FIGURE_SCALE_FRAC * SAMPLE_STEP) / SAMPLE_SIZE * 1.05);
       const figureBoost = isDark ? 1 : 1.4;
-      ctx.font = `500 ${fontSize}px "JetBrains Mono", ui-monospace, monospace`;
+      ctx.font = `500 ${fontSize}px "JetBrains Mono Variable", ui-monospace, monospace`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       for (const p of particles) {
-        ctx.globalAlpha = Math.min(1, p.alpha * figureBoost);
+        ctx.globalAlpha = Math.min(1, p.alpha * figureBoost * layerOpacity[p.layer]);
         ctx.fillStyle = colors.get(p.region) ?? '#888888';
         ctx.fillText(p.char, p.x, p.y);
       }
@@ -479,18 +566,68 @@
       // Lluvia ASCII en caída continua alrededor de la figura
       const rainBoost = isDark ? 1 : 2.2;
       const rainFontSize = Math.max(8, Math.min(width, height) * 0.032);
-      ctx.font = `500 ${rainFontSize}px "JetBrains Mono", ui-monospace, monospace`;
+      ctx.font = `500 ${rainFontSize}px "JetBrains Mono Variable", ui-monospace, monospace`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       drawRain(ctx, rain, width, height, rainFontSize, Math.min(width, height) * 0.42, rainBoost);
 
-      // Figura OmniSpec fija
+      // Interpolación suave de opacidad X-ray por capa arquitectónica
+      for (const layer of ALL_LAYERS) {
+        const target = getTargetOpacity(layer);
+        layerOpacity[layer] += (target - layerOpacity[layer]) * 0.18;
+      }
+
+      // Figura OmniSpec con aislamiento X-ray por capa
       drawFigure();
     };
 
-    /** Manejador pasivo de movimiento de ratón. */
+    /** Actualiza el resaltado hovered si cambió la capa bajo el puntero. */
+    const setCanvasHover = (nextHover: AnatomyLayer | null): void => {
+      if (nextHover === canvasHoverLayer) return;
+      canvasHoverLayer = nextHover;
+      wrap.style.cursor = canvasHoverLayer ? 'pointer' : '';
+      window.dispatchEvent(new CustomEvent('omni:hero-region-hover', { detail: { layer: canvasHoverLayer } }));
+      if (reduceMotion || userPaused) {
+        snapLayerOpacity();
+        drawStatic();
+      }
+    };
+
+    /** Manejador pasivo de movimiento de ratón: física + detección de capa en reposo. */
     const onMouseMove = (e: MouseEvent): void => {
       setCursorPos(e.clientX, e.clientY);
+      const onPauseBtn = e.target instanceof Node && pauseButton.contains(e.target);
+      setCanvasHover(onPauseBtn ? null : hitTestLayer(mouseX, mouseY));
+    };
+
+    /** Fija o limpia la capa inspeccionada al hacer clic o tap sobre la figura. */
+    const onWrapClick = (e: MouseEvent): void => {
+      const rect = wrap.getBoundingClientRect();
+      const hit = hitTestLayer(e.clientX - rect.left, e.clientY - rect.top);
+      if (hit === null && canvasPinnedLayer === null) return;
+      canvasPinnedLayer = hit === null || hit === canvasPinnedLayer ? null : hit;
+      window.dispatchEvent(new CustomEvent('omni:hero-region-pin', { detail: { layer: canvasPinnedLayer } }));
+      if (reduceMotion || userPaused) {
+        snapLayerOpacity();
+        drawStatic();
+      }
+    };
+
+    /** Limpia el estado hover al salir del área específica del lienzo. */
+    const onWrapMouseLeave = (): void => {
+      setCanvasHover(null);
+    };
+
+    /** Sincroniza el aislamiento de capas solicitado desde el riel inferior de anatomía. */
+    const onRailFocus = (e: Event): void => {
+      const detail = (e as CustomEvent<{ hoverLayer?: AnatomyLayer | null; pinnedLayer?: AnatomyLayer | null }>).detail;
+      if (!detail) return;
+      if ('pinnedLayer' in detail) canvasPinnedLayer = detail.pinnedLayer ?? null;
+      if ('hoverLayer' in detail) railHoverLayer = detail.hoverLayer ?? null;
+      if (reduceMotion || userPaused) {
+        snapLayerOpacity();
+        drawStatic();
+      }
     };
 
     /** Manejador táctil para móviles y tablets. */
@@ -500,11 +637,12 @@
       }
     };
 
-    /** Neutraliza la dispersión al salir del área o terminar toque. */
+    /** Neutraliza la dispersión y hover al salir del documento o terminar toque. */
     const onPointerLeave = (): void => {
       mouseActive = false;
       mouseX = -9999;
       mouseY = -9999;
+      setCanvasHover(null);
     };
 
     /** Exposes animation state as a persistent label; reduced motion takes precedence. */
@@ -521,12 +659,12 @@
     };
     const onPause = (): void => {
       userPaused = !userPaused;
-      if (userPaused) { stopLoop(); drawStatic(); } else startLoop();
+      if (userPaused) { stopLoop(); snapLayerOpacity(); drawStatic(); } else startLoop();
       updatePauseLabel();
     };
     const onMotionChange = (): void => {
       reduceMotion = motionQuery.matches;
-      if (reduceMotion) { stopLoop(); resize(); } else startLoop();
+      if (reduceMotion) { stopLoop(); snapLayerOpacity(); resize(); } else startLoop();
       updatePauseLabel();
     };
     const onVisibilityChange = (): void => {
@@ -536,6 +674,9 @@
     motionQuery.addEventListener('change', onMotionChange);
     document.addEventListener('visibilitychange', onVisibilityChange);
     window.addEventListener('omni:language-change', updatePauseLabel);
+    window.addEventListener('omni:hero-focus-region', onRailFocus);
+    wrap.addEventListener('click', onWrapClick);
+    wrap.addEventListener('mouseleave', onWrapMouseLeave);
     updatePauseLabel();
 
     /** Controla apagado y reanudación real del loop rAF según visibilidad en pantalla. */
@@ -561,7 +702,10 @@
       for (const drop of rain) {
         drop.color = rainPalette[Math.floor(Math.random() * rainPalette.length)];
       }
-      if (reduceMotion || userPaused) drawStatic();
+      if (reduceMotion || userPaused) {
+        snapLayerOpacity();
+        drawStatic();
+      }
     });
     themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
@@ -593,6 +737,10 @@
         motionQuery.removeEventListener('change', onMotionChange);
         document.removeEventListener('visibilitychange', onVisibilityChange);
         window.removeEventListener('omni:language-change', updatePauseLabel);
+        window.removeEventListener('omni:hero-focus-region', onRailFocus);
+        wrap.removeEventListener('click', onWrapClick);
+        wrap.removeEventListener('mouseleave', onWrapMouseLeave);
+        wrap.style.cursor = '';
         window.removeEventListener('mousemove', onMouseMove);
         window.removeEventListener('scroll', updateRect);
         window.removeEventListener('touchmove', onTouchMove);

@@ -56,8 +56,8 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['"Albert Sans"', 'system-ui', '-apple-system', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+        sans: ['"Albert Sans Variable"', 'system-ui', '-apple-system', 'sans-serif'],
+        mono: ['"JetBrains Mono Variable"', 'ui-monospace', 'monospace'],
       },
     },
   },

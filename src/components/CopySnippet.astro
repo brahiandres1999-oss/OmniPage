@@ -1,12 +1,13 @@
 ---
 import { installCommand } from '../data/omnispec';
+import { Button } from './ui/button';
 interface Props { command?: string; id?: string; prefix?: string; }
 const { command = installCommand, id, prefix = '$' } = Astro.props;
 ---
 <div class="copy-snippet" id={id}>
   <div class="command-row">
     <pre tabindex="0" role="region" aria-label="Comando completo" data-i18n-aria="copy.region"><span class="command-prefix" aria-hidden="true">{prefix} </span><code data-copy-text>{command}</code></pre>
-    <button type="button" class="copy-button" data-copy-button aria-label="Copiar comando" data-i18n-aria="copy.aria">
+    <Button variant="ghost" size="sm" className="copy-button" data-copy-button="" aria-label="Copiar comando" data-i18n-aria="copy.aria">
       <svg class="copy-icon" aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
         <rect x="8" y="8" width="12" height="12" rx="2"/>
         <path d="M16 8V4H4v12h4"/>
@@ -15,10 +16,10 @@ const { command = installCommand, id, prefix = '$' } = Astro.props;
         <polyline points="20 6 9 17 4 12"/>
       </svg>
       <span data-copy-label data-i18n="copy.copy">Copiar</span>
-    </button>
+    </Button>
   </div>
   <p class="copy-status" role="status" aria-atomic="true"></p>
-  <button type="button" class="text-button copy-select" hidden data-i18n="copy.select">Seleccionar comando</button>
+  <Button variant="link" size="sm" className="text-button copy-select" hidden data-i18n="copy.select">Seleccionar comando</Button>
 </div>
 <script>
   import { translations } from '../i18n/translations';
@@ -46,7 +47,7 @@ const { command = installCommand, id, prefix = '$' } = Astro.props;
         resetTimer = setTimeout(() => {
           delete button.dataset.copied;
           label.dataset.i18n = 'copy.copy';
-          label.textContent = dict['copy.copy'];
+          label.textContent = translations[getLanguage()]['copy.copy'];
         }, 2200);
       }
     };

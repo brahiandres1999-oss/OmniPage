@@ -5,7 +5,7 @@ export const docsSections = [
     "es": {
       "title": "1. Motor Universal de Ingeniería Agéntica: De la Burocracia SDD a la Certeza",
       "paragraphs": [
-        "Los agentes de Inteligencia Artificial son extraordinarios implementando funciones puntuales, pero sufren de tres problemas crónicos: <strong>amnesia de contexto</strong> entre sesiones, <strong>sobreingeniería prematura</strong> (*overengineering*) y <strong>modificación no controlada de código adyacente</strong> (*code slop*).",
+        "Los agentes de Inteligencia Artificial son extraordinarios implementando funciones puntuales, pero sufren de tres problemas crónicos: <strong>amnesia de contexto</strong> entre sesiones, <strong>sobreingeniería prematura</strong> (<em>overengineering</em>) y <strong>modificación no controlada de código adyacente</strong> (<em>code slop</em>).",
         "<strong>OmniSpec 0.9.0</strong> evoluciona más allá del desarrollo guiado por especificaciones (SDD) tradicional: no es un simple generador de documentos ni una burocracia de plantillas rígidas, sino el <em>Motor Universal de Ingeniería Agéntica (Universal Agentic Engineering Engine)</em>.",
         "Calibra el rigor según el impacto real mediante Rutas Proporcionales (Light, Standard, Full con FIT v2), erradica la amnesia con memoria persistente SQLite FTS5 externa (cero residuos en Git), previene regresiones con cartografía AST de dependencias antes de tocar código, y confina a los agentes con gobernanza dura y atestación criptográfica HMAC-SHA256.",
         "Un motor determinista con arquitectura <strong>Zero Runtime Dependencies</strong> (<code>dependencies: {}</code>) que garantiza soberanía absoluta sobre tu código y gobierna a múltiples agentes (Antigravity, Cursor, Claude Code, Copilot, Codex, Kilo y OpenCode) de forma simultánea o en enjambres colaborativos (Swarms)."
@@ -14,7 +14,7 @@ export const docsSections = [
     "en": {
       "title": "1. Universal Agentic Engineering Engine: Beyond SDD to Deterministic Rigor",
       "paragraphs": [
-        "AI coding agents are remarkably capable at writing isolated functions, yet they suffer from three chronic pitfalls: <strong>context amnesia</strong> across sessions, <strong>premature overengineering</strong>, and <strong>uncontrolled adjacent edits</strong> (*code slop*).",
+        "AI coding agents are remarkably capable at writing isolated functions, yet they suffer from three chronic pitfalls: <strong>context amnesia</strong> across sessions, <strong>premature overengineering</strong>, and <strong>uncontrolled adjacent edits</strong> (<em>code slop</em>).",
         "<strong>OmniSpec 0.9.0</strong> transcends traditional Spec-Driven Development (SDD): it is neither a rigid template bureaucracy nor a passive document framework, but the <em>Universal Agentic Engineering Engine</em>.",
         "It matches ceremony to real impact via Proportional Routes (Light, Standard, Full with FIT v2), eliminates amnesia via external SQLite FTS5 memory (zero Git clutter), prevents cascading breakages through polyglot AST cartography before modifying any code, and confines agents through hard governance and HMAC-SHA256 cryptographic attestation.",
         "A deterministic engine built with <strong>Zero Runtime Dependencies</strong> (<code>dependencies: {}</code>) that guarantees absolute codebase sovereignty and governs multiple AI agents (Antigravity, Cursor, Claude Code, Copilot, Codex, Kilo, and OpenCode) concurrently or in collaborative swarms."
@@ -28,7 +28,7 @@ export const docsSections = [
     "es": {
       "title": "2. Punto de Partida: Quickstart en 30 Segundos",
       "paragraphs": [
-        "OmniSpec requiere <strong>Node.js ≥22.19.0</strong> (Node 22 LTS o Node 24 Current) o <strong>Bun 1.1+</strong>. No descarga dependencias ajenas ni modifica variables globales del sistema.",
+        "OmniSpec requiere <strong>Node.js ≥22.19.0</strong> (Node 22 o Node 24) o <strong>Bun 1.1+</strong>. No descarga dependencias ajenas ni modifica variables globales del sistema.",
         "Abre una terminal en la carpeta de tu proyecto y ejecuta el comando insignia. El flag <code>--yes</code> de npm acepta obtener el paquete oficial publicado en el canal <code>latest</code>, mientras que OmniSpec despliega un asistente interactivo con teclado para seleccionar tu idioma y tus herramientas de IA preferidas.",
         "¿Prefieres otro gestor o instalación permanente? OmniSpec es compatible de forma nativa con pnpm, Bun, Yarn Modern y CLI global."
       ]
@@ -36,7 +36,7 @@ export const docsSections = [
     "en": {
       "title": "2. Starting Point: 30-Second Quickstart",
       "paragraphs": [
-        "OmniSpec requires <strong>Node.js ≥22.19.0</strong> (Node 22 LTS or Node 24 Current) or <strong>Bun 1.1+</strong>. It brings zero external runtime dependencies and requires no elevated system privileges.",
+        "OmniSpec requires <strong>Node.js ≥22.19.0</strong> (Node 22 or Node 24) or <strong>Bun 1.1+</strong>. It brings zero external runtime dependencies and requires no elevated system privileges.",
         "Open a terminal in your project folder and run the flagship command. npm’s <code>--yes</code> flag confirms fetching the official package on the <code>latest</code> channel, while OmniSpec presents an interactive keyboard wizard to configure your language and favorite AI tools.",
         "Prefer another package manager or permanent global CLI? OmniSpec natively supports pnpm, Bun, Yarn Modern and global installation."
       ]
@@ -173,7 +173,7 @@ export const docsSections = [
       ]
     },
     "en": {
-      "title": "4.2 Acto III: Implement, Audit and Converge",
+      "title": "4.2 Act III: Implement, Audit and Converge",
       "paragraphs": [
         "The final act turns contracts into working software validated with scientific rigor:",
         "<code>omni-implement</code>: Performs surgical code edits task by task under the constitutional <strong>Write-Before-Speak</strong> law, adhering strictly to the agreed plan without scope creep.",
@@ -217,7 +217,7 @@ export const docsSections = [
       "title": "5.1 Artesanía de Software y Matriz de 4 Estados de UI",
       "paragraphs": [
         "OmniSpec 0.9.0 erradica los clichés visuales y malos hábitos de los modelos de IA mediante el protocolo <strong>Zero-Slop Guard</strong> (Type-Slop, Mock-Slop, Visual-Slop, Scope-Slop, Dependency-Slop):",
-        "<strong>Cero Clichés de IA:</strong> Prohibidos los degradados azul/púrpura genéricos, resplandores difusos artificiales y el anidamiento excesivo de tarjetas con sombras (*card-itis*). Se prioriza la jerarquía visual limpia mediante tipografía y whitespace deliberado.",
+        "<strong>Cero Clichés de IA:</strong> Prohibidos los degradados azul/púrpura genéricos, resplandores difusos artificiales y el anidamiento excesivo de tarjetas con sombras (<em>card-itis</em>). Se prioriza la jerarquía visual limpia mediante tipografía y whitespace deliberado.",
         "<strong>Matriz Obligatoria de 4 Estados:</strong> Toda vista interactiva debe contemplar explícitamente: 1. <em>Loading</em> (skeletons contextuales con CLS = 0), 2. <em>Empty</em> (explicación clara con llamada a la acción), 3. <em>Error</em> (mensaje comprensible con reintento), y 4. <em>Protected</em> (estado sin permisos o restringido).",
         "Soporte nativo para kits modernos de componentes (<code>shadcn</code>, <code>radix</code>, <code>headlessui</code>, <code>preline</code>, <code>flyonui</code>) vía <code>--ui-components</code> y la guía de diseño del sistema en <code>omni-spec guide design</code>."
       ]
@@ -226,7 +226,7 @@ export const docsSections = [
       "title": "5.1 Software Craftsmanship and 4-State UI Matrix",
       "paragraphs": [
         "OmniSpec 0.9.0 eliminates AI visual clichés and bad habits through the <strong>Zero-Slop Guard</strong> protocol (Type-Slop, Mock-Slop, Visual-Slop, Scope-Slop, Dependency-Slop):",
-        "<strong>Anti-Cliché Design:</strong> Generic blue/purple gradients, fuzzy artificial glow, and nested shadow-boxed cards (*card-itis*) are strictly prohibited. Visual hierarchy is established through intentional typography and whitespace.",
+        "<strong>Anti-Cliché Design:</strong> Generic blue/purple gradients, fuzzy artificial glow, and nested shadow-boxed cards (<em>card-itis</em>) are strictly prohibited. Visual hierarchy is established through intentional typography and whitespace.",
         "<strong>Mandatory 4-State Matrix:</strong> Every interactive view must deliberately support: 1. <em>Loading</em> (contextual skeletons with CLS = 0), 2. <em>Empty</em> (clear explanation with immediate CTA), 3. <em>Error</em> (actionable message with retry mechanism), and 4. <em>Protected</em> (unauthorized or permission-restricted state).",
         "Native governance for modern component kits (<code>shadcn</code>, <code>radix</code>, <code>headlessui</code>, <code>preline</code>, <code>flyonui</code>) via <code>--ui-components</code> and system guidelines in <code>omni-spec guide design</code>."
       ]
@@ -394,7 +394,7 @@ export const docsSections = [
         "<strong>Omni-Guardian (Ejecución Sin Shell):</strong> Toda comprobación y quality gate se ejecuta mediante <code>spawn(..., { shell: false })</code> contra una lista blanca de binarios autorizados (<code>node</code>, <code>npm</code>, <code>vitest</code>, <code>tsc</code>, etc.). Rechaza inyecciones de comandos, operadores de shell (<code>&amp;</code>, <code>|</code>, <code>;</code>, backticks) y rutas fuera del proyecto.",
         "<strong>Hook Pre-commit Determinista:</strong> Instala la protección local con <code>omni-spec guardian install</code>. Bloquea commits con marcadores de conflicto (<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>), bloques <code>catch</code> vacíos o silenciosos, y tipados peligrosos como <code>any</code> o <code>as unknown as</code>.",
         "<strong>Hollow-Guard (Anti-Slop en Pruebas):</strong> Durante <code>omni-spec verify</code>, rechaza cualquier suite modificada que carezca de aserciones, contenga tautologías engañosas (<code>expect(true).toBe(true)</code>, <code>assert.ok(true)</code>) o no importe código real de la aplicación.",
-        "<strong>Atestación Criptográfica HMAC-SHA256:</strong> Cada resultado de verificación y el artefacto <code>verification.json</code> se firman criptográficamente con una clave privada protegida por DPAPI en <code>%LOCALAPPDATA%\\OmniSpec\\keys\\attestation.key</code>, garantizando que nadie pueda falsificar la aprobación de quality gates.",
+        "<strong>Atestación Criptográfica HMAC-SHA256:</strong> Cada resultado de verificación y el artefacto <code>verification.json</code> se firman criptográficamente con una clave privada protegida por DPAPI en <code>%LOCALAPPDATA%\\OmniSpec\\keys\\attestation.key</code>, permitiendo comprobar la integridad del registro dentro del modelo de confianza de la instalación.",
         "<strong>Broker de Autenticación Seguro:</strong> Gestión de credenciales mediante DPAPI en <code>%LOCALAPPDATA%\\OmniSpec\\auth.dat</code> y cerrojo global entre procesos para refresco de tokens con <code>omni-spec login</code>."
       ]
     },
@@ -405,7 +405,7 @@ export const docsSections = [
         "<strong>Omni-Guardian (Shell-Free Execution):</strong> All verification gates execute via <code>spawn(..., { shell: false })</code> against an allowed binary whitelist (<code>node</code>, <code>npm</code>, <code>vitest</code>, <code>tsc</code>, etc.). It strictly rejects shell injection, chaining operators (<code>&amp;</code>, <code>|</code>, <code>;</code>, backticks), and paths escaping the repository boundary.",
         "<strong>Deterministic Pre-commit Hook:</strong> Install local repo protection using <code>omni-spec guardian install</code>. Blocks commits containing merge conflict markers (<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>), silent or empty <code>catch</code> blocks, and unsafe types like <code>any</code> or <code>as unknown as</code>.",
         "<strong>Hollow-Guard (Test Anti-Slop):</strong> During <code>omni-spec verify</code>, it blocks modified test suites lacking assertions, using tautological checks (<code>expect(true).toBe(true)</code>, <code>assert.ok(true)</code>), or failing to import real project code.",
-        "<strong>Cryptographic HMAC-SHA256 Attestation:</strong> Every gate result and the <code>verification.json</code> record are signed with HMAC-SHA256 using a DPAPI-protected key in <code>%LOCALAPPDATA%\\OmniSpec\\keys\\attestation.key</code>, ensuring verification evidence cannot be fabricated or tampered with.",
+        "<strong>Cryptographic HMAC-SHA256 Attestation:</strong> Every gate result and the <code>verification.json</code> record are signed with HMAC-SHA256 using a DPAPI-protected key in <code>%LOCALAPPDATA%\\OmniSpec\\keys\\attestation.key</code>, allowing record integrity to be checked within the installation’s trust model.",
         "<strong>Secure Auth Broker:</strong> Credential management using DPAPI in <code>%LOCALAPPDATA%\\OmniSpec\\auth.dat</code> and a cross-process mutex for secure token rotation via <code>omni-spec login</code>."
       ]
     },
