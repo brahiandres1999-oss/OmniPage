@@ -6,7 +6,6 @@ const icons: Record<string, string> = {
   fintech: 'wallet',
   healthtech: 'heart',
   ecommerce: 'globe',
-  bpo: 'key',
   general: 'code'
 };
 const profiles = Object.entries(profileDataByLang.es);
@@ -93,18 +92,16 @@ const profiles = Object.entries(profileDataByLang.es);
                 <span data-locale="es">Controles e invariantes del proyecto</span>
                 <span data-locale="en" hidden>Project invariants & controls</span>
               </h4>
-              <ul class="invariants-list">
-                {(['es', 'en'] as const).map(lang => (
-                  <div data-locale={lang} hidden={lang === 'en'} class="invariants-lang-group">
-                    {profileDataByLang[lang][key].invariants.map(item => (
-                      <li class="invariant-item">
-                        <Icon name="check" size={16} class="check-icon" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </div>
-                ))}
-              </ul>
+              {(['es', 'en'] as const).map(lang => (
+                <ul data-locale={lang} hidden={lang === 'en'} class="invariants-list">
+                  {profileDataByLang[lang][key].invariants.map(item => (
+                    <li class="invariant-item">
+                      <Icon name="check" size={16} class="check-icon" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              ))}
             </div>
           </div>
         </div>
@@ -235,10 +232,10 @@ const profiles = Object.entries(profileDataByLang.es);
   }
   .panel-tag {
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: rgb(var(--accent));
+    color: rgb(var(--text-primary));
     margin-top: 0.2rem;
   }
   .panel-desc {
@@ -265,7 +262,7 @@ const profiles = Object.entries(profileDataByLang.es);
   .activation-cmd {
     font-family: var(--font-mono, monospace);
     font-size: 0.75rem;
-    color: rgb(var(--accent));
+    color: rgb(var(--text-primary));
     font-weight: 600;
   }
   .panel-invariants {

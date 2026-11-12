@@ -208,18 +208,6 @@ export const profileDataByLang: Record<Language, Record<string, DomainProfile>> 
         "Probar los escenarios relevantes del checkout"
       ]
     },
-    "bpo": {
-      "id": "bpo",
-      "name": "BPO & Workplace",
-      "flag": "--profile bpo",
-      "tag": "Privacidad laboral · Acceso · Agregación",
-      "description": "Controles de BPO & Workplace para revisar y adaptar con el agente. El perfil no impone un stack ni certifica cumplimiento.",
-      "invariants": [
-        "Revisar qué datos personales necesita el producto",
-        "Acordar acceso y finalidad de métricas agregadas",
-        "Evaluar reidentificación y privacidad según contexto"
-      ]
-    },
     "general": {
       "id": "general",
       "name": "General Software",
@@ -268,18 +256,6 @@ export const profileDataByLang: Record<Language, Record<string, DomainProfile>> 
         "Review concurrency and order states",
         "Agree on price, stock and payment consistency",
         "Test relevant checkout scenarios"
-      ]
-    },
-    "bpo": {
-      "id": "bpo",
-      "name": "BPO & Workplace",
-      "flag": "--profile bpo",
-      "tag": "Worker privacy · Access · Aggregation",
-      "description": "Controls for BPO & Workplace to review and adapt with the agent. A profile does not impose a stack or certify compliance.",
-      "invariants": [
-        "Review which personal data the product needs",
-        "Agree on access and purpose for aggregate metrics",
-        "Assess reidentification and privacy in context"
       ]
     },
     "general": {

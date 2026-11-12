@@ -14,24 +14,24 @@
         },
         "highlights": {
             "es": [
-                "Servidor MCP & Memoria Persistente (SQLite FTS5): Motor relacional embebido en specs/.omni/memory.db y servidor MCP stdio (omni-spec mcp) que erradica la amnesia entre sesiones y entre distintos agentes sin saturar contexto ni contaminar Git.",
-                "Cartografía de Código & Blast Radius: Lexer determinista y grafo de dependencias que calculan el radio de impacto de cualquier cambio antes de tocar una sola línea de código.",
-                "Memoria Heurística Persistente (SQLite FTS5): Motor relacional embebido en specs/.omni/memory.db que erradica la amnesia entre sesiones y entre distintos agentes sin saturar la ventana de contexto ni contaminar Git.",
-                "Gobernanza Omni-Guardian & Confinamiento: Hook pre-commit con atestación criptográfica HMAC, circuit breaker contra bucles infinitos y broker de autenticación DPAPI seguro.",
+                "Memoria Externa Unificada & Servidor MCP: Almacén relacional SQLite FTS5 externo fuera del repositorio (%LOCALAPPDATA%\\OmniSpec\\workspaces\\<id>\\memory.db) y servidor MCP stdio (omni-spec mcp) que erradican la amnesia entre sesiones sin contaminar Git (Modo Zero-Footprint).",
+                "Cartografía de Código Políglota & Blast Radius: Lexer DFA pushdown y resolvedor de dependencias multi-lenguaje (JS/TS, Python, Go, Rust, Java) que calculan matemáticamente el radio de impacto antes de editar.",
+                "Gobernanza Omni-Guardian & Confinamiento: Ejecución segura sin shell (spawn con shell: false), lista blanca de binarios autorizados, hook pre-commit y broker de autenticación DPAPI seguro.",
+                "Verificación Criptográfica HMAC & Hollow-Guard: Firma criptográfica HMAC-SHA256 de registros de verificación v4 y guardián estricto contra pruebas vacías o con aserciones tautológicas.",
+                "Concurrencia Multi-Agente & Swarms: Cerrojo mutex de Lamport (manifest.lock), Circuit Breaker contra bucles y desbordamiento de tokens, y subagente omni-auditor para enjambres colaborativos.",
                 "Rutas Proporcionales (FIT v2): Triaje determinista en rutas Light (quirúrgica, 0 overhead burocrático), Standard y Full para adaptar el rigor documental al impacto real del cambio.",
                 "Regla Constitucional Write-Before-Speak: Prohibición estricta de afirmar modificaciones sin llamar a herramientas o diferir cambios acordados al código posterior.",
-                "Protocolo Consciente de Fase en /omni-clarify: Confirmación interactiva de cambios con lista explícita de archivos existentes y auditoría obligatoria a 0 errores.",
-                "Optimización de Presupuestos de Contexto: Calibración estricta de límites de caracteres en prompts para prevenir context bloat y letargo en modelos LLM ligeros."
+                "Protocolo Consciente de Fase en /omni-clarify: Confirmación interactiva de cambios con lista explícita de archivos existentes y auditoría obligatoria a 0 errores."
             ],
             "en": [
-                "MCP Server & Persistent Memory (SQLite FTS5): Embedded relational database in specs/.omni/memory.db and stdio MCP server (omni-spec mcp) eliminating session amnesia without inflating context windows or polluting Git.",
-                "Code Cartography & Blast Radius: Deterministic AST lexer and dependency graph that computes impact radius before modifying a single line of code.",
-                "Persistent Heuristic Memory (SQLite FTS5): Embedded relational database in specs/.omni/memory.db eliminating session amnesia without inflating context windows or polluting Git.",
-                "Omni-Guardian Governance & Confinement: Pre-commit hook with cryptographic HMAC attestation, infinite-loop circuit breaker, and secure DPAPI auth broker.",
+                "Unified External Memory & MCP Server: External relational SQLite FTS5 store outside repository (%LOCALAPPDATA%\\OmniSpec\\workspaces\\<id>\\memory.db) and stdio MCP server (omni-spec mcp) eliminating session amnesia without Git pollution (Zero-Footprint mode).",
+                "Polyglot AST Cartography & Blast Radius: Pushdown DFA lexer and multi-language dependency resolver (JS/TS, Python, Go, Rust, Java) computing mathematical impact radius before editing.",
+                "Omni-Guardian Governance & Confinement: Shell-free execution (spawn with shell: false), allowed binary whitelist, pre-commit hook, and secure DPAPI auth broker.",
+                "Cryptographic HMAC Verification & Hollow-Guard: HMAC-SHA256 signatures on v4 verification records and strict guard against empty tests or tautological assertions.",
+                "Multi-Agent Concurrency & Swarms: Lamport bakery mutex (manifest.lock), Circuit Breaker bounding loops and token spend, and omni-auditor subagent for collaborative swarms.",
                 "Proportional Routes (FIT v2): Deterministic ceremony triage into Light (surgical, zero bureaucratic overhead), Standard, and Full routes matching actual change risk.",
                 "Write-Before-Speak Constitutional Rule: Strict prohibition against claiming edits exist before tool execution or deferring agreed requirements to code.",
-                "Phase-Aware /omni-clarify Protocol: Interactive confirmation listing exact existing target files and mandatory zero-error audit gate.",
-                "Prompt Budget Economy: Strict character limits across agent prompts preventing context bloat and cognitive fatigue in lightweight LLM models."
+                "Phase-Aware /omni-clarify Protocol: Interactive confirmation listing exact existing target files and mandatory zero-error audit gate."
             ]
         }
     },

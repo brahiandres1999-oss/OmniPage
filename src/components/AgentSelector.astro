@@ -28,8 +28,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             <legend class="field-label sr-only" data-i18n="start.agent">{t['start.agent']}</legend>
             <div class="agent-options">
               {Object.entries(agentsByLang.es).map(([key, agent]) => (
-                <label class="agent-option">
-                  <input type="radio" name="agent-choice" value={key} checked={key === 'claude'} />
+                <label class="agent-option" for={`agent-radio-${key}`}>
+                  <input type="radio" id={`agent-radio-${key}`} name="agent-choice" value={key} checked={key === 'claude'} />
                   <span class="agent-option-content">
                     <AgentLogo agent={key} size={18} />
                     <span data-agent-label={key}>{agent.title}</span>
@@ -60,6 +60,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <article class="start-step">
         <span class="step-number" aria-hidden="true">03</span>
         <div><h3 data-i18n="start.3.title">{t['start.3.title']}</h3><p class="body-copy" data-i18n="start.3.body">{t['start.3.body']}</p><blockquote class="example-request" data-i18n="start.prompt">{t['start.prompt']}</blockquote><a class="quiet-link" href={base + '/docs/#quickstart'}><span data-i18n="start.docs">{t['start.docs']}</span><span aria-hidden="true">↗</span></a></div>
+      </article>
+      <article class="start-step" id="mantenimiento">
+        <span class="step-number" aria-hidden="true">04</span>
+        <div>
+          <h3 data-i18n="start.maintenance.title">{t['start.maintenance.title']}</h3>
+          <p class="body-copy" data-i18n="start.maintenance.body">{t['start.maintenance.body']}</p>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.75rem;">
+            <CopySnippet command="npx --yes omni-spec doctor" prefix="$" />
+            <CopySnippet command="npx --yes omni-spec update --dry-run" prefix="$" />
+          </div>
+          <p class="small-note" style="margin-top: 0.5rem;" data-i18n="start.maintenance.note">{t['start.maintenance.note']}</p>
+        </div>
       </article>
     </div>
     <p class="start-scope small-note" data-i18n="start.scope">{t['start.scope']}</p>

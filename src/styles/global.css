@@ -583,7 +583,7 @@ select { width: 100%; max-width: 29rem; min-height: 3rem; padding: .6rem .85rem;
   line-height: 1.6;
   margin: 0;
 }
-.terminal-surface .text-secondary { color: #6b7280; }
+.terminal-surface .text-secondary { color: #94a3b8; }
 .terminal-surface .text-accent { color: #60a5fa; }
 .terminal-surface .text-success { color: #34d399; }
 .terminal-surface .text-highlight { color: #fbbf24; font-weight: 600; }
@@ -667,6 +667,13 @@ select { width: 100%; max-width: 29rem; min-height: 3rem; padding: .6rem .85rem;
   margin-top: auto;
   padding-top: 0.75rem;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 0;
+  background: transparent;
+  width: 100%;
+  cursor: pointer;
+  text-align: left;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -674,6 +681,15 @@ select { width: 100%; max-width: 29rem; min-height: 3rem; padding: .6rem .85rem;
   color: #94a3b8;
   user-select: none;
   flex-shrink: 0;
+  font-family: inherit;
+}
+.term-status-footer:hover .term-status-hint {
+  color: #fff;
+}
+.term-status-footer:focus-visible {
+  outline: 2px solid #60a5fa;
+  outline-offset: 2px;
+  border-radius: 0.25rem;
 }
 .term-status-hint {
   display: inline-flex;
@@ -693,7 +709,7 @@ select { width: 100%; max-width: 29rem; min-height: 3rem; padding: .6rem .85rem;
 }
 .term-status-step {
   font-size: 0.6875rem;
-  color: #64748b;
+  color: #94a3b8;
   padding: 0.12rem 0.5rem;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.06);

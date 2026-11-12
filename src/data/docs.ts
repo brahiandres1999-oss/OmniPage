@@ -3,19 +3,21 @@ export const docsSections = [
   {
     "id": "intro",
     "es": {
-      "title": "1. Motor Universal de Ingeniería Agéntica: De la Alucinación a la Certeza",
+      "title": "1. Motor Universal de Ingeniería Agéntica: De la Burocracia SDD a la Certeza",
       "paragraphs": [
         "Los agentes de Inteligencia Artificial son extraordinarios implementando funciones puntuales, pero sufren de tres problemas crónicos: <strong>amnesia de contexto</strong> entre sesiones, <strong>sobreingeniería prematura</strong> (*overengineering*) y <strong>modificación no controlada de código adyacente</strong> (*code slop*).",
-        "<strong>OmniSpec</strong> es el <em>Motor Universal de Ingeniería Agéntica</em>: el repositorio es la fuente de la verdad duradera. Calibra el rigor según el impacto mediante Rutas Proporcionales (Light, Standard, Full con FIT v2), memoria persistente SQLite FTS5 (cero amnesia sin ensuciar Git) y cartografía estática de código antes de cualquier edición.",
-        "Un motor determinista con arquitectura <strong>Zero Runtime Dependencies</strong> (<code>dependencies: {}</code>) que garantiza soberanía sobre tu código, integra Omni Studio (cockpit visual en Tauri v2 + React 19) y gobierna a múltiples agentes (Antigravity, Cursor, Claude Code, Copilot, Codex y Gemini)."
+        "<strong>OmniSpec 0.9.0</strong> evoluciona más allá del desarrollo guiado por especificaciones (SDD) tradicional: no es un simple generador de documentos ni una burocracia de plantillas rígidas, sino el <em>Motor Universal de Ingeniería Agéntica (Universal Agentic Engineering Engine)</em>.",
+        "Calibra el rigor según el impacto real mediante Rutas Proporcionales (Light, Standard, Full con FIT v2), erradica la amnesia con memoria persistente SQLite FTS5 externa (cero residuos en Git), previene regresiones con cartografía AST de dependencias antes de tocar código, y confina a los agentes con gobernanza dura y atestación criptográfica HMAC-SHA256.",
+        "Un motor determinista con arquitectura <strong>Zero Runtime Dependencies</strong> (<code>dependencies: {}</code>) que garantiza soberanía absoluta sobre tu código y gobierna a múltiples agentes (Antigravity, Cursor, Claude Code, Copilot, Codex, Kilo y OpenCode) de forma simultánea o en enjambres colaborativos (Swarms)."
       ]
     },
     "en": {
-      "title": "1. Universal Agentic Engineering Engine: From Hallucination to Certainty",
+      "title": "1. Universal Agentic Engineering Engine: Beyond SDD to Deterministic Rigor",
       "paragraphs": [
-        "AI agents are remarkably capable at writing single functions, yet they suffer from three chronic pitfalls: <strong>context amnesia</strong> across sessions, <strong>premature overengineering</strong>, and <strong>uncontrolled adjacent edits</strong> (*code slop*).",
-        "<strong>OmniSpec</strong> is the <em>Universal Agentic Engineering Engine</em>: the repository is the single source of durable truth. It matches ceremony to impact using Proportional Routes (Light, Standard, Full with FIT v2), persistent SQLite FTS5 memory (zero amnesia without polluting Git), and static code cartography before modifying any file.",
-        "A deterministic engine built with <strong>Zero Runtime Dependencies</strong> (<code>dependencies: {}</code>) that guarantees absolute codebase sovereignty, provides Omni Studio (visual desktop/web cockpit on Tauri v2 + React 19), and governs multiple AI agents (Antigravity, Cursor, Claude Code, Copilot, Codex, and Gemini)."
+        "AI coding agents are remarkably capable at writing isolated functions, yet they suffer from three chronic pitfalls: <strong>context amnesia</strong> across sessions, <strong>premature overengineering</strong>, and <strong>uncontrolled adjacent edits</strong> (*code slop*).",
+        "<strong>OmniSpec 0.9.0</strong> transcends traditional Spec-Driven Development (SDD): it is neither a rigid template bureaucracy nor a passive document framework, but the <em>Universal Agentic Engineering Engine</em>.",
+        "It matches ceremony to real impact via Proportional Routes (Light, Standard, Full with FIT v2), eliminates amnesia via external SQLite FTS5 memory (zero Git clutter), prevents cascading breakages through polyglot AST cartography before modifying any code, and confines agents through hard governance and HMAC-SHA256 cryptographic attestation.",
+        "A deterministic engine built with <strong>Zero Runtime Dependencies</strong> (<code>dependencies: {}</code>) that guarantees absolute codebase sovereignty and governs multiple AI agents (Antigravity, Cursor, Claude Code, Copilot, Codex, Kilo, and OpenCode) concurrently or in collaborative swarms."
       ]
     },
     "commands": [],
@@ -88,8 +90,8 @@ export const docsSections = [
     },
     "commands": [],
     "code": {
-      "es": "├── CONSTITUTION.md              # Leyes de ingeniería inviolables (Write-Before-Speak)\n├── AGENTS.md                    # Directivas universales para agentes IA\n├── CLAUDE.md                    # Sincronización gestionada para Claude Code\n└── specs/\n    ├── manifest.json            # Estado del proyecto y especificaciones activas\n    ├── project-context.md       # Memoria destilada (MDD) y finops de contexto\n    ├── checks.json              # Catálogo de quality gates automatizados\n    ├── 001-feature-login/\n    │   ├── spec.md              # Contrato EARS: propósito, alcance y criterios AC\n    │   ├── plan.md              # Estrategia técnica y análisis de impacto\n    │   ├── tasks.md             # Checklist atómico de implementación\n    │   ├── acceptance.json      # Cobertura formal de criterios y evidencia\n    │   └── verification.json    # Huella criptográfica y resultados de checks\n    └── .omni/\n        ├── memory.db            # Memoria relacional persistente (SQLite FTS5, ignorada en Git)\n        └── runtime/             # Motor determinista local (ignorado por Git)",
-      "en": "├── CONSTITUTION.md              # Binding, non-negotiable engineering laws (Write-Before-Speak)\n├── AGENTS.md                    # Universal AI agent directives\n├── CLAUDE.md                    # Managed synchronization for Claude Code\n└── specs/\n    ├── manifest.json            # Machine-readable project state and active specs\n    ├── project-context.md       # Distilled architectural memory (MDD)\n    ├── checks.json              # Automated quality gates catalog\n    ├── 001-feature-login/\n    │   ├── spec.md              # EARS contract: purpose, scope & acceptance criteria\n    │   ├── plan.md              # Technical design and impact analysis\n    │   ├── tasks.md             # Atomic implementation checklist\n    │   ├── acceptance.json      # Formal criteria coverage and evidence\n    │   └── verification.json    # Cryptographic SHA-256 fingerprint & test results\n    └── .omni/\n        ├── memory.db            # Persistent relational memory (SQLite FTS5, Git-ignored)\n        └── runtime/             # Deterministic local engine (Git-ignored)"
+      "es": "├── CONSTITUTION.md              # Leyes de ingeniería inviolables (Write-Before-Speak)\n├── AGENTS.md                    # Directivas universales para agentes IA\n├── CLAUDE.md                    # Sincronización gestionada para Claude Code\n└── specs/\n    ├── manifest.json            # Estado del proyecto y especificaciones activas\n    ├── project-context.md       # Memoria destilada (MDD) y finops de contexto\n    ├── checks.json              # Catálogo de quality gates automatizados\n    ├── contracts.json           # Contratos formales y capacidades del proyecto\n    └── 001-feature-login/\n        ├── spec.md              # Contrato EARS: propósito, alcance y criterios AC\n        ├── plan.md              # Estrategia técnica y análisis de impacto\n        ├── tasks.md             # Checklist atómico de implementación\n        ├── acceptance.json      # Cobertura formal de criterios y evidencia\n        └── verification.json    # Huella criptográfica HMAC-SHA256 y resultados\n\n# Memoria Persistente Externa (Zero-Footprint en Git):\n# %LOCALAPPDATA%\\OmniSpec\\workspaces\\<id>\\memory.db (SQLite FTS5)",
+      "en": "├── CONSTITUTION.md              # Binding, non-negotiable engineering laws (Write-Before-Speak)\n├── AGENTS.md                    # Universal AI agent directives\n├── CLAUDE.md                    # Managed synchronization for Claude Code\n└── specs/\n    ├── manifest.json            # Machine-readable project state and active specs\n    ├── project-context.md       # Distilled architectural memory (MDD)\n    ├── checks.json              # Automated quality gates catalog\n    ├── contracts.json           # Formal project contracts and capabilities\n    └── 001-feature-login/\n        ├── spec.md              # EARS contract: purpose, scope & acceptance criteria\n        ├── plan.md              # Technical design and impact analysis\n        ├── tasks.md             # Atomic implementation checklist\n        ├── acceptance.json      # Formal criteria coverage and evidence\n        └── verification.json    # Cryptographic HMAC-SHA256 fingerprint & test results\n\n# External Persistent Memory (Zero-Footprint in Git):\n# %LOCALAPPDATA%\\OmniSpec\\workspaces\\<id>\\memory.db (SQLite FTS5)"
     }
   },
   {
@@ -165,18 +167,18 @@ export const docsSections = [
       "title": "4.2 Acto III: Implementar, Auditar y Converger",
       "paragraphs": [
         "El último acto transforma los contratos en software funcional verificado con rigor científico:",
-        "<code>omni-implement</code>: Ejecuta la cirugía de código con enfoque minimalista, resolviendo tarea por tarea sin desviarse del alcance acordado.",
+        "<code>omni-implement</code>: Ejecuta la cirugía de código con enfoque minimalista bajo la regla constitucional <strong>Write-Before-Speak</strong>, resolviendo tarea por tarea sin desviarse del alcance acordado.",
         "<code>omni-audit</code>: Un subagente auditor independiente analiza la especificación y el código generado buscando trampas, checkboxes vacíos, comentarios de relleno o desviaciones constitucionales.",
-        "<code>omni-converge</code>: Reconcilia la evidencia ejecutable. <code>verify</code> ejecuta los quality gates y genera una huella criptográfica SHA-256 de los archivos; <code>complete</code> valida que todos los criterios estén cubiertos y no existan cambios espurios posteriores al snapshot."
+        "<code>omni-converge</code>: Reconcilia la evidencia ejecutable. <code>verify</code> ejecuta los quality gates, aplica <strong>Hollow-Guard</strong> para bloquear pruebas vacías o tautológicas, y sella un registro con atestación criptográfica <strong>HMAC-SHA256</strong> (formato v4); <code>complete</code> valida que todos los criterios estén cubiertos y no existan cambios espurios posteriores al snapshot."
       ]
     },
     "en": {
-      "title": "4.2 Act III: Implement, Audit and Converge",
+      "title": "4.2 Acto III: Implement, Audit and Converge",
       "paragraphs": [
         "The final act turns contracts into working software validated with scientific rigor:",
-        "<code>omni-implement</code>: Performs surgical code edits task by task, adhering strictly to the agreed plan without scope creep.",
+        "<code>omni-implement</code>: Performs surgical code edits task by task under the constitutional <strong>Write-Before-Speak</strong> law, adhering strictly to the agreed plan without scope creep.",
         "<code>omni-audit</code>: An independent auditor subagent inspects specifications and implementation to detect bypasses, empty checkboxes, or constitutional violations.",
-        "<code>omni-converge</code>: Reconciles executable evidence. <code>verify</code> runs configured quality gates and stamps a cryptographic SHA-256 fingerprint; <code>complete</code> verifies that all criteria are satisfied and no files changed after the snapshot."
+        "<code>omni-converge</code>: Reconciles executable evidence. <code>verify</code> runs configured quality gates, enforces <strong>Hollow-Guard</strong> to prevent empty or tautological tests, and stamps a cryptographic <strong>HMAC-SHA256</strong> attestation (v4 format); <code>complete</code> verifies that all criteria are satisfied and no files changed after the snapshot."
       ]
     },
     "commands": [],
@@ -185,19 +187,25 @@ export const docsSections = [
   {
     "id": "arquetipos",
     "es": {
-      "title": "5. Los Cuatro Arquetipos y Triaje Dinámico",
+      "title": "5. Arquetipos y Rutas Proporcionales (FIT v2: Light, Standard, Full)",
       "paragraphs": [
-        "En ingeniería de software no todo cambio es una 'Feature'. OmniSpec proporciona cuatro arquetipos con artefactos especializados:",
-        "<strong>feature</strong> (<code>spec.md</code>): Nueva funcionalidad o cambio de comportamiento. <strong>bugfix</strong> (<code>bug.md</code>, <code>rca.md</code>, <code>fix.md</code>): Diagnóstico estricto con reproducción, análisis de causa raíz (5 Whys) y prevención de regresiones. <strong>debt</strong> (<code>audit.md</code>, <code>migration-plan.md</code>): Reducción de deuda técnica o simplificación de dependencias. <strong>rfc</strong> (<code>rfc.md</code>): Registro duradero de decisiones arquitectónicas.",
-        "<strong>Triaje Dinámico (Fit v2):</strong> Permite ajustar la ceremonia al tamaño real del problema. Usa <code>create --light</code> para cambios quirúrgicos de 1 a 3 archivos (omite plan y tareas pesadas), y escala a <code>standard</code> o <code>full</code> automáticamente cuando aumenta el riesgo o la ambigüedad."
+        "A diferencia del SDD tradicional que imponía una burocracia documental monolítica para cualquier cambio, OmniSpec clasifica el trabajo en cuatro arquetipos de ingeniería con artefactos especializados:",
+        "<strong>feature</strong> (<code>spec.md</code>): Nueva funcionalidad o cambio de comportamiento con criterios EARS tipados. <strong>bugfix</strong> (<code>bug.md</code>, <code>rca.md</code>, <code>fix.md</code>): Diagnóstico estricto con reproducción, análisis de causa raíz (5 Whys) y prevención de regresiones. <strong>debt</strong> (<code>audit.md</code>, <code>migration-plan.md</code>): Reducción de deuda técnica, simplificación o refactors. <strong>rfc</strong> (<code>rfc.md</code>): Registro duradero de decisiones arquitectónicas bajo formato MADR.",
+        "<strong>Rutas Proporcionales (Algoritmo FIT v2):</strong> Erradica la sobrecarga documental adaptando el nivel de ceremonia al tamaño y riesgo real del cambio:",
+        "• <strong>Ruta Light (Quirúrgica):</strong> Para cambios de 1 a 3 archivos y bajo radio de impacto. Cero planes ni tareas burocráticas innecesarias: el agente define los criterios mínimos y salta directamente a la implementación y convergencia verificada.",
+        "• <strong>Ruta Standard (Arquitectónica):</strong> Para cambios multi-módulo que requieren plan técnico explícito, análisis de impacto y mitigación de riesgos.",
+        "• <strong>Ruta Full (Gobernada):</strong> Reservada para cambios de alto riesgo, mutaciones de esquemas públicos o dependencias críticas; exige doble compuerta de aprobación, desglose atómico de tareas y validación cruzada con subagente auditor."
       ]
     },
     "en": {
-      "title": "5. The Four Archetypes and Dynamic Triage",
+      "title": "5. Archetypes and Proportional Routes (FIT v2: Light, Standard, Full)",
       "paragraphs": [
-        "Not all engineering work is a 'Feature'. OmniSpec provides four purpose-built archetypes with specialized artifacts:",
-        "<strong>feature</strong> (<code>spec.md</code>): New functionality or behavioral change. <strong>bugfix</strong> (<code>bug.md</code>, <code>rca.md</code>, <code>fix.md</code>): Strict defect diagnosis with reproduction, 5-Whys root cause analysis (RCA), and regression prevention. <strong>debt</strong> (<code>audit.md</code>, <code>migration-plan.md</code>): Tech debt reduction and code simplification. <strong>rfc</strong> (<code>rfc.md</code>): Durable architectural decision record.",
-        "<strong>Dynamic Triage (Fit v2):</strong> Proportional ceremony matched to problem scope. Use <code>create --light</code> for surgical 1-to-3 file edits (bypassing heavy plans and tasks), auto-escalating to <code>standard</code> or <code>full</code> when risk or architectural impact demands it."
+        "Unlike legacy SDD which enforced a monolithic documentation bureaucracy on every single change, OmniSpec classifies engineering work into four purpose-built archetypes with specialized artifacts:",
+        "<strong>feature</strong> (<code>spec.md</code>): New functionality or behavioral change with typed EARS criteria. <strong>bugfix</strong> (<code>bug.md</code>, <code>rca.md</code>, <code>fix.md</code>): Strict defect diagnosis with reproduction, 5-Whys root cause analysis (RCA), and regression prevention. <strong>debt</strong> (<code>audit.md</code>, <code>migration-plan.md</code>): Tech debt reduction, structural refactors, or dependency cleanup. <strong>rfc</strong> (<code>rfc.md</code>): Durable architectural decision records following the MADR standard.",
+        "<strong>Proportional Routes (FIT v2 Algorithm):</strong> Eliminates documentation bloat by calibrating ceremonial overhead to the actual risk and blast radius:",
+        "• <strong>Light Route (Surgical):</strong> For focused 1-to-3 file changes with minimal blast radius. Zero bureaucratic plan or task breakdown overhead: agents specify concise criteria and jump directly to verified implementation and convergence.",
+        "• <strong>Standard Route (Architectural):</strong> For multi-module modifications requiring an explicit technical design, contract mapping, and risk mitigation.",
+        "• <strong>Full Route (Governed):</strong> Reserved for high-risk changes, public schema mutations, or critical dependencies; mandates dual approval gates, atomic task checklists, and cross-auditor validation."
       ]
     },
     "commands": [],
@@ -328,47 +336,85 @@ export const docsSections = [
   {
     "id": "manifest-lock",
     "es": {
-      "title": "8.1 Bajo el Capó: Concurrencia e Integridad Atómica",
+      "title": "8.1 Concurrencia, Enjambres Multi-Agente (Swarms) e Integridad Atómica",
       "paragraphs": [
-        "<code>specs/manifest.lock/</code> implementa un mecanismo de exclusión mutua basado en el algoritmo de panadería de Lamport para serializar escrituras concurrentes de estado entre procesos y subagentes.",
-        "Las operaciones de disco utilizan reemplazos atómicos con reintentos exponenciales (<code>fs-retry.mjs</code>) diseñados para mitigar bloqueos transitorios en entornos Windows causados por antivirus o sincronizadores en la nube.",
-        "Una arquitectura limpia de dependencias que asegura que OmniSpec funcione sin fricción tanto en estaciones de trabajo locales como en pipelines de CI/CD."
+        "OmniSpec 0.9.0 fue diseñado para operar con fiabilidad determinista en arquitecturas multi-agente y enjambres colaborativos (Swarms):",
+        "<strong>Cerrojo Mutex de Lamport (<code>specs/manifest.lock/</code>):</strong> Implementa el algoritmo de panadería de Lamport para serializar escrituras concurrentes de estado entre procesos CLI paralelos y agentes o subagentes autónomos que operan simultáneamente.",
+        "<strong>Memoria Externa Compartida con Reintentos Exponenciales:</strong> El almacén SQLite FTS5 (<code>memory.db</code>) utiliza transacciones atómicas y <code>fs-retry.mjs</code> para permitir que múltiples agentes en un swarm compartan observaciones, patrones y lecciones aprendidas sin colisiones ni conflictos en Git.",
+        "<strong>Circuit Breaker Inteligente (<code>circuit_breakers</code>):</strong> Confinamiento de ejecución con estados <code>CLOSED</code>, <code>HALF_OPEN</code>, <code>OPEN</code> y <code>DEAD_LETTER</code>. Monitorea hasta 3 turnos, 2 reintentos por compuerta, 80.000 tokens por tarea y 25.000 tokens por minuto, frenando bucles infinitos o consumo desmedido cuando un enjambre entra en deriva.",
+        "<strong>Subagente Auditor (<code>omni-auditor</code>):</strong> Definición agéntica aislada que puede ser convocada dentro del enjambre como revisor independiente de coherencia y cumplimiento de contratos."
       ]
     },
     "en": {
-      "title": "8.1 Under the Hood: Concurrency and Atomic Integrity",
+      "title": "8.1 Concurrency, Multi-Agent Swarms, and Atomic Integrity",
       "paragraphs": [
-        "<code>specs/manifest.lock/</code> implements a Lamport bakery algorithm mutex to serialize concurrent state writes between CLI commands, parallel processes, and autonomous subagents.",
-        "All filesystem writes use atomic replacements with exponential retry mechanisms (<code>fs-retry.mjs</code>) specifically designed to withstand transient Windows locks from antivirus scanners or cloud sync daemons.",
-        "A zero-dependency architecture ensuring OmniSpec runs seamlessly across local workstations and headless CI/CD pipelines."
+        "OmniSpec 0.9.0 is engineered from the ground up for deterministic reliability across multi-agent workflows and collaborative swarms:",
+        "<strong>Lamport Bakery Mutex (<code>specs/manifest.lock/</code>):</strong> Employs Lamport’s bakery algorithm to serialize concurrent state mutations between parallel CLI runs and autonomous agents or subagents acting at the same time.",
+        "<strong>Shared External Memory with Exponential Backoff:</strong> The external SQLite FTS5 store (<code>memory.db</code>) relies on atomic transactions and <code>fs-retry.mjs</code>, enabling multiple workers in a swarm to share observations, patterns, and constraints without Git collisions.",
+        "<strong>Intelligent Circuit Breaker (<code>circuit_breakers</code>):</strong> Confinement engine transitioning through <code>CLOSED</code>, <code>HALF_OPEN</code>, <code>OPEN</code>, and <code>DEAD_LETTER</code> states. Enforces budgets (3 turns, 2 retries per gate, 80,000 tokens per task, 25,000 tokens per minute) to arrest infinite loops or runaway spending during swarm execution.",
+        "<strong>Auditor Subagent (<code>omni-auditor</code>):</strong> Isolated agent definition ready to be summoned in any swarm as an independent verifier of contract coherence and constitutional compliance."
       ]
     },
     "commands": [],
-    "code": ""
+    "code": "$ omni-spec status --json\n{\n  \"lock\": {\n    \"status\": \"ACQUIRED\",\n    \"algorithm\": \"Lamport-Bakery\",\n    \"holder\": \"agent-omni-auditor-1\",\n    \"heartbeatMs\": 1200\n  },\n  \"circuitBreaker\": {\n    \"state\": \"CLOSED\",\n    \"turnsRemaining\": 3,\n    \"tokensSpent\": 14200,\n    \"tokenLimit\": 80000\n  }\n}"
   },
   {
     "id": "memoria-cartografia",
     "es": {
       "title": "8.2 Memoria SQLite FTS5, Servidor MCP y Cartografía",
       "paragraphs": [
-        "OmniSpec 0.9.0 incorpora <strong>Memoria Heurística Persistente (SQLite FTS5)</strong>: los agentes consultan y persisten patrones, lecciones aprendidas y restricciones en <code>specs/.omni/memory.db</code> con búsqueda rápida de texto completo mediante <code>omni-spec memory</code>, eliminando la amnesia entre sesiones sin ensuciar el árbol de Git.",
-        "<strong>Servidor MCP Integrado:</strong> Ejecuta <code>omni-spec mcp</code> para exponer las herramientas de memoria directamente a clientes MCP por stdio en cualquier entorno de desarrollo compatible.",
-        "<strong>Cartografía de Código & Blast Radius:</strong> Mediante <code>omni-spec cartography</code> y <code>omni-spec blast-radius</code>, el motor indexa las dependencias estáticas del proyecto y calcula el radio de impacto de cualquier cambio antes de permitir la edición de código."
+        "OmniSpec 0.9.0 incorpora <strong>Memoria Heurística Persistente (SQLite FTS5)</strong>: los agentes consultan y persisten patrones, lecciones aprendidas y restricciones en el almacén externo <code>%LOCALAPPDATA%\\OmniSpec\\workspaces\\&lt;id&gt;\\memory.db</code> con búsqueda rápida de texto completo mediante <code>omni-spec memory</code>, eliminando la amnesia entre sesiones sin ensuciar el árbol de Git (Modo Zero-Footprint).",
+        "<strong>Servidor MCP Nativo:</strong> Ejecuta <code>omni-spec mcp</code> para exponer las herramientas de memoria, lectura de estado activo y cálculo de radio de impacto directamente a clientes MCP por stdio en cualquier entorno de desarrollo o enjambre de agentes compatible.",
+        "<strong>Cartografía Políglota de Código & Blast Radius:</strong> Mediante un lexer DFA pushdown (sin dependencias para TypeScript/JavaScript, Python, Go, Rust y Java), <code>omni-spec cartography</code> y <code>omni-spec blast-radius</code> indexan el grafo de dependencias y calculan la puntuación matemática de impacto <code>S = min(100, ...)</code> antes de permitir la edición de código, previniendo roturas en cascada."
       ]
     },
     "en": {
       "title": "8.2 SQLite FTS5 Memory, MCP Server and Cartography",
       "paragraphs": [
-        "OmniSpec 0.9.0 introduces <strong>Persistent Heuristic Memory (SQLite FTS5)</strong>: agents query and record patterns, lessons learned, and constraints in <code>specs/.omni/memory.db</code> with instant full-text search via <code>omni-spec memory</code>, eliminating session amnesia without polluting Git history.",
-        "<strong>Integrated MCP Server:</strong> Run <code>omni-spec mcp</code> to expose memory tools directly over stdio JSON-RPC to any MCP-compliant AI coding assistant.",
-        "<strong>Code Cartography & Blast Radius:</strong> Via <code>omni-spec cartography</code> and <code>omni-spec blast-radius</code>, the engine indexes project dependencies and computes the impact radius before allowing any code edits."
+        "OmniSpec 0.9.0 introduces <strong>Persistent Heuristic Memory (SQLite FTS5)</strong>: agents query and record patterns, lessons learned, and constraints in the external store <code>%LOCALAPPDATA%\\OmniSpec\\workspaces\\&lt;id&gt;\\memory.db</code> with instant full-text search via <code>omni-spec memory</code>, eliminating session amnesia without Git repository clutter (Zero-Footprint Mode).",
+        "<strong>Native MCP Server:</strong> Run <code>omni-spec mcp</code> to expose memory tools, active spec status, and impact analysis directly over stdio JSON-RPC to any MCP-compliant AI assistant or swarm agent.",
+        "<strong>Polyglot AST Cartography & Blast Radius:</strong> Powered by a dependency-free pushdown DFA lexer (supporting TypeScript/JavaScript, Python, Go, Rust, and Java), <code>omni-spec cartography</code> and <code>omni-spec blast-radius</code> index dependency graphs and calculate mathematical impact score <code>S = min(100, ...)</code> before permitting file modifications, preventing cascading regressions."
       ]
     },
     "commands": [
+      "npx --yes omni-spec memory list",
+      "npx --yes omni-spec memory search \"login token\"",
       "npx --yes omni-spec mcp",
       "npx --yes omni-spec cartography --json",
-      "npx --yes omni-spec blast-radius <files...> --json"
+      "npx --yes omni-spec blast-radius src/auth.ts --json"
     ],
-    "code": ""
+    "code": "$ omni-spec memory search \"login token\"\n[FTS5 MATCH: 2 results (0.012s)]\n- [CONVENTION] src/auth/token.ts (score: 0.94)\n  \"JWT token rotation requires 15m expiration with Redis blacklist revocation.\"\n- [GOTCHA] src/middleware/auth.ts (score: 0.88)\n  \"Bearer header must strip 'Bearer ' prefix before HMAC verification.\"\n\n$ omni-spec blast-radius src/auth.ts --json\n{\n  \"target\": \"src/auth.ts\",\n  \"directDependents\": [\"src/routes/login.ts\", \"src/routes/refresh.ts\"],\n  \"transitiveDependents\": [\"src/server.ts\"],\n  \"totalImpacted\": 3,\n  \"score\": 18.42,\n  \"gate\": \"PROCEED\"\n}\n\n$ omni-spec mcp\n[MCP] Serving JSON-RPC over stdio on OmniSpec v0.9.0 (memory, status, blast-radius)"
+  },
+  {
+    "id": "gobernanza-seguridad",
+    "es": {
+      "title": "8.3 Gobernanza Preventiva: Omni-Guardian, Hollow-Guard y Atestación Criptográfica",
+      "paragraphs": [
+        "Para eliminar alucinaciones y prevenir modificaciones perjudiciales, OmniSpec 0.9.0 implementa una suite de gobernanza dura y confinamiento estricto:",
+        "<strong>Omni-Guardian (Ejecución Sin Shell):</strong> Toda comprobación y quality gate se ejecuta mediante <code>spawn(..., { shell: false })</code> contra una lista blanca de binarios autorizados (<code>node</code>, <code>npm</code>, <code>vitest</code>, <code>tsc</code>, etc.). Rechaza inyecciones de comandos, operadores de shell (<code>&amp;</code>, <code>|</code>, <code>;</code>, backticks) y rutas fuera del proyecto.",
+        "<strong>Hook Pre-commit Determinista:</strong> Instala la protección local con <code>omni-spec guardian install</code>. Bloquea commits con marcadores de conflicto (<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>), bloques <code>catch</code> vacíos o silenciosos, y tipados peligrosos como <code>any</code> o <code>as unknown as</code>.",
+        "<strong>Hollow-Guard (Anti-Slop en Pruebas):</strong> Durante <code>omni-spec verify</code>, rechaza cualquier suite modificada que carezca de aserciones, contenga tautologías engañosas (<code>expect(true).toBe(true)</code>, <code>assert.ok(true)</code>) o no importe código real de la aplicación.",
+        "<strong>Atestación Criptográfica HMAC-SHA256:</strong> Cada resultado de verificación y el artefacto <code>verification.json</code> se firman criptográficamente con una clave privada protegida por DPAPI en <code>%LOCALAPPDATA%\\OmniSpec\\keys\\attestation.key</code>, garantizando que nadie pueda falsificar la aprobación de quality gates.",
+        "<strong>Broker de Autenticación Seguro:</strong> Gestión de credenciales mediante DPAPI en <code>%LOCALAPPDATA%\\OmniSpec\\auth.dat</code> y cerrojo global entre procesos para refresco de tokens con <code>omni-spec login</code>."
+      ]
+    },
+    "en": {
+      "title": "8.3 Preventive Governance: Omni-Guardian, Hollow-Guard and Cryptographic Attestation",
+      "paragraphs": [
+        "To eliminate hallucinations and prevent harmful mutations, OmniSpec 0.9.0 enforces strict governance and runtime confinement:",
+        "<strong>Omni-Guardian (Shell-Free Execution):</strong> All verification gates execute via <code>spawn(..., { shell: false })</code> against an allowed binary whitelist (<code>node</code>, <code>npm</code>, <code>vitest</code>, <code>tsc</code>, etc.). It strictly rejects shell injection, chaining operators (<code>&amp;</code>, <code>|</code>, <code>;</code>, backticks), and paths escaping the repository boundary.",
+        "<strong>Deterministic Pre-commit Hook:</strong> Install local repo protection using <code>omni-spec guardian install</code>. Blocks commits containing merge conflict markers (<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>), silent or empty <code>catch</code> blocks, and unsafe types like <code>any</code> or <code>as unknown as</code>.",
+        "<strong>Hollow-Guard (Test Anti-Slop):</strong> During <code>omni-spec verify</code>, it blocks modified test suites lacking assertions, using tautological checks (<code>expect(true).toBe(true)</code>, <code>assert.ok(true)</code>), or failing to import real project code.",
+        "<strong>Cryptographic HMAC-SHA256 Attestation:</strong> Every gate result and the <code>verification.json</code> record are signed with HMAC-SHA256 using a DPAPI-protected key in <code>%LOCALAPPDATA%\\OmniSpec\\keys\\attestation.key</code>, ensuring verification evidence cannot be fabricated or tampered with.",
+        "<strong>Secure Auth Broker:</strong> Credential management using DPAPI in <code>%LOCALAPPDATA%\\OmniSpec\\auth.dat</code> and a cross-process mutex for secure token rotation via <code>omni-spec login</code>."
+      ]
+    },
+    "commands": [
+      "npx --yes omni-spec guardian install",
+      "npx --yes omni-spec guardian check",
+      "npx --yes omni-spec login --provider claude",
+      "npx --yes omni-spec auth status"
+    ],
+    "code": "$ omni-spec guardian check\n[GUARDIAN] Running pre-commit and pre-execution integrity checks...\n  [OK] No merge conflict markers found.\n  [OK] Zero-catch slop: no empty or exception-swallowing catch blocks.\n  [OK] Anti-slop: zero 'any' casts or unsafe assertions detected.\n  [OK] Shell confinement: binary whitelist validated.\n  [OK] Cryptographic key: DPAPI attestation active (HMAC-SHA256).\n\nResult: ALL CHECKS PASSED (exit code 0)"
   }
 ];

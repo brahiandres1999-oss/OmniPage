@@ -32,12 +32,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           <div class="term-scroll-container">
             <!-- STEP 0: Prompt inicial -->
             <div class="term-step" data-term-step="0">
-              <pre class="terminal-code"><code><span class="text-secondary">PS C:\dev\LaboratorioSpringBootBancov2&gt;</span> <span class="term-cursor-input">npx --yes omni-spec init</span><span class="term-blink-cursor">_</span></code></pre>
+              <pre class="terminal-code"><code><span class="text-secondary">PS C:\dev\my-pay-service&gt;</span> <span class="term-cursor-input">npx --yes omni-spec init</span><span class="term-blink-cursor">_</span></code></pre>
             </div>
 
             <!-- STEP 1: Selección de Herramientas -->
             <div class="term-step" data-term-step="1" hidden>
-              <pre class="terminal-code"><code><span class="text-secondary">PS C:\dev\LaboratorioSpringBootBancov2&gt;</span> npx --yes omni-spec init
+              <pre class="terminal-code"><code><span class="text-secondary">PS C:\dev\my-pay-service&gt;</span> npx --yes omni-spec init
 
 <span class="ascii-logo"><span class="ascii-blue">  ___                  _  </span> <span class="ascii-amber"> ____             </span>
 <span class="ascii-blue"> / _ \ _ __ ___  _ __ (_) </span><span class="ascii-amber">| ___| _ __   ___  ___ </span>
@@ -50,7 +50,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <span class="text-secondary">─────────────────────────────────────────────────────────────────</span>
   <span class="text-highlight">¿Dónde usarás OmniSpec?</span>
 
-  Destino: <span class="text-secondary">C:\dev\LaboratorioSpringBootBancov2</span>
+  Destino: <span class="text-secondary">C:\dev\my-pay-service</span>
   No se detectaron archivos de aplicación. Definirás el producto y las tecnologías con tu agente.
 
   <span class="text-success">&gt; [x] Antigravity</span>
@@ -67,7 +67,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <span class="text-secondary">─────────────────────────────────────────────────────────────────</span>
   <span class="text-highlight">Where will you use OmniSpec?</span>
 
-  Target: <span class="text-secondary">C:\dev\LaboratorioSpringBootBancov2</span>
+  Target: <span class="text-secondary">C:\dev\my-pay-service</span>
   No application files detected. You will define product and technologies with your agent.
 
   <span class="text-success">&gt; [x] Antigravity</span>
@@ -126,7 +126,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <span class="text-secondary">─────────────────────────────────────────────────────────────────</span>
   <span class="text-highlight">¿Preparar OmniSpec en esta carpeta?</span>
 
-  Destino: <span class="text-secondary">C:\dev\LaboratorioSpringBootBancov2</span>
+  Destino: <span class="text-secondary">C:\dev\my-pay-service</span>
   No se detectaron archivos de aplicación. Definirás el producto y las tecnologías con tu agente.
   Integraciones seleccionadas: <span class="text-highlight">antigravity</span>
 
@@ -137,7 +137,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <span class="text-secondary">─────────────────────────────────────────────────────────────────</span>
   <span class="text-highlight">Prepare OmniSpec in this directory?</span>
 
-  Target: <span class="text-secondary">C:\dev\LaboratorioSpringBootBancov2</span>
+  Target: <span class="text-secondary">C:\dev\my-pay-service</span>
   No application files detected. You will define product and technologies with your agent.
   Selected integrations: <span class="text-highlight">antigravity</span>
 
@@ -164,7 +164,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   <span class="text-accent">INSTALACIÓN</span>
   <span class="text-secondary">─────────────────────────────────────────────────────────────────</span>
-  Destino: <span class="text-secondary">C:\dev\LaboratorioSpringBootBancov2</span>
+  Destino: <span class="text-secondary">C:\dev\my-pay-service</span>
   <span class="text-success">[OK]</span> Integridad de archivos administrados y versión del runtime local comprobadas.
   <span class="text-success">[OK]</span> omni-auditor: <span class="text-highlight">.agents/agents/omni-auditor.md</span>
 
@@ -183,7 +183,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   <span class="text-accent">INSTALLATION</span>
   <span class="text-secondary">─────────────────────────────────────────────────────────────────</span>
-  Target: <span class="text-secondary">C:\dev\LaboratorioSpringBootBancov2</span>
+  Target: <span class="text-secondary">C:\dev\my-pay-service</span>
   <span class="text-success">[OK]</span> Managed files and local runtime version verified.
   <span class="text-success">[OK]</span> omni-auditor: <span class="text-highlight">.agents/agents/omni-auditor.md</span>
 
@@ -199,16 +199,16 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           </div>
 
           <!-- Barra de estado interactiva estilo terminal -->
-          <footer class="term-status-footer" id="term-status-bar">
+          <button type="button" class="term-status-footer" id="term-status-bar">
             <span class="term-status-hint">
               <span class="term-prompt-key">↵ Enter</span>
               <span id="term-hint-text">
-                <span data-locale="es">Presiona Enter para ejecutar</span>
-                <span data-locale="en" hidden>Press Enter to run</span>
+                <span data-locale="es">Haz clic o presiona Enter para ejecutar</span>
+                <span data-locale="en" hidden>Click or press Enter to run</span>
               </span>
             </span>
             <span class="term-status-step font-mono" id="term-step-indicator">0 / 4</span>
-          </footer>
+          </button>
         </div>
       </article>
 
@@ -217,7 +217,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <header class="diptych-header explorer-header">
           <div class="tab-indicator font-mono">
             <Icon name="folder" size={16}/>
-            <span class="explorer-brand">EXPLORER: LABORATORIOSPRINGBOOTBANCOV2</span>
+            <span class="explorer-brand">EXPLORER: MY-PAY-SERVICE</span>
           </div>
           <div class="explorer-tabs" role="tablist">
             <button type="button" role="tab" id="tab-tree" aria-selected="true" class="exp-tab is-active" data-exp-target="view-tree">
@@ -235,7 +235,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             <div class="tree-root-label">
               <span class="tree-caret">▾</span>
               <Icon name="folder" size={15}/>
-              <strong>LaboratorioSpringBootBancov2</strong>
+              <strong>my-pay-service</strong>
               <span class="tree-status-badge" id="tree-sync-badge">
                 <span data-locale="es">Listo</span>
                 <span data-locale="en" hidden>Ready</span>
@@ -295,10 +295,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
                 </summary>
                 <div class="tree-indent-level-2">
                   <div class="tree-file"><span class="tree-file-icon">📁</span><span>_templates/</span></div>
-                  <div class="tree-file"><span class="tree-file-icon">📁</span><span>.omni/</span><span class="tree-tag">runtime</span></div>
-                  <div class="tree-file highlight-file"><span class="tree-file-icon">📄</span><span>.omni/memory.db</span><span class="tree-tag">SQLite FTS5</span></div>
+                  <div class="tree-file"><span class="tree-file-icon">📁</span><span>.omni/</span><span class="tree-tag">runtime (local)</span></div>
                   <div class="tree-file"><span class="tree-file-icon">📁</span><span>commands/</span></div>
-                  <div class="tree-file"><span class="tree-file-icon">📄</span><span>manifest.lock</span></div>
+                  <div class="tree-file"><span class="tree-file-icon">📄</span><span>manifest.lock</span><span class="tree-tag">Lamport mutex</span></div>
+                  <div class="tree-file"><span class="tree-file-icon">📄</span><span>contracts.json</span><span class="tree-tag">
+                    <span data-locale="es">contratos</span>
+                    <span data-locale="en" hidden>contracts</span>
+                  </span></div>
                   <div class="tree-file"><span class="tree-file-icon">📄</span><span>.gitignore</span></div>
                   <div class="tree-file"><span class="tree-file-icon">📄</span><span>manifest.json</span><span class="tree-tag">
                     <span data-locale="es">versión</span>
@@ -327,7 +330,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           <!-- VISTA 2: CONSTITUTION.md (BILINGÜE ES / EN) -->
           <div id="view-const" class="exp-view exp-scrollable" hidden>
             <div data-locale="es">
-              <pre class="spec-code"><code><span class="text-secondary"># CONSTITUTION — LaboratorioSpringBootBancov2</span>
+              <pre class="spec-code"><code><span class="text-secondary"># CONSTITUTION — my-pay-service</span>
 <span class="text-accent">&gt; Directivas de ingeniería inviolables para agentes de IA.</span>
 
 <span class="text-highlight">1. Cirugía de Código (Minimal Touch):</span>
@@ -343,7 +346,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
    El código debe ser autoexplicativo y limpio.</code></pre>
             </div>
             <div data-locale="en" hidden>
-              <pre class="spec-code"><code><span class="text-secondary"># CONSTITUTION — LaboratorioSpringBootBancov2</span>
+              <pre class="spec-code"><code><span class="text-secondary"># CONSTITUTION — my-pay-service</span>
 <span class="text-accent">&gt; Non-negotiable engineering directives for AI coding agents.</span>
 
 <span class="text-highlight">1. Minimal Touch Surgery:</span>
@@ -363,32 +366,32 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           <!-- VISTA 3: project-context.md (BILINGÜE ES / EN) -->
           <div id="view-context" class="exp-view exp-scrollable" hidden>
             <div data-locale="es">
-              <pre class="spec-code"><code><span class="text-secondary"># Project Context — LaboratorioSpringBootBancov2</span>
+              <pre class="spec-code"><code><span class="text-secondary"># Project Context — my-pay-service</span>
 <span class="text-accent">&gt; Memoria arquitectónica destilada del repositorio (MDD).</span>
 
 <span class="text-highlight">## Stack Detectado</span>
-- Lenguaje / Framework: Spring Boot 3.x (Java 21)
+- Lenguaje / Runtime: TypeScript 5.x / Node.js 22 (LTS)
 - Arquitectura: Hexagonal / Domain-Driven Design (DDD)
-- Base de Datos: PostgreSQL + JPA / Flyway
-- Quality Gates: ./mvnw clean test (JUnit 5 + AssertJ)
+- Base de Datos: PostgreSQL + Prisma ORM
+- Quality Gates: npm test && npm run build (Vitest + Supertest)
 
 <span class="text-highlight">## Directivas del Repositorio</span>
 - Convención de Commits: Conventional Commits 1.0.0
-- Documentación: Javadoc obligatorio en contratos de dominio.</code></pre>
+- Documentación: TSDoc obligatorio en contratos de dominio.</code></pre>
             </div>
             <div data-locale="en" hidden>
-              <pre class="spec-code"><code><span class="text-secondary"># Project Context — LaboratorioSpringBootBancov2</span>
+              <pre class="spec-code"><code><span class="text-secondary"># Project Context — my-pay-service</span>
 <span class="text-accent">&gt; Distilled architectural memory of the repository (MDD).</span>
 
 <span class="text-highlight">## Detected Stack</span>
-- Language / Framework: Spring Boot 3.x (Java 21)
+- Language / Runtime: TypeScript 5.x / Node.js 22 (LTS)
 - Architecture: Hexagonal / Domain-Driven Design (DDD)
-- Database: PostgreSQL + JPA / Flyway
-- Quality Gates: ./mvnw clean test (JUnit 5 + AssertJ)
+- Database: PostgreSQL + Prisma ORM
+- Quality Gates: npm test && npm run build (Vitest + Supertest)
 
 <span class="text-highlight">## Repository Invariants</span>
 - Commit Convention: Conventional Commits 1.0.0 (in English)
-- Documentation Standard: Javadoc mandatory on domain interfaces.</code></pre>
+- Documentation Standard: TSDoc mandatory on domain interfaces.</code></pre>
             </div>
           </div>
         </div>
@@ -478,20 +481,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     else showStep(0);
   }
 
-  // Touch & click fallback on status bar for mobile / tablet devices without hardware keyboard
+  // Click on status bar advances step
   statusBar?.addEventListener('click', () => {
     nextStep();
   });
 
-  // Key navigation: Enter advances step
-  window.addEventListener('keydown', (e) => {
-    const canvas = document.getElementById('canvas');
-    if (!canvas) return;
-    const rect = canvas.getBoundingClientRect();
-    const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-    if (isVisible && e.key === 'Enter') {
-      const activeEl = document.activeElement;
-      if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA')) return;
+  // Focused key navigation on the interactive card only (no global window hijacking)
+  const termCard = document.getElementById('term-interactive-card');
+  termCard?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       nextStep();
     }
